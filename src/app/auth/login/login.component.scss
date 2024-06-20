@@ -6,12 +6,24 @@
     align-items: center;
     .content-main {
         width: 606px;
-        padding: 32px 24px;
+        padding: 56px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 30px;
         box-shadow: 0px 2px 10px 0px #00000014;
+        h1 {
+            color: #444df2;
+            font-size: 46px;
+            font-weight: 700;
+        }
     }
+}
+
+.advice {
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
 }
 
 .form-field {
@@ -23,15 +35,17 @@
     padding: 18px 32px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    button {
-        img {
-            width: 24px;
-            height: 24px;
-        }
+    gap: 30px;
+    margin-bottom: 6px;
+    cursor: text;
+    img {
+        width: 24px;
+        height: 24px;
     }
     input {
         flex: 1;
+        font-size: 18px;
+        font-weight: 500;
     }
 }
 
@@ -39,6 +53,7 @@
     width: 100%;
     display: flex;
     align-items: center;
+    gap: 15px;
     hr {
         flex: 1;
         border: none;
@@ -48,8 +63,63 @@
 
 .google-btn {
     justify-content: center;
+    gap: 20px;
+    cursor: pointer;
+    border-color: #ADB0D9;
+    img {
+        width: 38px;
+        height: 38px;
+    }
+    span {
+        width: 184px;
+        color: #444DF2;
+        font-size: 18px;
+        font-weight: 400;
+    }
+    &:hover {
+        border-style: solid;
+        border-width: 1px;
+        box-shadow: 0px 2px 6px 0px #00000014;
+    }
 }
 
 .submit-btns {
     display: flex;
+    gap: 30px;
+}
+
+.logo {
+    position: absolute;
+    left: 75px;
+    top: 75px;
+    width: 242px;
+    height: 70px;
+    cursor: pointer;
+}
+
+.create-account-hint {
+    position: absolute;
+    right: 75px;
+    top: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+    p {
+        font-size: 18px;
+    }
+    a {
+        position: relative;
+        width: 157px;
+        right: -16px;
+    }
+}
+
+app-legal-footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 30px;
+    display: flex;
+    justify-content: center;
 }

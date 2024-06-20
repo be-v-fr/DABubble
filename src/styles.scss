@@ -1,11 +1,11 @@
-@import './fonts.scss';
+@import "./fonts.scss";
 
 $violet-bright: #eceefe;
 $purple-light: #adb0d9;
 $purple-blue: #444df2;
-$purple-blue-bright: #535AF1;
-$purple-blue-brighter: #797EF3;
-$purple-blue-active: #444DF2;
+$purple-blue-bright: #535af1;
+$purple-blue-brighter: #797ef3;
+$purple-blue-active: #444df2;
 $grey: #686868;
 
 @mixin transition($duration: 100ms) {
@@ -21,7 +21,7 @@ $grey: #686868;
 * {
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Nunito', Helvetica, sans-serif;
+    font-family: "Nunito", Helvetica, sans-serif;
 }
 
 button,
@@ -34,6 +34,7 @@ input {
 button,
 a {
     cursor: pointer;
+    @include transition();
     &:disabled {
         cursor: not-allowed;
     }
@@ -60,7 +61,8 @@ a {
     align-items: center;
     padding-left: 25px;
     padding-right: 25px;
-    @include transition();
+    font-size: 18px;
+    font-weight: 700;
 }
 
 .form-btn-primary {
@@ -96,5 +98,37 @@ a {
         color: $grey;
         border-color: $grey;
         background-color: white;
+    }
+}
+
+.link-purple {
+    border-radius: 30px;
+    color: $purple-blue-brighter;
+    text-decoration: none;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 500;
+    &:hover {
+        color: $purple-blue-active;
+    }
+}
+
+.link-purple-bg {
+    @extend .link-purple;
+    height: 32px;
+    &:hover {
+        @extend .bg-violet;
+    }
+}
+
+.link-purple-border {
+    @extend .link-purple;
+    height: 42px;
+    &:hover {
+        border: 1px solid #ADB0D9;
     }
 }
