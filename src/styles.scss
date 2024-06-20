@@ -1,10 +1,84 @@
-$violet-bright: #ECEEFE;
+$violet-bright: #eceefe;
+$purple-light: #adb0d9;
+$purple-blue: #444df2;
+$purple-blue-bright: #535AF1;
+$purple-blue-brighter: #797EF3;
+$purple-blue-active: #444DF2;
+
+@mixin transition($duration: 100ms) {
+    transition: $duration ease;
+    &:hover {
+        transition: $duration ease;
+    }
+    &:active {
+        transition: $duration ease;
+    }
+}
 
 * {
     margin: 0;
     box-sizing: border-box;
 }
 
+button,
+input {
+    border: none;
+    outline: none;
+    background: none;
+}
+
+button,
+a {
+    cursor: pointer;
+}
+
 .bg-violet {
     background-color: $violet-bright;
+}
+
+.bg-purple-light {
+    background-color: $purple-light;
+}
+
+.content-card {
+    background-color: white;
+    border-radius: 30px;
+}
+
+.form-btn {
+    height: 49px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.form-btn-primary {
+    @extend .form-btn;
+    color: white;
+    background-color: $purple-blue;
+    &:hover {
+        background-color: $purple-blue-brighter;
+    }
+    &:active {
+        background-color: $purple-blue-active;
+    }
+}
+
+.form-btn-secondary {
+    @extend .form-btn;
+    color: $purple-blue;
+    border: 1px solid $purple-blue;
+    background-color: white;
+    &:hover {
+        color: white;
+        border-color: $purple-blue-bright;
+        background-color: $purple-blue-bright;
+    }
+    &:active {
+        border-color: $purple-blue-active;
+        background-color: $purple-blue-active;
+    }
 }
