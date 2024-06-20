@@ -53,6 +53,7 @@ a {
     align-items: center;
     padding-left: 25px;
     padding-right: 25px;
+    @include transition();
 }
 
 .form-btn-primary {
