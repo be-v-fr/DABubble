@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+$violet-bright: #ECEEFE;
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.bg-violet {
+    background-color: $violet-bright;
+}
