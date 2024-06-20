@@ -1,0 +1,117 @@
+@import '../../../styles.scss';
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 989px;
+    background-color: white;
+    border-radius: 30px;
+
+    .main-header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 25px 40px;
+
+        .channel-btn {
+            font-size: 24px;
+            font-weight: 700px;
+            line-height: 32.74px;
+            padding: 6px 10px;
+
+            &:hover {
+                color: $purple-blue-bright;
+                background-color: #ECEEFE;
+                border-radius: 100px;
+            }
+
+            img {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        }
+
+        .main-header-members {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .members-btn {
+                width: 142px;
+                height: 46px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                &:hover {
+                    color: $purple-blue-bright;
+                    background-color: #ECEEFE;
+                    border-radius: 100px;
+                }
+
+                .m-images-container {
+                    margin-left: 10px;
+
+                    img {
+                        margin-left: -10px;
+                    }
+                }
+
+                span {
+                    font-size: 20px;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .message-container {
+        width: 85%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 20px ;
+        gap: 30px;
+
+        .img-container {
+            img {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+        .message-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+
+            .user-name {
+                font-size: 18px;
+                font-weight: 700;
+                line-height: 24.55px;
+            }
+
+            .message-footer {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+
+                button {
+                    color: $purple-blue-bright;
+                    padding: 0;
+                }
+
+                span {
+                    color: $grey;
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 19.1px;
+                }
+            }
+        }
+
+    }
+}
