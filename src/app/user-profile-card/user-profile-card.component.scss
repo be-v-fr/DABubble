@@ -1,7 +1,9 @@
+@import "../../styles.scss";
+
 .userCard {
   width: 500px;
   height: 705px;
-  background-color: darkgray;
+  background-color: white;
   border-radius: 30px;
   transform: translate(-50%, -50%);
   left: 50%;
@@ -30,10 +32,77 @@
 .profileImg {
   position: absolute;
   left: 150px;
-  top: 150px;
+  top: 125px;
   img {
     width: 200px;
     height: 200px;
     border-radius: 100%;
+  }
+}
+
+.userName {
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  height: 86px;
+  position: absolute;
+  top: 370px;
+  left: 40px;
+  p:first-child {
+    width: 16px;
+    height: 16px;
+    background-color: #92c83e;
+    border-radius: 100%;
+  }
+  p:last-child {
+    font-weight: 400;
+    font-size: 20px;
+    color: #92c83e;
+  }
+}
+.online {
+  display: flex;
+  align-items: baseline;
+  gap: 15px;
+  margin-top: 15px;
+}
+.emailContainer {
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  height: 70px;
+  gap: 15px;
+  margin-top: 501px;
+  margin-left: 40px;
+  .email {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    img{
+      width: 25px;
+      height: 20px;
+    }
+    p{
+      font-weight: 700;
+    font-size: 20px;
+    }
+  }
+  .showEmail{
+    margin-left: 50px;
+    p{
+      font-weight: 400;
+      font-size: 18px;
+      color: #1381FF;
+    }
+  }
+}
+.submit-btns{
+  margin-top: 45px;
+  margin-left: 168px;
+  button{
+    width: 164px;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
   }
 }
