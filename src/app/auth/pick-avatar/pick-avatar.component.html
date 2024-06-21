@@ -1,0 +1,31 @@
+<div class="content-wrapper">
+    <form class="content-main content-card">
+        <h1>
+            Wähle deinen Avatar
+            <div class="back-btn-container">
+                <a routerLink="/auth/signUp" class="black-to-blue-btn">
+                    <img src="assets/img/icons/go_back_arrow.svg" alt="go back">
+                </a>
+            </div>
+        </h1>
+        <img src="../../../assets/img/profile_blank.svg" alt="blank profile picture" class="profile-blank">
+        <section class="form-bottom">
+            <h2>Frederick Beck</h2>
+            <p>Aus der Liste wählen</p>
+            <div class="avatar-picker">
+                @for (i of ['00','01','02','03','04','05']; track i) {
+                <img src="../../../assets/img/avatar/avatar_{{i}}.svg" alt="Avatar {{i}}">
+                }
+            </div>
+            <div class="upload-avatar-container">
+                <span>eigenes Bild verwenden</span>
+                <button class="form-btn-secondary">Datei hochladen</button>
+            </div>
+            <div class="submit-btns">
+                <button type="submit" class="form-btn-primary">Weiter</button>
+            </div>
+        </section>
+    </form>
+    <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
+    <app-legal-footer></app-legal-footer>
+</div>

@@ -101,6 +101,20 @@ a {
     }
 }
 
+.black-to-blue-btn {
+    @include transition();
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+        background-color: $violet-bright;
+        img {
+            filter: invert(32%) sepia(31%) saturate(5534%) hue-rotate(229deg) brightness(97%) contrast(95%);
+        }
+    }
+}
+
 .link-purple {
     border-radius: 30px;
     color: $purple-blue-brighter;
