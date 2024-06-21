@@ -1,0 +1,19 @@
+@import '../login/login.component.scss';
+@import '../sign-up/sign-up.component.scss';
+
+.content-wrapper .content-main {
+    width: 696px;
+    padding-left: 96px;
+    padding-right: 96px;
+    h1 .back-btn-container {
+        left: -60px;
+    }
+}
+
+.form-bottom {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 0 48px;
+}

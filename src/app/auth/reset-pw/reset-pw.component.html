@@ -1,1 +1,25 @@
-<p>reset-pw works!</p>
+<div class="content-wrapper">
+    <form class="content-main content-card">
+        <h1>
+            Passwort zurücksetzen
+            <div class="back-btn-container">
+                <a routerLink="/auth" class="black-to-blue-btn">
+                    <img src="assets/img/icons/go_back_arrow.svg" alt="go back">
+                </a>
+            </div>
+        </h1>
+        <section class="form-bottom">
+            <div class="form-field bg-violet">
+                <input type="password" placeholder="Neues Passwort">
+            </div>
+            <div class="form-field bg-violet">
+                <input type="password" placeholder="Neues Passwort bestätigen">
+            </div>
+            <div class="submit-btns">
+                <button type="submit" class="form-btn-primary" disabled>Passwort ändern</button>
+            </div>
+        </section>
+    </form>
+    <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
+    <app-legal-footer></app-legal-footer>
+</div>

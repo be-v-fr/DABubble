@@ -1,1 +1,23 @@
-<p>request-pw-reset works!</p>
+<div class="content-wrapper">
+    <form class="content-main content-card">
+        <h1>
+            Passwort zurücksetzen
+            <div class="back-btn-container">
+                <a routerLink="/auth" class="black-to-blue-btn">
+                    <img src="assets/img/icons/go_back_arrow.svg" alt="go back">
+                </a>
+            </div>
+        </h1>
+        <p class="advice">Bitte geben Sie Ihre E-Mail-Adresse ein.</p>
+        <div class="form-field bg-violet">
+            <img src="assets/img/icons/mail.svg" alt="E-Mail">
+            <input type="email" placeholder="beispielname@email.com">
+        </div>
+        <p class="advice text-grey">Wir senden Ihnen eine E-Mail, über die Sie Ihr Passwort ändern können.</p>
+        <div class="submit-btns">
+            <button type="submit" class="form-btn-primary" disabled>E-Mail senden</button>
+        </div>
+    </form>
+    <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
+    <app-legal-footer></app-legal-footer>
+</div>
