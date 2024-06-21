@@ -1,0 +1,26 @@
+@import '../login/login.component.scss';
+
+.privacy-policy-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    span {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        a {
+            font-size: 16px;
+            padding: 0;
+            background: none;
+            &:hover {
+                background: none;
+            }
+        }
+    }
+}
+
+.submit-btns {
+    width: 100%;
+    justify-content: flex-end;
+}

@@ -16,6 +16,21 @@
             color: #444df2;
             font-size: 46px;
             font-weight: 700;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            .back-btn-container {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                display: flex;
+                align-items: center;
+                .black-to-blue-btn {
+                    width: 40px;
+                    height: 40px;
+                }
+            }
         }
     }
 }

@@ -1,1 +1,38 @@
-<p>sign-up works!</p>
+<div class="content-wrapper">
+    <form class="content-main content-card">
+        <h1>
+            Konto erstellen
+            <div class="back-btn-container">
+                <a routerLink="/auth" class="black-to-blue-btn">
+                    <img src="assets/img/icons/go_back_arrow.svg" alt="go back">
+                </a>
+            </div>
+        </h1>
+        <p class="advice">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
+        <div class="form-field bg-violet">
+            <img src="assets/img/icons/person.svg" alt="Name">
+            <input type="text" placeholder="Name und Nachname">
+        </div>
+        <div class="form-field bg-violet">
+            <img src="assets/img/icons/mail.svg" alt="E-Mail">
+            <input type="email" placeholder="beispielname@email.com">
+        </div>
+        <div class="form-field bg-violet">
+            <img src="assets/img/icons/lock.svg" alt="Password">
+            <input type="password" placeholder="Passwort">
+        </div>
+        <div class="privacy-policy-container">
+            <input type="checkbox">
+            <span>
+                Ich stimme der
+                <a routerLink="/privacypolicy" target="_blank" class="link-purple-bg">Datenschutzerklärung</a>
+                zu.
+            </span>
+        </div>
+        <div class="submit-btns">
+            <button type="submit" class="form-btn-primary">Weiter</button>
+        </div>
+    </form>
+    <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
+    <app-legal-footer></app-legal-footer>
+</div>

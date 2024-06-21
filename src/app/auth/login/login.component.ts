@@ -15,7 +15,9 @@ export class LoginComponent {
   //
   // Details:
   // - On Input, both text color and icon color should turn to black
+  // - Input style details (including "focus" in Figma\Components)
   // - Click on form field surrounding input should focus input
   // - Password visibility options
   // - DABubble Logo should be clickable
+  // - Hover effect Google Button (check out Figma\Components)
 }
