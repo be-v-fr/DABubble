@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { LegalFooterComponent } from '../legal-footer/legal-footer.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [LegalFooterComponent],
+  imports: [RouterLink, LegalFooterComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
