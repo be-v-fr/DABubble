@@ -19,7 +19,6 @@ export const routes: Routes = [
     {path: 'auth/pickAvatar', component: PickAvatarComponent},
     {path: 'auth/requestPwReset', component: RequestPwResetComponent},
     {path: 'auth/resetPw', component: ResetPwComponent},
-    {path: 'main', component: MainComponent},
     {path: 'impress', component: ImpressComponent},
     {path: 'privacypolicy', component: PrivacypolicyComponent},
     {path: 'userProfile', component: UserProfileCardComponent},

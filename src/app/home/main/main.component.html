@@ -1,7 +1,9 @@
 <section class="main-container">
     <div class="main-header">
-        <button class="channel-btn"># Entwicklerteam <img src="/assets/img/icons/keyboard_arrow_down.svg"
-                alt="Keyboard Arrow Down"></button>
+        <button class="channel-btn">
+            # Entwicklerteam
+            <span class="material-icons-outlined icon">keyboard_arrow_down</span>
+        </button>
         <div class="main-header-members">
             <button class="members-btn">
                 <div class="m-images-container">
@@ -12,7 +14,7 @@
                 <span>3</span>
             </button>
             <button class="add-members-btn">
-                <img src="/assets/img/icons/add_members.svg" alt="Add Members">
+                <span class="material-icons-outlined icon">person_add_alt</span>
             </button>
         </div>
     </div>
@@ -30,9 +32,24 @@
                 <button>2 Antworten</button>
                 <span>Letzte Antwort 14:56</span>
             </div>
+            <div class="reactions-container">
+                <div class="reaction">
+                    <div class="emoji">😱</div>
+                    <span>1</span>
+                </div>
+                <div class="reaction">
+                    <div class="emoji">🚀</div>
+                    <span>1</span>
+                </div>
+                <button class="add-emoji-btn">
+                    <span class="material-icons-outlined icon">add_reaction</span>
+                </button>
+            </div>
         </div>
     </div>
 
     <app-time-separator />
+
+    <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="showEmojiPicker"></emoji-mart>
 
 </section>

@@ -1,4 +1,6 @@
 @import "./fonts.scss";
+@import 'material-icons/iconfont/material-icons.css';
+@import '@ctrl/ngx-emoji-mart/picker';
 
 $violet-bright: #eceefe;
 $purple-light: #adb0d9;
@@ -10,9 +12,11 @@ $grey: #686868;
 
 @mixin transition($duration: 100ms) {
     transition: $duration ease;
+
     &:hover {
         transition: $duration ease;
     }
+
     &:active {
         transition: $duration ease;
     }
@@ -35,6 +39,7 @@ button,
 a {
     cursor: pointer;
     @include transition();
+
     &:disabled {
         cursor: not-allowed;
     }
@@ -73,12 +78,15 @@ a {
     @extend .form-btn;
     color: white;
     background-color: $purple-blue;
+
     &:hover {
         background-color: $purple-blue-brighter;
     }
+
     &:active {
         background-color: $purple-blue-active;
     }
+
     &:disabled {
         background-color: $grey;
     }
@@ -89,15 +97,18 @@ a {
     color: $purple-blue;
     border: 1px solid $purple-blue;
     background-color: white;
+
     &:hover {
         color: white;
         border-color: $purple-blue-bright;
         background-color: $purple-blue-bright;
     }
+
     &:active {
         border-color: $purple-blue-active;
         background-color: $purple-blue-active;
     }
+
     &:disabled {
         color: $grey;
         border-color: $grey;
@@ -111,8 +122,10 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+
     &:hover {
         background-color: $violet-bright;
+
         img {
             filter: invert(32%) sepia(31%) saturate(5534%) hue-rotate(229deg) brightness(97%) contrast(95%);
         }
@@ -130,6 +143,7 @@ a {
     justify-content: center;
     font-size: 18px;
     font-weight: 500;
+
     &:hover {
         color: $purple-blue-active;
     }
@@ -138,6 +152,7 @@ a {
 .link-purple-bg {
     @extend .link-purple;
     height: 32px;
+
     &:hover {
         @extend .bg-violet;
     }
@@ -146,9 +161,18 @@ a {
 .link-purple-border {
     @extend .link-purple;
     height: 42px;
+
     &:hover {
         border: 1px solid #ADB0D9;
     }
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

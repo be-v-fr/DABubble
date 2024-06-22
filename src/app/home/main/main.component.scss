@@ -16,10 +16,17 @@
         padding: 25px 40px;
 
         .channel-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 24px;
             font-weight: 700px;
             line-height: 32.74px;
             padding: 6px 10px;
+
+            span {
+                font-size: 30px;
+            }
 
             &:hover {
                 color: $purple-blue-bright;
@@ -64,6 +71,20 @@
                     font-weight: 600;
                 }
             }
+
+            .add-members-btn {
+                background-color: $violet-bright;
+                padding: 8px 10px;
+                border-radius: 100%;
+
+                &:hover {
+                    color: $purple-blue-bright;
+                }
+
+                span {
+                    font-size: 24px;
+                }
+            }
         }
     }
 
@@ -72,7 +93,7 @@
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
-        padding: 20px ;
+        padding: 20px;
         gap: 30px;
 
         .img-container {
@@ -110,6 +131,42 @@
                     font-weight: 400;
                     line-height: 19.1px;
                 }
+            }
+
+            .reactions-container {
+                display: flex;
+                align-items: stretch;
+                justify-content: center;
+                gap: 10px;
+
+                .reaction {
+                    min-width: 63px;
+                    padding: 5px 10px;
+                    border: 1px solid $purple-light;
+                    border-radius: 20px;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    &:hover {
+                        cursor: pointer;
+                        border: 1px solid $purple-blue;
+                    }
+                }
+
+                button {
+                    display: flex;
+                    align-items: center;
+
+                    &:hover {
+                        color: $purple-blue;
+                    }
+
+                    span {
+                        font-size: 24px;
+                    }
+                }
+
             }
         }
 
