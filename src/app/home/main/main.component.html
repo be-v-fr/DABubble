@@ -18,36 +18,11 @@
             </button>
         </div>
     </div>
-
-    <app-time-separator />
-
-    <div class="message-container">
-        <div class="img-container">
-            <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
-        </div>
-        <div class="message-content">
-            <div class="user-name">Noah Braun</div>
-            <div class="message">Welche Version ist aktuell von Angular?</div>
-            <div class="message-answers">
-                <button>2 Antworten</button>
-                <span>Letzte Antwort 14:56</span>
-            </div>
-            <div class="reactions-container">
-                <div class="reaction">
-                    <div class="emoji">😱</div>
-                    <span>1</span>
-                </div>
-                <div class="reaction">
-                    <div class="emoji">🚀</div>
-                    <span>1</span>
-                </div>
-                <button class="add-emoji-btn">
-                    <span class="material-icons-outlined icon">add_reaction</span>
-                </button>
-            </div>
-        </div>
+    <div class="message-items-container">
+        <app-message-item />
+        <app-message-item />
+        <app-message-item />
     </div>
-
     <app-message-box />
     <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="showEmojiPicker"></emoji-mart>
 
