@@ -30,7 +30,7 @@
 
             &:hover {
                 color: $purple-blue-bright;
-                background-color: #ECEEFE;
+                background-color: $violet-bright;
                 border-radius: 100px;
             }
 
@@ -115,7 +115,7 @@
                 line-height: 24.55px;
             }
 
-            .message-footer {
+            .message-answers {
                 display: flex;
                 align-items: center;
                 gap: 20px;
@@ -123,6 +123,11 @@
                 button {
                     color: $purple-blue-bright;
                     padding: 0;
+                    transition: transform 0.2s ease-in-out;
+
+                    &:hover {
+                        transform: scale(1.1);
+                    }
                 }
 
                 span {
@@ -170,5 +175,9 @@
             }
         }
 
+    }
+
+    app-message-box{
+        width: 90%;
     }
 }

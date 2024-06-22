@@ -1,0 +1,53 @@
+@import '../../../styles.scss';
+
+.message-box-container {
+    height: 145px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px;
+    margin: 45px 0;
+    border: 1px solid $purple-light;
+    border-radius: 20px;
+
+    input {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 24.55px;
+
+    }
+
+    .message-box-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .message-box-actions {
+            display: flex;
+            gap: 5px;
+
+            button {
+                color: $grey;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 8px 10px;
+
+                span {
+                    font-size: 24px;
+                }
+
+                &:hover {
+                    color: $purple-blue-bright;
+                    background-color: $violet-bright;
+                    border-radius: 20px;
+                }
+            }
+        }
+
+
+        .send-btn {
+            color: $purple-blue;
+        }
+    }
+}
