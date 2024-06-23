@@ -4,11 +4,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 485px;
+    // width: 485px;
     height: 680px;
     background-color: white;
     border-radius: 30px;
     margin: 22px 0;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
 
     .thread-header {
         width: 100%;
