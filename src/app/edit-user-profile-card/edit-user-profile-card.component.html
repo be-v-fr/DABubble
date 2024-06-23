@@ -2,29 +2,41 @@
   <div class="head">
     <p>Dein Profil Bearbeiten</p>
     <div class="black-to-blue-btn">
+      <a routerLink="/auth">
       <img src="./../../assets/img/userProfileImg/close.svg" />
+      </a>
     </div>
   </div>
   <div class="profileImg">
     <img class="#" src="../../assets/img/userProfileImg/Sofia Müller.png" />
   </div>
   <div class="inputContainer">
-  <div class="emailContainer">
-    <div class="email">
-      <img src="../../assets/img/userProfileImg/account_circle.png" />
-      <p>Vollständiger Name</p>
-       </div>
-       <div class="inputField">
-      <input type="" placeholder="your name">
+    <div class="nameContainer">
+      <div class="userName">
+        <img
+          class="userIcon"
+          src="../../assets/img/userProfileImg/account_circle.png"
+        />
+        <p>Vollständiger Name</p>
+      </div>
+      <div class="inputField">
+        <input type="" placeholder="Sofia Müller" />
+      </div>
+    </div>
+
+    <div class="emailContainer">
+      <div class="email">
+        <img class="mailIcon" src="../../assets/img/userProfileImg/mail.png" />
+        <p>E-Mail-Adresse</p>
+      </div>
+      <div class="inputField">
+        <input type="" placeholder="sofia.muel@beispiel.com" />
+      </div>
+    </div>
+    <div class="submit-btns">
+      <button type="button" class="form-btn-secondary">Abbrechen</button>
+
+      <button type="submit" class="form-btn-primary">Speichern</button>
     </div>
   </div>
- <!-- ' <div class="emailContainer">
-    <div class="email">
-      <img src="../../assets/img/userProfileImg/mail.png" />
-      <p>E-Mail-Adresse</p>
-      <input type="" placeholder="your name">
-
-    </div>
-  </div>' -->
-</div>
 </div>

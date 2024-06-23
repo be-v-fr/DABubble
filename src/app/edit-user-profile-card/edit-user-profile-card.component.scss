@@ -9,18 +9,40 @@
   height: 194px;
 }
 
-.emailContainer {
+.nameContainer {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  .email {
+  gap: 7px;
+  .userName {
     display: flex;
     gap: 20px;
-    img {
+    .mailIcon {
+      width: 25px;
+      height: 20px;
+    }
+    .userIcon{
       width: 25px;
       height: 25px;
     }
     p {
+      font-weight: 700;
+      font-size: 20px;
+    }
+  }
+}
+.emailContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 16px;
+  .email {
+    display: flex;
+    gap: 20px;
+    .mailIcon {
+      width: 25px;
+      height: 20px;
+    }
+        p {
       font-weight: 700;
       font-size: 20px;
     }
@@ -73,5 +95,11 @@
   border: 1px solid rgba(173, 176, 217, 1);
   border-radius: 30px;
   padding-left: 20px;  
+}
+.submit-btns{
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 45px;
 }
 
