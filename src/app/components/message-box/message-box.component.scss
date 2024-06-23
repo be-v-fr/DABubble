@@ -24,6 +24,7 @@
 
         .message-box-actions {
             display: flex;
+            position: relative;
             gap: 5px;
 
             button {
@@ -42,7 +43,18 @@
                     background-color: $violet-bright;
                     border-radius: 20px;
                 }
+
+                &:first-child::after {
+                    content: '';
+                    position: absolute;
+                    left: 46px;
+                    height: 40px;
+                    width: 1px;
+                    background-color: $grey;
+                }
             }
+
+
         }
 
 
