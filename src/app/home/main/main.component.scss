@@ -88,11 +88,13 @@
             }
         }
     }
-    .message-items-container{
+
+    .message-items-container {
         overflow-y: auto;
+        @include scrollbar();
     }
 
-    app-message-box{
+    app-message-box {
         width: 90%;
     }
 }
