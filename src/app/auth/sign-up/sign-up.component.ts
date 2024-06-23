@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { LegalFooterComponent } from '../legal-footer/legal-footer.component';
@@ -7,7 +8,7 @@ import { AuthService } from '../../../services/auth.service';
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [FormsModule, RouterLink, LegalFooterComponent],
+  imports: [CommonModule, FormsModule, RouterLink, LegalFooterComponent],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss'
 })
@@ -19,11 +20,11 @@ export class SignUpComponent {
     password: ''
   }
   // ToDo:
-  // - Validation + messages
   // - Checkbox with Style (Material Design?)
+  //    - add to validation
   // - Hover effect privacy policy
-  // - Impressum: Input-Variable, um Back-Button auszublenden?? Oder stattdessen beim Aufrufen der Privacy Policy Login-Daten zwsischenspeichern (z.B. als Service)
-  onSubmit(form: NgForm) {
+  // - Impressum: Input-Variable, um Back-Button auszublenden?? Oder stattdessen beim Aufrufen der Privacy Policy Login-Daten zwischenspeichern (z.B. als Service)
+    onSubmit(form: NgForm) {
     if (form.submitted && form.valid) {this.signUp()}
     else {console.error('Sign up failed.')}
   }

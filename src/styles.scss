@@ -9,6 +9,7 @@ $purple-blue-bright: #535af1;
 $purple-blue-brighter: #797ef3;
 $purple-blue-active: #444df2;
 $grey: #686868;
+$magenta: #ED1E79;
 
 @mixin transition($duration: 100ms) {
     transition: $duration ease;
@@ -160,6 +161,11 @@ a {
             filter: invert(32%) sepia(31%) saturate(5534%) hue-rotate(229deg) brightness(97%) contrast(95%);
         }
     }
+}
+
+.to-black {
+    @include transition();
+    filter: brightness(0);   
 }
 
 .link-purple {

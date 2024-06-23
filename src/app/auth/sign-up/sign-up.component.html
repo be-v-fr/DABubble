@@ -10,19 +10,34 @@
         </h1>
         <p class="advice">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
         <div class="form-field bg-violet">
-            <img src="assets/img/icons/person.svg" alt="Name">
-            <input type="text" placeholder="Name und Nachname" [(ngModel)]="user.name" name="name" #name="ngModel">
+            <img src="assets/img/icons/person.svg" alt="Name" [ngClass]="{'to-black': user.name}">
+            <input type="text" placeholder="Name und Nachname" [(ngModel)]="user.name" name="name" #name="ngModel"
+                required>
+            @if(name.touched && !name.valid)
+            {<p class="error-msg">
+                Bitte schreiben Sie einen Namen.
+            </p>}
         </div>
         <div class="form-field bg-violet">
-            <img src="assets/img/icons/mail.svg" alt="E-Mail">
-            <input type="email" placeholder="beispielname@email.com" [(ngModel)]="user.email" name="email" #email="ngModel">
+            <img src="assets/img/icons/mail.svg" alt="E-Mail" [ngClass]="{'to-black': user.email}">
+            <input type="email" placeholder="beispielname@email.com" [(ngModel)]="user.email" name="email"
+                #email="ngModel" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
+            @if(email.touched && !email.valid)
+            {<p class="error-msg">
+                Diese E-Mail-Adresse ist leider ungültig.
+            </p>}
         </div>
         <div class="form-field bg-violet">
-            <img src="assets/img/icons/lock.svg" alt="Password">
-            <input type="password" placeholder="Passwort" [(ngModel)]="user.password" name="password" #password="ngModel">
+            <img src="assets/img/icons/lock.svg" alt="Password" [ngClass]="{'to-black': user.password}">
+            <input type="password" placeholder="Passwort" [(ngModel)]="user.password" name="password"
+                #password="ngModel" required>
+            @if(password.touched && !password.valid)
+            {<p class="error-msg">
+                Bitte geben Sie ein Passwort ein.
+            </p>}
         </div>
         <div class="privacy-policy-container">
-            <input type="checkbox">
+            <input type="checkbox" [ngModel]="false" name="privacy" #privacy="ngModel" required>
             <span>
                 Ich stimme der
                 <a routerLink="/privacypolicy" target="_blank" class="link-purple-bg">Datenschutzerklärung</a>
@@ -30,7 +45,7 @@
             </span>
         </div>
         <div class="submit-btns">
-            <button type="submit" class="form-btn-primary">Weiter</button>
+            <button type="submit" class="form-btn-primary" [disabled]="!signUpForm.valid || !privacy.valid">Weiter</button>
         </div>
     </form>
     <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
