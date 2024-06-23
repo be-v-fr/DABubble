@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { LegalFooterComponent } from '../legal-footer/legal-footer.component';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,8 +12,10 @@ import { LegalFooterComponent } from '../legal-footer/legal-footer.component';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+  private authService = inject(AuthService);
   // ToDo:
   // - General Functionality
+  // - Validation + messages
   //
   // Details:
   // - On Input, both text color and icon color should turn to black
