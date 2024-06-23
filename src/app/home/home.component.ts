@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 
 import { HeaderComponent } from './header/header.component';
-import { MainComponent } from './main/main.component';
+import { MainChatComponent } from '../components/main-chat/main-chat.component';
+import { ThreadComponent } from '../components/thread/thread.component';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [HeaderComponent, MainComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+    selector: 'app-home',
+    standalone: true,
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss',
+    imports: [HeaderComponent, MainChatComponent, ThreadComponent]
 })
 export class HomeComponent {
 

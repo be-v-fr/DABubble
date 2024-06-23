@@ -19,11 +19,19 @@
         </div>
     </div>
     <div class="message-items-container">
-        <app-message-item />
-        <app-message-item />
-        <app-message-item />
+        <div class="message-item-container">
+            <app-time-separator />
+            <app-message-item />
+        </div>
+        <div class="message-item-container">
+            <app-time-separator />
+            <app-message-item />
+        </div>
+        <div class="message-item-container">
+            <app-time-separator />
+            <app-message-item />
+        </div>
     </div>
     <app-message-box />
     <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="showEmojiPicker"></emoji-mart>
-
 </section>
