@@ -1,13 +1,49 @@
 @import '../../../styles.scss';
 
 .message-container {
+    position: relative;
+    margin-top: 30px;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     padding: 20px;
     gap: 30px;
 
+    .reaction-bar-container {
+        position: absolute;
+        top: -18px;
+        right: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        max-width: 215px;
+        height: 46px;
+        background-color: white;
+        border: 1px solid $purple-light;
+        border-radius: 25px 25px 0 25px;
+        padding: 10px 15px 10px 20px;
 
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            border-radius: 20px;
+
+            span {
+                width: 24px;
+                height: 24px;
+            }
+
+            &:hover {
+                color: $purple-blue;
+                background-color: $violet-bright;
+            }
+        }
+
+        display: none;
+    }
 
     .img-container {
         img {
@@ -23,10 +59,24 @@
         align-items: flex-start;
         gap: 8px;
 
-        .user-name {
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 24.55px;
+        .user-name-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+
+            .user-name {
+                font-size: 18px;
+                font-weight: 700;
+                line-height: 24.55px;
+            }
+
+            span {
+                color: $grey;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 19.1px;
+            }
         }
 
         .message {
@@ -111,6 +161,10 @@
     &:hover {
         background-color: $violet-bright;
 
+        .reaction-bar-container {
+            display: flex;
+        }
+
         .message-content {
             .message {
                 .message-text {
@@ -128,10 +182,5 @@
                 background-color: white;
             }
         }
-
-
-
-
     }
-
 }
