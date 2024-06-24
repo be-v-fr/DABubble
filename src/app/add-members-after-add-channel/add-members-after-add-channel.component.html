@@ -5,10 +5,22 @@
       <span class="material-icons-outlined">close</span>
     </button>
   </div>
+  <div class="inputContainer">
+    <div>
+    <input type="radio" id="contactChoice1" name="contactChoice1" value="allMembers"  [(ngModel)]="selection" />
+    <label for="contactChoice1">Alle Mitglieder von <span>OfficeTeam</span> hinzufügen</label>
+  </div>
   <div>
-    <input type="radio" id="contactChoice1" name="#" value="#" />
-    <label for="addAllmembers">Alle Mitglieder von OfficeTeam hinzufügen</label>
+    <input type="radio" id="contactChoice2" name="contactChoice2" value="specificPeople"  [(ngModel)]="selection" />
+    <label for="contactChoice2">Bestimmte Leute hinzufügen</label>
+  </div>
+  <div>
+    <button type="submit"  [disabled]="!selection" class="form-btn-primary">Erstellen</button>
+  </div>
 
-    <input type="radio" id="contactChoice2" name="#" value="#" />
-    <label for="addSpecificPeople">Bestimmte Leute hinzufügen</label>
+  <div *ngIf="selection === 'specificPeople'" class="additional-input">
+    <label for="specificPeople"></label>
+    <input type="text" id="specificPeopleInput" [(ngModel)]="specificPeople" placeholder="Name eingeben" />
+  </div>
+
 </div>
