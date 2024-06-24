@@ -30,10 +30,14 @@
         <div class="form-field bg-violet">
             <img src="assets/img/icons/lock.svg" alt="Password" [ngClass]="{'to-black': user.password}">
             <input type="password" placeholder="Passwort" [(ngModel)]="user.password" name="password"
-                #password="ngModel" required>
-            @if(password.touched && !password.valid)
+                #password="ngModel" minlength="6" required>
+            @if(password.touched && password.value.length == 0)
             {<p class="error-msg">
                 Bitte geben Sie ein Passwort ein.
+            </p>}
+            @else if(password.touched && password.value.length < 6)
+            {<p class="error-msg">
+                Ihr Passwort muss mindestens 6 Zeichen enthalten.
             </p>}
         </div>
         <div class="privacy-policy-container">
@@ -50,8 +54,7 @@
             </span>
         </div>
         <div class="submit-btns">
-            <button type="submit" class="form-btn-primary"
-                [disabled]="!signUpForm.valid">Weiter</button>
+            <button type="submit" class="form-btn-primary" [disabled]="!signUpForm.valid">Weiter</button>
         </div>
     </form>
     <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">

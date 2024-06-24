@@ -11,15 +11,20 @@
         <section class="form-bottom">
             <div class="form-field bg-violet">
                 <input type="password" placeholder="Neues Passwort" [(ngModel)]="passwords.password" name="password"
-                    #password="ngModel" required>
-                @if(password.touched && !password.valid)
+                    #password="ngModel" minlength="6" required>
+                @if(password.touched && password.value.length == 0)
                 {<p class="error-msg">
                     Bitte geben Sie ein Passwort ein.
                 </p>}
+                @else if(password.touched && password.value.length < 6)
+                {<p class="error-msg">
+                    Ihr Passwort muss mindestens 6 Zeichen enthalten.
+                </p>}
             </div>
             <div class="form-field bg-violet">
-                <input type="password" placeholder="Neues Kennwort bestätigen" [(ngModel)]="passwords.passwordConfirmation"
-                    name="passwordConfirmation" #passwordConfirmation="ngModel" required>
+                <input type="password" placeholder="Neues Kennwort bestätigen"
+                    [(ngModel)]="passwords.passwordConfirmation" name="passwordConfirmation"
+                    #passwordConfirmation="ngModel" required>
                 @if(passwordConfirmation.touched && !passwordConfirmation.valid)
                 {<p class="error-msg">
                     Bitte geben Sie ein Passwort ein.
@@ -31,7 +36,8 @@
                 </p>}
             </div>
             <div class="submit-btns">
-                <button type="submit" class="form-btn-primary" [disabled]="!validateForm(resetPwForm)">Passwort ändern</button>
+                <button type="submit" class="form-btn-primary" [disabled]="!validateForm(resetPwForm)">Passwort
+                    ändern</button>
             </div>
         </section>
     </form>

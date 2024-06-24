@@ -1,5 +1,14 @@
 import { Injectable, inject } from "@angular/core";
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, user } from "@angular/fire/auth";
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+  user
+} from "@angular/fire/auth"
 import { sendPasswordResetEmail } from "firebase/auth";
 import { Observable, from } from "rxjs";
 
@@ -50,6 +59,15 @@ export class AuthService {
   }
 
 
+  logInWithGoogle(): Observable<void> {
+    const promise = signInWithPopup(
+      this.firebaseAuth,
+      new GoogleAuthProvider()
+    ).then((response) => {console.log(response)});
+    return from(promise);
+  }
+
+
   /**
    * Send password reset email
    * @param email user email address
@@ -84,23 +102,5 @@ export class AuthService {
     } else {
       return undefined;
     }
-  }
-
-
-  /**
-   * Set "remember_log_in" item in local storage to handle log in remembrance
-   * @param logIn desired value
-   */
-  setLocalRememberMe(remember: boolean) {
-    localStorage.setItem('remember_log_in', JSON.stringify(remember));
-  }
-
-
-  /**
-   * Get "remember_log_in" item from local storage to handle log in remembrance
-   */
-  getLocalRememberMe() {
-    const item = localStorage.getItem('remember_log_in');
-    return (item ? JSON.parse(item) : false);
   }
 }

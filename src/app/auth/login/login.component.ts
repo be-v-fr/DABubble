@@ -18,18 +18,17 @@ export class LoginComponent {
     email: '',
     password: ''
   }
+  authError: string | null = null;
   // ToDo:
   // - General Functionality
   //    - Guest Login
   //    - Google Login
-  // - Error: "Login failed"
   //
   // Details:
   // - Password visibility options (if desired)
   // - DABubble Logo should be clickable
   onSubmit(form: NgForm) {
     if (form.submitted && form.valid) {this.logIn()}
-    else {console.error('Sign up failed.')}
   }
 
   logIn() {
@@ -38,7 +37,27 @@ export class LoginComponent {
         const uid = this.authService.getCurrentUid();
         console.log(uid);
       },
-      error: (err) => console.error(err)
+      error: (err) => this.setAuthError(err.toString())
     });
+  }
+
+  logInWithGoogle() {
+    this.authService.logInWithGoogle();
+  }
+
+  setAuthError(response?: string) {
+    this.authError = response ? this.getAuthError(response) : this.getAuthError();
+  }
+
+  getAuthError(response?: string): string {
+    if(response && response.includes('auth/invalid-credential')) {
+      return 'Falsches Passwort oder E-Mail-Adresse.'
+    } else {
+      return 'Anmeldung fehlgeschlagen.'
+    }
+  }
+
+  resetAuthError(): void {
+    this.authError = null;
   }
 }

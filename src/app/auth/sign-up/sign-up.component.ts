@@ -20,13 +20,10 @@ export class SignUpComponent {
     password: ''
   }
   // ToDo:
-  // - Checkbox with Style (Material Design?)
-  //    - add to validation
-  // - Hover effect privacy policy
   // - Impressum: Input-Variable, um Back-Button auszublenden?? Oder stattdessen beim Aufrufen der Privacy Policy Login-Daten zwischenspeichern (z.B. als Service)
-    onSubmit(form: NgForm) {
-    if (form.submitted && form.valid) {this.signUp()}
-    else {console.error('Sign up failed.')}
+  onSubmit(form: NgForm) {
+    if (form.submitted && form.valid) { this.signUp() }
+    else { console.error('Sign up failed.') }
   }
 
   signUp() {
