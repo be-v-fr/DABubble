@@ -22,7 +22,6 @@ export class LoginComponent {
   // ToDo:
   // - General Functionality
   //    - Guest Login
-  //    - Google Login
   //
   // Details:
   // - Password visibility options (if desired)

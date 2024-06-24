@@ -63,7 +63,7 @@ export class AuthService {
     const promise = signInWithPopup(
       this.firebaseAuth,
       new GoogleAuthProvider()
-    ).then((response) => {console.log(response)});
+    ).then(() => { });
     return from(promise);
   }
 
@@ -73,11 +73,11 @@ export class AuthService {
    * @param email user email address
    * @returns authentication result
    */
-  resetPassword(email: string): Observable<void> {
+  requestPasswordReset(email: string): Observable<void> {
     const promise = sendPasswordResetEmail(
       this.firebaseAuth,
       email
-    ).then(() => { });
+    ).then(() => {console.log('Email sent!') });
     return from(promise);
   }
 
