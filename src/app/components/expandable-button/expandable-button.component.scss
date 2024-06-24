@@ -1,0 +1,62 @@
+@import '../../../styles.scss';
+
+.btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 5px 10px 5px 0px;
+
+        .icon {
+            font-size: 30px;
+        }
+
+        .channel-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 27.28px;
+        }
+
+        .add-icon {
+            padding: 3px;
+        }
+
+        &:hover {
+            color: $purple-blue-bright;
+
+            .add-icon {
+                background-color: $violet-bright;
+                border-radius: 15px;
+            }
+        }
+    }
+}
+
+.menu {
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu li {
+    margin: 5px 0;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+}
