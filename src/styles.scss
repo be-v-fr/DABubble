@@ -16,11 +16,9 @@ $onlinedot-offline: #686868;
 
 @mixin transition($duration: 100ms) {
     transition: $duration ease;
-
     &:hover {
         transition: $duration ease;
     }
-
     &:active {
         transition: $duration ease;
     }
@@ -54,6 +52,16 @@ $onlinedot-offline: #686868;
     &:hover {
         cursor: pointer;
     }
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 * {
@@ -204,14 +212,4 @@ a {
     &:hover {
         border: 1px solid #ADB0D9;
     }
-}
-
-html,
-body {
-    height: 100%;
-}
-
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
 }

@@ -37,7 +37,12 @@
             </p>}
         </div>
         <div class="privacy-policy-container">
-            <input type="checkbox" [ngModel]="false" name="privacy" #privacy="ngModel" required>
+            <div class="custom-checkbox-container">
+                <div class="custom-checkbox" class="custom-checkbox"
+                    [ngClass]="privacy.valid ? 'custom-checkbox-checked' : 'custom-checkbox-empty'">
+                    <input type="checkbox" [ngModel]="false" name="privacy" #privacy="ngModel" required>
+                </div>
+            </div>
             <span>
                 Ich stimme der
                 <a routerLink="/privacypolicy" target="_blank" class="link-purple-bg">Datenschutzerklärung</a>
@@ -45,7 +50,8 @@
             </span>
         </div>
         <div class="submit-btns">
-            <button type="submit" class="form-btn-primary" [disabled]="!signUpForm.valid || !privacy.valid">Weiter</button>
+            <button type="submit" class="form-btn-primary"
+                [disabled]="!signUpForm.valid">Weiter</button>
         </div>
     </form>
     <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">

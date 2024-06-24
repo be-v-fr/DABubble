@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { LegalFooterComponent } from '../legal-footer/legal-footer.component';
@@ -7,21 +8,37 @@ import { AuthService } from '../../../services/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, LegalFooterComponent],
+  imports: [CommonModule, FormsModule, RouterLink, LegalFooterComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
   private authService = inject(AuthService);
+  user = {
+    email: '',
+    password: ''
+  }
   // ToDo:
   // - General Functionality
-  // - Validation + messages
+  //    - Guest Login
+  //    - Google Login
+  // - Error: "Login failed"
   //
   // Details:
-  // - On Input, both text color and icon color should turn to black
-  // - Input style details (including "focus" in Figma\Components)
-  // - Click on form field surrounding input should focus input
-  // - Password visibility options
+  // - Password visibility options (if desired)
   // - DABubble Logo should be clickable
-  // - Hover effect Google Button (check out Figma\Components)
+  onSubmit(form: NgForm) {
+    if (form.submitted && form.valid) {this.logIn()}
+    else {console.error('Sign up failed.')}
+  }
+
+  logIn() {
+    this.authService.logIn(this.user.email, this.user.password).subscribe({
+      next: () => {
+        const uid = this.authService.getCurrentUid();
+        console.log(uid);
+      },
+      error: (err) => console.error(err)
+    });
+  }
 }

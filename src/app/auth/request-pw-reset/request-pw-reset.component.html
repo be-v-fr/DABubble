@@ -1,5 +1,5 @@
 <div class="content-wrapper">
-    <form class="content-main content-card">
+    <form class="content-main content-card" (ngSubmit)="onSubmit(requestPwResetForm)" #requestPwResetForm="ngForm">
         <h1>
             Passwort zurücksetzen
             <div class="back-btn-container">
@@ -10,12 +10,17 @@
         </h1>
         <p class="advice">Bitte geben Sie Ihre E-Mail-Adresse ein.</p>
         <div class="form-field bg-violet">
-            <img src="assets/img/icons/mail.svg" alt="E-Mail">
-            <input type="email" placeholder="beispielname@email.com">
+            <img src="assets/img/icons/mail.svg" alt="E-Mail" [ngClass]="{'to-black': data.email}">
+            <input type="email" placeholder="beispielname@email.com" [(ngModel)]="data.email" name="email"
+                #email="ngModel" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
+            @if(email.touched && !email.valid)
+            {<p class="error-msg">
+                Diese E-Mail-Adresse ist leider ungültig.
+            </p>}
         </div>
         <p class="advice text-grey">Wir senden Ihnen eine E-Mail, über die Sie Ihr Passwort ändern können.</p>
         <div class="submit-btns">
-            <button type="submit" class="form-btn-primary" disabled>E-Mail senden</button>
+            <button type="submit" class="form-btn-primary" [disabled]="!requestPwResetForm.valid">E-Mail senden</button>
         </div>
     </form>
     <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
