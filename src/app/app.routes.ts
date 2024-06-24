@@ -11,6 +11,10 @@ import { PickAvatarComponent } from './auth/pick-avatar/pick-avatar.component';
 import { RequestPwResetComponent } from './auth/request-pw-reset/request-pw-reset.component';
 import { ResetPwComponent } from './auth/reset-pw/reset-pw.component';
 import { EditUserLogOutCardComponent } from './edit-user-log-out-card/edit-user-log-out-card.component';
+import { AddMembersAfterAddChannelComponent } from './add-members-after-add-channel/add-members-after-add-channel.component';
+
+
+
 export const routes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'auth', component: LoginComponent},
@@ -24,6 +28,7 @@ export const routes: Routes = [
     {path: 'mainUser', component: MainUserProfileCardComponent},
     {path: 'editUser', component: EditUserProfileCardComponent},
     {path: 'editUserLogOut', component: EditUserLogOutCardComponent},
+    {path: 'addMemberChannel', component: AddMembersAfterAddChannelComponent},
 
 
 ];

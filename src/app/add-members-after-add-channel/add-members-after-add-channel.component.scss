@@ -1,0 +1,42 @@
+@import '../../styles.scss';
+ 
+.container{
+    width: 710px;
+    height: 279px;
+    background-color: white;
+    border-radius: 30px;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);  
+}
+.headlineAndCloseBtn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 630px;
+    height: 40px;
+    justify-content: space-between;
+    margin-left: 40px;
+    margin-top: 40px;
+    span{
+        font-weight: 700;
+    font-size: 24px;
+    }
+}
+ .close-thread-btn {
+    color: rgb(0, 0, 0, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+
+   
+
+    &:hover {
+        color: $purple-blue-bright;
+        background-color: $violet-bright;
+        border-radius: 20px;
+    }
+}
