@@ -33,6 +33,7 @@ export class LoginComponent {
   }
 
   logIn() {
+    this.showToast = true;
     this.authService.logIn(this.user.email, this.user.password).subscribe({
       next: () => this.onLogIn(),
       error: (err) => this.setAuthError(err.toString())
@@ -41,13 +42,16 @@ export class LoginComponent {
 
   logInWithGoogle() {
     this.authService.logInWithGoogle().subscribe({
-      next: () => this.onLogIn(),
+      next: () => {
+        this.showToast = true;
+        this.onLogIn();
+      },
       error: (err) => this.setAuthError(err.toString())
     });
   }
 
   logInAsGuest() {
-    this.authService.logOut();
+    this.showToast = true;
     this.authService.logInAsGuest().subscribe({
       next: () => this.onLogIn(),
       error: (err) => this.setAuthError(err.toString())
@@ -71,13 +75,18 @@ export class LoginComponent {
   }
 
   onLogIn() {
-    this.showToast = true; // toast is only shown AFTER successful login... should it alternatively be shown when ATTEMPTING to login?
     const uid = this.authService.getCurrentUid();
     console.log(uid); // remove later
+    if(!this.showToast) {this.redirect()}
   }
 
   afterToast() {
-    // proceed via router
-    console.log('afterToast() called');
+    this.showToast = false;
+    this.redirect();
+    console.log('afterToast() called'); // remove later
+  }
+
+  redirect() {
+
   }
 }
