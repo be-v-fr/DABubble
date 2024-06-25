@@ -1,8 +1,10 @@
-<div class="userLogOutContainer">
-  <div class="profileButton">
-    <span routerLink="/mainUser">Profil</span>
-  </div>
-  <div>
-    <span routerLink="/auth">Log out</span>
+<div class="userLogOutMenu">
+  <div class="userLogOutContainer">
+    <div (click)="openProfile()" class="profileButton">
+      <span>Profil</span>
+    </div>
+    <div (click)="logMeOut()">
+      <span>Log out</span>
+    </div>
   </div>
 </div>
