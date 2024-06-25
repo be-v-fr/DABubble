@@ -1,0 +1,189 @@
+@import "../../styles.scss";
+
+$animation-duration: 3000ms;
+$gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 100dvh;
+    left: 100vw;
+    right: 0;
+    z-index: -1;
+    background: $gradient-bg;
+    animation: fade-out $animation-duration ease-in-out;
+    @keyframes fade-out {
+        0% {
+            opacity: 1;
+            z-index: 10;
+            bottom: 0;
+            left: 0;
+        }
+        60% {
+            opacity: 1;
+            z-index: 10;
+            bottom: 0;
+            left: 0;
+        }
+        75% {
+            opacity: 0;
+            z-index: 10;
+            bottom: 0;
+            left: 0;
+        }
+        100% {
+            opacity: 0;
+            z-index: 10;
+            bottom: 0;
+            left: 0;
+        }
+    }
+}
+
+@mixin logo-wrapper-start() {
+    width: 100vw;
+    height: 100dvh;
+}
+
+@mixin logo-wrapper-end() {
+    width: calc(242px + 2 * 75px);
+    height: calc(70px + 2 * 75px);
+}
+
+.logo-wrapper {
+    position: absolute;
+    padding: 75px;
+    z-index: 11;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include logo-wrapper-end();
+    .logo-container {
+        width: 242px;
+        height: 70px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.logo-img-container {
+    height: 100%;
+    width: auto;
+    position: relative;
+    img {
+        position: relative;
+        height: inherit;
+        width: auto;
+    }
+}
+
+.blinder {
+    position: absolute;
+    top: calc(50% - 50dvh);
+    bottom: calc(50% - 50dvh);
+    right: -36px;
+    width: 50vw;
+    background: $gradient-bg;
+    opacity: 0;
+    animation: hide-blinder $animation-duration ease-in-out;
+    @keyframes hide-blinder {
+        0% {
+            opacity: 1;
+        }
+        38% {
+            opacity: 1;
+        }
+        39% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+}
+
+.logo-text-container {
+    height: 100%;
+    width: auto;
+    img {
+        position: relative;
+        height: inherit;
+        z-index: -1;
+    }
+}
+
+.logo-animate {
+    animation: shrink-wrapper 2000ms ease-in-out;
+    @keyframes shrink-wrapper {
+        0% {
+            @include logo-wrapper-start();
+        }
+        54% {
+            @include logo-wrapper-start();
+        }
+        100% {
+            @include logo-wrapper-end();
+        }
+    }
+    .logo-container {
+        animation: size-container 2000ms ease-in-out;
+        @keyframes size-container {
+            0% {
+                width: 636px;
+                height: 184px;
+            }
+            54% {
+                width: 636px;
+                height: 184px;
+            }
+            100% {
+                width: 242px;
+                height: 70px;
+            }
+        }
+        .logo-img-container img {
+            animation: move-img $animation-duration ease-in-out;
+            @keyframes move-img {
+                0% {
+                    left: 226px;
+                }
+                32% {
+                    left: 0;
+                }
+                100% {
+                    left: 0;
+                }
+            }
+        }
+        .logo-text-container img {
+            animation: move-text $animation-duration ease-in-out;
+            @keyframes move-text {
+                0% {
+                    right: 100%;
+                    filter: invert(100%);
+                }
+                20% {
+                    right: 100%;
+                    filter: invert(100%);
+                }
+                40% {
+                    right: 0;
+                    filter: invert(100%);
+                }
+                50% {
+                    right: 0;
+                    filter: invert(100%);
+                }
+                100% {
+                    right: 0;
+                    filter: invert(0%);
+                }
+            }
+        }
+    }
+}
+
+.hide {
+    display: none;
+}
