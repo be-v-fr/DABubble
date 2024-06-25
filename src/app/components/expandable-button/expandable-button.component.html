@@ -29,7 +29,8 @@
             <li><a href="#">
                     <div class="message-img-container">
                         <img src="../../../assets/img/avatar/avatar_01.svg" alt="Avatar">
-                        <span class="on-off-line-sign"></span>
+                        <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
+                            class="on-off-line-sign"></span>
                     </div>
                     <span>Gast (Du)</span>
                 </a>
@@ -37,7 +38,8 @@
             <li><a href="#">
                     <div class="message-img-container">
                         <img src="../../../assets/img/avatar/avatar_00.svg" alt="Avatar">
-                        <span class="on-off-line-sign"></span>
+                        <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
+                            class="on-off-line-sign"></span>
                     </div>
                     <span>Sofia Müller</span>
                 </a>
@@ -45,7 +47,8 @@
             <li><a href="#">
                     <div class="message-img-container">
                         <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar">
-                        <span class="on-off-line-sign"></span>
+                        <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
+                            class="on-off-line-sign"></span>
                     </div>
                     <span>Noah Braun</span>
                 </a>

@@ -6,7 +6,7 @@ import { Component, input } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './expandable-button.component.html',
-  styleUrl: './expandable-button.component.scss'
+  styleUrl: './expandable-button.component.scss',
 })
 export class ExpandableButtonComponent {
   isMenuExpanded = false;
@@ -14,6 +14,7 @@ export class ExpandableButtonComponent {
   title = input.required<string>();
   icon = input.required<string>();
   showBtn = input.required<boolean>();
+  online = true;
 
   toggleMenu() {
     this.isMenuExpanded = !this.isMenuExpanded;
