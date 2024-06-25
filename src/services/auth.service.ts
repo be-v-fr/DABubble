@@ -1,5 +1,15 @@
 import { Injectable, inject } from "@angular/core";
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, user } from "@angular/fire/auth";
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInAnonymously,
+  signOut,
+  updateProfile,
+  user
+} from "@angular/fire/auth";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { Observable, from } from "rxjs";
 
@@ -50,16 +60,33 @@ export class AuthService {
   }
 
 
+  logInWithGoogle(): Observable<void> {
+    const promise = signInWithPopup(
+      this.firebaseAuth,
+      new GoogleAuthProvider()
+    ).then(() => { });
+    return from(promise);
+  }
+
+
+  logInAsGuest(): Observable<void> {
+    const promise = signInAnonymously(
+      this.firebaseAuth
+    ).then(() => { });
+    return from(promise);    
+  }
+
+
   /**
    * Send password reset email
    * @param email user email address
    * @returns authentication result
    */
-  resetPassword(email: string): Observable<void> {
+  requestPasswordReset(email: string): Observable<void> {
     const promise = sendPasswordResetEmail(
       this.firebaseAuth,
       email
-    ).then(() => { });
+    ).then(() => {console.log('Email sent!') });
     return from(promise);
   }
 
@@ -84,23 +111,5 @@ export class AuthService {
     } else {
       return undefined;
     }
-  }
-
-
-  /**
-   * Set "remember_log_in" item in local storage to handle log in remembrance
-   * @param logIn desired value
-   */
-  setLocalRememberMe(remember: boolean) {
-    localStorage.setItem('remember_log_in', JSON.stringify(remember));
-  }
-
-
-  /**
-   * Get "remember_log_in" item from local storage to handle log in remembrance
-   */
-  getLocalRememberMe() {
-    const item = localStorage.getItem('remember_log_in');
-    return (item ? JSON.parse(item) : false);
   }
 }

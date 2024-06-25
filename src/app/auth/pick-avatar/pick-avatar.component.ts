@@ -10,6 +10,17 @@ import { LegalFooterComponent } from '../legal-footer/legal-footer.component';
   styleUrl: './pick-avatar.component.scss'
 })
 export class PickAvatarComponent {
-  // ToDo:
-  // - Avatar Picker
+  avatarSrc: string = 'assets/img/profile_blank.svg';
+
+  selectDefaultAvatar(index: string) {
+    this.avatarSrc = `assets/img/avatar/avatar_${index}.svg`;
+  }
+
+  selectCustomAvatar() {
+    // implement Firebase Cloud Storage
+  }
+
+  unselectAvatar() {
+    this.avatarSrc = 'assets/img/profile_blank.svg';    
+  }
 }

@@ -1,0 +1,21 @@
+<div class="btn-container">
+    <button (click)="toggleMenu()">
+        <span class="material-icons-outlined icon">arrow_drop_down</span>
+        <!-- <span class="material-icons-outlined icon">arrow_right</span> -->
+        <div class="channel-title">
+            <span class="material-icons-outlined icon">{{ icon() }}</span>
+            {{ title() }}
+        </div>
+    </button>
+    <button *ngIf="showBtn()">
+        <span class="material-icons-outlined add-icon">add</span>
+    </button>
+</div>
+
+<div *ngIf="isMenuExpanded" class="menu">
+    <ul>
+        <li><a href="#">Item 1</a></li>
+        <li><a href="#">Item 2</a></li>
+        <li><a href="#">Item 3</a></li>
+    </ul>
+</div>

@@ -1,28 +1,41 @@
 <div class="content-wrapper">
-    <form class="content-main content-card">
+    <form class="content-main content-card" (ngSubmit)="onSubmit(logInForm)" #logInForm="ngForm"
+        (change)="resetAuthError()">
         <h1>Anmeldung</h1>
         <p class="advice">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
         <div class="form-field bg-violet">
-            <img src="assets/img/icons/mail.svg" alt="E-Mail">
-            <input type="email" placeholder="beispielname@email.com">
+            <img src="assets/img/icons/mail.svg" alt="E-Mail" [ngClass]="{'to-black': user.email}">
+            <input type="email" placeholder="beispielname@email.com" [(ngModel)]="user.email" name="email"
+                #email="ngModel" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
+            @if(email.touched && !email.valid)
+            {<p class="error-msg">
+                Diese E-Mail-Adresse ist leider ungültig.
+            </p>}
         </div>
         <div class="form-field bg-violet">
-            <img src="assets/img/icons/lock.svg" alt="Password">
-            <input type="password" placeholder="Passwort">
+            <img src="assets/img/icons/lock.svg" alt="Password" [ngClass]="{'to-black': user.password}">
+            <input type="password" placeholder="Passwort" [(ngModel)]="user.password" name="password"
+                #password="ngModel" required>
+            @if(password.touched && !password.valid)
+            {<p class="error-msg">
+                Bitte geben Sie ein Passwort ein.
+            </p>}
+            @else if(logInForm.submitted && authError)
+            {<p class="error-msg">{{authError}}</p>}
         </div>
-        <a href="" class="link-purple-bg">Passwort vergessen?</a>
+        <a routerLink="/auth/requestPwReset" class="link-purple-bg">Passwort vergessen?</a>
         <div class="or-seperator-container">
             <hr class="or-separator bg-purple-light">
             <span>ODER</span>
             <hr class="or-separator bg-purple-light">
         </div>
-        <button class="form-field google-btn bg-violet" type="button">
+        <button class="form-field google-btn bg-violet" type="button" (click)="logInWithGoogle()">
             <img src="assets/img/icons/google_logo.svg" alt="Google">
             <span>Anmelden mit Google</span>
         </button>
         <div class="submit-btns">
-            <button type="submit" class="form-btn-primary">Anmelden</button>
-            <button type="button" class="form-btn-secondary">Gäste-Login</button>
+            <button type="submit" class="form-btn-primary" [disabled]="!logInForm.valid">Anmelden</button>
+            <button type="button" class="form-btn-secondary" (click)="logInAsGuest()">Gäste-Login</button>
         </div>
     </form>
     <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
