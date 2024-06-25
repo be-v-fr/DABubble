@@ -8,15 +8,12 @@
     span {
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 2px;
         font-size: 16px;
         a {
             font-size: 16px;
-            padding: 0;
-            background: none;
-            &:hover {
-                background: none;
-            }
+            padding: 1px 3px;
+            height: auto;
         }
     }
 }

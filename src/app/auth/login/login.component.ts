@@ -41,7 +41,25 @@ export class LoginComponent {
   }
 
   logInWithGoogle() {
-    this.authService.logInWithGoogle();
+    this.authService.logInWithGoogle().subscribe({
+      next: () => {
+        const uid = this.authService.getCurrentUid();
+        console.log(uid);
+      },
+      error: (err) => this.setAuthError(err.toString())
+    });
+  }
+
+  logInAsGuest() {
+    this.authService.logOut();
+    this.authService.logInAsGuest().subscribe({
+      next: (response) => {
+        // const uid = this.authService.getCurrentUid();
+        // console.log(uid);
+        console.log(response);
+      },
+      error: (err) => this.setAuthError(err.toString())
+    });    
   }
 
   setAuthError(response?: string) {

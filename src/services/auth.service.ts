@@ -5,10 +5,11 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  signInAnonymously,
   signOut,
   updateProfile,
   user
-} from "@angular/fire/auth"
+} from "@angular/fire/auth";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { Observable, from } from "rxjs";
 
@@ -65,6 +66,14 @@ export class AuthService {
       new GoogleAuthProvider()
     ).then(() => { });
     return from(promise);
+  }
+
+
+  logInAsGuest(): Observable<void> {
+    const promise = signInAnonymously(
+      this.firebaseAuth
+    ).then(() => { });
+    return from(promise);    
   }
 
 

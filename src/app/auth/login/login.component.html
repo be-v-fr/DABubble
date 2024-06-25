@@ -35,7 +35,7 @@
         </button>
         <div class="submit-btns">
             <button type="submit" class="form-btn-primary" [disabled]="!logInForm.valid">Anmelden</button>
-            <button type="button" class="form-btn-secondary">Gäste-Login</button>
+            <button type="button" class="form-btn-secondary" (click)="logInAsGuest()">Gäste-Login</button>
         </div>
     </form>
     <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
