@@ -11,6 +11,9 @@
   position: absolute;
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
   transition: height 0.3s ease-in-out;
+  &.expanded {
+    min-height: 354px;
+  }
 }
 .headlineAndCloseBtn {
   display: flex;
@@ -72,8 +75,7 @@
 .additional-input {
   width: 630px;
   height: 55px;
-  border: 1px solid rgba(173, 176, 217, 1);
+  border: 1px solid rgba(68, 77, 242, 1);
   border-radius: 30px;
-  padding-left: 20px;
-  margin-left: 40px;
+ 
 }

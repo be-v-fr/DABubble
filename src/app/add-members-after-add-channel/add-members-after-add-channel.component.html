@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" [ngClass]="{ 'expanded': selection === 'specificPeople' }">
   <div class="headlineAndCloseBtn">
     <span>Leute hinzufügen</span>
     <button class="close-thread-btn">
@@ -14,13 +14,14 @@
     <input type="radio" id="contactChoice2" name="contactChoice2" value="specificPeople"  [(ngModel)]="selection" />
     <label for="contactChoice2">Bestimmte Leute hinzufügen</label>
   </div>
-  <div>
-    <button type="submit"  [disabled]="!selection" class="form-btn-primary">Erstellen</button>
-  </div>
-
   <div *ngIf="selection === 'specificPeople'" class="additional-input">
     <label for="specificPeople"></label>
     <input type="text" id="specificPeopleInput" [(ngModel)]="specificPeople" placeholder="Name eingeben" />
   </div>
+  <div>
+    <button type="submit"  [disabled]="!selection" class="form-btn-primary">Erstellen</button>
+  </div>
+
+
 
 </div>

@@ -5,11 +5,12 @@ import { RouterLink } from '@angular/router';
 import { LegalFooterComponent } from '../legal-footer/legal-footer.component';
 import { AuthService } from '../../../services/auth.service';
 import { ToastNotificationComponent } from '../toast-notification/toast-notification.component';
+import { AnimationIntroComponent } from '../../animation-intro/animation-intro.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, LegalFooterComponent, ToastNotificationComponent],
+  imports: [CommonModule, FormsModule, RouterLink, LegalFooterComponent, ToastNotificationComponent, AnimationIntroComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
