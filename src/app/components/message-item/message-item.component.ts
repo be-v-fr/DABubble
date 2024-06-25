@@ -9,5 +9,9 @@ import { TimeSeparatorComponent } from '../time-separator/time-separator.compone
   styleUrl: './message-item.component.scss'
 })
 export class MessageItemComponent {
+  
 
+  onShowEmojiPicker(){
+
+  }
 }

@@ -1,7 +1,7 @@
 <section class="main-container">
     <div class="main-header">
         <button class="channel-btn">
-            # Entwicklerteam
+            # {{ title() }}
             <span class="material-icons-outlined icon">keyboard_arrow_down</span>
         </button>
         <div class="main-header-members">
@@ -19,19 +19,30 @@
         </div>
     </div>
     <div class="message-items-container">
-        <div class="message-item-container">
+        <div class="message-item-container" *ngIf="messages">
             <app-time-separator />
             <app-message-item />
         </div>
-        <div class="message-item-container">
+        <div class="message-item-container" *ngIf="messages">
             <app-time-separator />
             <app-message-item />
         </div>
-        <div class="message-item-container">
+        <div class="message-item-container" *ngIf="messages">
             <app-time-separator />
             <app-message-item />
         </div>
+        <div class="create-channel-message-container" *ngIf="!messages">
+            <h3>
+                <span>#</span>
+                Office-team
+            </h3>
+            <p>
+                Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
+                <span># Office-team.</span>
+            </p>
+        </div>
+
     </div>
     <app-message-box />
-    <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="showEmojiPicker"></emoji-mart>
+    <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="emojiPicker"></emoji-mart>
 </section>
