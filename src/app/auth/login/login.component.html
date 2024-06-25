@@ -1,3 +1,4 @@
+<app-animation-intro [animate]="true"></app-animation-intro>
 <div class="content-wrapper">
     <form class="content-main content-card" (ngSubmit)="onSubmit(logInForm)" #logInForm="ngForm"
         (change)="resetAuthError()">
@@ -38,7 +39,7 @@
             <button type="button" class="form-btn-secondary" (click)="logInAsGuest()">Gäste-Login</button>
         </div>
     </form>
-    <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
+    <!-- <img src="assets/img/logo_name.svg" alt="DABubble" class="logo"> -->
     <div class="create-account-hint">
         <p>Neu bei DABubble?</p>
         <a routerLink="/auth/signUp" class="link-purple-border">Konto erstellen</a>
