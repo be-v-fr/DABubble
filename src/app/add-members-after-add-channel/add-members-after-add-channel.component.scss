@@ -1,42 +1,79 @@
-@import '../../styles.scss';
- 
-.container{
-    width: 710px;
-    height: 279px;
-    background-color: white;
-    border-radius: 30px;
-    transform: translate(-50%, -50%);
-    left: 50%;
-    top: 50%;
-    position: absolute;
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);  
+@import "../../styles.scss";
+
+.container {
+  width: 710px;
+  min-height: 279px;
+  background-color: white;
+  border-radius: 30px;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+  transition: height 0.3s ease-in-out;
 }
-.headlineAndCloseBtn{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 630px;
-    height: 40px;
-    justify-content: space-between;
-    margin-left: 40px;
-    margin-top: 40px;
-    span{
-        font-weight: 700;
+.headlineAndCloseBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 630px;
+  height: 40px;
+  justify-content: space-between;
+  margin-left: 40px;
+  margin-top: 40px;
+  span {
+    font-weight: 700;
     font-size: 24px;
-    }
+  }
 }
- .close-thread-btn {
-    color: rgb(0, 0, 0, 1);
+.close-thread-btn {
+  color: rgb(0, 0, 0, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+
+  &:hover {
+    color: $purple-blue-bright;
+    background-color: $violet-bright;
+    border-radius: 20px;
+  }
+}
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-left: 40px;
+  margin-top: 20px;
+  div {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 8px 10px;
-
-   
-
-    &:hover {
-        color: $purple-blue-bright;
-        background-color: $violet-bright;
-        border-radius: 20px;
+    gap: 20px;
+    label {
+      font-weight: 400;
+      font-size: 18px;
+      span{
+        color: rgba(121, 126, 243, 1);
+      }
     }
+  }
+}
+.form-btn-primary .disabled {
+  background-color: #686868;
+}
+.form-btn-primary {
+  margin-top: 10px;
+  margin-left: 505px;
+}
+.form-btn-primary .active {
+  color: white;
+  background-color: #444df2;
+}
+.additional-input {
+  width: 630px;
+  height: 55px;
+  border: 1px solid rgba(173, 176, 217, 1);
+  border-radius: 30px;
+  padding-left: 20px;
+  margin-left: 40px;
 }
