@@ -4,11 +4,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { LegalFooterComponent } from '../legal-footer/legal-footer.component';
 import { AuthService } from '../../../services/auth.service';
+import { ToastNotificationComponent } from '../toast-notification/toast-notification.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, LegalFooterComponent],
+  imports: [CommonModule, FormsModule, RouterLink, LegalFooterComponent, ToastNotificationComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -19,6 +20,7 @@ export class LoginComponent {
     password: ''
   }
   authError: string | null = null;
+  showToast: boolean = false;
   // ToDo:
   // - General Functionality
   //    - Guest Login
@@ -32,20 +34,14 @@ export class LoginComponent {
 
   logIn() {
     this.authService.logIn(this.user.email, this.user.password).subscribe({
-      next: () => {
-        const uid = this.authService.getCurrentUid();
-        console.log(uid);
-      },
+      next: () => this.onLogIn(),
       error: (err) => this.setAuthError(err.toString())
     });
   }
 
   logInWithGoogle() {
     this.authService.logInWithGoogle().subscribe({
-      next: () => {
-        const uid = this.authService.getCurrentUid();
-        console.log(uid);
-      },
+      next: () => this.onLogIn(),
       error: (err) => this.setAuthError(err.toString())
     });
   }
@@ -53,11 +49,7 @@ export class LoginComponent {
   logInAsGuest() {
     this.authService.logOut();
     this.authService.logInAsGuest().subscribe({
-      next: (response) => {
-        // const uid = this.authService.getCurrentUid();
-        // console.log(uid);
-        console.log(response);
-      },
+      next: () => this.onLogIn(),
       error: (err) => this.setAuthError(err.toString())
     });    
   }
@@ -76,5 +68,16 @@ export class LoginComponent {
 
   resetAuthError(): void {
     this.authError = null;
+  }
+
+  onLogIn() {
+    this.showToast = true; // toast is only shown AFTER successful login... should it alternatively be shown when ATTEMPTING to login?
+    const uid = this.authService.getCurrentUid();
+    console.log(uid); // remove later
+  }
+
+  afterToast() {
+    // proceed via router
+    console.log('afterToast() called');
   }
 }

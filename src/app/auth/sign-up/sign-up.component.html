@@ -59,4 +59,5 @@
     </form>
     <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
     <app-legal-footer></app-legal-footer>
+    <app-toast-notification [message]="'signup'" [showing]="showToast" (then)="afterToast()"></app-toast-notification>
 </div>

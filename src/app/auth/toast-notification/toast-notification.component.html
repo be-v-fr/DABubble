@@ -1,0 +1,10 @@
+<div class="content" [ngClass]="{'hide': !showing}">
+    @if(message == 'login')
+    {<span>Anmelden</span>}
+    @else if (message == 'signup')
+    {<span>Konto erfolgreich erstellt!</span>}
+    @else if (message == 'email') {
+        <span class="material-icons icon">send</span>
+        <span>E-Mail gesendet</span>
+    }
+</div>
