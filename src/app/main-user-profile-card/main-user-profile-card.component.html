@@ -1,7 +1,7 @@
 <div class="userCard">
     <div class="head">
       <p>Profil</p>
-      <div class="black-to-blue-btn" routerLink="/editUserLogOut">
+      <div class="black-to-blue-btn" (click)="closeDialog()">
         <img        
           src="./../../assets/img/userProfileImg/close.svg"
         />
@@ -13,7 +13,7 @@
     <div class="userName">
         <div class="nameAndEdit">
       <h1>Sofia Müller</h1>
-      <p class="edit" routerLink="/editUser">Bearbeiten</p>
+      <p class="edit" (click)="openEditProfile()">Bearbeiten</p>
     </div>
       <div class="online">
         <p></p>

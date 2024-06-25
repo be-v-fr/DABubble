@@ -1,20 +1,135 @@
-@import "../user-profile-card/user-profile-card.component.scss";
+@import "../../styles.scss";
+
 .userCard {
-  height: 600px;
-  border-radius: 30px 0px 30px 30px;
+    position: fixed;
+    right: 35px;
+    top: 95px;
+    width: 500px;
+    height: 705px;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
 }
-.nameAndEdit {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+.head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 420px;
+    height: 40px;
+    margin-left: 40px;
+    position: absolute;
+    top: 40px;
+    align-items: baseline;
+    p {
+        font-weight: 700;
+        font-size: 24px;
+    }
+    img {
+        cursor: pointer;
+
+    }
 }
-.edit {
-  color: rgba(83, 90, 241, 1) !important;
-  font-weight: 600 !important;
-  font-size: 18px !important;
-  cursor: pointer;
-  &:hover{
-    color: rgba(53, 60, 211, 1) !important;
-    font-weight: 650 !important;
+
+.profileImg {
+    position: absolute;
+    left: 150px;
+    top: 125px;
+    img {
+        width: 200px;
+        height: 200px;
+        border-radius: 100%;
+    }
+}
+
+.userName {
+    display: flex;
+    flex-direction: column;
+    width: 420px;
+    height: 86px;
+    position: absolute;
+    top: 370px;
+    left: 40px;
+    p:first-child {
+        width: 16px;
+        height: 16px;
+        background-color: #92c83e;
+        border-radius: 100%;
+    }
+    p:last-child {
+        font-weight: 400;
+        font-size: 20px;
+        color: #92c83e;
+    }
+}
+
+.online {
+    display: flex;
+    align-items: baseline;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.emailContainer {
+    display: flex;
+    flex-direction: column;
+    width: 420px;
+    height: 70px;
+    gap: 15px;
+    margin-top: 501px;
+    margin-left: 40px;
+    .email {
+        display: flex;
+        gap: 20px;
+        img {
+            width: 25px;
+            height: 20px;
+        }
+        p {
+            font-weight: 700;
+            font-size: 20px;
+        }
+    }
+    .showEmail{
+        margin-left: 50px;
+        p {
+            font-weight: 400;
+            font-size: 18px;
+            color: #1381FF;
+        }
+    }
+}
+
+.submit-btns{
+  margin-top: 45px;
+  margin-left: 168px;
+  button {
+    width: 164px;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
   }
+}
+// ###########################################################
+
+.userCard {
+    height: 600px;
+    border-radius: 30px 0px 30px 30px;
+}
+
+.nameAndEdit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit {
+    color: $purple-blue-bright !important;
+    font-weight: 600 !important;
+    font-size: 18px !important;
+    cursor: pointer;
+    &:hover {
+        color: $purple-blue-bright !important;
+        font-weight: 650 !important;
+    }
 }
