@@ -13,9 +13,52 @@
 </div>
 
 <div *ngIf="isMenuExpanded" class="menu">
-    <ul>
-        <li><a href="#">Item 1</a></li>
-        <li><a href="#">Item 2</a></li>
-        <li><a href="#">Item 3</a></li>
-    </ul>
+    <div *ngIf="showBtn()" class="channel-menu">
+        <ul>
+            <li><a href="#"><span>#</span> Entwicklerteam</a></li>
+            <li><a href="#"><span>#</span> Entwicklerteam</a></li>
+            <li><a href="#"><span>#</span> Entwicklerteam</a></li>
+        </ul>
+        <button>
+            <span class="material-icons-outlined add-circle-icon">add_circle_outline</span>
+            <span>Channel hinzufügen</span>
+        </button>
+    </div>
+    <div *ngIf="!showBtn()" class="messages-menu">
+        <ul>
+            <li><a href="#">
+                    <div class="message-img-container">
+                        <img src="../../../assets/img/avatar/avatar_01.svg" alt="Avatar">
+                        <span class="on-off-line-sign"></span>
+                    </div>
+                    <span>Gast (Du)</span>
+                </a>
+            </li>
+            <li><a href="#">
+                    <div class="message-img-container">
+                        <img src="../../../assets/img/avatar/avatar_00.svg" alt="Avatar">
+                        <span class="on-off-line-sign"></span>
+                    </div>
+                    <span>Sofia Müller</span>
+                </a>
+            </li>
+            <li><a href="#">
+                    <div class="message-img-container">
+                        <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar">
+                        <span class="on-off-line-sign"></span>
+                    </div>
+                    <span>Noah Braun</span>
+                </a>
+            </li>
+            <li><a href="#">
+                    <div class="message-img-container">
+                        <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar">
+                        <span class="on-off-line-sign"></span>
+                    </div>
+                    <span>Noah Braun</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
 </div>
