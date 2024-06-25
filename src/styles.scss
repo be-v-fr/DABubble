@@ -9,10 +9,11 @@ $purple-blue-bright: #535af1;
 $purple-blue-brighter: #797ef3;
 $purple-blue-active: #444df2;
 $grey: #686868;
+$grey-light: #e6e6e6;
 $magenta: #ED1E79;
-$onlinedot-border: #eceefe;
+$onlinedot-border: #eceefe; // this is identical to "violet-bright"
 $onlinedot-online: #92c83e;
-$onlinedot-offline: #686868;
+$onlinedot-offline: #686868; // this is identical to "grey"
 
 @mixin transition($duration: 100ms) {
     transition: $duration ease;
