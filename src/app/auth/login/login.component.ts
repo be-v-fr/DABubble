@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -20,6 +20,8 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private usersService = inject(UsersService);
   user = {
+    uid: '',
+    name: '',
     email: '',
     password: ''
   }
@@ -48,10 +50,14 @@ export class LoginComponent {
     this.authService.logInWithGoogle().subscribe({
       next: () => {
         this.showToast = true;
-        const uid = this.authService.getCurrentUid();
-        // the User also has to be added to Firestore
-        // overwriting the data in case the User already exists
-        // aside from UID, name and email are required here
+        const userRef = this.authService.firebaseAuth.currentUser;
+        if(userRef) {
+          this.usersService.addUser(new User({
+            uid: userRef.uid,
+            name: userRef.displayName,
+            email: userRef.email
+          }));
+        }
         this.onLogIn();
       },
       error: (err) => this.setAuthError(err.toString())

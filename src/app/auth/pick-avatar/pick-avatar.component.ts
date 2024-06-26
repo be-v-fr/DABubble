@@ -25,17 +25,21 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
   customFile: any = '';
 
   ngOnInit(): void {
-    this.userSub = this.authService.user$.subscribe((user) => {
+    this.userSub = this.subUser();
+  }
+
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe();
+  }
+
+  subUser(): Subscription {
+    return this.authService.user$.subscribe((user) => {
       if (user && user.displayName) {
         const uid = this.authService.getCurrentUid();
         if (uid) { this.user.uid = uid };
         this.user.name = user.displayName;
       }
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.userSub.unsubscribe();
+    });
   }
 
   selectDefaultAvatar(index: string) {
