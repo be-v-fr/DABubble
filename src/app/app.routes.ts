@@ -16,15 +16,17 @@ import { NewMessageComponent } from './components/new-message/new-message.compon
 import { MainChatComponent } from './components/main-chat/main-chat.component';
 import { AddMembersComponent } from './add-members/add-members.component';
 import { AddChannelComponent } from './add-channel/add-channel.component';
+import { DirectMessageComponent } from './components/direct-message/direct-message.component';
 
 
 export const routes: Routes = [
-    { path: '',   redirectTo: '/main-chat', pathMatch: 'full' },
+    { path: '', redirectTo: '/main-chat', pathMatch: 'full' },
     {
         path: '', component: HomeComponent,
         children: [
             { path: 'new', component: NewMessageComponent },
             { path: 'main-chat', component: MainChatComponent },
+            { path: 'direct-message/:id', component: DirectMessageComponent },
         ]
     },
     { path: 'auth', component: LoginComponent },
@@ -39,8 +41,6 @@ export const routes: Routes = [
     { path: 'editUser', component: EditUserProfileCardComponent },
     { path: 'editUserLogOut', component: EditUserLogOutCardComponent },
     { path: 'addMemberChannel', component: AddMembersAfterAddChannelComponent },
-    {path: 'addMember', component: AddMembersComponent},
-    {path: 'addChannel', component: AddChannelComponent},
-
-
+    { path: 'addMember', component: AddMembersComponent },
+    { path: 'addChannel', component: AddChannelComponent },
 ];

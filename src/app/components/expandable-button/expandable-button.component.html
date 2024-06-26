@@ -27,7 +27,7 @@
     <div *ngIf="!showBtn()" class="messages-menu">
         <ul>
             <li>
-                <a routerLink="/id">
+                <a routerLink="/direct-message/:id">
                     <div class="message-img-container">
                         <img src="../../../assets/img/avatar/avatar_01.svg" alt="Avatar">
                         <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
@@ -37,7 +37,7 @@
                 </a>
             </li>
             <li>
-                <a routerLink="/id">
+                <a routerLink="/direct-message/:id">
                     <div class="message-img-container">
                         <img src="../../../assets/img/avatar/avatar_00.svg" alt="Avatar">
                         <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
@@ -47,7 +47,7 @@
                 </a>
             </li>
             <li>
-                <a routerLink="/id">
+                <a routerLink="/direct-message/:id">
                     <div class="message-img-container">
                         <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar">
                         <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
@@ -57,7 +57,7 @@
                 </a>
             </li>
             <li>
-                <a routerLink="/id">
+                <a routerLink="/direct-message/:id">
                     <div class="message-img-container">
                         <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar">
                         <span class="on-off-line-sign"></span>
