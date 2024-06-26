@@ -1,5 +1,5 @@
 <div class="content-wrapper">
-    <form class="content-main content-card">
+    <form class="content-main content-card" #pickAvatarForm="ngForm">
         <h1>
             Wähle deinen Avatar
             <div class="back-btn-container">
@@ -22,7 +22,9 @@
             </div>
             <div class="upload-avatar-container">
                 <span>eigenes Bild verwenden</span>
-                <button class="form-btn-secondary">Datei hochladen</button>
+                <input type="file" #fileInput name="fileInput" style="display: none" ngModel (change)="onCustomSelection($event)"
+                    accept="image/*">
+                <button class="form-btn-secondary" (click)="fileInput.click()">Datei hochladen</button>
             </div>
             <div class="submit-btns">
                 <button type="submit" class="form-btn-primary">Weiter</button>
