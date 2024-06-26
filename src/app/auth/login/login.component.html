@@ -1,4 +1,4 @@
-<app-animation-intro [animate]="true"></app-animation-intro>
+<app-animation-intro></app-animation-intro>
 <div class="content-wrapper">
     <form class="content-main content-card" (ngSubmit)="onSubmit(logInForm)" #logInForm="ngForm"
         (change)="resetAuthError()">
@@ -8,7 +8,7 @@
             <img src="assets/img/icons/mail.svg" alt="E-Mail" [ngClass]="{'to-black': user.email}">
             <input type="email" placeholder="beispielname@email.com" [(ngModel)]="user.email" name="email"
                 #email="ngModel" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
-            @if(email.touched && !email.valid)
+            @if((email.touched || logInForm.submitted) && !email.valid)
             {<p class="error-msg">
                 Diese E-Mail-Adresse ist leider ungültig.
             </p>}
@@ -17,7 +17,7 @@
             <img src="assets/img/icons/lock.svg" alt="Password" [ngClass]="{'to-black': user.password}">
             <input type="password" placeholder="Passwort" [(ngModel)]="user.password" name="password"
                 #password="ngModel" required>
-            @if(password.touched && !password.valid)
+            @if((password.touched || logInForm.submitted) && !password.valid)
             {<p class="error-msg">
                 Bitte geben Sie ein Passwort ein.
             </p>}
@@ -35,7 +35,7 @@
             <span>Anmelden mit Google</span>
         </button>
         <div class="submit-btns">
-            <button type="submit" class="form-btn-primary" [disabled]="!logInForm.valid">Anmelden</button>
+            <button type="submit" class="form-btn-primary">Anmelden</button>
             <button type="button" class="form-btn-secondary" (click)="logInAsGuest()">Gäste-Login</button>
         </div>
     </form>

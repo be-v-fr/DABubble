@@ -13,7 +13,6 @@ export class ToastNotificationComponent {
   @Output() then = new EventEmitter<void>;
 
   private _showing: boolean = false;
-
   @Input()
   set showing(value: boolean) {
     if (value) {

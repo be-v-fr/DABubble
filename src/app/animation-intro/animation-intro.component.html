@@ -1,5 +1,5 @@
-<div class="overlay" [ngClass]="{'hide': after || !animate}"></div>
-<div class="logo-wrapper" [ngClass]="{'logo-animate': animate}">
+<div class="overlay" [ngClass]="{'hide': after || !animate, 'paused': pause}"></div>
+<div class="logo-wrapper" [ngClass]="{'logo-animate': animate, 'paused': pause}">
     <div class="logo-container">
         <div class="logo-img-container">
             <div class="blinder" [ngClass]="{'hide': after || !animate}"></div>
