@@ -24,8 +24,6 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
   avatarSrc: string = 'assets/img/profile_blank.svg';
   customFile: any = '';
 
-  // how to upload a file: https://www.geeksforgeeks.org/angular-file-upload/
-
   ngOnInit(): void {
     this.userSub = this.authService.user$.subscribe((user) => {
       if (user && user.displayName) {
@@ -47,7 +45,6 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
   onCustomSelection(e: Event) {
     // implement user feedback in case file is invalid (no image)
     // disable Submit-Button while uploading
-    // add UID and File name to path/ref!
     const input = e.target as HTMLInputElement;
     if (input.files) {
       this.storageService.uploadAvatar(input.files[0], this.user.uid);

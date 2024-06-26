@@ -5,6 +5,8 @@ import { Router, RouterLink } from '@angular/router';
 import { LegalFooterComponent } from '../legal-footer/legal-footer.component';
 import { AuthService } from '../../../services/auth.service';
 import { ToastNotificationComponent } from '../toast-notification/toast-notification.component';
+import { User } from '../../../models/user.class';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,6 +17,7 @@ import { ToastNotificationComponent } from '../toast-notification/toast-notifica
 })
 export class SignUpComponent {
   private authService = inject(AuthService);
+  private usersService = inject(UsersService);
   private router = inject(Router);
   user = {
     name: '',
@@ -26,6 +29,7 @@ export class SignUpComponent {
   // ToDo:
   // - Während Signup disablen, um zweifaches Absenden zu unterbinden
   // - Impressum: Input-Variable, um Back-Button auszublenden?? Oder stattdessen beim Aufrufen der Privacy Policy Login-Daten zwischenspeichern (z.B. als Service)
+  // - Validation: This email address is already taken
   onSubmit(form: NgForm) {
     if (form.submitted && form.valid) { this.signUp() }
     else { console.error('Sign up failed.') }
@@ -40,6 +44,15 @@ export class SignUpComponent {
 
   onSignUp() {
     this.showToast = true;
+    const uid = this.authService.getCurrentUid();
+    if (uid) {
+      const user = new User({
+        uid: uid,
+        name: this.user.name,
+        email: this.user.email
+      });
+      this.usersService.addUser(user);
+    }
   }
 
   setAuthError() {

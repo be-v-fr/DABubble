@@ -6,6 +6,8 @@ import { LegalFooterComponent } from '../legal-footer/legal-footer.component';
 import { AuthService } from '../../../services/auth.service';
 import { ToastNotificationComponent } from '../toast-notification/toast-notification.component';
 import { AnimationIntroComponent } from '../../animation-intro/animation-intro.component';
+import { UsersService } from '../../../services/users.service';
+import { User } from '../../../models/user.class';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +18,7 @@ import { AnimationIntroComponent } from '../../animation-intro/animation-intro.c
 })
 export class LoginComponent {
   private authService = inject(AuthService);
+  private usersService = inject(UsersService);
   user = {
     email: '',
     password: ''
@@ -45,6 +48,10 @@ export class LoginComponent {
     this.authService.logInWithGoogle().subscribe({
       next: () => {
         this.showToast = true;
+        const uid = this.authService.getCurrentUid();
+        // the User also has to be added to Firestore
+        // overwriting the data in case the User already exists
+        // aside from UID, name and email are required here
         this.onLogIn();
       },
       error: (err) => this.setAuthError(err.toString())
