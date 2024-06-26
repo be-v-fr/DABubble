@@ -17,7 +17,7 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private storageService = inject(StorageService);
   user = {
-    uid: '',
+    uid: 'testUID', // delete value later
     name: '...'
   }
   userSub = new Subscription();
@@ -45,11 +45,12 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
   }
 
   onCustomSelection(e: Event) {
-    // validate file as Image
+    // implement user feedback in case file is invalid (no image)
     // disable Submit-Button while uploading
+    // add UID and File name to path/ref!
     const input = e.target as HTMLInputElement;
     if (input.files) {
-      this.storageService.upload(input.files[0], this.storageService.avatarsRef);
+      this.storageService.uploadAvatar(input.files[0], this.user.uid);
     }
   }
 
