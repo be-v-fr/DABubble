@@ -13,7 +13,7 @@ import { ResetPwComponent } from './auth/reset-pw/reset-pw.component';
 import { EditUserLogOutCardComponent } from './edit-user-log-out-card/edit-user-log-out-card.component';
 import { AddMembersAfterAddChannelComponent } from './add-members-after-add-channel/add-members-after-add-channel.component';
 import { AddMembersComponent } from './add-members/add-members.component';
-
+import { AddChannelComponent } from './add-channel/add-channel.component';
 
 
 export const routes: Routes = [
@@ -31,6 +31,7 @@ export const routes: Routes = [
     {path: 'editUserLogOut', component: EditUserLogOutCardComponent},
     {path: 'addMemberChannel', component: AddMembersAfterAddChannelComponent},
     {path: 'addMember', component: AddMembersComponent},
+    {path: 'addChannel', component: AddChannelComponent},
 
 
 ];

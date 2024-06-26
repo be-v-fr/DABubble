@@ -60,3 +60,16 @@
     font-size: 18px;
   }
 }
+.close-thread-btn {
+  color: rgb(0, 0, 0, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+
+  &:hover {
+    color: $purple-blue-bright;
+    background-color: $violet-bright;
+    border-radius: 20px;
+  }
+}
