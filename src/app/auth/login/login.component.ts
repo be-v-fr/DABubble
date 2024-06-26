@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -6,6 +6,8 @@ import { LegalFooterComponent } from '../legal-footer/legal-footer.component';
 import { AuthService } from '../../../services/auth.service';
 import { ToastNotificationComponent } from '../toast-notification/toast-notification.component';
 import { AnimationIntroComponent } from '../../animation-intro/animation-intro.component';
+import { UsersService } from '../../../services/users.service';
+import { User } from '../../../models/user.class';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,10 @@ import { AnimationIntroComponent } from '../../animation-intro/animation-intro.c
 })
 export class LoginComponent {
   private authService = inject(AuthService);
+  private usersService = inject(UsersService);
   user = {
+    uid: '',
+    name: '',
     email: '',
     password: ''
   }
@@ -45,6 +50,14 @@ export class LoginComponent {
     this.authService.logInWithGoogle().subscribe({
       next: () => {
         this.showToast = true;
+        const userRef = this.authService.firebaseAuth.currentUser;
+        if(userRef) {
+          this.usersService.addUser(new User({
+            uid: userRef.uid,
+            name: userRef.displayName,
+            email: userRef.email
+          }));
+        }
         this.onLogIn();
       },
       error: (err) => this.setAuthError(err.toString())

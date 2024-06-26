@@ -14,7 +14,8 @@ import { EditUserLogOutCardComponent } from './edit-user-log-out-card/edit-user-
 import { AddMembersAfterAddChannelComponent } from './add-members-after-add-channel/add-members-after-add-channel.component';
 import { NewMessageComponent } from './components/new-message/new-message.component';
 import { MainChatComponent } from './components/main-chat/main-chat.component';
-
+import { AddMembersComponent } from './add-members/add-members.component';
+import { AddChannelComponent } from './add-channel/add-channel.component';
 
 
 export const routes: Routes = [
@@ -38,6 +39,8 @@ export const routes: Routes = [
     { path: 'editUser', component: EditUserProfileCardComponent },
     { path: 'editUserLogOut', component: EditUserLogOutCardComponent },
     { path: 'addMemberChannel', component: AddMembersAfterAddChannelComponent },
+    {path: 'addMember', component: AddMembersComponent},
+    {path: 'addChannel', component: AddChannelComponent},
 
 
 ];

@@ -1,1 +1,20 @@
-<p>add-members works!</p>
+<div class="container">
+  <div class="headlineAndCloseBtn">
+    <div>
+    <span>Leute hinzufügen</span>
+    <span># Entwicklerteam</span>
+  </div>
+    <button class="close-thread-btn">
+      <span class="material-icons-outlined">close</span>
+    </button>
+  </div>
+  <div class="inputContainer">
+    <div class="additional-input">
+      <label for="specificPeople"></label>
+      <input type="text" id="specificPeopleInput" placeholder="Name eingeben" [(ngModel)]="selection"/>
+    </div>
+    <div>
+      <button type="submit" [disabled]="!selection" class="form-btn-primary">Hinzufügen</button>
+    </div>
+  </div>
+</div>

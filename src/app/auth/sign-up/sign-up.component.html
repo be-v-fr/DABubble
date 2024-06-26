@@ -39,6 +39,8 @@
             {<p class="error-msg">
                 Ihr Passwort muss mindestens 6 Zeichen enthalten.
             </p>}
+            @else if(signUpForm.submitted && authError)
+            {<p class="error-msg">{{authError}}</p>}
         </div>
         <div class="privacy-policy-container">
             <div class="custom-checkbox-container">
