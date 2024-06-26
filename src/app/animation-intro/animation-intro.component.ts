@@ -13,12 +13,28 @@ export class AnimationIntroComponent implements OnInit {
   @Output() then = new EventEmitter<void>();
   after: boolean = false;
 
+  private _pause: boolean = false;
+  @Input()
+  set pause(value: boolean) {
+      this._pause = value;
+      this.initAnimation();
+  };
+  get pause(): boolean {
+    return this._pause;
+  }
+
   ngOnInit(): void {
-    if(this.animate) {
-      setTimeout(() => {
-        this.after = true;
-        this.then.emit();
-      }, 3000);
-    }
+    this.initAnimation();
+  }
+
+  initAnimation(): void {
+    if (this.animate && !this.pause) {this.awaitAnimation()}
+  }
+
+  awaitAnimation(): void {
+    setTimeout(() => {
+      this.after = true;
+      this.then.emit();
+    }, 3000);
   }
 }
