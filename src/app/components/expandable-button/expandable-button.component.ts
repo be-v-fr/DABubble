@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-expandable-button',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './expandable-button.component.html',
   styleUrl: './expandable-button.component.scss',
 })

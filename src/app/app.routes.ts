@@ -12,23 +12,32 @@ import { RequestPwResetComponent } from './auth/request-pw-reset/request-pw-rese
 import { ResetPwComponent } from './auth/reset-pw/reset-pw.component';
 import { EditUserLogOutCardComponent } from './edit-user-log-out-card/edit-user-log-out-card.component';
 import { AddMembersAfterAddChannelComponent } from './add-members-after-add-channel/add-members-after-add-channel.component';
+import { NewMessageComponent } from './components/new-message/new-message.component';
+import { MainChatComponent } from './components/main-chat/main-chat.component';
 
 
 
 export const routes: Routes = [
-    {path: '', component: HomeComponent},
-    {path: 'auth', component: LoginComponent},
-    {path: 'auth/signUp', component: SignUpComponent},
-    {path: 'auth/pickAvatar', component: PickAvatarComponent},
-    {path: 'auth/requestPwReset', component: RequestPwResetComponent},
-    {path: 'auth/resetPw', component: ResetPwComponent},
-    {path: 'impress', component: ImpressComponent},
-    {path: 'privacypolicy', component: PrivacypolicyComponent},
-    {path: 'userProfile', component: UserProfileCardComponent},
-    {path: 'mainUser', component: MainUserProfileCardComponent},
-    {path: 'editUser', component: EditUserProfileCardComponent},
-    {path: 'editUserLogOut', component: EditUserLogOutCardComponent},
-    {path: 'addMemberChannel', component: AddMembersAfterAddChannelComponent},
+    { path: '',   redirectTo: '/main-chat', pathMatch: 'full' },
+    {
+        path: '', component: HomeComponent,
+        children: [
+            { path: 'new', component: NewMessageComponent },
+            { path: 'main-chat', component: MainChatComponent },
+        ]
+    },
+    { path: 'auth', component: LoginComponent },
+    { path: 'auth/signUp', component: SignUpComponent },
+    { path: 'auth/pickAvatar', component: PickAvatarComponent },
+    { path: 'auth/requestPwReset', component: RequestPwResetComponent },
+    { path: 'auth/resetPw', component: ResetPwComponent },
+    { path: 'impress', component: ImpressComponent },
+    { path: 'privacypolicy', component: PrivacypolicyComponent },
+    { path: 'userProfile', component: UserProfileCardComponent },
+    { path: 'mainUser', component: MainUserProfileCardComponent },
+    { path: 'editUser', component: EditUserProfileCardComponent },
+    { path: 'editUserLogOut', component: EditUserLogOutCardComponent },
+    { path: 'addMemberChannel', component: AddMembersAfterAddChannelComponent },
 
 
 ];

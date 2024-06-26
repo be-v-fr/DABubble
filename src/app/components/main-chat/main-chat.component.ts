@@ -2,8 +2,8 @@ import { Component, input } from '@angular/core';
 
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
-import { MessageBoxComponent } from '../message-box/message-box.component';
 import { MessageItemComponent } from '../message-item/message-item.component';
+import { MessageBoxComponent } from '../message-box/message-box.component';
 import { TimeSeparatorComponent } from '../time-separator/time-separator.component';
 
 @Component({
@@ -20,7 +20,7 @@ import { TimeSeparatorComponent } from '../time-separator/time-separator.compone
   ],
 })
 export class MainChatComponent {
-  title = input.required<string>();
+  title = input<string>('Entwicklerteam');
   messages = true;
   emojiPicker = false;
 }

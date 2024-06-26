@@ -15,9 +15,9 @@
 <div *ngIf="isMenuExpanded" class="menu">
     <div *ngIf="showBtn()" class="channel-menu">
         <ul>
-            <li><a href="#"><span>#</span> Entwicklerteam</a></li>
-            <li><a href="#"><span>#</span> Entwicklerteam</a></li>
-            <li><a href="#"><span>#</span> Entwicklerteam</a></li>
+            <li><a routerLink="/main-chat"><span>#</span> Entwicklerteam</a></li>
+            <li><a routerLink="/main-chat"><span>#</span> Entwicklerteam</a></li>
+            <li><a routerLink="/main-chat"><span>#</span> Entwicklerteam</a></li>
         </ul>
         <button>
             <span class="material-icons-outlined add-circle-icon">add_circle_outline</span>
@@ -26,7 +26,8 @@
     </div>
     <div *ngIf="!showBtn()" class="messages-menu">
         <ul>
-            <li><a href="#">
+            <li>
+                <a routerLink="/id">
                     <div class="message-img-container">
                         <img src="../../../assets/img/avatar/avatar_01.svg" alt="Avatar">
                         <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
@@ -35,7 +36,8 @@
                     <span>Gast (Du)</span>
                 </a>
             </li>
-            <li><a href="#">
+            <li>
+                <a routerLink="/id">
                     <div class="message-img-container">
                         <img src="../../../assets/img/avatar/avatar_00.svg" alt="Avatar">
                         <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
@@ -44,7 +46,8 @@
                     <span>Sofia Müller</span>
                 </a>
             </li>
-            <li><a href="#">
+            <li>
+                <a routerLink="/id">
                     <div class="message-img-container">
                         <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar">
                         <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
@@ -53,7 +56,8 @@
                     <span>Noah Braun</span>
                 </a>
             </li>
-            <li><a href="#">
+            <li>
+                <a routerLink="/id">
                     <div class="message-img-container">
                         <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar">
                         <span class="on-off-line-sign"></span>
