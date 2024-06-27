@@ -19,7 +19,7 @@ import { User } from '../../../models/user.class';
 export class LoginComponent {
   private authService = inject(AuthService);
   private usersService = inject(UsersService);
-  user = {
+  userData = {
     uid: '',
     name: '',
     email: '',
@@ -40,7 +40,7 @@ export class LoginComponent {
 
   logIn() {
     this.showToast = true;
-    this.authService.logIn(this.user.email, this.user.password).subscribe({
+    this.authService.logIn(this.userData.email, this.userData.password).subscribe({
       next: () => this.onLogIn(),
       error: (err) => this.setAuthError(err.toString())
     });
@@ -50,7 +50,7 @@ export class LoginComponent {
     this.authService.logInWithGoogle().subscribe({
       next: () => {
         this.showToast = true;
-        const userRef = this.authService.firebaseAuth.currentUser;
+        const userRef = this.authService.getCurrent();
         if(userRef) {
           this.usersService.addUser(new User({
             uid: userRef.uid,

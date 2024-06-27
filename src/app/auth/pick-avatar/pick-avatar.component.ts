@@ -1,10 +1,12 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
+import { RouterLink, Router } from '@angular/router';
 import { LegalFooterComponent } from '../legal-footer/legal-footer.component';
 import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { StorageService } from '../../../services/storage.service';
+import { UsersService } from '../../../services/users.service';
+import { User } from '../../../models/user.class';
 
 @Component({
   selector: 'app-pick-avatar',
@@ -16,12 +18,14 @@ import { StorageService } from '../../../services/storage.service';
 export class PickAvatarComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private storageService = inject(StorageService);
-  user = {
-    uid: 'testUID', // delete value later
-    name: '...'
+  private usersService = inject(UsersService);
+  private router = inject(Router);
+  userData = {
+    uid: '',
+    name: '...',
+    avatarSrc: 'assets/img/profile_blank.svg'
   }
   userSub = new Subscription();
-  avatarSrc: string = 'assets/img/profile_blank.svg';
   customFile: any = '';
 
   ngOnInit(): void {
@@ -36,26 +40,37 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
     return this.authService.user$.subscribe((user) => {
       if (user && user.displayName) {
         const uid = this.authService.getCurrentUid();
-        if (uid) { this.user.uid = uid };
-        this.user.name = user.displayName;
+        if (uid) { this.userData.uid = uid };
+        this.userData.name = user.displayName;
       }
     });
   }
 
   selectDefaultAvatar(index: string) {
-    this.avatarSrc = `assets/img/avatar/avatar_${index}.svg`;
+    this.userData.avatarSrc = `assets/img/avatar/avatar_${index}.svg`;
   }
 
-  onCustomSelection(e: Event) {
+  async onCustomSelection(e: Event) {
     // implement user feedback in case file is invalid (no image)
     // disable Submit-Button while uploading
     const input = e.target as HTMLInputElement;
     if (input.files) {
-      this.storageService.uploadAvatar(input.files[0], this.user.uid);
+      this.storageService.uploadAvatar(input.files[0], this.userData.uid)
+        .then((response) => {
+          console.log('upload avatar response:', response); // remove later
+          if(response.includes(this.userData.uid)) {
+            this.userData.avatarSrc = response;
+            this.usersService.updateUser(new User(this.userData));
+          }
+        })
     }
   }
 
   unselectAvatar() {
-    this.avatarSrc = 'assets/img/profile_blank.svg';
+    this.userData.avatarSrc = 'assets/img/profile_blank.svg';
+  }
+
+  onSubmit(form: NgForm) {
+    if (form.submitted && form.valid) {this.router.navigateByUrl('')}
   }
 }
