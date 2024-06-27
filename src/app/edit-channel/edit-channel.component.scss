@@ -95,6 +95,9 @@
   height: 105px;
   margin-left: 40px;
   margin-top: 20px;
+  border: 1px solid rgba(173, 176, 217, 1);
+  border-radius: 20px;
+  padding: 20px;
 
   input {
     border: 1px solid rgba(173, 176, 217, 1);
@@ -131,4 +134,13 @@
 .addChannelBtn{
   margin-left: 628px;
     margin-top: 45px;
+}
+.editChannelName{
+  margin-top: 20px;
+ 
+    span{
+      font-weight: 400;
+      font-size: 18px;
+      word-spacing: 10px;
+    }
 }
