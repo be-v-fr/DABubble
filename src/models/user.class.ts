@@ -8,7 +8,7 @@ export class User {
         this.uid = obj && obj.uid ? obj.uid : '';
         this.name = obj && obj.name ? obj.name : '';
         this.email = obj && obj.email ? obj.email : '';
-        this.avatarSrc = obj && obj.avatarSrc ? obj.avatarSrc : '';        
+        this.avatarSrc = obj && obj.avatarSrc ? obj.avatarSrc : 'assets/img/profile_blank.svg';        
     }
 
     toJson() {

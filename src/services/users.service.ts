@@ -119,7 +119,7 @@ export class UsersService implements OnDestroy {
     return user;
   }
 
-  
+
   isRegisteredUser(authUid: string): boolean {
     return this.getUserByUid(authUid).uid.length > 0;
   }

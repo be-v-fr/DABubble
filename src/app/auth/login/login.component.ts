@@ -71,8 +71,8 @@ export class LoginComponent {
     return new User({
       uid: authData.uid,
       name: authData.displayName,
-      email: authData.email
-      // add Google Profile Pic !!
+      email: authData.email,
+      avatarSrc: authData.photoURL
     });
   }
 

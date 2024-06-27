@@ -26,6 +26,7 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
     avatarSrc: 'assets/img/profile_blank.svg'
   }
   userSub = new Subscription();
+  usersSub = new Subscription();
   customFile: any = '';
 
   ngOnInit(): void {
@@ -34,16 +35,36 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
+    this.usersSub.unsubscribe();
   }
 
   subUser(): Subscription {
     return this.authService.user$.subscribe((user) => {
       if (user && user.displayName) {
         const uid = this.authService.getCurrentUid();
-        if (uid) { this.userData.uid = uid };
+        if (uid) {
+          this.userData.uid = uid;
+          this.setPreSelectionAvatar();
+        };
         this.userData.name = user.displayName;
       }
     });
+  }
+
+
+  // needed for Google Account Avatar
+  setPreSelectionAvatar() {
+    this.syncAvatar();
+    this.usersSub = this.subUsers();
+  }
+
+  syncAvatar() {
+    this.userData.avatarSrc = this.usersService.getUserByUid(this.userData.uid).avatarSrc;
+  }
+
+
+  subUsers(): Subscription {
+    return this.usersService.users$.subscribe(() => this.syncAvatar());
   }
 
   selectDefaultAvatar(index: string) {
@@ -51,14 +72,13 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
   }
 
   async onCustomSelection(e: Event) {
-    // implement user feedback in case file is invalid (no image)
+    // implement user feedback in case file is invalid (e.g. no image)
     // disable Submit-Button while uploading
     const input = e.target as HTMLInputElement;
     if (input.files) {
       this.storageService.uploadAvatar(input.files[0], this.userData.uid)
         .then((response) => {
-          console.log('upload avatar response:', response); // remove later
-          if(response.includes(this.userData.uid)) {
+          if (response.includes(this.userData.uid)) {
             this.userData.avatarSrc = response;
             this.usersService.updateUser(new User(this.userData));
           }
@@ -71,6 +91,6 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
-    if (form.submitted && form.valid) {this.router.navigateByUrl('')}
+    if (form.submitted && form.valid) { this.router.navigateByUrl('') }
   }
 }
