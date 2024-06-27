@@ -2,6 +2,7 @@ import { Injectable, inject, OnDestroy } from '@angular/core';
 import { Firestore, collection, doc, onSnapshot, setDoc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
 import { User } from '../models/user.class';
+import { CollectionReference, DocumentReference, addDoc } from 'firebase/firestore';
 
 
 /**
@@ -56,7 +57,7 @@ export class UsersService implements OnDestroy {
    * Get reference to Firestore "users" collection
    * @returns reference
    */
-  getColRef() {
+  getColRef(): CollectionReference {
     return collection(this.firestore, 'users');
   }
 
@@ -66,7 +67,7 @@ export class UsersService implements OnDestroy {
    * @param id Firestore task ID
    * @returns reference
    */
-  getSingleDocRef(uid: string) {
+  getSingleDocRef(uid: string): DocumentReference {
     return doc(this.getColRef(), uid);
   }
 
@@ -89,7 +90,7 @@ export class UsersService implements OnDestroy {
    */
   async updateUser(user: User) {
     if (user.uid) {
-      let docRef = this.getSingleDocRef(user.uid);
+      const docRef = this.getSingleDocRef(user.uid);
       await updateDoc(docRef, user.toJson())
         .catch((err: Error) => { console.error(err) });
     }
@@ -101,7 +102,7 @@ export class UsersService implements OnDestroy {
    * @param id Firestore user ID of user to be deleted
    */
   async deleteUser(uid: string) {
-    let docRef = this.getSingleDocRef(uid);
+    const docRef = this.getSingleDocRef(uid);
     await deleteDoc(docRef)
       .catch((err: Error) => { console.error(err) });
   }
@@ -116,5 +117,10 @@ export class UsersService implements OnDestroy {
     let user = new User();
     this.users.forEach(u => { if (u.uid == uid) { user = u } });
     return user;
+  }
+
+  
+  isRegisteredUser(authUid: string): boolean {
+    return this.getUserByUid(authUid).uid.length > 0;
   }
 }

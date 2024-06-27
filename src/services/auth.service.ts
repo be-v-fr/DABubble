@@ -64,7 +64,7 @@ export class AuthService {
     const promise = signInWithPopup(
       this.firebaseAuth,
       new GoogleAuthProvider()
-    ).then(() => { });
+    ).then((response) => {console.log(response) }); // remove later
     return from(promise);
   }
 
