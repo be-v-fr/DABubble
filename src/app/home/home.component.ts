@@ -22,7 +22,7 @@ export class HomeComponent {
     private authService = inject(AuthService);
     private usersService = inject(UsersService);
     private authSub = new Subscription();
-    private usersSub = new Subscription();
+    public usersSub = new Subscription();
     public currentUser = new User();
     public users: User[] = [];
 

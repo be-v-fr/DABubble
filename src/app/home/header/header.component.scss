@@ -71,6 +71,16 @@
     }
 }
 
+.userprofile-name {
+    height: fit-content;
+    line-height: 100%;
+    text-align: right;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: horizontal; 
+}
+
 .userprofile-image-box {
     position: relative;
     img {
