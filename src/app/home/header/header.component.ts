@@ -2,6 +2,7 @@ import { Component, Inject, inject } from '@angular/core';
 import { EditUserLogOutCardComponent } from '../../edit-user-log-out-card/edit-user-log-out-card.component';
 import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +24,8 @@ export class HeaderComponent {
   // readonly dialog = inject(MatDialog);
   constructor(public dialogRef: MatDialogRef<EditUserLogOutCardComponent>, 
     public dialog: MatDialog, 
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   openUserLogoutCard(): void {
@@ -32,6 +34,7 @@ export class HeaderComponent {
     this.dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog "EditUserLogOutCard" was Closed.', result);
       if (result == 'logout') {
+        this.authService.logOut();
         this.router.navigate(['auth']);
       }
     });

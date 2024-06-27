@@ -2,7 +2,6 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
 import { MainUserProfileCardComponent } from '../main-user-profile-card/main-user-profile-card.component';
-import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -26,8 +25,7 @@ export class EditUserLogOutCardComponent {
     public dialogRef: MatDialogRef<EditUserLogOutCardComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogUserRef: MatDialogRef<MainUserProfileCardComponent>,
-    public dialog: MatDialog,
-    private authService: AuthService
+    public dialog: MatDialog
   ) {}
 
   openProfile() {
@@ -35,7 +33,6 @@ export class EditUserLogOutCardComponent {
 
     this.dialogUserRef.afterClosed().subscribe(result => {
       console.log('The dialog "EditUserLogOutCard" was Closed.', result); // remove later
-      this.authService.logOut();
     });
   }
 
