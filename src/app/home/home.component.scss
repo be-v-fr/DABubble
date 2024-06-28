@@ -1,6 +1,15 @@
 .main-container {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 22px;
+    height: 100%;
+    max-height: calc(100% - 150px);
+
+    app-navigation,
+    app-thread,
+    app-main-chat {
+        height: 100%;
+    }
 }

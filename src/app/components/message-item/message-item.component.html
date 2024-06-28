@@ -4,7 +4,7 @@
             <span class="reaction-icon">👍</span>
         </button> -->
         <button>
-            <span class="material-icons-outlined">add_reaction</span>
+            <span (click)="onShowEmojiPicker()" class="material-icons-outlined">add_reaction</span>
         </button>
         <button>
             <span class="material-icons-outlined">insert_comment</span>
@@ -28,24 +28,15 @@
             <button>2 Antworten</button>
             <span>Letzte Antwort 14:56</span>
         </div>
-        <div class="reactions-container">
-            <div class="reaction">
+        <div class="reactions-container" *ngIf="emojis().length > 0 ">
+            <div class="reaction" *ngFor="let emoji of emojis()">
                 <div class="reaction-info">
-                    <div class="reaction-info-emoji">😱</div>
+                    <div class="reaction-info-emoji">{{ emoji?.native }}</div>
                     <div class="reaction-info-name">Max Musterman</div>
                     <div class="reaction-info-sub-info">hat reagiert</div>
                 </div>
-                <div class="emoji">😱</div>
-                <span>1</span>
-            </div>
-            <div class="reaction">
-                <div class="reaction-info">
-                    <div class="reaction-info-emoji">🚀</div>
-                    <div class="reaction-info-name">Max Musterman</div>
-                    <div class="reaction-info-sub-info">hat reagiert</div>
-                </div>
-                <div class="emoji">🚀</div>
-                <span>1</span>
+                <div class="emoji">{{ emoji?.native }}</div>
+                <span>{{ emoji?.count }}</span>
             </div>
             <button class="add-emoji-btn" (click)="onShowEmojiPicker()">
                 <span class="material-icons-outlined icon">add_reaction</span>

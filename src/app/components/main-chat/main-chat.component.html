@@ -21,16 +21,18 @@
     <div class="message-items-container">
         <div class="message-item-container" *ngIf="messages">
             <app-time-separator />
-            <app-message-item />
+            <app-message-item [emojis]="emojis" [hideEmojiPicker]="emojiPicker"
+                (showEmojiPicker)="handleStateChange($event)" />
         </div>
         <div class="message-item-container" *ngIf="messages">
             <app-time-separator />
-            <app-message-item />
+            <app-message-item [emojis]="emojis" [hideEmojiPicker]="emojiPicker"
+                (showEmojiPicker)="handleStateChange($event)" />
         </div>
-        <div class="message-item-container" *ngIf="messages">
+        <!-- <div class="message-item-container" *ngIf="messages">
             <app-time-separator />
             <app-message-item />
-        </div>
+        </div> -->
         <div class="create-channel-message-container" *ngIf="!messages">
             <h3>
                 <span>#</span>
@@ -43,5 +45,6 @@
         </div>
     </div>
     <app-message-box />
-    <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="emojiPicker"></emoji-mart>
+    <emoji-mart title="Pick your emoji…" (emojiClick)="addEmoji($event)" emoji="point_up"
+        *ngIf="emojiPicker"></emoji-mart>
 </section>
