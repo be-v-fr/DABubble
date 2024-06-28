@@ -96,21 +96,21 @@
             border-color: $purple-blue-bright;
         }
     }
+}
 
-    .error-msg {
-        position: absolute;
-        top: calc(100% + 3px);
-        left: 0;
-        color: $magenta;
-        font-size: 14px;
-        animation: fade-in 250ms ease-out;
-        @keyframes fade-in {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+.error-msg {
+    position: absolute;
+    top: calc(100% + 3px);
+    left: 0;
+    color: $magenta;
+    font-size: 14px;
+    animation: fade-in 250ms ease-out;
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
         }
     }
 }
@@ -230,8 +230,8 @@
 
     a {
         position: relative;
-        width: 160px;
-        right: -17px;
+        width: 162px;
+        right: -18px;
     }
 }
 

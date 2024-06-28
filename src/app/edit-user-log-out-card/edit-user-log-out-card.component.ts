@@ -25,15 +25,20 @@ export class EditUserLogOutCardComponent {
     public dialogRef: MatDialogRef<EditUserLogOutCardComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogUserRef: MatDialogRef<MainUserProfileCardComponent>,
-    public dialog: MatDialog,
-  ) {}
+    public dialog: MatDialog
+  ) {
+    console.log('LogOut-Card..constr. data:', data);
+  }
 
   openProfile() {
-    this.dialogUserRef = this.dialog.open(MainUserProfileCardComponent);
+    this.dialogUserRef = this.dialog.open(MainUserProfileCardComponent, {
+      data: {
+        mainUser: this.data.mainUser
+      }
+    });
 
     this.dialogUserRef.afterClosed().subscribe(result => {
-      console.log('The dialog "EditUserLogOutCard" was Closed.', result);
-      
+      console.log('The dialog "MainUserProfileCard" was Closed.', result); // remove later
     });
   }
 

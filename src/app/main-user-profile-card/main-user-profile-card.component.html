@@ -8,12 +8,12 @@
       </div>
     </div>
     <div class="profileImg">
-      <img class="#" src="../../assets/img/userProfileImg/Sofia Müller.png" />
+      <img class="#" src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}" />
     </div>
     <div class="userName">
         <div class="nameAndEdit">
-      <h1>Sofia Müller</h1>
-      <p class="edit" (click)="openEditProfile()">Bearbeiten</p>
+      <h1>{{ mainUser.name || 'Sofia Müller'}}</h1>
+      <p class="edit" (click)="openEditProfile(mainUser)">Bearbeiten</p>
     </div>
       <div class="online">
         <p></p>
@@ -26,7 +26,7 @@
         <p>E-Mail-Adresse</p>
       </div>
       <div class="showEmail">
-        <p>sofia.muel&#64;beispiel.com</p>
+        <p>{{ mainUser.email || 'sofia.muel&#64;beispiel.com' }}</p>
       </div>
     </div>
    

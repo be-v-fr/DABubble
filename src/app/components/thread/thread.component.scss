@@ -1,4 +1,4 @@
-@import '../../../styles.scss';
+@import "../../../styles.scss";
 
 .thread-container {
     display: flex;
@@ -306,8 +306,7 @@
     }
 
 
-    app-message-box {
-        width: 445px !important;
-    }
-
+  app-message-box {
+    width: 445px !important;
+  }
 }

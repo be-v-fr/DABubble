@@ -15,6 +15,7 @@ export class ResetPwComponent {
     password: '',
     passwordConfirmation: ''
   }
+  loading: boolean = false;
 
 
   validateForm(form: NgForm) {

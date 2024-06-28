@@ -5,8 +5,8 @@
         <h1>Anmeldung</h1>
         <p class="advice">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
         <div class="form-field bg-violet">
-            <img src="assets/img/icons/mail.svg" alt="E-Mail" [ngClass]="{'to-black': user.email}">
-            <input type="email" placeholder="beispielname@email.com" [(ngModel)]="user.email" name="email"
+            <img src="assets/img/icons/mail.svg" alt="E-Mail" [ngClass]="{'to-black': userData.email}">
+            <input type="email" placeholder="beispielname@email.com" [(ngModel)]="userData.email" name="email"
                 #email="ngModel" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
             @if((email.touched || logInForm.submitted) && !email.valid)
             {<p class="error-msg">
@@ -14,8 +14,8 @@
             </p>}
         </div>
         <div class="form-field bg-violet">
-            <img src="assets/img/icons/lock.svg" alt="Password" [ngClass]="{'to-black': user.password}">
-            <input type="password" placeholder="Passwort" [(ngModel)]="user.password" name="password"
+            <img src="assets/img/icons/lock.svg" alt="Password" [ngClass]="{'to-black': userData.password}">
+            <input type="password" placeholder="Passwort" [(ngModel)]="userData.password" name="password"
                 #password="ngModel" required>
             @if((password.touched || logInForm.submitted) && !password.valid)
             {<p class="error-msg">
@@ -30,13 +30,13 @@
             <span>ODER</span>
             <hr class="or-separator bg-purple-light">
         </div>
-        <button class="form-field google-btn bg-violet" type="button" (click)="logInWithGoogle()">
+        <button class="form-field google-btn bg-violet" type="button" (click)="logInWithGoogle()" [disabled]="loading">
             <img src="assets/img/icons/google_logo.svg" alt="Google">
             <span>Anmelden mit Google</span>
         </button>
         <div class="submit-btns">
-            <button type="submit" class="form-btn-primary">Anmelden</button>
-            <button type="button" class="form-btn-secondary" (click)="logInAsGuest()">Gäste-Login</button>
+            <button type="submit" class="form-btn-primary" [disabled]="loading">Anmelden</button>
+            <button type="button" class="form-btn-secondary" (click)="logInAsGuest()" [disabled]="loading">Gäste-Login</button>
         </div>
     </form>
     <!-- <img src="assets/img/logo_name.svg" alt="DABubble" class="logo"> -->

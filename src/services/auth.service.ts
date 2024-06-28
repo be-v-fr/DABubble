@@ -64,7 +64,7 @@ export class AuthService {
     const promise = signInWithPopup(
       this.firebaseAuth,
       new GoogleAuthProvider()
-    ).then(() => { });
+    ).then((response) => {console.log(response) }); // remove later
     return from(promise);
   }
 
@@ -73,7 +73,7 @@ export class AuthService {
     const promise = signInAnonymously(
       this.firebaseAuth
     ).then(() => { });
-    return from(promise);    
+    return from(promise);
   }
 
 
@@ -86,7 +86,7 @@ export class AuthService {
     const promise = sendPasswordResetEmail(
       this.firebaseAuth,
       email
-    ).then(() => {console.log('Email sent!') });
+    ).then(() => { console.log('Email sent!') });
     return from(promise);
   }
 
@@ -101,15 +101,17 @@ export class AuthService {
   }
 
 
+  getCurrent() {
+    return this.firebaseAuth.currentUser;
+  }
+
+
   /**
    * Get Firebase user ID ("uid") of active user
    * @returns user ID (actual uid or undefined in case there is no log in)
    */
   getCurrentUid(): string | undefined {
-    if (this.firebaseAuth.currentUser) {
-      return this.firebaseAuth.currentUser['uid'];
-    } else {
-      return undefined;
-    }
+    const current = this.firebaseAuth.currentUser;
+    return current ? current.uid : undefined;
   }
 }

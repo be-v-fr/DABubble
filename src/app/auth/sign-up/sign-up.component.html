@@ -56,7 +56,7 @@
             </span>
         </div>
         <div class="submit-btns">
-            <button type="submit" class="form-btn-primary" [disabled]="!signUpForm.valid">Weiter</button>
+            <button type="submit" class="form-btn-primary" [disabled]="!signUpForm.valid || loading">Weiter</button>
         </div>
     </form>
     <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">

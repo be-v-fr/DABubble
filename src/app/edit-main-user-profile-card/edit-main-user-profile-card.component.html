@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="profileImg">
-    <img class="#" src="../../assets/img/userProfileImg/Sofia Müller.png" />
+    <img class="#" src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}" />
   </div>
 
   <div class="inputContainer">
@@ -22,7 +22,7 @@
         <p>Vollständiger Name</p>
       </div>
       <div class="inputField">
-        <input type="text" placeholder="Sofia Müller" />
+        <input type="text" placeholder="{{ mainUser.name || 'Vorname Name'}}" value="{{ mainUser.name }}" />
       </div>
     </div>
 
@@ -32,7 +32,7 @@
         <p>E-Mail-Adresse</p>
       </div>
       <div class="inputField">
-        <input type="email" placeholder="sofia.muel@beispiel.com"  pattern="[a-zA-Z0-9\.!%_\+\-]{1,64}[@][a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,6}"/>
+        <input type="email" placeholder="{{ mainUser.email || 'vorname.name&#64;beispiel.de' }}"  pattern="[a-zA-Z0-9\.!%_\+\-]{1,64}[@][a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,6}" value="{{ mainUser.email }}"/>
       </div>
     </div>
 
