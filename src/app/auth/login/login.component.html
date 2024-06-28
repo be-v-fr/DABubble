@@ -30,13 +30,13 @@
             <span>ODER</span>
             <hr class="or-separator bg-purple-light">
         </div>
-        <button class="form-field google-btn bg-violet" type="button" (click)="logInWithGoogle()">
+        <button class="form-field google-btn bg-violet" type="button" (click)="logInWithGoogle()" [disabled]="loading">
             <img src="assets/img/icons/google_logo.svg" alt="Google">
             <span>Anmelden mit Google</span>
         </button>
         <div class="submit-btns">
-            <button type="submit" class="form-btn-primary">Anmelden</button>
-            <button type="button" class="form-btn-secondary" (click)="logInAsGuest()">Gäste-Login</button>
+            <button type="submit" class="form-btn-primary" [disabled]="loading">Anmelden</button>
+            <button type="button" class="form-btn-secondary" (click)="logInAsGuest()" [disabled]="loading">Gäste-Login</button>
         </div>
     </form>
     <!-- <img src="assets/img/logo_name.svg" alt="DABubble" class="logo"> -->

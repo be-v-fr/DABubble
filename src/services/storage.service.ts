@@ -27,7 +27,7 @@ export class StorageService {
       await this.upload(img, ref);
       return this.getUrl(ref);
     } else {
-      return 'err/not-an-image'; // use "catch" or "throw" instead ??
+      throw('err/not-an-image');
     }
   }
 

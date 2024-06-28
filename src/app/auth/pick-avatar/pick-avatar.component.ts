@@ -28,6 +28,8 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
   userSub = new Subscription();
   usersSub = new Subscription();
   customFile: any = '';
+  loading: boolean = true;
+  fileError: string | null = null;
 
   ngOnInit(): void {
     this.userSub = this.subUser();
@@ -43,6 +45,7 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
       if (user && user.displayName) {
         const uid = this.authService.getCurrentUid();
         if (uid) {
+          this.loading = false;
           this.userData.uid = uid;
           this.setPreSelectionAvatar();
         };
@@ -52,7 +55,6 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
   }
 
 
-  // needed for Google Account Avatar
   setPreSelectionAvatar() {
     this.syncAvatar();
     this.usersSub = this.subUsers();
@@ -68,26 +70,54 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
   }
 
   selectDefaultAvatar(index: string) {
+    this.resetFileError();
     this.userData.avatarSrc = `assets/img/avatar/avatar_${index}.svg`;
   }
 
   async onCustomSelection(e: Event) {
-    // implement user feedback in case file is invalid (e.g. no image)
-    // disable Submit-Button while uploading
+    this.resetFileError();
+    this.loading = true;
     const input = e.target as HTMLInputElement;
     if (input.files) {
       this.storageService.uploadAvatar(input.files[0], this.userData.uid)
-        .then((response) => {
-          if (response.includes(this.userData.uid)) {
-            this.userData.avatarSrc = response;
-            this.usersService.updateUser(new User(this.userData));
-          }
-        })
+        .then((response) => this.onCustomUpload(response))
+        .catch((err: Error) => this.onError(err));
     }
+  }
+
+  onError(err: Error) {
+    this.setFileError(err.toString());
+    this.loading = false;    
+  }
+
+  async onCustomUpload(response: any) {
+    if (response.includes(this.userData.uid)) {
+      this.userData.avatarSrc = response;
+      this.usersService.updateUser(new User(this.userData))
+        .catch((err: Error) => this.onError(err));
+      this.loading = false;
+    }
+  }
+
+  setFileError(response?: string) {
+    this.fileError = response ? this.getFileError(response) : this.getFileError();
+  }
+
+  getFileError(response?: string): string {
+    if (response && response.includes('err/not-an-image')) {
+      return 'Ungültiger Dateityp.'
+    } else {
+      return 'Upload fehlgeschlagen.'
+    }
+  }
+
+  resetFileError(): void {
+    this.fileError = null;
   }
 
   unselectAvatar() {
     this.userData.avatarSrc = 'assets/img/profile_blank.svg';
+    this.resetFileError();
   }
 
   onSubmit(form: NgForm) {

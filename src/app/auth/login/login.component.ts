@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
@@ -28,6 +28,7 @@ export class LoginComponent {
   }
   authError: string | null = null;
   showToast: boolean = false;
+  loading: boolean = false;
   // ToDo:
   // - General Functionality
   //    - Guest Login
@@ -41,17 +42,24 @@ export class LoginComponent {
   }
 
   logIn() {
+    this.loading = true;
     this.showToast = true;
     this.authService.logIn(this.userData.email, this.userData.password).subscribe({
       next: () => this.onLogIn(),
-      error: (err) => this.setAuthError(err.toString())
+      error: (err) => this.onError(err)
     });
   }
 
+  onError(err: Error) {
+    this.setAuthError(err.toString());
+    this.loading = false;    
+  }
+
   logInWithGoogle() {
+    this.loading = true;
     this.authService.logInWithGoogle().subscribe({
       next: () => this.onGoogleLogin(),
-      error: (err) => this.setAuthError(err.toString())
+      error: (err) => this.onError(err)
     });
   }
 
@@ -62,7 +70,8 @@ export class LoginComponent {
     if (userRef) {
       const userObj = this.constructUserFromGoogleAuth(userRef);
       this.handleGoogleUserRegistrationStatus(userObj)
-        .then(() => this.onLogIn());
+        .then(() => this.onLogIn())
+        .catch((err) => this.onError(err));
     }
   }
 
@@ -89,10 +98,11 @@ export class LoginComponent {
   }
 
   logInAsGuest() {
+    this.loading = true;
     this.showToast = true;
     this.authService.logInAsGuest().subscribe({
       next: () => this.onLogIn(),
-      error: (err) => this.setAuthError(err.toString())
+      error: (err) => this.onError(err)
     });
   }
 
@@ -123,7 +133,7 @@ export class LoginComponent {
 
   redirect() {
     let route = '';
-    switch(this.redirectTo) {
+    switch (this.redirectTo) {
       case 'home': break;
       case 'avatar': route = 'auth/pickAvatar';
     }

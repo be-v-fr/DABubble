@@ -26,6 +26,7 @@ export class SignUpComponent {
   }
   showToast: boolean = false;
   authError: string | null = null;
+  loading: boolean = false;
   // ToDo:
   // - Während Signup disablen, um zweifaches Absenden zu unterbinden
   // - Impressum: Input-Variable, um Back-Button auszublenden?? Oder stattdessen beim Aufrufen der Privacy Policy Login-Daten zwischenspeichern (z.B. als Service)
@@ -36,10 +37,16 @@ export class SignUpComponent {
   }
 
   signUp() {
+    this.loading = true;
     this.authService.register(this.user.name, this.user.email, this.user.password).subscribe({
       next: () => this.onSignUp(),
-      error: () => this.setAuthError()
-    });    
+      error: () => this.onError()
+    });
+  }
+
+  onError() {
+    this.setAuthError();
+    this.loading = false;    
   }
 
   onSignUp() {
@@ -51,7 +58,8 @@ export class SignUpComponent {
         name: this.user.name,
         email: this.user.email
       });
-      this.usersService.addUser(user);
+      this.usersService.addUser(user)
+        .catch(() => this.onError());
     }
   }
 

@@ -24,10 +24,14 @@
                 <span>eigenes Bild verwenden</span>
                 <input type="file" #fileInput name="fileInput" style="display: none" ngModel (change)="onCustomSelection($event)"
                     accept="image/*">
-                <button type="button" class="form-btn-secondary" (click)="fileInput.click()">Datei hochladen</button>
+                <button type="button" class="form-btn-secondary" (click)="fileInput.click()" [disabled]="loading">Datei hochladen</button>
+                @if(fileError)
+                {<p class="error-msg">
+                    {{fileError}}
+                </p>}
             </div>
             <div class="submit-btns">
-                <button type="submit" class="form-btn-primary">Weiter</button>
+                <button type="submit" class="form-btn-primary" [disabled]="loading">Weiter</button>
             </div>
         </section>
     </form>

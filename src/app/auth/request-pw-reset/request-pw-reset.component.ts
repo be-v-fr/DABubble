@@ -19,16 +19,21 @@ export class RequestPwResetComponent {
     email: ''
   }
   showToast: boolean = false;
+  loading: boolean = false;
 
   onSubmit(form: NgForm) {
-    if (form.submitted && form.valid) {this.requestPasswordReset()}
+    if (form.submitted && form.valid) { this.requestPasswordReset() }
   }
 
 
   requestPasswordReset() {
+    this.loading = true;
     this.authService.requestPasswordReset(this.data.email).subscribe({
       next: () => this.onRequest(),
-      error: (err) => console.error(err)
+      error: (err) => {
+        console.error(err);
+        this.loading = false;
+      }
     });
   }
 
@@ -37,7 +42,6 @@ export class RequestPwResetComponent {
   }
 
   afterToast() {
-    // proceed via router
-    console.log('afterToast() called');
+    this.loading = false;
   }
 }
