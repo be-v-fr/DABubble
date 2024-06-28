@@ -1,9 +1,8 @@
-import { Component, Inject, inject, Input, input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { EditUserLogOutCardComponent } from '../../edit-user-log-out-card/edit-user-log-out-card.component';
-import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
-import { HomeComponent } from '../home.component';
 import { User } from '../../../models/user.class';
 
 @Component({
@@ -23,31 +22,37 @@ import { User } from '../../../models/user.class';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  @Input() mainuser!: User;
+  @Input() mainUser: User = new User;
 
   // readonly dialog = inject(MatDialog);
   constructor(public dialogRef: MatDialogRef<EditUserLogOutCardComponent>, 
     public dialog: MatDialog, 
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) {
+      if (this.mainUser.uid == '') {
+        console.info('mainuser is empty!'); // remove later
+        // this.authService.logOut();
+        // this.router.navigate(['auth']);
+      } else {
+        console.info('mainuser has data!'); // remove later
+      }
+  }
+    
 
   openUserLogoutCard(): void {
-    this.dialogRef = this.dialog.open(EditUserLogOutCardComponent);
+    this.dialogRef = this.dialog.open(EditUserLogOutCardComponent, {
+      data: {
+        mainUser: this.mainUser
+      }
+    });
 
     this.dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog "EditUserLogOutCard" was Closed.', result);
+      console.log('The dialog "EditUserLogOutCard" was Closed.', result); // remove later
       if (result == 'logout') {
         this.authService.logOut();
         this.router.navigate(['auth']);
       }
     });
-
-    // this.dialogref = this.dialog.open(EditUserLogOutCardComponent);
-
-    // // Wenn Dialog geschlossen wird, auf das Schliessen reagieren
-    // this.dialogref.afterClosed().subscribe(result => {
-    //   console.log('The dialog "EditUserLogOutCard" was Closed.', result);
-    // });
   }
 }

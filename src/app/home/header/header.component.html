@@ -11,9 +11,9 @@
         </div>
     </div>
     <div class="userprofile-wrapper" (click)="openUserLogoutCard()">
-        <span class="userprofile-name">{{ mainuser.name }}</span>
+        <span class="userprofile-name">{{ mainUser.name || '...' }}</span>
         <div class="userprofile-image-box">
-            <img src="{{ mainuser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}">
+            <img src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}">
             <div class="onlinedot"></div>
         </div>
         <div class="userprofile-menu-box">
