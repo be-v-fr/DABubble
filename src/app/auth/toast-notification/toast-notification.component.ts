@@ -9,7 +9,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrl: './toast-notification.component.scss'
 })
 export class ToastNotificationComponent {
-  @Input() message: 'login' | 'signup' | 'email' = 'login';
+  @Input() message: 'login' | 'signup' | 'email' | 'resetPw' = 'login';
   @Output() then = new EventEmitter<void>;
 
   private _showing: boolean = false;

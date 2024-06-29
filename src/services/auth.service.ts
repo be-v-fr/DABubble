@@ -10,7 +10,7 @@ import {
   updateProfile,
   user
 } from "@angular/fire/auth";
-import { sendPasswordResetEmail } from "firebase/auth";
+import { sendPasswordResetEmail, confirmPasswordReset } from "firebase/auth";
 import { Observable, from } from "rxjs";
 
 
@@ -64,7 +64,7 @@ export class AuthService {
     const promise = signInWithPopup(
       this.firebaseAuth,
       new GoogleAuthProvider()
-    ).then(() => {});
+    ).then(() => { });
     return from(promise);
   }
 
@@ -90,6 +90,16 @@ export class AuthService {
     return from(promise);
   }
 
+
+  resetPassword(oobCode: string, password: string): Observable<void> {
+    const promise = confirmPasswordReset(
+      this.firebaseAuth,
+      oobCode,
+      password
+    ).then(() => { });
+    return from(promise);
+  }
+  
 
   /**
    * Log out

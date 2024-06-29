@@ -34,6 +34,8 @@
                 {<p class="error-msg">
                     Ihre Kennwörter stimmen nicht überein.
                 </p>}
+                @else if(resetPwForm.submitted && authError)
+                {<p class="error-msg">{{authError}}</p>}
             </div>
             <div class="submit-btns">
                 <button type="submit" class="form-btn-primary" [disabled]="!validateForm(resetPwForm)">Passwort
@@ -43,4 +45,5 @@
     </form>
     <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
     <app-legal-footer></app-legal-footer>
+    <app-toast-notification [message]="'resetPw'" [showing]="showToast" (then)="afterToast()"></app-toast-notification>
 </div>

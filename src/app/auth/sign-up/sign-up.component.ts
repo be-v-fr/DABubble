@@ -32,7 +32,6 @@ export class SignUpComponent {
   // - Validation: This email address is already taken
   onSubmit(form: NgForm) {
     if (form.submitted && form.valid) { this.signUp() }
-    else { console.error('Sign up failed.') }
   }
 
   signUp() {
