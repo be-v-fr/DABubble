@@ -27,12 +27,12 @@ export class StorageService {
       await this.upload(img, ref);
       return this.getUrl(ref);
     } else {
-      throw('err/not-an-image');
+      throw ('err/not-an-image');
     }
   }
 
   isImage(img: File): boolean {
-    return img.type.includes('image'); // check if all image file extensions are actually noted as "image/[extension]"
+    return img.type.includes('image');
   }
 
 
@@ -43,7 +43,7 @@ export class StorageService {
         dir.items.forEach((fileRef: any) => deleteObject(fileRef));
         dir.prefixes.forEach((folderRef: any) => this.deleteFolder(folderRef.fullPath))
       })
-      .catch((error: Error) => console.log(error));
+      .catch((err: Error) => console.error(err));
   }
 
 
@@ -52,12 +52,12 @@ export class StorageService {
   }
 
 
-  // implement file compression or maximum file size on upload
+  // OPTIONAL: implement file compression or maximum file size on upload
   async uploadAvatar(img: File, uid: string): Promise<string> {
     const relFilePath = 'avatars/' + this.generateAvatarName(img, uid);
     const fileRef: any = ref(this.storage, relFilePath);
     const previousAvatarRef = await this.getAvatarRef(uid)
-    if(previousAvatarRef) {await deleteObject(previousAvatarRef)};
+    if (previousAvatarRef) { await deleteObject(previousAvatarRef) };
     return await this.uploadImage(img, fileRef);
   }
 
@@ -65,7 +65,6 @@ export class StorageService {
   generateAvatarName(img: File, uid: string): string {
     const nameParts = img.name.split('.');
     const fileExtension = nameParts[nameParts.length - 1];
-    console.log('new avatar file name:', uid + '.' + fileExtension); // remove later
     return uid + '.' + fileExtension;
   }
 
@@ -73,15 +72,9 @@ export class StorageService {
   async getAvatarRef(uid: string): Promise<any> {
     await listAll(this.avatarsRef)
       .then((dir: any) => {
-        dir.items.forEach((fileRef: any) => {
-          console.log(fileRef);
-          if (fileRef.name.includes(uid)) {
-            console.log('previous avatar ref:', fileRef.name); // remove later 
-            return fileRef;
-          }
-        });
+        dir.items.forEach((fileRef: any) => { if (fileRef.name.includes(uid)) { return fileRef } });
         return undefined;
       })
-      .catch((error: Error) => console.log(error));
+      .catch((err: Error) => console.error(err));
   }
 }

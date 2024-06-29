@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
@@ -11,7 +12,7 @@ import { User } from '../../../models/user.class';
 @Component({
   selector: 'app-pick-avatar',
   standalone: true,
-  imports: [FormsModule, RouterLink, LegalFooterComponent],
+  imports: [CommonModule, FormsModule, RouterLink, LegalFooterComponent],
   templateUrl: './pick-avatar.component.html',
   styleUrl: './pick-avatar.component.scss'
 })
@@ -29,6 +30,7 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
   usersSub = new Subscription();
   customFile: any = '';
   loading: boolean = true;
+  initializing: boolean = true;
   fileError: string | null = null;
 
   ngOnInit(): void {
@@ -43,12 +45,11 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
   subUser(): Subscription {
     return this.authService.user$.subscribe((user) => {
       if (user && user.displayName) {
+        this.loading = false;
+        this.initializing = false;
         const uid = this.authService.getCurrentUid();
-        if (uid) {
-          this.loading = false;
-          this.userData.uid = uid;
-          this.setPreSelectionAvatar();
-        };
+        if (uid) {this.userData.uid = uid};
+        this.setPreSelectionAvatar();
         this.userData.name = user.displayName;
       }
     });
@@ -94,8 +95,8 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
     if (response.includes(this.userData.uid)) {
       this.userData.avatarSrc = response;
       this.usersService.updateUser(new User(this.userData))
+        .then(() => this.loading = false)
         .catch((err: Error) => this.onError(err));
-      this.loading = false;
     }
   }
 

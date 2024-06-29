@@ -28,7 +28,6 @@ export class SignUpComponent {
   authError: string | null = null;
   loading: boolean = false;
   // ToDo:
-  // - Während Signup disablen, um zweifaches Absenden zu unterbinden
   // - Impressum: Input-Variable, um Back-Button auszublenden?? Oder stattdessen beim Aufrufen der Privacy Policy Login-Daten zwischenspeichern (z.B. als Service)
   // - Validation: This email address is already taken
   onSubmit(form: NgForm) {

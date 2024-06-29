@@ -52,24 +52,24 @@ export class LoginComponent {
 
   onError(err: Error) {
     this.setAuthError(err.toString());
-    this.loading = false;    
+    this.loading = false;
   }
 
   logInWithGoogle() {
     this.loading = true;
     this.authService.logInWithGoogle().subscribe({
-      next: () => this.onGoogleLogin(),
+      next: () => this.onGoogleLogIn(),
       error: (err) => this.onError(err)
     });
   }
 
 
-  onGoogleLogin() {
+  onGoogleLogIn() {
     this.showToast = true;
     const userRef = this.authService.getCurrent();
     if (userRef) {
       const userObj = this.constructUserFromGoogleAuth(userRef);
-      this.handleGoogleUserRegistrationStatus(userObj)
+      this.handleExternalUserRegistrationStatus(userObj)
         .then(() => this.onLogIn())
         .catch((err) => this.onError(err));
     }
@@ -86,14 +86,14 @@ export class LoginComponent {
   }
 
 
-  async handleGoogleUserRegistrationStatus(user: User): Promise<void> {
+  async handleExternalUserRegistrationStatus(user: User): Promise<void> {
     if (this.usersService.isRegisteredUser(user.uid)) {
       await this.usersService.updateUser(user);
       this.redirectTo = 'home';
     }
     else {
       await this.usersService.addUser(user);
-      this.redirectTo = 'avatar';
+      this.redirectTo = (user.name == 'Gast' ? 'home' : 'avatar');
     }
   }
 
@@ -101,8 +101,26 @@ export class LoginComponent {
     this.loading = true;
     this.showToast = true;
     this.authService.logInAsGuest().subscribe({
-      next: () => this.onLogIn(),
+      next: () => this.onGuestLogIn(),
       error: (err) => this.onError(err)
+    });
+  }
+
+  onGuestLogIn() {
+    this.showToast = true;
+    const userRef = this.authService.getCurrent();
+    if (userRef) {
+      const userObj = this.constructGuestUser(userRef);
+      this.handleExternalUserRegistrationStatus(userObj)
+        .then(() => this.onLogIn())
+        .catch((err) => this.onError(err));
+    }
+  }
+
+  constructGuestUser(authData: any): User {
+    return new User({
+      uid: authData.uid,
+      name: 'Gast'
     });
   }
 

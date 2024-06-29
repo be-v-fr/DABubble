@@ -64,7 +64,7 @@ export class AuthService {
     const promise = signInWithPopup(
       this.firebaseAuth,
       new GoogleAuthProvider()
-    ).then((response) => {console.log(response) }); // remove later
+    ).then(() => {});
     return from(promise);
   }
 
@@ -72,7 +72,8 @@ export class AuthService {
   logInAsGuest(): Observable<void> {
     const promise = signInAnonymously(
       this.firebaseAuth
-    ).then(() => { });
+    ).then(() => { })
+    .catch(() => {});
     return from(promise);
   }
 
