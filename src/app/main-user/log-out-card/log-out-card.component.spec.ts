@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditUserLogOutCardComponent } from './edit-user-log-out-card.component';
+import { EditUserLogOutCardComponent } from './log-out-card.component';
 
 describe('EditUserLogOutCardComponent', () => {
   let component: EditUserLogOutCardComponent;

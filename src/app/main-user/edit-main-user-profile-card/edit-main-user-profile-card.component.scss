@@ -1,4 +1,4 @@
-@import "../../styles.scss";
+@import "../../../styles.scss";
 
 .inputContainer {
     display: flex;
@@ -75,8 +75,19 @@
         font-weight: 700;
         font-size: 24px;
     }
-    img {
-        cursor: pointer;
+    a {
+        width: 40px;
+        height: 40px;
+        border-radius: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            cursor: pointer;
+        }
+        &:hover {
+            background-color: $violet-bright;
+        }
     }
 }
 

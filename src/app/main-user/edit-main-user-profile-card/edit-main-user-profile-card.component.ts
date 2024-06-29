@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
-import { User } from '../../models/user.class';
+import { User } from '../../../models/user.class';
 
 @Component({
     selector: 'app-edit-main-user-profile-card',

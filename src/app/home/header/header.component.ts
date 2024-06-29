@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { EditUserLogOutCardComponent } from '../../edit-user-log-out-card/edit-user-log-out-card.component';
+import { LogOutCardComponent } from '../../main-user/log-out-card/log-out-card.component';
 import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
@@ -9,7 +9,7 @@ import { User } from '../../../models/user.class';
   selector: 'app-header',
   standalone: true,
   imports: [
-    EditUserLogOutCardComponent,
+    LogOutCardComponent,
     MatDialogModule
   ],
   providers: [
@@ -24,31 +24,22 @@ import { User } from '../../../models/user.class';
 export class HeaderComponent {
   @Input() mainUser: User = new User;
 
-  // readonly dialog = inject(MatDialog);
-  constructor(public dialogRef: MatDialogRef<EditUserLogOutCardComponent>, 
+  constructor(
+    public dialogRef: MatDialogRef<LogOutCardComponent>, 
     public dialog: MatDialog, 
     private router: Router,
     private authService: AuthService
-  ) {
-      if (this.mainUser.uid == '') {
-        console.info('mainuser is empty!'); // remove later
-        // this.authService.logOut();
-        // this.router.navigate(['auth']);
-      } else {
-        console.info('mainuser has data!'); // remove later
-      }
-  }
-    
+  ) {}
 
   openUserLogoutCard(): void {
-    this.dialogRef = this.dialog.open(EditUserLogOutCardComponent, {
+    this.dialogRef = this.dialog.open(LogOutCardComponent, {
       data: {
         mainUser: this.mainUser
       }
     });
 
     this.dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog "EditUserLogOutCard" was Closed.', result); // remove later
+      console.log('The dialog "LogOutCard" was Closed.', result); // remove later
       if (result == 'logout') {
         this.authService.logOut();
         this.router.navigate(['auth']);

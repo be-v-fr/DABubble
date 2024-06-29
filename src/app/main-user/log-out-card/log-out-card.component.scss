@@ -1,16 +1,17 @@
-@import "../../styles.scss";
+@import "../../../styles.scss";
 
 .userLogOutMenu {
   position: fixed;
   right: 35px;
   top: 95px;
-  background-color: transparent;
   height: 181px;
   width: 282px;
+  background-color: transparent;
   .userLogOutContainer {
     position: relative;
-    height: 181px;
-    width: 282px;
+    height: fit-content;
+    padding: 30px;
+    // width: 282px;
     border-radius: 30px 0px 30px 30px;
     background-color: white;
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
@@ -19,14 +20,14 @@
     justify-content: center;
     gap: 15px;
     div {
+      // margin-left: 30px;
       width: 222px;
       height: 53px;
-      margin-left: 30px;
+      outline: none;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      outline: none;
       &:hover {
           color: $purple-blue-bright;
           background-color: $violet-bright;

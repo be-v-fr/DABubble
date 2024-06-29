@@ -1,0 +1,33 @@
+<div class="userCard">
+  <div class="head">
+    <p>Profil</p>
+    <div class="close-btn">
+      <a (click)="closeDialog()">
+        <img src="/assets/img/userProfileImg/close.svg" />
+      </a>
+    </div>
+  </div>
+  <div class="profileImg">
+    <img class="#" src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}" />
+  </div>
+  <div class="userName">
+      <div class="nameAndEdit">
+    <h1>{{ mainUser.name || 'Sofia Müller'}}</h1>
+    <p class="edit" (click)="openEditProfile(mainUser)">Bearbeiten</p>
+  </div>
+    <div class="online">
+      <p></p>
+      <p>Aktiv</p>
+    </div>
+  </div>
+  <div class="emailContainer">
+    <div class="email">
+      <img src="/assets/img/userProfileImg/mail.png" />
+      <p>E-Mail-Adresse</p>
+    </div>
+    <div class="showEmail">
+      <p>{{ mainUser.email || 'sofia.muel&#64;beispiel.com' }}</p>
+    </div>
+  </div>
+</div>
+  
