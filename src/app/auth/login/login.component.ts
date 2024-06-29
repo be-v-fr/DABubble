@@ -29,10 +29,6 @@ export class LoginComponent {
   authError: string | null = null;
   showToast: boolean = false;
   loading: boolean = false;
-  // ToDo:
-  // - General Functionality
-  //    - Guest Login
-  //
   // Details:
   // - Password visibility options (if desired)
   // - DABubble Logo should be clickable

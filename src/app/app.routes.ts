@@ -19,9 +19,10 @@ import { AddMembersComponent } from './add-members/add-members.component';
 import { AddChannelComponent } from './add-channel/add-channel.component';
 import { DirectMessageComponent } from './components/direct-message/direct-message.component';
 
+import { authGuard } from './shared/auth.guard';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/main-chat', pathMatch: 'full' },
+    { path: '', canActivate: [authGuard], pathMatch: 'full', component: HomeComponent},
     {
         path: '', component: HomeComponent,
         children: [

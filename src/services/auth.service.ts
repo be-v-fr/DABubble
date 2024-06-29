@@ -72,8 +72,7 @@ export class AuthService {
   logInAsGuest(): Observable<void> {
     const promise = signInAnonymously(
       this.firebaseAuth
-    ).then(() => { })
-    .catch(() => {});
+    ).then(() => { });
     return from(promise);
   }
 
@@ -87,7 +86,7 @@ export class AuthService {
     const promise = sendPasswordResetEmail(
       this.firebaseAuth,
       email
-    ).then(() => { console.log('Email sent!') });
+    ).then(() => { });
     return from(promise);
   }
 
