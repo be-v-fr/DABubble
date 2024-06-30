@@ -17,9 +17,11 @@ $onlinedot-offline: #686868; // this is identical to "grey"
 
 @mixin transition($duration: 100ms) {
     transition: $duration ease;
+
     &:hover {
         transition: $duration ease;
     }
+
     &:active {
         transition: $duration ease;
     }
@@ -178,7 +180,7 @@ a {
 
 .to-black {
     @include transition();
-    filter: brightness(0);   
+    filter: brightness(0);
 }
 
 .link-purple {
@@ -214,4 +216,10 @@ a {
     &:hover {
         border: 1px solid #ADB0D9;
     }
+}
+
+
+emoji-mart {
+    position: absolute;
+    top: 50px;
 }

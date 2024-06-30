@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class MessageItemComponent {
   @Input() emojis: { unified: string, native: string, count: number }[] = [];
+  @Input() messageSender = false;
   @Input() hideEmojiPicker = false;
   @Output() showEmojiPicker = new EventEmitter<boolean>();
 

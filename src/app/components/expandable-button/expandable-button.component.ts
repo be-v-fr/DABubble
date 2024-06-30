@@ -10,8 +10,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './expandable-button.component.scss',
 })
 export class ExpandableButtonComponent {
-  isMenuExpanded = false;
-
+  isMenuExpanded = true;
   title = input.required<string>();
   icon = input.required<string>();
   showBtn = input.required<boolean>();

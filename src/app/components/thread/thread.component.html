@@ -20,12 +20,9 @@
                             <button>
                                 <span class="material-icons-outlined">add_reaction</span>
                             </button>
-                            <button>
-                                <span class="material-icons-outlined">insert_comment</span>
-                            </button>
-                            <button>
+                            <!-- <button>
                                 <span class="material-icons-outlined">more_verti</span>
-                            </button>
+                            </button> -->
                         </div>
                         <div class="img-container">
                             <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
@@ -71,6 +68,8 @@
                 <div class="antworten-separator">2 Antworten</div>
             </div>
             <div class="thread-antworten">
+                <app-message-item [emojis]="emojis" [hideEmojiPicker]="emojiPicker"
+                    (showEmojiPicker)="handleStateChange($event)" [messageSender]="true" />
                 <!-- <app-message-item />
                 <app-message-item />
                 <app-message-item /> -->
@@ -78,5 +77,6 @@
         </div>
     </div>
     <app-message-box />
-
+    <emoji-mart title="Pick your emoji…" (emojiClick)="addEmoji($event)" emoji="point_up"
+        *ngIf="emojiPicker"></emoji-mart>
 </div>

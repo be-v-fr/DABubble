@@ -27,7 +27,7 @@
         <div class="message-item-container" *ngIf="messages">
             <app-time-separator />
             <app-message-item [emojis]="emojis" [hideEmojiPicker]="emojiPicker"
-                (showEmojiPicker)="handleStateChange($event)" />
+                (showEmojiPicker)="handleStateChange($event)" [messageSender]="true" />
         </div>
         <!-- <div class="message-item-container" *ngIf="messages">
             <app-time-separator />
