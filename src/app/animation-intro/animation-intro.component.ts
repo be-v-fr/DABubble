@@ -12,6 +12,8 @@ export class AnimationIntroComponent implements OnInit {
   @Input() animate: boolean = true;
   @Output() then = new EventEmitter<void>();
   after: boolean = false;
+  // ToDo:
+  // - DABubble Logo should be clickable
 
   private _pause: boolean = false;
   @Input()

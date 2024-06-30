@@ -1,6 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
+
+/**
+ * This component displays a toast notification to the user.
+ * 
+ * The message is handled via the input parameter "message".
+ * After the message timeout has expired, the component will output a <void> "then" event.
+ * 
+ * Example of usage:
+ * <app-toast-notification [message]="'login'" [showing]="showToast" (then)="afterToast()"></app-toast-notification>
+ */
 @Component({
   selector: 'app-toast-notification',
   standalone: true,

@@ -9,6 +9,10 @@ import { AnimationIntroComponent } from '../../animation-intro/animation-intro.c
 import { UsersService } from '../../../services/users.service';
 import { User } from '../../../models/user.class';
 
+
+/**
+ * This component displays the login page with the login form at the center.
+ */
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -29,14 +33,21 @@ export class LoginComponent {
   authError: string | null = null;
   showToast: boolean = false;
   loading: boolean = false;
-  // Details:
-  // - Password visibility options (if desired)
-  // - DABubble Logo should be clickable
   redirectTo: 'home' | 'avatar' = 'home';
+
+
+  /**
+   * This function is triggered by the login form submission.
+   * @param form - login form
+   */
   onSubmit(form: NgForm) {
     if (form.submitted && form.valid) { this.logIn() }
   }
 
+
+  /**
+   * This function logs in the user via authentication service.
+   */
   logIn() {
     this.loading = true;
     this.showToast = true;
@@ -46,11 +57,20 @@ export class LoginComponent {
     });
   }
 
+
+  /**
+   * This function handles system errors/exceptions during login.
+   * @param err - error
+   */
   onError(err: Error) {
     this.setAuthError(err.toString());
     this.loading = false;
   }
 
+
+  /**
+   * This function calls Google log in via authentication service.
+   */
   logInWithGoogle() {
     this.loading = true;
     this.authService.logInWithGoogle().subscribe({
@@ -60,6 +80,10 @@ export class LoginComponent {
   }
 
 
+  /**
+   * This function handles Google log in. In doing so, it checks whether the user has logged in before.
+   * When a Google user logs in for the first time, a new user is created in the database.
+   */
   onGoogleLogIn() {
     this.showToast = true;
     const userRef = this.authService.getCurrent();
@@ -72,6 +96,11 @@ export class LoginComponent {
   }
 
 
+  /**
+   * This function creates a User() from the Google log in response.
+   * @param authData - log in response data
+   * @returns new User() object
+   */
   constructUserFromGoogleAuth(authData: any): User {
     return new User({
       uid: authData.uid,
@@ -82,6 +111,11 @@ export class LoginComponent {
   }
 
 
+  /**
+   * This function handles the registration status of external users.
+   * Google users and guest users are considered external users.
+   * @param user User() object to be checked
+   */
   async handleExternalUserRegistrationStatus(user: User): Promise<void> {
     if (this.usersService.isRegisteredUser(user.uid)) {
       await this.usersService.updateUser(user);
@@ -93,6 +127,10 @@ export class LoginComponent {
     }
   }
 
+
+  /**
+   * This function calls anonymous guest log in.
+   */
   logInAsGuest() {
     this.loading = true;
     this.showToast = true;
@@ -102,6 +140,10 @@ export class LoginComponent {
     });
   }
 
+
+  /**
+   * This function handles anonymous guest log in.
+   */
   onGuestLogIn() {
     this.showToast = true;
     const userRef = this.authService.getCurrent();
@@ -113,6 +155,12 @@ export class LoginComponent {
     }
   }
 
+
+  /**
+   * This function creates a User() from the guest log in response.
+   * @param authData - log in response data
+   * @returns new User() object
+   */
   constructGuestUser(authData: any): User {
     return new User({
       uid: authData.uid,
@@ -120,10 +168,22 @@ export class LoginComponent {
     });
   }
 
+
+  /**
+   * This function sets the "authError" property.
+   * @param response - error from log in response
+   */
   setAuthError(response?: string) {
     this.authError = response ? this.getAuthError(response) : this.getAuthError();
   }
 
+
+  /**
+   * This function translates the system's error messages to German error messages
+   * to be displayed to the user.
+   * @param response - error from log in response
+   * @returns German error message for the UI
+   */
   getAuthError(response?: string): string {
     if (response && response.includes('auth/invalid-credential')) {
       return 'Falsches Passwort oder E-Mail-Adresse.'
@@ -132,19 +192,35 @@ export class LoginComponent {
     }
   }
 
+
+  /**
+   * This function removes the log in error message by resetting it.
+   */
   resetAuthError(): void {
     this.authError = null;
   }
 
+
+  /**
+   * This function handles the log in.
+   */
   onLogIn() {
     if (!this.showToast) { this.redirect() }
   }
 
+
+  /**
+   * This function is called when the toast notification timeout has expired.
+   */
   afterToast() {
     this.showToast = false;
     this.redirect();
   }
 
+
+  /**
+   * This function redirects the user.
+   */
   redirect() {
     let route = '';
     switch (this.redirectTo) {

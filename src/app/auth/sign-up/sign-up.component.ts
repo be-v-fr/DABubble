@@ -8,6 +8,10 @@ import { ToastNotificationComponent } from '../toast-notification/toast-notifica
 import { User } from '../../../models/user.class';
 import { UsersService } from '../../../services/users.service';
 
+
+/**
+ * This component displays the signup page with the signup form at the center.
+ */
 @Component({
   selector: 'app-sign-up',
   standalone: true,
@@ -30,10 +34,20 @@ export class SignUpComponent {
   // ToDo:
   // - Impressum: Input-Variable, um Back-Button auszublenden?? Oder stattdessen beim Aufrufen der Privacy Policy Login-Daten zwischenspeichern (z.B. als Service)
   // - Validation: This email address is already taken
+
+
+  /**
+   * This function is triggered by the signup form submission.
+   * @param form - signup form
+   */
   onSubmit(form: NgForm) {
     if (form.submitted && form.valid) { this.signUp() }
   }
 
+
+  /**
+   * This function signs up the new user via authentication service.
+   */
   signUp() {
     this.loading = true;
     this.authService.register(this.user.name, this.user.email, this.user.password).subscribe({
@@ -42,11 +56,20 @@ export class SignUpComponent {
     });
   }
 
+
+  /**
+   * This function handles system errors/exceptions during signup.
+   * @param err - error
+   */
   onError() {
     this.setAuthError();
-    this.loading = false;    
+    this.loading = false;
   }
 
+
+  /**
+   * This function handles the sign in.
+   */
   onSignUp() {
     this.showToast = true;
     const uid = this.authService.getCurrentUid();
@@ -61,10 +84,19 @@ export class SignUpComponent {
     }
   }
 
+
+  /**
+   * This function sets the "authError" property.
+   * @param response - error from log in response
+   */
   setAuthError() {
     this.authError = 'Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.';
   }
 
+
+  /**
+   * This function is called when the toast notification timeout has expired.
+   */
   afterToast() {
     this.router.navigateByUrl('auth/pickAvatar');
   }

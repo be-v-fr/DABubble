@@ -5,6 +5,10 @@ import { LegalFooterComponent } from '../legal-footer/legal-footer.component';
 import { AuthService } from '../../../services/auth.service';
 import { ToastNotificationComponent } from '../toast-notification/toast-notification.component';
 
+
+/**
+ * This component displays the password reset page with the reset form at the center.
+ */
 @Component({
   selector: 'app-reset-pw',
   standalone: true,
@@ -25,20 +29,38 @@ export class ResetPwComponent implements OnInit {
   loading: boolean = false;
   oobCode: string = '';
 
+
+  /**
+   * This function obtains the OOBCode from the Firebase email URL
+   * and stores it in the "oobCode" property. 
+   */
   ngOnInit(): void {
       this.route.queryParams.subscribe(params => this.oobCode = params['oobCode']);
   }
 
 
+  /**
+   * This function validates the reset form input fields.
+   * @param form - password reset form
+   * @returns validation result
+   */
   validateForm(form: NgForm) {
     return form.valid && this.passwords.password == this.passwords.passwordConfirmation;
   }
 
 
+  /**
+   * This function is triggered by the reset form submission.
+   * @param form - password reset form
+   */
   onSubmit(form: NgForm) {
     if (form.submitted && form.valid && this.oobCode.length > 0) {this.resetPassword() }
   }
 
+
+  /**
+   * This function resets the password using the authentication service.
+   */
   resetPassword() {
     this.loading = true;
     this.authService.resetPassword(this.oobCode, this.passwords.password).subscribe({
@@ -47,19 +69,36 @@ export class ResetPwComponent implements OnInit {
     })
   }
 
+
+  /**
+   * This function is triggered by the password reset.
+   */
   onPasswordReset() {
     this.showToast = true;
   }
 
+
+  /**
+   * This function handles errors/exceptions during password reset.
+   * @param err - error
+   */
   onError() {
     this.setAuthError();
     this.loading = false;    
   }
 
+
+  /**
+   * This function sets the error message to be displayed to the user.
+   */
   setAuthError() {
     this.authError = 'Zurücksetzen fehlgeschlagen. Bitte versuchen Sie es erneut.';
   }
 
+
+  /**
+   * This function is called when the toast notification timeout has expired.
+   */
   afterToast() {
     this.router.navigateByUrl('auth');
   }
