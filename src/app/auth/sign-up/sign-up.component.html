@@ -51,7 +51,7 @@
             </div>
             <span>
                 Ich stimme der
-                <a routerLink="/privacypolicy" target="_blank" class="link-purple-bg">Datenschutzerklärung</a>
+                <a routerLink="/privacypolicy" [queryParams]="{'back': false}" target="_blank" class="link-purple-bg">Datenschutzerklärung</a>
                 zu.
             </span>
         </div>
