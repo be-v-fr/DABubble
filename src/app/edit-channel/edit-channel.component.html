@@ -4,36 +4,60 @@
     <button class="close-thread-btn">
       <span class="material-icons-outlined">close</span>
     </button>
-
   </div>
-  <div class="explainChannel">
-  <div class="channelName">
-    <span>Channel-Name</span>
-    <span>Bearbeiten</span>
-    
-    <!-- <span>Speichern</span> -->
-  </div>
-  <div class="editChannelName">
-    <span># Entwicklerteam</span>
-  </div>
-    <!-- <input type="text" placeholder="# &nbsp; Entwicklerteam" /> -->
-</div>
-  <div class="explain">
-    <div class="channelName">
-      <span>Beschreibung</span>
-      <span>Speichern</span>
-
+  <div class="explainChannel" [ngClass]="{ 'no-border': editName }">
+    <div class="channelName" [ngClass]="{ width: editName }">
+      <div>
+        <span>Channel name</span>
+        <span *ngIf="!editName"># Entwicklerteam</span>
+      </div>
+      <div *ngIf="!editName">
+        <button (click)="toggleEditName()">Bearbeiten</button>
+      </div>
+      <div *ngIf="editName">
+        <button (click)="saveNameChanges()">Speichern</button>
+      </div>
     </div>
-    <input type="text" placeholder="Dein Text hier" />
-    <span></span>
+    <div class="editChannelName">
+      <input
+        *ngIf="editName"
+        type="text"
+        placeholder="# &nbsp; Entwicklerteam"
+      />
+    </div>
   </div>
-  <div class="createdBy">
-    <span>Erstellt von</span>
-    <span>Noah Braun</span>
-
+  <div class="explain" [ngClass]="{ 'no-border': editDescriptionMode }">
+    <div class="channelName" [ngClass]="{ width: editDescriptionMode }">
+      <div class="titleText">
+        <span>Beschreibung</span>
+        <span *ngIf="!editDescriptionMode">
+          Dieser Channel ist für alles rund um #dfsdf vorgesehen. Hier kannst du
+          zusammen mit deinem Team Meetings abhalten, Dokumente teilen und
+          Entscheidungen treffen.</span
+        >
+        <span class="line"></span>
+      </div>
+      <div class="description" *ngIf="!editDescriptionMode">
+        <button (click)="toggleEditDescriptionMode()">Bearbeiten</button>
+      </div>
+      <div *ngIf="editDescriptionMode">
+        <button (click)="saveDescriptionChanges()">Speichern</button>
+      </div>
+    </div>
+    <div></div>
+    <div class="editChannelName">
+      <input
+        *ngIf="editDescriptionMode"
+        type="text"
+        placeholder="Dein Text hier"
+      />
+    </div>
+    <div class="createdBy">
+      <span>Erstellt von</span>
+      <span>Noah Braun</span>
+    </div>
   </div>
   <div class="addChannelBtn">
     <button type="submit" class="form-btn-primary">Channel verlassen</button>
-    
   </div>
 </div>

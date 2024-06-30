@@ -32,11 +32,20 @@
 .channelName {
   display: flex;
   justify-content: space-between;
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
   span:nth-child(1) {
-    font-size: 18px;
     font-weight: 700;
+    font-size: 18px;
   }
   span:nth-child(2) {
+    font-weight: 400;
+    font-size: 18px;
+  }
+  button {
     font-size: 18px;
     font-weight: 600px;
     color: rgba(83, 90, 241, 1);
@@ -44,22 +53,29 @@
     &:hover {
       color: $purple-blue-bright !important;
       font-weight: 650 !important;
+    }
   }
+}
+.description {
+  width: 90px;
+  height: 25px;
+  margin-left: -90px;
+  button {
+    margin-left: -10px;
   }
 }
 .explain {
-  display: flex;
-  flex-direction: column;
   width: 792px;
-  height: 105px;
-  gap: 20px;
+  height: 273px;
   margin-left: 40px;
   margin-top: 20px;
+  border: 1px solid rgba(173, 176, 217, 1);
+  border-radius: 20px;
+  padding: 20px;
   span:nth-child(3) {
     width: 739px;
     border: 1px solid rgba(173, 176, 217, 1);
     margin-top: 10px;
-    margin-left: 26.5px;
   }
 
   input {
@@ -69,6 +85,7 @@
     height: 60px;
     font-size: 18px;
     font-weight: 400;
+    width: 792px;
     &:hover,
     &:focus {
       border: 1px solid rgba(83, 90, 241, 1);
@@ -88,7 +105,6 @@
     border-radius: 20px;
   }
 }
-
 
 .explainChannel {
   width: 792px;
@@ -115,32 +131,48 @@
     }
   }
 }
-.createdBy{
+.createdBy {
+  display: flex;
   flex-direction: column;
-    display: flex;
-    margin-top: 63px;
-    margin-left: 40px;
-    gap: 20px;
-    span:nth-child(1){
-      font-weight: 700;
-      font-size: 18px;
-    }
-    span:nth-child(2){
-      font-weight: 400;
-      font-size: 24px;
-      color: rgba(83, 90, 241, 1);
-    }
+  margin-top: 30px;
+  gap: 20px;
+  span:nth-child(1) {
+    font-weight: 700;
+    font-size: 18px;
+  }
+  span:nth-child(2) {
+    font-weight: 400;
+    font-size: 24px;
+    color: rgba(83, 90, 241, 1);
+  }
 }
-.addChannelBtn{
+.addChannelBtn {
   margin-left: 628px;
-    margin-top: 45px;
+  margin-top: 45px;
 }
-.editChannelName{
-  margin-top: 20px;
+.editChannelName {
+  margin-left: -20px;
+  span {
+    font-weight: 400;
+    font-size: 18px;
+    word-spacing: 10px;
+  }
+}
+.no-border {
+  border: none;
  
-    span{
-      font-weight: 400;
-      font-size: 18px;
-      word-spacing: 10px;
-    }
 }
+.width {
+  margin-left: -20px;
+  width: 792px;
+  margin-top: -30px;
+  align-items: center;
+  transition: 100ms ease-in;
+
+}
+.titleText {
+  margin-top: 20px;
+  transition: 100ms ease-in;
+
+}
+
