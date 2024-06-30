@@ -7,7 +7,7 @@
             {{ title() }}
         </div>
     </button>
-    <button *ngIf="showBtn()">
+    <button *ngIf="showBtn()" (click)="onAddChannel()">
         <span class="material-icons-outlined add-icon">add</span>
     </button>
 </div>
@@ -19,7 +19,7 @@
             <li><a routerLink="/main-chat"><span>#</span> Entwicklerteam</a></li>
             <li><a routerLink="/main-chat"><span>#</span> Entwicklerteam</a></li>
         </ul>
-        <button >
+        <button (click)="onAddChannel()">
             <span class="material-icons-outlined add-circle-icon">add_circle_outline</span>
             <span>Channel hinzufügen</span>
         </button>

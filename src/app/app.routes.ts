@@ -44,7 +44,6 @@ export const routes: Routes = [
     { path: 'LogOut', component: LogOutCardComponent },
     { path: 'addMemberChannel', component: AddMembersAfterAddChannelComponent },
     { path: 'addMember', component: AddMembersComponent },
-    { path: 'addChannel', component: AddChannelComponent },
     { path: 'editChannel', component: EditChannelComponent },
 
 ];
