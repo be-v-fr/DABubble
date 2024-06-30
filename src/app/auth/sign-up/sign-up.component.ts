@@ -31,9 +31,6 @@ export class SignUpComponent {
   showToast: boolean = false;
   authError: string | null = null;
   loading: boolean = false;
-  // ToDo:
-  // - Impressum: Input-Variable, um Back-Button auszublenden?? Oder stattdessen beim Aufrufen der Privacy Policy Login-Daten zwischenspeichern (z.B. als Service)
-  // - Validation: This email address is already taken
 
 
   /**
