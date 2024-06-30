@@ -6,6 +6,8 @@ import { MessageItemComponent } from '../message-item/message-item.component';
 import { MessageBoxComponent } from '../message-box/message-box.component';
 import { TimeSeparatorComponent } from '../time-separator/time-separator.component';
 
+import { EmojiService } from '../../../services/emoji-service/emoji-service';
+
 @Component({
   selector: 'app-main-chat',
   standalone: true,
@@ -23,26 +25,23 @@ export class MainChatComponent {
   title = input<string>('Entwicklerteam');
   messages = true;
   emojiPicker = false;
-  emojis: [{ unified: string, native: string, count: number }?] = [];
 
+  constructor(private emojiService: EmojiService) { }
 
   handleStateChange(newState: boolean) {
     this.emojiPicker = newState;
   }
 
   addEmoji(event: any) {
-    let isExist = this.emojis.find(e => e!.unified === event.emoji.unified);
-
-    if (isExist) {
-      isExist.count++;
-    } else {
-      this.emojis.push({
-        unified: event.emoji.unified,
-        native: event.emoji.native,
-        count: 1
-      })
-    }
+    this.emojiService.addEmoji({
+      unified: event.emoji.unified,
+      native: event.emoji.native
+    });
     this.emojiPicker = !this.emojiPicker;
-    console.log(this.emojis);
+    console.log(this.emojiService.getEmojis());
+  }
+
+  get emojis() {
+    return this.emojiService.getEmojis();
   }
 }

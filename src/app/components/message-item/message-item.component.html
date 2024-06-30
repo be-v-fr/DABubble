@@ -28,8 +28,8 @@
             <button>2 Antworten</button>
             <span>Letzte Antwort 14:56</span>
         </div>
-        <div class="reactions-container" *ngIf="emojis().length > 0 ">
-            <div class="reaction" *ngFor="let emoji of emojis()">
+        <div class="reactions-container" *ngIf="emojis.length > 0 ">
+            <div class="reaction" *ngFor="let emoji of emojis">
                 <div class="reaction-info">
                     <div class="reaction-info-emoji">{{ emoji?.native }}</div>
                     <div class="reaction-info-name">Max Musterman</div>
