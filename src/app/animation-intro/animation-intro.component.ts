@@ -1,6 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
+
+/**
+ * This component displays the DABubble intro animation.
+ * After the animation, a clickable DABubble logo remains.
+ * 
+ * The animation can be paused using the input parameter [pause]="true".
+ * The animation can be prevented using the input parameter [animate]="false". In that case, only the logo will be shown.
+ */
 @Component({
   selector: 'app-animation-intro',
   standalone: true,
@@ -12,8 +20,6 @@ export class AnimationIntroComponent implements OnInit {
   @Input() animate: boolean = true;
   @Output() then = new EventEmitter<void>();
   after: boolean = false;
-  // ToDo:
-  // - DABubble Logo should be clickable
 
   private _pause: boolean = false;
   @Input()
@@ -25,18 +31,34 @@ export class AnimationIntroComponent implements OnInit {
     return this._pause;
   }
 
+
+  /**
+   * This function calls the animation initialization.
+   */
   ngOnInit(): void {
     this.initAnimation();
   }
 
+
+  /**
+   * This function initializes the animation by checking the input parameters.
+   */
   initAnimation(): void {
     if (this.animate && !this.pause) {this.awaitAnimation()}
   }
 
+
+  /**
+   * This function sets the animation properties after animation completion.
+   * 
+   * The timeout duration is equal to the animation duration.
+   * Thus, the "after" property and the "(then)" event can be used to check whether the
+   * animation has been completed. 
+   */
   awaitAnimation(): void {
     setTimeout(() => {
       this.after = true;
       this.then.emit();
-    }, 3000);
+    }, 2400);
   }
 }
