@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 /**
@@ -20,6 +21,7 @@ export class AnimationIntroComponent implements OnInit {
   @Input() animate: boolean = true;
   @Output() then = new EventEmitter<void>();
   after: boolean = false;
+  private router = inject(Router);
 
   private _pause: boolean = false;
   @Input()
@@ -60,5 +62,14 @@ export class AnimationIntroComponent implements OnInit {
       this.after = true;
       this.then.emit();
     }, 2400);
+  }
+
+
+  /**
+   * This function checks whether the current route belongs to an auth (authentication) component.
+   * @returns check result
+   */
+  onAuthRoute(): boolean {
+    return !this.router.url.includes('auth');
   }
 }

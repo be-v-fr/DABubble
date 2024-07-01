@@ -1,12 +1,15 @@
 <div class="overlay" [ngClass]="{'hide': after || !animate, 'paused': pause}"></div>
-<div class="logo-wrapper" [ngClass]="{'logo-animate': animate, 'paused': pause}">
-    <a href="" class="logo-container" (click)="after ? true : $event.preventDefault()" [ngClass]="{'default-cursor': !after}">
-        <div class="logo-img-container">
-            <div class="blinder" [ngClass]="{'hide': after || !animate}"></div>
-            <img src="assets/img/logo.svg" alt="DABubble">
-        </div>
-        <div class="logo-text-container">
-            <img src="assets/img/logo_name_only.svg" alt="DABubble">
-        </div>
-    </a>
+<div [ngClass]="onAuthRoute() ? 'outer-wrapper-auth' : 'outer-wrapper-main'">
+    <div class="logo-wrapper" [ngClass]="{'logo-animate': animate, 'paused': pause}">
+        <a href="" class="logo-container" (click)="after ? true : $event.preventDefault()"
+            [ngClass]="{'default-cursor': !after}">
+            <div class="logo-img-container">
+                <div class="blinder" [ngClass]="{'hide': after || !animate}"></div>
+                <img src="assets/img/logo.svg" alt="DABubble">
+            </div>
+            <div class="logo-text-container">
+                <img src="assets/img/logo_name_only.svg" alt="DABubble">
+            </div>
+        </a>
+    </div>
 </div>

@@ -35,19 +35,22 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
     height: 100dvh;
 }
 
-@mixin logo-wrapper-end() {
+@mixin logo-wrapper-end-auth() {
     width: calc(242px + 2 * 75px);
     height: calc(70px + 2 * 75px);
 }
 
+@mixin logo-wrapper-end-main() {
+    width: calc(242px + 2 * 45px);
+    height: calc(70px + 2 * 25px);
+}
+
 .logo-wrapper {
     position: absolute;
-    padding: 75px;
     z-index: 11;
     display: flex;
     justify-content: center;
     align-items: center;
-    @include logo-wrapper-end();
     .logo-container {
         width: 242px;
         height: 70px;
@@ -55,6 +58,18 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
         justify-content: space-between;
         align-items: center;
     }
+}
+
+.outer-wrapper-auth .logo-wrapper {
+    @extend .logo-wrapper;
+    padding: 75px;
+    @include logo-wrapper-end-auth();
+}
+
+.outer-wrapper-main .logo-wrapper {
+    @extend .logo-wrapper;
+    padding: 25px 45px;
+    @include logo-wrapper-end-main();
 }
 
 .logo-img-container {
@@ -98,18 +113,35 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
     }
 }
 
-.logo-animate {
-    animation: shrink-wrapper calc($animation-duration * 0.42) ease-in-out;
+.outer-wrapper-auth .logo-animate {
+    animation: shrink-wrapper-auth calc($animation-duration * 0.42) ease-in-out;
     animation-delay: calc($animation-duration * 0.44);
     animation-fill-mode: backwards;
-    @keyframes shrink-wrapper {
+    @keyframes shrink-wrapper-auth {
         from {
             @include logo-wrapper-start();
         }
         to {
-            @include logo-wrapper-end();
+            @include logo-wrapper-end-auth();
         }
     }
+}
+
+.outer-wrapper-main .logo-animate {
+    animation: shrink-wrapper-main calc($animation-duration * 0.42) ease-in-out;
+    animation-delay: calc($animation-duration * 0.44);
+    animation-fill-mode: backwards;
+    @keyframes shrink-wrapper-main {
+        from {
+            @include logo-wrapper-start();
+        }
+        to {
+            @include logo-wrapper-end-main();
+        }
+    }    
+}
+
+.logo-animate {
     .logo-container {
         animation: size-container calc($animation-duration * 0.4) ease-in-out;
         animation-delay: calc($animation-duration * 0.46);
@@ -169,7 +201,9 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
     animation-play-state: paused;
     .logo-container {
         animation-play-state: paused;
-        .logo-img-container img, .logo-text-container img, .blinder {
+        .logo-img-container img,
+        .logo-text-container img,
+        .blinder {
             animation-play-state: paused;
         }
     }
