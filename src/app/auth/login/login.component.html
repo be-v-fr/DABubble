@@ -1,4 +1,4 @@
-<app-animation-intro></app-animation-intro>
+<app-animation-intro [animate]="true"></app-animation-intro>
 <div class="content-wrapper">
     <form class="content-main content-card" (ngSubmit)="onSubmit(logInForm)" #logInForm="ngForm"
         (change)="resetAuthError()">
