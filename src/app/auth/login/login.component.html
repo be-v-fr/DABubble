@@ -1,4 +1,3 @@
-<app-animation-intro [animate]="true"></app-animation-intro>
 <div class="content-wrapper">
     <form class="content-main content-card" (ngSubmit)="onSubmit(logInForm)" #logInForm="ngForm"
         (change)="resetAuthError()">
@@ -36,14 +35,13 @@
         </button>
         <div class="submit-btns">
             <button type="submit" class="form-btn-primary" [disabled]="loading">Anmelden</button>
-            <button type="button" class="form-btn-secondary" (click)="logInAsGuest()" [disabled]="loading">Gäste-Login</button>
+            <button type="button" class="form-btn-secondary" (click)="logInAsGuest()"
+                [disabled]="loading">Gäste-Login</button>
         </div>
     </form>
-    <!-- <img src="assets/img/logo_name.svg" alt="DABubble" class="logo"> -->
     <div class="create-account-hint">
         <p>Neu bei DABubble?</p>
         <a routerLink="/auth/signUp" class="link-purple-border">Konto erstellen</a>
     </div>
-    <app-legal-footer></app-legal-footer>
-    <app-toast-notification [message]="'login'" [showing]="showToast" (then)="afterToast()"></app-toast-notification>
+    <app-toast-notification [message]="'login'" [showing]="showToast" (then)="afterToast()" />
 </div>

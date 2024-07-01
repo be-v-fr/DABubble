@@ -3,7 +3,7 @@
         <h1>
             Wähle deinen Avatar
             <div class="back-btn-container">
-                <a routerLink="/auth" class="black-to-blue-btn">
+                <a routerLink="/auth/logIn" class="black-to-blue-btn">
                     <img src="assets/img/icons/go_back_arrow.svg" alt="go back">
                 </a>
             </div>
@@ -22,9 +22,10 @@
             </div>
             <div class="upload-avatar-container">
                 <span>eigenes Bild verwenden</span>
-                <input type="file" #fileInput name="fileInput" style="display: none" ngModel (change)="onCustomSelection($event)"
-                    accept="image/*">
-                <button type="button" class="form-btn-secondary" (click)="fileInput.click()" [disabled]="loading">Datei hochladen</button>
+                <input type="file" #fileInput name="fileInput" style="display: none" ngModel
+                    (change)="onCustomSelection($event)" accept="image/*">
+                <button type="button" class="form-btn-secondary" (click)="fileInput.click()" [disabled]="loading">Datei
+                    hochladen</button>
                 @if(fileError)
                 {<p class="error-msg">
                     {{fileError}}
@@ -35,6 +36,4 @@
             </div>
         </section>
     </form>
-    <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
-    <app-legal-footer></app-legal-footer>
 </div>

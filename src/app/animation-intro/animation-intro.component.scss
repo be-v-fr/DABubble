@@ -198,7 +198,7 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
 }
 
 .paused {
-    animation-play-state: paused;
+    animation-play-state: paused !important;
     .logo-container {
         animation-play-state: paused;
         .logo-img-container img,

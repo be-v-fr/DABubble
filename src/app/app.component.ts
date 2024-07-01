@@ -1,14 +1,88 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { AnimationIntroComponent } from './animation-intro/animation-intro.component';
+import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs';
 
+
+/**
+ * This component is the central component displaying all other components as its children.
+ * It also directly displays the intro animation and handles the user authentication upon visit.
+ */
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, AnimationIntroComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'DaBubble';
+  awaitingInit: boolean = true;
+  private authService = inject(AuthService);
+  userSub = new Subscription();
+
+
+  // ###############################################
+  // This parameter (if set to true) suppresses both the animation and the authentication
+  // and redirects automatically to the home component.
+  TESTING: boolean = true;
+  // ###############################################
+
+
+  /**
+   * The constructor sets the login page as the default route.
+   * @param router - Router instance
+   */
+  constructor(private router: Router) {
+    this.router.navigate(['/auth/logIn']);
+  }
+
+
+  /**
+   * This function creates an authentication service subscription for user authentication.
+   */
+  ngOnInit(): void {
+    if (!this.TESTING) {
+      this.userSub = this.subUser();
+      this.awaitMax();
+    } else { // remove this bracket before production
+      this.router.navigate(['']);
+    }
+  }
+
+
+  /**
+   * This function unsubscribes all subscriptions.
+   */
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe();
+  }
+
+
+  /**
+   * This function defines the user authentication process.
+   * @returns authentication service subscription
+   */
+  subUser(): Subscription {
+    return this.authService.user$.subscribe((user) => {
+      if (user && user.uid) {
+        this.router.navigate(['']);
+        this.awaitingInit = false;
+      }
+    });
+  }
+
+
+  /**
+   * This function automatically aborts the visual display of the authentication process after a timeout duration.
+   * 
+   * That simply means that the intro animation will start and the user can access the login form and other
+   * authentication components. The authentication process itself will not be affected since it is handled via
+   * subscriptions which continue in the runtime environment.
+   */
+    awaitMax(): void {
+      setTimeout(() => this.awaitingInit = false, 1000);
+    }
 }

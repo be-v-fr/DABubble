@@ -70,6 +70,6 @@ export class AnimationIntroComponent implements OnInit {
    * @returns check result
    */
   onAuthRoute(): boolean {
-    return !this.router.url.includes('auth');
+    return this.router.url.includes('auth');
   }
 }

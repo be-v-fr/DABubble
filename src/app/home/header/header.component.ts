@@ -42,7 +42,7 @@ export class HeaderComponent {
       console.log('The dialog "LogOutCard" was Closed.', result); // remove later
       if (result == 'logout') {
         this.authService.logOut();
-        this.router.navigate(['auth']);
+        this.router.navigate(['auth/logIn']);
       }
     });
   }

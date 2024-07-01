@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/login/login.component';
 import { ImpressComponent } from './home/legal/impress/impress.component';
 import { PrivacypolicyComponent } from './home/legal/privacypolicy/privacypolicy.component';
@@ -21,6 +22,7 @@ import { DirectMessageComponent } from './components/direct-message/direct-messa
 
 import { authGuard } from './shared/auth.guard';
 
+
 export const routes: Routes = [
     { path: '', canActivate: [authGuard], pathMatch: 'full', component: HomeComponent},
     {
@@ -31,11 +33,16 @@ export const routes: Routes = [
             { path: 'direct-message/:id', component: DirectMessageComponent },
         ]
     },
-    { path: 'auth', component: LoginComponent },
-    { path: 'auth/signUp', component: SignUpComponent },
-    { path: 'auth/pickAvatar', component: PickAvatarComponent },
-    { path: 'auth/requestPwReset', component: RequestPwResetComponent },
-    { path: 'auth/resetPw', component: ResetPwComponent },
+    {
+        path: 'auth', component: AuthComponent,
+        children: [
+            { path: 'logIn', component: LoginComponent },
+            { path: 'signUp', component: SignUpComponent },
+            { path: 'pickAvatar', component: PickAvatarComponent },
+            { path: 'requestPwReset', component: RequestPwResetComponent },
+            { path: 'resetPw', component: ResetPwComponent }
+        ]
+    },
     { path: 'impress', component: ImpressComponent },
     { path: 'privacypolicy', component: PrivacypolicyComponent },
     { path: 'userProfile', component: UserProfileCardComponent },

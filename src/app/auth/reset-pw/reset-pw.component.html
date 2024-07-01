@@ -3,7 +3,7 @@
         <h1>
             Passwort zurücksetzen
             <div class="back-btn-container">
-                <a routerLink="/auth" class="black-to-blue-btn">
+                <a routerLink="/auth/logIn" class="black-to-blue-btn">
                     <img src="assets/img/icons/go_back_arrow.svg" alt="go back">
                 </a>
             </div>
@@ -16,10 +16,9 @@
                 {<p class="error-msg">
                     Bitte geben Sie ein Passwort ein.
                 </p>}
-                @else if(password.touched && password.value.length < 6)
-                {<p class="error-msg">
+                @else if(password.touched && password.value.length < 6) {<p class="error-msg">
                     Ihr Passwort muss mindestens 6 Zeichen enthalten.
-                </p>}
+                    </p>}
             </div>
             <div class="form-field bg-violet">
                 <input type="password" placeholder="Neues Kennwort bestätigen"
@@ -43,7 +42,5 @@
             </div>
         </section>
     </form>
-    <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
-    <app-legal-footer></app-legal-footer>
-    <app-toast-notification [message]="'resetPw'" [showing]="showToast" (then)="afterToast()"></app-toast-notification>
+    <app-toast-notification [message]="'resetPw'" [showing]="showToast" (then)="afterToast()" />
 </div>

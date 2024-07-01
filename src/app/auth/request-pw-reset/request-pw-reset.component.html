@@ -3,7 +3,7 @@
         <h1>
             Passwort zurücksetzen
             <div class="back-btn-container">
-                <a routerLink="/auth" class="black-to-blue-btn">
+                <a routerLink="/auth/logIn" class="black-to-blue-btn">
                     <img src="assets/img/icons/go_back_arrow.svg" alt="go back">
                 </a>
             </div>
@@ -20,10 +20,9 @@
         </div>
         <p class="advice text-grey">Wir senden Ihnen eine E-Mail, über die Sie Ihr Passwort ändern können.</p>
         <div class="submit-btns">
-            <button type="submit" class="form-btn-primary" [disabled]="!requestPwResetForm.valid || loading">E-Mail senden</button>
+            <button type="submit" class="form-btn-primary" [disabled]="!requestPwResetForm.valid || loading">E-Mail
+                senden</button>
         </div>
     </form>
-    <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
-    <app-legal-footer></app-legal-footer>
-    <app-toast-notification [message]="'email'" [showing]="showToast" (then)="afterToast()"></app-toast-notification>
+    <app-toast-notification [message]="'email'" [showing]="showToast" (then)="afterToast()" />
 </div>

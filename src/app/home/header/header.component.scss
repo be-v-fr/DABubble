@@ -8,18 +8,24 @@
     gap: 20px;
 }
 
-.logo-wrapper {
-    padding-top: 25px;
-    padding-left: 45px;
-    padding-bottom: 20px;
+// .logo-wrapper {
+//     padding-top: 25px;
+//     padding-left: 45px;
+//     padding-bottom: 20px;
+//     min-width: 386px;
+//     width: 386px;
+//     display: flex;
+//     flex-direction: row;
+//     img {
+//         height: 70px;
+//         width: auto;
+//     }
+// }
+
+.pseudo-logo-wrapper {
     min-width: 386px;
     width: 386px;
-    display: flex;
-    flex-direction: row;
-    img {
-        height: 70px;
-        width: auto;
-    }
+    height: 115px;
 }
 
 .searchbar-wrapper {
