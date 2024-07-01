@@ -5,8 +5,9 @@ import { CommonModule } from '@angular/common';
 import { MessageItemComponent } from '../message-item/message-item.component';
 import { MessageBoxComponent } from '../message-box/message-box.component';
 import { TimeSeparatorComponent } from '../time-separator/time-separator.component';
-
 import { EmojiService } from '../../../services/emoji-service/emoji-service';
+import { EditChannelComponent } from '../../edit-channel/edit-channel.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-main-chat',
@@ -26,7 +27,7 @@ export class MainChatComponent {
   messages = true;
   emojiPicker = false;
 
-  constructor(private emojiService: EmojiService) { }
+  constructor(private emojiService: EmojiService, private dialog: MatDialog) { }
 
   handleStateChange(newState: boolean) {
     this.emojiPicker = newState;
@@ -44,4 +45,10 @@ export class MainChatComponent {
   get emojis() {
     return this.emojiService.getEmojis();
   }
+
+  onEditChannel(): void {
+    this.dialog.open(EditChannelComponent);
+  }
+
+  
 }

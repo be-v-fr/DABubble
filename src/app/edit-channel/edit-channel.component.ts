@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-edit-channel',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,],
   templateUrl: './edit-channel.component.html',
   styleUrl: './edit-channel.component.scss',
 })
 export class EditChannelComponent {
+
   editMode: boolean = false;
   editDescriptionMode: boolean = false;
   editName: boolean = false;
@@ -37,4 +38,6 @@ export class EditChannelComponent {
   saveDescriptionChanges() {
     this.editDescriptionMode = false;
   }
+
+
 }
