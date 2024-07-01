@@ -1,6 +1,6 @@
 @import "../../styles.scss";
 
-$animation-duration: 3000ms;
+$animation-duration: 2400ms;
 $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
 
 .overlay {
@@ -11,27 +11,17 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
     right: 0;
     z-index: -1;
     background: $gradient-bg;
-    animation: fade-out $animation-duration ease-in-out;
+    animation: fade-out calc($animation-duration / 4) ease-in-out;
+    animation-delay: calc(3 * $animation-duration / 4);
+    animation-fill-mode: backwards;
     @keyframes fade-out {
-        0% {
+        from {
             opacity: 1;
             z-index: 10;
             bottom: 0;
             left: 0;
         }
-        60% {
-            opacity: 1;
-            z-index: 10;
-            bottom: 0;
-            left: 0;
-        }
-        75% {
-            opacity: 0;
-            z-index: 10;
-            bottom: 0;
-            left: 0;
-        }
-        100% {
+        to {
             opacity: 0;
             z-index: 10;
             bottom: 0;
@@ -84,18 +74,14 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
         width: 50vw;
         background: $gradient-bg;
         opacity: 0;
-        animation: hide-blinder $animation-duration ease-in-out;
+        animation: hide-blinder 1ms;
+        animation-delay: calc($animation-duration * 0.4);
+        animation-fill-mode: backwards;
         @keyframes hide-blinder {
-            0% {
+            from {
                 opacity: 1;
             }
-            38% {
-                opacity: 1;
-            }
-            39% {
-                opacity: 0;
-            }
-            100% {
+            to {
                 opacity: 0;
             }
         }
@@ -113,64 +99,56 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
 }
 
 .logo-animate {
-    animation: shrink-wrapper 2000ms ease-in-out;
+    animation: shrink-wrapper calc($animation-duration * 0.42) ease-in-out;
+    animation-delay: calc($animation-duration * 0.44);
+    animation-fill-mode: backwards;
     @keyframes shrink-wrapper {
-        0% {
+        from {
             @include logo-wrapper-start();
         }
-        54% {
-            @include logo-wrapper-start();
-        }
-        100% {
+        to {
             @include logo-wrapper-end();
         }
     }
     .logo-container {
-        animation: size-container 2000ms ease-in-out;
+        animation: size-container calc($animation-duration * 0.4) ease-in-out;
+        animation-delay: calc($animation-duration * 0.46);
+        animation-fill-mode: backwards;
         @keyframes size-container {
-            0% {
+            from {
                 width: 636px;
                 height: 184px;
             }
-            54% {
-                width: 636px;
-                height: 184px;
-            }
-            100% {
+            to {
                 width: 242px;
                 height: 70px;
             }
         }
         .logo-img-container img {
-            animation: move-img $animation-duration ease-in-out;
+            animation: move-img calc($animation-duration / 3) ease-in-out;
             @keyframes move-img {
-                0% {
+                from {
                     left: 226px;
                 }
-                32% {
-                    left: 0;
-                }
-                100% {
+                to {
                     left: 0;
                 }
             }
         }
         .logo-text-container img {
-            animation: move-text $animation-duration ease-in-out;
+            animation: move-text calc($animation-duration * 0.83) ease-in-out;
+            animation-delay: calc($animation-duration * 0.17);
+            animation-fill-mode: backwards;
             @keyframes move-text {
                 0% {
                     right: 100%;
                     filter: invert(100%);
                 }
-                20% {
-                    right: 100%;
-                    filter: invert(100%);
-                }
-                40% {
+                25% {
                     right: 0;
                     filter: invert(100%);
                 }
-                50% {
+                55% {
                     right: 0;
                     filter: invert(100%);
                 }
@@ -195,4 +173,8 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
             animation-play-state: paused;
         }
     }
+}
+
+.default-cursor {
+    cursor: default;
 }

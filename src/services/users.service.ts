@@ -64,7 +64,7 @@ export class UsersService implements OnDestroy {
 
   /**
    * Get reference to single user Firestore data
-   * @param id Firestore task ID
+   * @param id - Firestore task ID
    * @returns reference
    */
   getSingleDocRef(uid: string): DocumentReference {
@@ -75,7 +75,7 @@ export class UsersService implements OnDestroy {
   /**
    * Add user to Firestore collection.
    * The Firestore document ID will be identical to the user's Firebase authentication ID.
-   * @param user user to be added
+   * @param user - user to be added
    */
   async addUser(user: User) {
     await setDoc(this.getSingleDocRef(user.uid), user.toJson())
@@ -86,7 +86,7 @@ export class UsersService implements OnDestroy {
   /**
    * Update user in Firestore collection.
    * The update will only be executed if the user (i.e., its Firestore ID) exists in the Firestore collection.
-   * @param user user to be updated
+   * @param user - user to be updated
    */
   async updateUser(user: User) {
     if (user.uid) {
@@ -99,7 +99,7 @@ export class UsersService implements OnDestroy {
 
   /**
    * Delete user from Firestore collection
-   * @param id Firestore user ID of user to be deleted
+   * @param id - Firestore user ID of user to be deleted
    */
   async deleteUser(uid: string) {
     const docRef = this.getSingleDocRef(uid);
@@ -110,7 +110,7 @@ export class UsersService implements OnDestroy {
 
   /**
    * Retrieve a complete user object from user ID
-   * @param id Firestore user ID
+   * @param id - Firestore user ID
    * @returns user object
    */
   getUserByUid(uid: string): User {
@@ -120,6 +120,12 @@ export class UsersService implements OnDestroy {
   }
 
 
+  /**
+   * This function checks whether a user is registered. It checks if
+   * a given UID is included in the users array.
+   * @param authUid - UID to be checked
+   * @returns check result
+   */
   isRegisteredUser(authUid: string): boolean {
     return this.getUserByUid(authUid).uid.length > 0;
   }
