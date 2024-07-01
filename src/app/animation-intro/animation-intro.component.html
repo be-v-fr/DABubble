@@ -1,8 +1,8 @@
 <div class="overlay" [ngClass]="{'hide': after || !animate, 'paused': pause}"></div>
 <div [ngClass]="onAuthRoute() ? 'outer-wrapper-auth' : 'outer-wrapper-main'">
     <div class="logo-wrapper" [ngClass]="{'logo-animate': animate && !after, 'paused': pause}">
-        <a href="" class="logo-container" (click)="after || !animate ? true : $event.preventDefault()"
-            [ngClass]="{'default-cursor': !after}">
+        <a href="" class="logo-container" (click)="(after || !animate) ? true : $event.preventDefault()"
+            [ngClass]="{'default-cursor': !(after || !animate)}">
             <div class="logo-img-container">
                 <div class="blinder" [ngClass]="{'hide': after || !animate}"></div>
                 <img src="assets/img/logo.svg" alt="DABubble">
