@@ -69,9 +69,9 @@ export class AppComponent implements OnInit, OnDestroy {
   subUser(): Subscription {
     return this.authService.user$.subscribe((user) => {
       if (user && user.uid) {
+        this.uid = user.uid;
         this.router.navigate(['']);
         this.awaitingInit = false;
-        this.uid = user.uid;
       }
     });
   }

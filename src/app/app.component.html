@@ -1,6 +1,6 @@
 <app-animation-intro [pause]="awaitingInit" [animate]="!TESTING" />
-<div *ngIf="(TESTING || uid) || !onProtectedRoute()">
-  <div class="page-wrapper bg-violet">
-    <router-outlet />
-  </div>
+@if((TESTING || uid) || !onProtectedRoute()) {
+<div class="page-wrapper bg-violet">
+  <router-outlet />
 </div>
+}
