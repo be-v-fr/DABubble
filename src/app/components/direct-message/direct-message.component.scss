@@ -63,6 +63,10 @@
                     display: flex;
                     align-items: flex-end;
                     gap: 20px;
+                    span:hover{
+                        color: rgb(68, 77, 242);
+                        cursor: pointer;
+                    }
 
                     .member-img-container {
                         position: relative;

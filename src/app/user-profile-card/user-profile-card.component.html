@@ -1,10 +1,10 @@
 <div class="userCard">
   <div class="head">
     <p>Profil</p>
-    <div class="black-to-blue-btn">
-      <a routerLink="/">
+    <div class="black-to-blue-btn" (click)="closeCard()">
+      
         <img src="./../../assets/img/userProfileImg/close.svg"
-      /></a>
+      />
     </div>
   </div>
   <div class="profileImg">
@@ -27,9 +27,11 @@
     </div>
   </div>
   <div class="submit-btns">
-    <button class="form-btn-primary">
+    <a routerLink="/direct-message/:id">
+    <button class="form-btn-primary" (click)="closeCard()">
       Nachricht
       <img src="../../assets/img/userProfileImg/mode_comment.png" />
     </button>
+  </a>
   </div>
 </div>

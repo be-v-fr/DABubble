@@ -4,6 +4,8 @@ import { MessageBoxComponent } from "../message-box/message-box.component";
 import { EmojiService } from '../../../services/emoji-service/emoji-service';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { UserProfileCardComponent } from '../../user-profile-card/user-profile-card.component';
 
 @Component({
     selector: 'app-thread',
@@ -16,7 +18,7 @@ export class ThreadComponent {
 
     emojiPicker = false;
 
-    constructor(private emojiService: EmojiService) { }
+    constructor(private emojiService: EmojiService,private dialog: MatDialog) { }
 
     handleStateChange(newState: boolean) {
         this.emojiPicker = newState;
@@ -34,4 +36,9 @@ export class ThreadComponent {
     get emojis() {
         return this.emojiService.getEmojis();
     }
+
+    
+  openUserProfile(): void {
+    this.dialog.open(UserProfileCardComponent);
+  }
 }

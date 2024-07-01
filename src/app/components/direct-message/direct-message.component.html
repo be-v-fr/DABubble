@@ -1,23 +1,34 @@
 <div class="direct-m-container">
-    <div class="direct-m-header">
-        <div class="header-img-container">
-            <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar">
-            <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
-                class="on-off-line-sign"></span>
-        </div>
-        <span>Noah Braun</span>
+  <div class="direct-m-header">
+    <div class="header-img-container">
+      <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar" />
+      <span
+        [ngStyle]="
+          online ? { background: '#92c83e' } : { background: '#686868' }
+        "
+        class="on-off-line-sign"
+      ></span>
     </div>
-    <div class="direct-m-content">
-        <div class="direct-m-mem">
-            <div class="direct-m-mem-header">
-                <div class="member-img-container">
-                    <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar">
-                </div>
-                <span>Noah Braun</span>
-            </div>
-            <p>Diese Unterhaltung findet nur zwischen <span>&#64;Sofia Müller</span>und dir statt.</p>
+    <span>Noah Braun</span>
+  </div>
+  <div class="direct-m-content">
+    <div class="direct-m-mem">
+      <div class="direct-m-mem-header">
+        <div class="member-img-container">
+          <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar" />
         </div>
-        <app-message-box />
+        <span (click)="openUserProfile()">Noah Braun</span>
+      </div>
+      <p>
+        Diese Unterhaltung findet nur zwischen <span>&#64;Sofia Müller</span>und
+        dir statt.
+      </p>
     </div>
-    <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="emojiPicker"></emoji-mart>
+    <app-message-box />
+  </div>
+  <emoji-mart
+    title="Pick your emoji…"
+    emoji="point_up"
+    *ngIf="emojiPicker"
+  ></emoji-mart>
 </div>

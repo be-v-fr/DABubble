@@ -4,12 +4,7 @@
   width: 500px;
   height: 705px;
   background-color: white;
-  border-radius: 30px;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
-  position: absolute;
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+  
 }
 .head {
   display: flex;
@@ -101,6 +96,9 @@
 .submit-btns{
   margin-top: 45px;
   margin-left: 168px;
+  a{
+    text-decoration: none;
+  }
   button{
     width: 164px;
     display: flex;
