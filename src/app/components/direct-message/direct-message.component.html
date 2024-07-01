@@ -1,6 +1,7 @@
 <div class="direct-m-container">
   <div class="direct-m-header">
     <div class="header-img-container">
+        <div class="hoverImgContainer" (click)="openUserProfile()">
       <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar" />
       <span
         [ngStyle]="
@@ -8,8 +9,10 @@
         "
         class="on-off-line-sign"
       ></span>
-    </div>
+    
     <span>Noah Braun</span>
+        </div>
+</div>
   </div>
   <div class="direct-m-content">
     <div class="direct-m-mem">
