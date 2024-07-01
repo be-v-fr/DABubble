@@ -20,6 +20,7 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'DaBubble';
   awaitingInit: boolean = true;
+  uid: string | null = null;
   private authService = inject(AuthService);
   userSub = new Subscription();
 
@@ -36,7 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
    * @param router - Router instance
    */
   constructor(private router: Router) {
-    this.router.navigate(['/auth/logIn']);
+
   }
 
 
@@ -44,12 +45,12 @@ export class AppComponent implements OnInit, OnDestroy {
    * This function creates an authentication service subscription for user authentication.
    */
   ngOnInit(): void {
-    if (!this.TESTING) {
-      this.userSub = this.subUser();
-      this.awaitMax();
-    } else { // remove this bracket before production
-      this.router.navigate(['']);
-    }
+      if(!this.TESTING) {
+        const url = new URL(window.location.href);
+        if(!url.search.includes('mode')) {this.router.navigate(['/auth/logIn'])}
+        this.userSub = this.subUser();
+        this.awaitMax();
+      }
   }
 
 
@@ -70,6 +71,7 @@ export class AppComponent implements OnInit, OnDestroy {
       if (user && user.uid) {
         this.router.navigate(['']);
         this.awaitingInit = false;
+        this.uid = user.uid;
       }
     });
   }
@@ -84,5 +86,15 @@ export class AppComponent implements OnInit, OnDestroy {
    */
     awaitMax(): void {
       setTimeout(() => this.awaitingInit = false, 1000);
+    }
+
+
+    onProtectedRoute(): boolean {
+      const route = this.router.url;
+      return !(
+        route.includes('auth') ||
+        route.includes('impress') ||
+        route.includes('privacypolicy')
+      ); 
     }
 }
