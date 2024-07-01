@@ -1,7 +1,7 @@
 <div class="container">
   <div class="headlineAndCloseBtn">
     <span># Entwicklerteam</span>
-    <button class="close-thread-btn">
+    <button class="close-thread-btn" (click)="closeChannel()">
       <span class="material-icons-outlined">close</span>
     </button>
   </div>
@@ -58,6 +58,6 @@
     </div>
   </div>
   <div class="addChannelBtn">
-    <button type="submit" class="form-btn-primary">Channel verlassen</button>
+    <button type="submit" class="form-btn-primary" (click)="closeChannel()">Channel verlassen</button>
   </div>
 </div>
