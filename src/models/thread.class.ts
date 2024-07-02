@@ -1,5 +1,3 @@
-import { Post } from "./post.class";
-
 export class Thread {
     thread_id: string;
     channel_id: string;
@@ -17,10 +15,5 @@ export class Thread {
             channel_id: this.channel_id,
             date: this.date
         };
-    }
-
-    getPosts(posts: Post[]): Post[] {
-        posts.filter(p => p.thread_id == this.thread_id);
-        return posts.sort((a, b) => a.date - b.date);
     }
 }

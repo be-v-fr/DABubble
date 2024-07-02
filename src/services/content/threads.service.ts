@@ -98,4 +98,12 @@ export class ThreadsService implements OnDestroy {
     await deleteDoc(docRef)
       .catch((err: Error) => { console.error(err) });
   }
+
+
+  getChannelThreads(threads: Thread[], channel_id: string): Thread[] {
+    threads.filter(t => t.channel_id == channel_id);
+    threads.sort((a, b) => a.date - b.date);
+    threads.forEach(t => t = new Thread(t));
+    return threads;
+}
 }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Channel } from '../../models/channel.class';
 import { ChannelsService } from '../../services/content/channels.service';
 import { Thread } from '../../models/thread.class';
@@ -7,6 +7,7 @@ import { Post } from '../../models/post.class';
 import { PostsService } from '../../services/content/posts.service';
 import { Reaction } from '../../models/reaction.class';
 import { ReactionsService } from '../../services/content/reactions.service';
+import { Subscription } from 'rxjs';
 
 /**
  * This component exists solely for TESTING purposes.
@@ -19,21 +20,63 @@ import { ReactionsService } from '../../services/content/reactions.service';
   templateUrl: './playground.component.html',
   styleUrl: './playground.component.scss'
 })
-export class PLAYGROUNDComponent implements OnInit {
-  private channelsService = inject(ChannelsService);
-  private threadsService = inject(ThreadsService);
-  private postsService = inject(PostsService);
-  private reactionsService = inject(ReactionsService);
+export class PLAYGROUNDComponent implements OnInit, OnDestroy {
+  public channelsService = inject(ChannelsService);
+  public threadsService = inject(ThreadsService);
+  public postsService = inject(PostsService);
+  public reactionsService = inject(ReactionsService);
+  channelsSub = new Subscription();
+  threadsSub = new Subscription();
+  postsSub = new Subscription();
+  reactionsSub = new Subscription();
+  channels: Channel[] = [];
+  threads: Thread[] = [];
+  posts: Post[] = [];
+  reactions: Reaction[] = [];
+
+  currentChannel = new Channel();
+  currentThreads: Thread[] | null = null;
+
 
   ngOnInit(): void {
-    // this.create(new Channel(), new Thread(), new Post(), new Reaction());
+    this.channelsSub = this.subChannels();
+    this.threadsSub = this.subThreads();
+    this.postsSub = this.subPosts();
+    this.reactionsSub = this.subReactions();
   }
 
-  async create(channel: Channel, thread: Thread, post: Post, reaction: Reaction) {
-    await this.channelsService.addDoc(channel);
-    await this.threadsService.addDoc(thread);
-    await this.postsService.addDoc(post);
-    await this.reactionsService.addDoc(reaction);
-    console.log('all 4 creation processes complete');
+  ngOnDestroy(): void {
+    this.channelsSub.unsubscribe();
+    this.threadsSub.unsubscribe();
+    this.postsSub.unsubscribe();
+    this.reactionsSub.unsubscribe();
+  }
+
+  subChannels(): Subscription {
+    return this.channelsService.channels$.subscribe((channels: Channel[]) => {
+      this.channels = channels;
+    })
+  }
+
+  subThreads(): Subscription {
+    return this.threadsService.threads$.subscribe((threads: Thread[]) => {
+      this.threads = threads;
+    })
+  }
+
+  subPosts(): Subscription {
+    return this.postsService.posts$.subscribe((posts: Post[]) => {
+      this.posts = posts;
+    })
+  }
+
+  subReactions(): Subscription {
+    return this.reactionsService.reactions$.subscribe((reactions: Reaction[]) => {
+      this.reactions = reactions;
+    })
+  }
+
+  selectChannel(channel_id: string) {
+      this.currentChannel = new Channel(this.channels.find(c => c.channel_id == channel_id));
   }
 }

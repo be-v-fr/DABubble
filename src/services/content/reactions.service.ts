@@ -71,7 +71,7 @@ export class ReactionsService implements OnDestroy {
         reaction.reaction_id = response.id;
         this.updateDoc(reaction);
       })
-      .catch ((err: Error) => { console.error(err) });
+      .catch((err: Error) => { console.error(err) });
   }
 
 
@@ -97,5 +97,23 @@ export class ReactionsService implements OnDestroy {
     const docRef = this.getSingleDocRef(reaction_id);
     await deleteDoc(docRef)
       .catch((err: Error) => { console.error(err) });
+  }
+
+
+  getPostReactions(reactions: Reaction[], post_id: string): Reaction[] {
+    reactions.filter(r => r.post_id == post_id);
+    reactions.forEach(r => r = new Reaction(r));
+    return reactions;
+  }
+
+
+  getGroupedReactions(reactions: Reaction[]): {} {
+    let groups: any = {};
+    reactions.forEach(r => {
+      let number = parseInt(groups[r.emoji]);
+      number = isNaN(number) ? 1 : number + 1;
+      groups[r.emoji] = number;
+    });
+    return groups;
   }
 }

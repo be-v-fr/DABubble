@@ -1,5 +1,3 @@
-import { Reaction } from "./reaction.class";
-
 export class Post {
     post_id: string;
     message: string;
@@ -23,19 +21,5 @@ export class Post {
             thread_id: this.thread_id,
             date: this.date
         };
-    }
-
-    getReactions(reactions: Reaction[]): Reaction[] {
-        return reactions.filter(r => r.post_id == this.post_id);
-    }
-
-    getReactionGroups(reactions: Reaction[]): {} {
-        let groups: any = {};
-        reactions.forEach(r => {
-            let number = parseInt(groups[r.emoji]);
-            number = isNaN(number) ? 1 : number + 1;
-            groups[r.emoji] = number;
-        });
-        return groups;
     }
 }
