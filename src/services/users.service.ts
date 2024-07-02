@@ -99,7 +99,7 @@ export class UsersService implements OnDestroy {
 
   /**
    * Delete user from Firestore collection
-   * @param id - Firestore user ID of user to be deleted
+   * @param uid - Firestore user ID of user to be deleted
    */
   async deleteUser(uid: string) {
     const docRef = this.getSingleDocRef(uid);
@@ -110,7 +110,7 @@ export class UsersService implements OnDestroy {
 
   /**
    * Retrieve a complete user object from user ID
-   * @param id - Firestore user ID
+   * @param uid - Firestore user ID
    * @returns user object
    */
   getUserByUid(uid: string): User {

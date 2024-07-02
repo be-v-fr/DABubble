@@ -22,6 +22,8 @@ import { DirectMessageComponent } from './components/direct-message/direct-messa
 
 import { authGuard } from './shared/auth.guard';
 
+import { PLAYGROUNDComponent } from './playground/playground.component'; // remove later
+
 
 export const routes: Routes = [
     { path: '', canActivate: [authGuard], pathMatch: 'full', component: HomeComponent},
@@ -52,5 +54,7 @@ export const routes: Routes = [
     { path: 'addMemberChannel', component: AddMembersAfterAddChannelComponent },
     { path: 'addMember', component: AddMembersComponent },
     { path: 'editChannel', component: EditChannelComponent },
+
+    { path: 'playground', component: PLAYGROUNDComponent }, // remove later
 
 ];
