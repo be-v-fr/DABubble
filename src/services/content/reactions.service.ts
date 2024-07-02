@@ -107,7 +107,7 @@ export class ReactionsService implements OnDestroy {
   }
 
 
-  getGroupedReactions(reactions: Reaction[]): {} {
+  getGroupedEmojis(reactions: Reaction[]): {} {
     let groups: any = {};
     reactions.forEach(r => {
       let number = parseInt(groups[r.emoji]);

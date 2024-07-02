@@ -69,6 +69,7 @@ export class PostsService implements OnDestroy {
     await addDoc(this.getColRef(), post.toJson())
       .then((response: any) => {
         post.post_id = response.id;
+        post.date = Date.now();
         this.updateDoc(post);
       })
       .catch((err: Error) => { console.error(err) });

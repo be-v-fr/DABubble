@@ -69,6 +69,7 @@ export class ThreadsService implements OnDestroy {
     await addDoc(this.getColRef(), thread.toJson())
       .then((response: any) => {
         thread.thread_id = response.id;
+        thread.date = Date.now();
         this.updateDoc(thread);
       })
       .catch((err: Error) => { console.error(err) });
