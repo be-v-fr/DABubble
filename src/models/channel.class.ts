@@ -25,7 +25,8 @@ export class Channel {
         };
     }
 
-    getThreads(threads: Thread[]) {
-        return threads.filter(t => t.channel_id == this.channel_id);
+    getThreads(threads: Thread[]): Thread[] {
+        threads.filter(t => t.channel_id == this.channel_id);
+        return threads.sort((a, b) => a.date - b.date);
     }
 }

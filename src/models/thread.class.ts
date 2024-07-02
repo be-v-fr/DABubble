@@ -19,7 +19,8 @@ export class Thread {
         };
     }
 
-    getPosts(posts: Post[]) {
-        return posts.filter(p => p.thread_id == this.thread_id);
+    getPosts(posts: Post[]): Post[] {
+        posts.filter(p => p.thread_id == this.thread_id);
+        return posts.sort((a, b) => a.date - b.date);
     }
 }

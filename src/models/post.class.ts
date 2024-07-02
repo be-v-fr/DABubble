@@ -6,12 +6,12 @@ export class Post {
     user_id: string;
     thread_id: string;
     date: number;
-    
+
     constructor(obj?: any) {
         this.post_id = obj && obj.post_id ? obj.post_id : '';
         this.message = obj && obj.message ? obj.message : '';
         this.user_id = obj && obj.user_id ? obj.user_id : '';
-        this.thread_id = obj && obj.thread_id ? obj.thread_id : '';        
+        this.thread_id = obj && obj.thread_id ? obj.thread_id : '';
         this.date = obj && obj.date ? obj.date : -1;
     }
 
@@ -25,7 +25,17 @@ export class Post {
         };
     }
 
-    getReactions(reactions: Reaction[]) {
+    getReactions(reactions: Reaction[]): Reaction[] {
         return reactions.filter(r => r.post_id == this.post_id);
+    }
+
+    getReactionGroups(reactions: Reaction[]): {} {
+        let groups: any = {};
+        reactions.forEach(r => {
+            let number = parseInt(groups[r.emoji]);
+            number = isNaN(number) ? 1 : number + 1;
+            groups[r.emoji] = number;
+        });
+        return groups;
     }
 }
