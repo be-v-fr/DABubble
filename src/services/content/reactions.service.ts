@@ -9,7 +9,7 @@ import { Reaction } from '../../models/reaction.class';
   providedIn: 'root'
 })
 export class ReactionsService implements OnDestroy {
-  reactions$: Subject<void> = new Subject<void>();
+  reactions$: Subject<Reaction[]> = new Subject<Reaction[]>();
   unsubReactions;
   firestore: Firestore = inject(Firestore);
 
@@ -32,10 +32,11 @@ export class ReactionsService implements OnDestroy {
 
   subReactions() {
     return onSnapshot(this.getColRef(), (list: any) => {
+      let reactions: Reaction[] = [];
       list.forEach((element: any) => {
-
+        reactions.push(element.data());
       });
-      this.reactions$.next();
+      this.reactions$.next(reactions);
     });
   }
 

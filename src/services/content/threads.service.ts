@@ -9,8 +9,7 @@ import { Thread } from '../../models/thread.class';
   providedIn: 'root'
 })
 export class ThreadsService implements OnDestroy {
-  threads: Thread[] = [];
-  threads$: Subject<void> = new Subject<void>();
+  threads$: Subject<Thread[]> = new Subject<Thread[]>();
   unsubThreads;
   firestore: Firestore = inject(Firestore);
 
@@ -33,10 +32,11 @@ export class ThreadsService implements OnDestroy {
 
   subThreads() {
     return onSnapshot(this.getColRef(), (list: any) => {
+      let threads: Thread[] = [];
       list.forEach((element: any) => {
-
+        threads.push(element.data());
       });
-      this.threads$.next();
+      this.threads$.next(threads);
     });
   }
 

@@ -9,7 +9,7 @@ import { Post } from '../../models/post.class';
   providedIn: 'root'
 })
 export class PostsService implements OnDestroy {
-  posts$: Subject<void> = new Subject<void>();
+  posts$: Subject<Post[]> = new Subject<Post[]>();
   unsubPosts;
   firestore: Firestore = inject(Firestore);
 
@@ -32,10 +32,11 @@ export class PostsService implements OnDestroy {
 
   subPosts() {
     return onSnapshot(this.getColRef(), (list: any) => {
+      let posts: Post[] = [];
       list.forEach((element: any) => {
-
+        posts.push(element.data());
       });
-      this.posts$.next();
+      this.posts$.next(posts);
     });
   }
 

@@ -9,7 +9,7 @@ import { Channel } from '../../models/channel.class';
   providedIn: 'root'
 })
 export class ChannelsService implements OnDestroy {
-  channels$: Subject<void> = new Subject<void>();
+  channels$: Subject<Channel[]> = new Subject<Channel[]>();
   unsubChannels;
   firestore: Firestore = inject(Firestore);
 
@@ -32,10 +32,11 @@ export class ChannelsService implements OnDestroy {
 
   subChannels() {
     return onSnapshot(this.getColRef(), (list: any) => {
+      let channels: Channel[] = [];
       list.forEach((element: any) => {
-
+        channels.push(element.data());
       });
-      this.channels$.next();
+      this.channels$.next(channels);
     });
   }
 
