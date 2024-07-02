@@ -1,3 +1,5 @@
+import { Thread } from "./thread.class";
+
 export class Channel {
     channel_id: string;
     channel_name: string;
@@ -21,5 +23,9 @@ export class Channel {
             description: this.description,
             members_uids: this.members_uids
         };
+    }
+
+    getThreads(threads: Thread[]) {
+        return threads.filter(t => t.channel_id == this.channel_id);
     }
 }

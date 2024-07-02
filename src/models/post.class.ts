@@ -1,3 +1,5 @@
+import { Reaction } from "./reaction.class";
+
 export class Post {
     post_id: string;
     message: string;
@@ -21,5 +23,9 @@ export class Post {
             thread_id: this.thread_id,
             date: this.date
         };
+    }
+
+    getReactions(reactions: Reaction[]) {
+        return reactions.filter(r => r.post_id == this.post_id);
     }
 }
