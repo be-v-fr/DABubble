@@ -1,53 +1,55 @@
 @import "../../../styles.scss";
 
-section {
+:host {
+  flex-shrink: 0;
   width: 366px;
-  height: 100%;
-  padding: 32px 30px;
-  border-radius: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  background-color: white;
-  overflow-y: auto;
-  @include scrollbar();
 
-  .nav-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .logo-btn {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-
-      span {
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 32.74px;
-      }
-    }
-
-    .new-message-btn {
-      padding: 8px;
-
-      &:hover {
-        background-color: $violet-bright;
-        border-radius: 30px;
-      }
-    }
-  }
-
-  .nav-main {
+  section {
+    height: 100%;
+    padding: 32px 30px;
+    border-radius: 30px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
     gap: 25px;
+    background-color: white;
 
-    app-expandable-button {
-      width: 100%;
+    .nav-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .logo-btn {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        span {
+          font-size: 24px;
+          font-weight: 700;
+          line-height: 32.74px;
+        }
+      }
+
+      .new-message-btn {
+        padding: 8px;
+
+        &:hover {
+          background-color: $violet-bright;
+          border-radius: 30px;
+        }
+      }
+    }
+
+    .nav-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+
+      app-expandable-button {
+        width: 100%;
+      }
     }
   }
 }

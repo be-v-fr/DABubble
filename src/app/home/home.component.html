@@ -1,6 +1,12 @@
+<button class="nav-button" (click)="onShowNavigation()">
+    Workspace-Menü schließen
+    <img src="assets/img/icons/show_menu.svg" alt="">
+</button>
 <app-header [mainUser]="currentUser"></app-header>
 <div class="main-container">
-    <app-navigation />
-    <router-outlet></router-outlet>
+    <app-navigation *ngIf="showNav" />
+    <div class="main-content">
+        <router-outlet></router-outlet>
+    </div>
     <app-thread />
 </div>

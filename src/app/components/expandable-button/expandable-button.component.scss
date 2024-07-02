@@ -41,8 +41,9 @@
 }
 
 .menu {
+  
   .channel-menu {
-    max-height: 400px;
+    max-height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -110,7 +111,7 @@
 
   .messages-menu {
     display: flex;
-    max-height: 400px;
+    height: 350px;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;

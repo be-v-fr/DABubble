@@ -1,4 +1,6 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 import { RouterOutlet } from '@angular/router';
 
 import { HeaderComponent } from './header/header.component';
@@ -16,7 +18,14 @@ import { MainChatComponent } from '../components/main-chat/main-chat.component';
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
-    imports: [RouterOutlet, HeaderComponent, NavigationComponent, MainChatComponent, ThreadComponent]
+    imports: [
+        CommonModule,
+        RouterOutlet,
+        HeaderComponent,
+        NavigationComponent,
+        MainChatComponent,
+        ThreadComponent
+    ]
 })
 export class HomeComponent {
     private authService = inject(AuthService);
@@ -25,6 +34,7 @@ export class HomeComponent {
     private usersSub = new Subscription();
     public currentUser = new User();
     public users: User[] = [];
+    public showNav = true;
 
     ngOnInit(): void {
         this.syncCurrentUser();
@@ -63,6 +73,10 @@ export class HomeComponent {
     syncCurrentUser(): void {
         const uid = this.authService.getCurrentUid();
         if (uid) { this.currentUser = this.usersService.getUserByUid(uid) }
+    }
+
+    onShowNavigation() {
+        this.showNav = !this.showNav;
     }
 
 }
