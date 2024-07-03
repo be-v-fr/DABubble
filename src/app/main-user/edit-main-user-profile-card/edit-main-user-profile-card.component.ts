@@ -2,6 +2,7 @@ import { Component, inject, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
 import { User } from '../../../models/user.class';
+import { EditMainUserAvatarComponent } from '../../edit-main-user-avatar/edit-main-user-avatar.component';
 import { UsersService } from '../../../services/users.service';
 import { FormsModule, NgForm } from '@angular/forms';
 
@@ -12,7 +13,6 @@ import { FormsModule, NgForm } from '@angular/forms';
     templateUrl: './edit-main-user-profile-card.component.html',
     styleUrl: './edit-main-user-profile-card.component.scss'
 })
-
 export class EditMainUserProfileCardComponent {
     public mainUser: User = new User;
     private usersService = inject(UsersService);

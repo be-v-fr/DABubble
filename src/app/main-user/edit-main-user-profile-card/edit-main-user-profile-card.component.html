@@ -1,48 +1,61 @@
 <div class="userCard">
-    <div class="head">
-        <p>Dein Profil Bearbeiten</p>
-        <div class="close-btn">
-            <a (click)="closeDialog()">
-                <img src="/assets/img/userProfileImg/close.svg" />
-            </a>
-        </div>
+  <div class="head">
+    <p>Dein Profil Bearbeiten</p>
+    <div class="close-btn">
+      <a (click)="closeDialog()">
+        <img src="/assets/img/userProfileImg/close.svg" />
+      </a>
     </div>
-    <div class="profileImg">
-        <img class="#" src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}" />
+  </div>
+  <div class="profileImg">
+    <img
+      class="#"
+      src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}"
+    />
+  </div>
+  <div class="editIcon" (click)="openPickAvatar()">
+    <img src="../../assets/img/icons/edit.svg" />
+  </div>
+  <div class="inputContainer">
+    <div class="nameContainer">
+      <div class="userName">
+        <img
+          class="userIcon"
+          src="../../assets/img/userProfileImg/account_circle.png"
+        />
+        <p>Vollständiger Name</p>
+      </div>
+      <div class="inputField">
+        <input
+          type="text"
+          placeholder="{{ mainUser.name || 'Vorname Name' }}"
+          value="{{ mainUser.name }}"
+        />
+      </div>
     </div>
 
-    <div class="inputContainer">
-        <form (ngSubmit)="onSubmit(editMainUser)" #editMainUser="ngForm">
-            <div class="nameContainer">
-                <div class="userName">
-                    <img class="userIcon" src="../../assets/img/userProfileImg/account_circle.png"/>
-                    <p>Vollständiger Name</p>
-                </div>
-                <div class="inputField">
-                    <input [(ngModel)]="userData.name" type="text" name="name" #name="ngModel" placeholder="{{ mainUser.name || 'Vorname Name'}}" value="{{ mainUser.name }}" required />
-                </div>
-                @if(name.touched && !name.valid)
-                {<p class="error-msg">
-                    Bitte schreiben Sie einen Namen.
-                </p>}
-                </div>
-            <div class="emailContainer">
-                <div class="email">
-                    <img class="mailIcon" src="/assets/img/userProfileImg/mail.png" />
-                    <p>E-Mail-Adresse</p>
-                </div>
-                <div class="inputField">
-                    <input [(ngModel)]="userData.email" type="email" name="email" #email="ngModel" placeholder="{{ mainUser.email || 'vorname.name&#64;beispiel.de' }}"  pattern="[a-zA-Z0-9\.%_\+\-]{1,}[@][a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,}" value="{{ mainUser.email }}" required />
-                </div>
-                @if((email.touched || editMainUser.submitted) && !email.valid)
-                {<p class="error-msg">
-                    Diese E-Mail-Adresse ist leider ungültig.
-                </p>}
-            </div>
-            <div class="submit-btns">
-                <button type="button" class="form-btn-secondary" (click)="closeDialog()">Abbrechen</button>
-                <button type="submit" class="form-btn-primary">Speichern</button>
-            </div>
-        </form>
+    <div class="emailContainer">
+      <div class="email">
+        <img class="mailIcon" src="/assets/img/userProfileImg/mail.png" />
+        <p>E-Mail-Adresse</p>
+      </div>
+      <div class="inputField">
+        <input
+          type="email"
+          placeholder="{{ mainUser.email || 'vorname.name&#64;beispiel.de' }}"
+          pattern="[a-zA-Z0-9\.!%_\+\-]{1,64}[@][a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,6}"
+          value="{{ mainUser.email }}"
+        />
+      </div>
     </div>
+
+    <div class="submit-btns">
+      <button type="button" class="form-btn-secondary" (click)="closeDialog()">
+        Abbrechen
+      </button>
+      <button type="submit" class="form-btn-primary" (click)="saveMainUser()">
+        Speichern
+      </button>
+    </div>
+  </div>
 </div>
