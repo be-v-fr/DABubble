@@ -10,6 +10,7 @@ import { NavigationComponent } from '../components/navigation/navigation.compone
 import { AuthService } from '../../services/auth.service';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../models/user.class';
+import { ActivityService } from '../../services/activity.service';
 import { Subscription } from 'rxjs';
 import { MainChatComponent } from '../components/main-chat/main-chat.component';
 
@@ -30,6 +31,7 @@ import { MainChatComponent } from '../components/main-chat/main-chat.component';
 export class HomeComponent {
     private authService = inject(AuthService);
     private usersService = inject(UsersService);
+    public activityService = inject(ActivityService);
     private authSub = new Subscription();
     private usersSub = new Subscription();
     public currentUser = new User();
@@ -38,7 +40,6 @@ export class HomeComponent {
 
     ngOnInit(): void {
         this.syncCurrentUser();
-        console.log('current user before sub:', this.currentUser); // remove later
         this.authSub = this.subAuth();
     }
 
@@ -51,7 +52,6 @@ export class HomeComponent {
         return this.authService.user$.subscribe((user) => {
             if (user) {
                 this.syncUsers();
-                console.log('full users array before sub:', this.users); // remove later
                 this.usersSub = this.subUsers();
             }
         });
@@ -60,9 +60,9 @@ export class HomeComponent {
     subUsers(): Subscription {
         return this.usersService.users$.subscribe(() => {
             this.syncCurrentUser();
-            console.log('current user after sub:', this.currentUser); // remove later
+            console.log('current user:', this.currentUser); // remove later
             this.syncUsers();
-            console.log('full users array after sub:', this.users); // remove later
+            console.log('full users array:', this.users); // remove later
         });
     }
 

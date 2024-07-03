@@ -106,5 +106,5 @@ export class ThreadsService implements OnDestroy {
     threads.sort((a, b) => a.date - b.date);
     threads.forEach(t => t = new Thread(t));
     return threads;
-}
+  }
 }
