@@ -95,11 +95,32 @@
     position: absolute;
     left: 150px;
     top: 125px;
-    img {
+    
+    img:nth-child(1){
         width: 200px;
         height: 200px;
         border-radius: 100%;
     }
+   
+  
+}
+
+.editIcon{
+    position: absolute;
+    top: 310px;
+    left: 330px;
+    border-radius: 100%;
+    padding: 8px;
+    cursor: pointer;
+    img{
+        width: 24px;
+        height: 24px;
+    }
+    &:hover{
+        background-color: #eceefe;
+       
+    }
+    
 }
 
 .inputField input{

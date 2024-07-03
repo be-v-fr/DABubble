@@ -8,11 +8,15 @@
     </div>
   </div>
   <div class="profileImg">
-    <img class="#" src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}" />
+    <img
+      class="#"
+      src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}"
+    />
   </div>
-
+  <div class="editIcon" (click)="openPickAvatar()">
+    <img src="../../assets/img/icons/edit.svg" />
+  </div>
   <div class="inputContainer">
-    
     <div class="nameContainer">
       <div class="userName">
         <img
@@ -22,7 +26,11 @@
         <p>Vollständiger Name</p>
       </div>
       <div class="inputField">
-        <input type="text" placeholder="{{ mainUser.name || 'Vorname Name'}}" value="{{ mainUser.name }}" />
+        <input
+          type="text"
+          placeholder="{{ mainUser.name || 'Vorname Name' }}"
+          value="{{ mainUser.name }}"
+        />
       </div>
     </div>
 
@@ -32,14 +40,22 @@
         <p>E-Mail-Adresse</p>
       </div>
       <div class="inputField">
-        <input type="email" placeholder="{{ mainUser.email || 'vorname.name&#64;beispiel.de' }}"  pattern="[a-zA-Z0-9\.!%_\+\-]{1,64}[@][a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,6}" value="{{ mainUser.email }}"/>
+        <input
+          type="email"
+          placeholder="{{ mainUser.email || 'vorname.name&#64;beispiel.de' }}"
+          pattern="[a-zA-Z0-9\.!%_\+\-]{1,64}[@][a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,6}"
+          value="{{ mainUser.email }}"
+        />
       </div>
     </div>
 
     <div class="submit-btns">
-      <button type="button" class="form-btn-secondary" (click)="closeDialog()">Abbrechen</button>
-      <button type="submit" class="form-btn-primary" (click)="saveMainUser()">Speichern</button>
+      <button type="button" class="form-btn-secondary" (click)="closeDialog()">
+        Abbrechen
+      </button>
+      <button type="submit" class="form-btn-primary" (click)="saveMainUser()">
+        Speichern
+      </button>
     </div>
-
   </div>
 </div>

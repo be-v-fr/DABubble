@@ -7,6 +7,7 @@ import { PrivacypolicyComponent } from './home/legal/privacypolicy/privacypolicy
 import { UserProfileCardComponent } from './user-profile-card/user-profile-card.component';
 import { MainUserProfileCardComponent } from './main-user/main-user-profile-card/main-user-profile-card.component';
 import { EditUserProfileCardComponent } from './edit-user-profile-card/edit-user-profile-card.component';
+import { EditMainUserProfileCardComponent } from './main-user/edit-main-user-profile-card/edit-main-user-profile-card.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { PickAvatarComponent } from './auth/pick-avatar/pick-avatar.component';
 import { RequestPwResetComponent } from './auth/request-pw-reset/request-pw-reset.component';
@@ -19,7 +20,7 @@ import { MainChatComponent } from './components/main-chat/main-chat.component';
 import { AddMembersComponent } from './add-members/add-members.component';
 import { AddChannelComponent } from './add-channel/add-channel.component';
 import { DirectMessageComponent } from './components/direct-message/direct-message.component';
-
+import { EditMainUserAvatarComponent } from './edit-main-user-avatar/edit-main-user-avatar.component';
 import { authGuard } from './shared/auth.guard';
 
 import { PLAYGROUNDComponent } from './playground/playground.component'; // remove later
@@ -50,11 +51,12 @@ export const routes: Routes = [
     { path: 'userProfile', component: UserProfileCardComponent },
     { path: 'mainUser', component: MainUserProfileCardComponent },
     { path: 'editUser', component: EditUserProfileCardComponent },
+    { path: 'editMainUser', component: EditMainUserProfileCardComponent },
     { path: 'LogOut', component: LogOutCardComponent },
     { path: 'addMemberChannel', component: AddMembersAfterAddChannelComponent },
     { path: 'addMember', component: AddMembersComponent },
     { path: 'editChannel', component: EditChannelComponent },
-
+    { path: 'editMainAvatar', component: EditMainUserAvatarComponent },
     { path: 'playground', component: PLAYGROUNDComponent }, // remove later
 
 ];
