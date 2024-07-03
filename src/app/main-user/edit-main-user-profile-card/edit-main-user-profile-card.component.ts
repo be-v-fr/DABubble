@@ -52,5 +52,9 @@ export class EditMainUserProfileCardComponent {
     onSubmit(form: NgForm) {
         if (form.submitted && form.valid) { this.saveMainUser(); }
     }
+
+    openPickAvatar() {
+        
+    }
     
 }
