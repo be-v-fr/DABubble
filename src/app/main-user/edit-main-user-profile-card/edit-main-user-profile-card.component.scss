@@ -32,6 +32,7 @@
 }
 
 .emailContainer {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 7px;
@@ -102,12 +103,18 @@
     }
 }
 
-.inputField input{
-    width: 420px;
-    height: 52px;
-    border: 1px solid rgba(173, 176, 217, 1);
-    border-radius: 30px;
-    padding-left: 20px;  
+.inputField {
+    input {
+        width: 420px;
+        height: 52px;
+        border: 1px solid $purple-light;
+        border-radius: 30px;
+        padding-left: 20px;
+        &:focus:invalid, &:not(:focus:placeholder-shown):invalid {
+            border-color: $magenta;
+        }
+    }
+
 }
 
 .submit-btns{
@@ -115,5 +122,22 @@
     justify-content: center;
     gap: 32px;
     margin-top: 45px;
+}
+
+.error-msg {
+    position: absolute;
+    top: calc(100% + 3px);
+    left: 0;
+    color: $magenta;
+    font-size: 14px;
+    animation: fade-in 250ms ease-out;
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
 }
 
