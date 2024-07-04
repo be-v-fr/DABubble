@@ -52,6 +52,16 @@
     }
 }
 
+.imgedit {
+    position: absolute;
+    right: 110px;
+    top: 300px;
+    cursor: pointer;
+    &:hover {
+        content: url('/assets/img/icons/edit_hover.svg');
+    }
+}
+
 .userName {
     display: flex;
     flex-direction: column;

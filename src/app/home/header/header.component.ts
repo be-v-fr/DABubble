@@ -3,6 +3,7 @@ import { LogOutCardComponent } from '../../main-user/log-out-card/log-out-card.c
 import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { UsersService } from '../../../services/users.service';
 import { User } from '../../../models/user.class';
 
 @Component({
@@ -28,7 +29,8 @@ export class HeaderComponent {
     public dialogRef: MatDialogRef<LogOutCardComponent>, 
     public dialog: MatDialog, 
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private usersService: UsersService
   ) {}
 
   openUserLogoutCard(): void {
@@ -41,6 +43,9 @@ export class HeaderComponent {
     this.dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog "LogOutCard" was Closed.', result); // remove later
       if (result == 'logout') {
+        const user = new User(this.mainUser);
+        user.lastActivity = -1;
+        this.usersService.updateUser(user);
         this.authService.logOut();
         this.router.navigate(['auth/logIn']);
       }

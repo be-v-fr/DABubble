@@ -65,13 +65,14 @@ export class ChannelsService implements OnDestroy {
    * The Firestore document ID will be identical to the doc's Firebase authentication ID.
    * @param doc - doc to be added
    */
-  async addDoc(channel: Channel) {
+  async addDoc(channel: Channel): Promise<string> {
     await addDoc(this.getColRef(), channel.toJson())
     .then((response: any) => {
       channel.channel_id = response.id;
       this.updateDoc(channel);
     })
-      .catch((err: Error) => { console.error(err) });
+    .catch((err: Error) => { console.error(err) });
+    return channel.channel_id;
   }
 
 

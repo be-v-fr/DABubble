@@ -7,7 +7,7 @@
             {{ title() }}
         </div>
     </button>
-    <button *ngIf="showBtn()" (click)="onAddChannel()">
+    <button *ngIf="showBtn()" (click)="onAddChannelClick()">
         <span class="material-icons-outlined add-icon">add</span>
     </button>
 </div>
@@ -15,11 +15,13 @@
 <div *ngIf="isMenuExpanded" class="menu">
     <div *ngIf="showBtn()" class="channel-menu">
         <ul>
-            <li><a routerLink="/main-chat"><span>#</span> Entwicklerteam</a></li>
-            <li><a routerLink="/main-chat"><span>#</span> Entwicklerteam</a></li>
-            <li><a routerLink="/main-chat"><span>#</span> Entwicklerteam</a></li>
+            @for (channel of userChannels; track channel) {<li>
+                <a routerLink="/main-chat" [queryParams]="{channel: channel.channel_id}">
+                    <span>#</span> {{channel.name}}
+                </a>
+            </li>}
         </ul>
-        <button (click)="onAddChannel()">
+        <button (click)="onAddChannelClick()">
             <span class="material-icons-outlined add-circle-icon">add_circle_outline</span>
             <span>Channel hinzufügen</span>
         </button>

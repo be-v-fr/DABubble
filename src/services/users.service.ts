@@ -78,6 +78,7 @@ export class UsersService implements OnDestroy {
    * @param user - user to be added
    */
   async addUser(user: User) {
+    user.lastActivity = Date.now();
     await setDoc(this.getSingleDocRef(user.uid), user.toJson())
       .catch((err: Error) => { console.error(err) });
   }
