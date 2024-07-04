@@ -13,6 +13,8 @@ import { User } from '../../models/user.class';
 import { ActivityService } from '../../services/activity.service';
 import { Subscription } from 'rxjs';
 import { MainChatComponent } from '../components/main-chat/main-chat.component';
+import { ChannelsService } from '../../services/content/channels.service';
+import { Channel } from '../../models/channel.class';
 
 @Component({
     selector: 'app-home',
@@ -31,11 +33,14 @@ import { MainChatComponent } from '../components/main-chat/main-chat.component';
 export class HomeComponent {
     private authService = inject(AuthService);
     private usersService = inject(UsersService);
+    private channelsService = inject(ChannelsService);
     public activityService = inject(ActivityService);
     private authSub = new Subscription();
     private usersSub = new Subscription();
+    private channelsSub = new Subscription();
     public currentUser = new User();
     public users: User[] = [];
+    public userChannels: Channel[] = [];
     public showNav = true;
 
     ngOnInit(): void {
@@ -46,6 +51,7 @@ export class HomeComponent {
     ngOnDestroy(): void {
         this.authSub.unsubscribe();
         this.usersSub.unsubscribe();
+        this.channelsSub.unsubscribe();
     }
 
     subAuth(): Subscription {
@@ -53,6 +59,7 @@ export class HomeComponent {
             if (user) {
                 this.syncUsers();
                 this.usersSub = this.subUsers();
+                this.channelsSub = this.subChannels();
             }
         });
     }
@@ -66,6 +73,10 @@ export class HomeComponent {
         });
     }
 
+    subChannels(): Subscription {
+        return this.channelsService.channels$.subscribe(channels => this.setUserChannels(channels));
+    }
+
     syncUsers(): void {
         this.users = this.usersService.users;
     }
@@ -73,6 +84,10 @@ export class HomeComponent {
     syncCurrentUser(): void {
         const uid = this.authService.getCurrentUid();
         if (uid) { this.currentUser = this.usersService.getUserByUid(uid) }
+    }
+
+    setUserChannels(channels: Channel[]): void {
+        this.userChannels = channels.filter(c => c.members_uids.includes(this.currentUser.uid));
     }
 
     onShowNavigation() {

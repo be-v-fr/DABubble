@@ -4,7 +4,7 @@
 </button>
 <app-header [mainUser]="currentUser"></app-header>
 <div class="main-container">
-    <app-navigation *ngIf="showNav" />
+    <app-navigation *ngIf="showNav" [user_id]="currentUser.uid" [userChannels]="userChannels"/>
     <div class="main-content">
         <router-outlet></router-outlet>
     </div>

@@ -1,4 +1,4 @@
-<div class="container">
+<form class="container" (ngSubmit)="onSubmit(addChannelForm)" #addChannelForm="ngForm">
   <div class="headlineAndCloseBtn">
     <span>Channel erstellen</span>
     <button class="close-thread-btn" (click)="onCancel()">
@@ -14,16 +14,17 @@
   </div>
   <div class="channelName">
     <span>Channel-Name</span>
-    <input type="text" placeholder="# &nbsp; z.B. Kooperationsprojekte" />
+    <input type="text" placeholder="# &nbsp; z.B. Kooperationsprojekte" [(ngModel)]="channel.name" name="name"
+      #name="ngModel" required />
   </div>
   <div class="explain">
     <div>
-    <span>Beschreibung</span><span> (optional)</span>
-</div>
-    <input type="text" placeholder="Dein Text hier" />
+      <span>Beschreibung</span><span> (optional)</span>
+    </div>
+    <input type="text" placeholder="Dein Text hier" [(ngModel)]="channel.description" name="description"
+    #description="ngModel" />
   </div>
-       <div class="addChannelBtn">
-        <button type="submit"  class="form-btn-primary">Erstellen</button>
-      </div>
-    
-</div>
+  <div class="addChannelBtn">
+    <button type="submit" class="form-btn-primary" [disabled]="!name.valid">Erstellen</button>
+  </div>
+</form>
