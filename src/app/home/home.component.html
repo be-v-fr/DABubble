@@ -1,10 +1,16 @@
-<button class="nav-button" (click)="onShowNavigation()">
-    Workspace-Menü schließen
-    <img src="assets/img/icons/show_menu.svg" alt="">
+<button class="nav-button" (click)="onShowNavigation()" [style.left]="!showNav ? '-122px' : '-136px'">
+    {{ showNav ? 'Workspace-Menü schließen' : 'Workspace-Menü öffen'}}
+    <img class="close" *ngIf="showNav" src="assets/img/icons/show_menu.svg" alt="">
+    <img class="open" *ngIf="!showNav" src="assets/img/icons/show_menu.svg" alt="">
 </button>
+<!-- <button class="nav-button" (click)="onShowNavigation()">
+    Workspace-Menü öffen
+    <img class="open" *ngIf="!showNav" src="assets/img/icons/show_menu.svg" alt="">
+</button> -->
+
 <app-header [mainUser]="currentUser"></app-header>
 <div class="main-container">
-    <app-navigation *ngIf="showNav" [user_id]="currentUser.uid" [userChannels]="userChannels"/>
+    <app-navigation *ngIf="showNav" [user_id]="currentUser.uid" [userChannels]="userChannels" />
     <div class="main-content">
         <router-outlet></router-outlet>
     </div>
