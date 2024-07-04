@@ -25,17 +25,18 @@ button {
 
 .main-container {
     position: relative;
-    padding-left: 22px;
+    padding: 22px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 22px;
     height: 100%;
     width: 100%;
-    max-width: 1879px;
+    // max-width: 1879px;
     max-height: calc(100% - 150px);
 
-    app-navigation {
+    app-navigation,
+    app-thread {
         height: 100%;
     }
 

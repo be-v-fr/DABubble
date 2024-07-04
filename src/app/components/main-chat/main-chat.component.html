@@ -1,50 +1,53 @@
-<section class="main-container">
-    <div class="main-header">
-        <button class="channel-btn" (click)="onEditChannel()">
-            # {{ title() }}
-            <span class="material-icons-outlined icon">keyboard_arrow_down</span>
-        </button>
-        <div class="main-header-members">
-            <button class="members-btn">
-                <div class="m-images-container">
-                    <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
-                    <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
-                    <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
-                </div>
-                <span>3</span>
+<div class="main-container">
+    <section class="main-container">
+        <div class="main-header">
+            <button class="channel-btn" (click)="onEditChannel()">
+                # {{ title() }}
+                <span class="material-icons-outlined icon">keyboard_arrow_down</span>
             </button>
-            <button class="add-members-btn">
-                <span class="material-icons-outlined icon">person_add_alt</span>
-            </button>
+            <div class="main-header-members">
+                <button class="members-btn">
+                    <div class="m-images-container">
+                        <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
+                        <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
+                        <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
+                    </div>
+                    <span>3</span>
+                </button>
+                <button class="add-members-btn">
+                    <span class="material-icons-outlined icon">person_add_alt</span>
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="message-items-container">
-        <div class="message-item-container" *ngIf="messages">
-            <app-time-separator />
-            <app-message-item [emojis]="emojis" [hideEmojiPicker]="emojiPicker"
-                (showEmojiPicker)="handleStateChange($event)" />
+        <div class="message-items-container">
+            <div class="message-item-container" *ngIf="messages">
+                <app-time-separator />
+                <app-message-item [emojis]="emojis" [hideEmojiPicker]="emojiPicker"
+                    (showEmojiPicker)="handleEmojiStateChange($event)" (id)="openThread($event)" />
+            </div>
+            <!-- <div class="message-item-container" *ngIf="messages">
+                <app-time-separator />
+                <app-message-item [emojis]="emojis" [hideEmojiPicker]="emojiPicker"
+                    (showEmojiPicker)="handleEmojiStateChange($event)" [messageSender]="true" />
+            </div> -->
+            <!-- <div class="message-item-container" *ngIf="messages">
+                <app-time-separator />
+                <app-message-item />
+            </div> -->
+            <div class="create-channel-message-container" *ngIf="!messages">
+                <h3>
+                    <span>#</span>
+                    Office-team
+                </h3>
+                <p>
+                    Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
+                    <span># Office-team.</span>
+                </p>
+            </div>
         </div>
-        <div class="message-item-container" *ngIf="messages">
-            <app-time-separator />
-            <app-message-item [emojis]="emojis" [hideEmojiPicker]="emojiPicker"
-                (showEmojiPicker)="handleStateChange($event)" [messageSender]="true" />
-        </div>
-        <!-- <div class="message-item-container" *ngIf="messages">
-            <app-time-separator />
-            <app-message-item />
-        </div> -->
-        <div class="create-channel-message-container" *ngIf="!messages">
-            <h3>
-                <span>#</span>
-                Office-team
-            </h3>
-            <p>
-                Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
-                <span># Office-team.</span>
-            </p>
-        </div>
-    </div>
-    <app-message-box />
-    <emoji-mart title="Pick your emoji…" (emojiClick)="addEmoji($event)" emoji="point_up"
-        *ngIf="emojiPicker"></emoji-mart>
-</section>
+        <app-message-box />
+        <emoji-mart title="Pick your emoji…" (emojiClick)="addEmoji($event)" emoji="point_up"
+            *ngIf="emojiPicker"></emoji-mart>
+    </section>
+    <app-thread *ngIf="thread" [thread]="thread" />
+</div>

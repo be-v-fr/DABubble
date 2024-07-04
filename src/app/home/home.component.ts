@@ -12,6 +12,8 @@ import { UsersService } from '../../services/users.service';
 import { User } from '../../models/user.class';
 import { Subscription } from 'rxjs';
 import { MainChatComponent } from '../components/main-chat/main-chat.component';
+import { ThreadsService } from '../../services/content/threads.service';
+import { ChannelsService } from '../../services/content/channels.service';
 
 @Component({
     selector: 'app-home',
@@ -30,6 +32,9 @@ import { MainChatComponent } from '../components/main-chat/main-chat.component';
 export class HomeComponent {
     private authService = inject(AuthService);
     private usersService = inject(UsersService);
+    private channelService = inject(ChannelsService);
+    private threadService = inject(ThreadsService);
+
     private authSub = new Subscription();
     private usersSub = new Subscription();
     public currentUser = new User();
@@ -78,5 +83,6 @@ export class HomeComponent {
     onShowNavigation() {
         this.showNav = !this.showNav;
     }
+
 
 }

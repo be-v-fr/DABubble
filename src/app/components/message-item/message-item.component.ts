@@ -4,6 +4,8 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
 import { UserProfileCardComponent } from '../../user-profile-card/user-profile-card.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ThreadsService } from '../../../services/content/threads.service';
+import { Thread } from '../../../models/thread.class';
 @Component({
   selector: 'app-message-item',
   standalone: true,
@@ -12,12 +14,17 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './message-item.component.scss'
 })
 export class MessageItemComponent {
-  constructor(private dialog: MatDialog) { }
 
   @Input() emojis: { unified: string, native: string, count: number }[] = [];
   @Input() messageSender = false;
   @Input() hideEmojiPicker = false;
   @Output() showEmojiPicker = new EventEmitter<boolean>();
+  @Output() id = new EventEmitter<string>();
+
+  constructor(
+    private dialog: MatDialog,
+    private threadService: ThreadsService
+  ) { }
 
   emojiPicker = false;
 
@@ -26,8 +33,21 @@ export class MessageItemComponent {
     this.showEmojiPicker.emit(this.emojiPicker);
   }
 
+  async onOpenNewThread() {
+    try {
+      const threadId = await this.threadService.addDoc(new Thread({
+        channel_id: 'test2-ljbkjvkjvkjv',
+        date: new Date().getTime(),
+      }));
+      this.id.emit(threadId);
+    } catch (err) {
+      console.error('Error adding document:', err);
+    }
+  }
+
+
   openUserProfile(): void {
     this.dialog.open(UserProfileCardComponent);
   }
-  }
+}
 
