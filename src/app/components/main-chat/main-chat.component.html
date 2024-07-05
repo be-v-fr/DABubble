@@ -20,34 +20,32 @@
             </div>
         </div>
         <div class="message-items-container">
-            <div class="message-item-container" *ngIf="messages">
-                <app-time-separator />
-                <app-message-item [emojis]="emojis" [hideEmojiPicker]="emojiPicker"
-                    (showEmojiPicker)="handleEmojiStateChange($event)" (id)="openThread($event)" />
+            @if(channelThreads && channelThreads.length > 0) {
+            @for (thread of channelThreads; track thread) {
+            <div class="message-item-container">
+                <app-time-separator [timestamp]="thread.date" />
+                <app-message-item [post]="getFirstPost(thread.thread_id)" [emojis]="emojis" [hideEmojiPicker]="emojiPicker"
+                    (showEmojiPicker)="handleEmojiStateChange($event)" (id)="openThread($event)" [messageSender]="isCurrentUserAuthor(getFirstPost(thread.thread_id).user_id)"
+                    [threadLength]="getThreadLength(thread.thread_id)" [lastReply]="getLastReplyTime(thread.thread_id)" />
             </div>
-            <!-- <div class="message-item-container" *ngIf="messages">
-                <app-time-separator />
-                <app-message-item [emojis]="emojis" [hideEmojiPicker]="emojiPicker"
-                    (showEmojiPicker)="handleEmojiStateChange($event)" [messageSender]="true" />
-            </div> -->
-            <!-- <div class="message-item-container" *ngIf="messages">
-                <app-time-separator />
-                <app-message-item />
-            </div> -->
-            <div class="create-channel-message-container" *ngIf="!messages">
+            }
+            } @else {
+            <div class="create-channel-message-container">
                 <h3>
                     <span>#</span>
-                    Office-team
+                    {{ currentChannel.name }}
                 </h3>
                 <p>
                     Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
-                    <span># Office-team.</span>
+                    <span># {{ currentChannel.name }}.</span>
                 </p>
             </div>
+            }
         </div>
-        <app-message-box />
+        <app-message-box [channelName]="currentChannel.name" (sent)="createThread($event)" />
         <emoji-mart title="Pick your emoji…" (emojiClick)="addEmoji($event)" emoji="point_up"
             *ngIf="emojiPicker"></emoji-mart>
+        <!-- Q: Is the emoji picker connected to the thread which the emojis are added to? If not, store thread ID which the picker is opened from as a property -->
     </section>
     <app-thread *ngIf="thread" [thread]="thread" />
 </div>

@@ -3,16 +3,20 @@ import { Firestore, collection, doc, onSnapshot, updateDoc, deleteDoc } from '@a
 import { Subject } from 'rxjs';
 import { CollectionReference, DocumentReference, addDoc } from 'firebase/firestore';
 import { Thread } from '../../models/thread.class';
+import { PostsService } from './posts.service';
+import { Post } from '../../models/post.class';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThreadsService implements OnDestroy {
+  threads: Thread[] = [];
   threads$: Subject<Thread[]> = new Subject<Thread[]>();
   unsubThreads;
 
   firestore: Firestore = inject(Firestore);
+  private postsService = inject(PostsService);
 
   /**
    * Create subscription
@@ -31,9 +35,8 @@ export class ThreadsService implements OnDestroy {
   subThreads() {
     return onSnapshot(this.getColRef(), (list: any) => {
       let threads: Thread[] = [];
-      list.forEach((element: any) => {
-        threads.push(element.data());
-      });
+      list.forEach((element: any) => threads.push(element.data()));
+      this.threads = threads;
       this.threads$.next(threads);
     });
   }
@@ -63,7 +66,7 @@ export class ThreadsService implements OnDestroy {
    * @param doc - doc to be added
    */
 
-  async addDoc(thread: Thread): Promise<any> {
+  async addDoc(thread: Thread): Promise<string> {
     try {
       const response = await addDoc(this.getColRef(), thread.toJson());
       thread.thread_id = response.id;
@@ -72,7 +75,20 @@ export class ThreadsService implements OnDestroy {
       return response.id;
     } catch (err) {
       console.error(err);
-      throw err; // Re-throw the error to let the caller handle it
+      throw err;
+    }
+  }
+
+  async createThread(message: string, channel_id: string, author_id: string): Promise<string> {
+    try {
+      const thread = new Thread({ channel_id: channel_id });
+      const thread_id = await this.addDoc(thread);
+      const post = new Post({ message: message, user_id: author_id, thread_id: thread_id });
+      await this.postsService.addDoc(post);
+      return thread_id;
+    } catch (err) {
+      console.error(err);
+      throw err;  
     }
   }
 
@@ -100,7 +116,7 @@ export class ThreadsService implements OnDestroy {
   }
 
   getChannelThreads(threads: Thread[], channel_id: string): Thread[] {
-    threads.filter(t => t.channel_id == channel_id);
+    threads = threads.filter(t => t.channel_id == channel_id);
     threads.sort((a, b) => a.date - b.date);
     threads.forEach(t => t = new Thread(t));
     return threads;

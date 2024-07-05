@@ -1,6 +1,8 @@
-<div class="message-box-container">
-    <input placeholder="Nachricht an #Entwicklerteam" name="message-box">
+<form class="message-box-container" (ngSubmit)="onSubmit(messageForm)" #messageForm="ngForm">
+    <input [placeholder]="getPlaceholder()" [(ngModel)]="data.message" name="messageBox"
+    #messageBox="ngModel" required>
     <div class="message-box-footer">
+        <!-- TO DO: Implement actions -->
         <div class="message-box-actions">
             <button>
                 <span class="material-icons-outlined icon">add</span>
@@ -12,8 +14,8 @@
                 <span class="material-icons-outlined icon">alternate_email</span>
             </button>
         </div>
-        <button class="send-btn">
+        <button class="send-btn" type="submit">
             <span class="material-icons-outlined icon">send</span>
         </button>
     </div>
-</div>
+</form>
