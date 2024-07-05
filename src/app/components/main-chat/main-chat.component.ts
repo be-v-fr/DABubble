@@ -8,6 +8,7 @@ import { TimeSeparatorComponent } from '../time-separator/time-separator.compone
 import { EmojiService } from '../../../services/emoji-service/emoji-service';
 import { EditChannelComponent } from '../../edit-channel/edit-channel.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MemberListComponent } from '../../member-list/member-list.component';
 
 @Component({
   selector: 'app-main-chat',
@@ -48,6 +49,11 @@ export class MainChatComponent {
 
   onEditChannel(): void {
     this.dialog.open(EditChannelComponent);
+  }
+
+  openMemberList():void{
+    this.dialog.open(MemberListComponent);
+
   }
 
   

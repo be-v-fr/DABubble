@@ -1,0 +1,140 @@
+@import "../../styles.scss";
+
+.memberCard {
+  width: 415px;
+  height: 411px;
+}
+.mat-mdc-dialog-container.mat-animation-noopable .mdc-dialog__surface {
+  border-radius: 10px !important; 
+}
+
+.headlineAndCloseBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 335px;
+  height: 40px;
+  justify-content: space-between;
+  margin-left: 16px;
+  margin-top: 40px;
+  gap: 211px;
+  align-items: center;
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    span:nth-child(1) {
+      font-weight: 700;
+      font-size: 24px;
+      height: 33px;
+      align-items: center;
+      display: flex;
+    }
+    span:nth-child(2) {
+      color: rgba(121, 126, 243, 1);
+      font-size: 18px;
+      font-weight: 400;
+      width: 166px;
+      height: 25px;
+      word-spacing: 15px;
+    }
+  }
+}
+
+.close-thread-btn {
+  color: rgb(0, 0, 0, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+
+  &:hover {
+    color: $purple-blue-bright;
+    background-color: $violet-bright;
+    border-radius: 20px;
+  }
+}
+
+.usersMenu {
+  width: 335px;
+  height: 271px;
+  margin-left: 16px;
+  margin-top: 20px;
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.message-img-container {
+  width: 366px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+  button{
+  display: flex;
+    gap: 15px;
+    align-items: center;
+    padding: 12px 20px;
+
+    // width: 274px;
+    // height: 56px;
+    &:hover {
+      color: #535af1;
+      background-color: #eceefe;
+      border-radius: 100px;
+      cursor: pointer;
+    }
+  }
+  img {
+    width: 50px;
+    height: 50px;
+  }
+  .online {
+    border: 2px solid white;
+    border-radius: 100%;
+    width: 14px;
+    height: 14px;
+    background-color: #92c83e;
+    position: absolute;
+    left: 36px;
+    top: 40px;
+  }
+  span {
+    font-size: 18px;
+    font-weight: 400;
+  }
+ 
+}
+
+.addMemberBtn {
+  width: 366px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  left: 20px;
+  button {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    // width: 274px;
+    // height: 56px;
+    padding: 12px 20px;
+    &:hover {
+      color: #535af1;
+      background-color: #eceefe;
+      border-radius: 100px;
+    }
+  }
+  .addMemberText {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  img {
+    width: 32px;
+    height: 32px;
+   
+  }
+}
