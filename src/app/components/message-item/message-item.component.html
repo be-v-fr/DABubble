@@ -1,4 +1,4 @@
-<div class="message-container" [class.reversed]="messageSender">
+<div *ngIf="post" class="message-container" [class.reversed]="messageSender">
     <div class="reaction-bar-container">
         <!-- <button>
             <span class="reaction-icon">👍</span>
@@ -6,7 +6,7 @@
         <button>
             <span (click)="onShowEmojiPicker()" class="material-icons-outlined">add_reaction</span>
         </button>
-        <button>
+        <button (click)="onOpenNewThread()">
             <span class="material-icons-outlined">insert_comment</span>
         </button>
         <button>
@@ -14,20 +14,21 @@
         </button>
     </div>
     <div class="img-container">
-        <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
+        <img src="{{author.avatarSrc}}" alt="Avatar">
     </div>
     <div class="message-content">
         <div class="user-name-container">
-            <div class="user-name" (click)="openUserProfile()">Noah Braun</div>
-            <span>15:32 Uhr</span>
+            <div class="user-name" (click)="openUserProfile(post.user_id)">{{author.name}}</div>
+            <span>{{timeService.toClock(post.date)}} Uhr</span>
         </div>
         <div class="message">
-            <div class="message-text">Welche Version ist aktuell von Angular?</div>
+            <div class="message-text">{{ post.message }}</div>
         </div>
-        <div class="message-answers">
-            <button>2 Antworten</button>
-            <span>Letzte Antwort 14:56</span>
+        <div *ngIf="threadLength && threadLength > 1" class="message-answers">
+            <button>{{threadLength - 1}} Antworten</button>
+            <span *ngIf="lastReply">Letzte Antwort {{timeService.toClock(lastReply)}}</span>
         </div>
+        <!-- TO DO: Connect reactions to service: -->
         <div class="reactions-container" *ngIf="emojis.length > 0 ">
             <div class="reaction" *ngFor="let emoji of emojis">
                 <div class="reaction-info">

@@ -1,3 +1,46 @@
+<div class="main-container">
+    <section class="main-container">
+        <div class="main-header">
+            <button class="channel-btn" (click)="onEditChannel()">
+                # {{ currentChannel.name }}
+                <span class="material-icons-outlined icon">keyboard_arrow_down</span>
+            </button>
+            <div class="main-header-members">
+                <button class="members-btn">
+                    <div class="m-images-container">
+                        <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
+                        <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
+                        <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
+                    </div>
+                    <span>3</span>
+                </button>
+                <button class="add-members-btn">
+                    <span class="material-icons-outlined icon">person_add_alt</span>
+                </button>
+            </div>
+        </div>
+        <div class="message-items-container">
+            @if(channelThreads && channelThreads.length > 0) {
+            @for (thread of channelThreads; track thread) {
+            <div class="message-item-container">
+                <app-time-separator [timestamp]="thread.date" />
+                <app-message-item [post]="getFirstPost(thread.thread_id)" [emojis]="emojis" [hideEmojiPicker]="emojiPicker"
+                    (showEmojiPicker)="handleEmojiStateChange($event)" (id)="openThread($event)" [messageSender]="isCurrentUserAuthor(getFirstPost(thread.thread_id).user_id)"
+                    [threadLength]="getThreadLength(thread.thread_id)" [lastReply]="getLastReplyTime(thread.thread_id)" />
+            </div>
+            }
+            } @else {
+            <div class="create-channel-message-container">
+                <h3>
+                    <span>#</span>
+                    {{ currentChannel.name }}
+                </h3>
+                <p>
+                    Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
+                    <span># {{ currentChannel.name }}.</span>
+                </p>
+            </div>
+            }
 <section class="main-container">
     <div class="main-header">
         <button class="channel-btn" (click)="onEditChannel()">
@@ -43,8 +86,10 @@
                 <span># Office-team.</span>
             </p>
         </div>
-    </div>
-    <app-message-box />
-    <emoji-mart title="Pick your emoji…" (emojiClick)="addEmoji($event)" emoji="point_up"
-        *ngIf="emojiPicker"></emoji-mart>
-</section>
+        <app-message-box [channelName]="currentChannel.name" (sent)="createThread($event)" />
+        <emoji-mart title="Pick your emoji…" (emojiClick)="addEmoji($event)" emoji="point_up"
+            *ngIf="emojiPicker"></emoji-mart>
+        <!-- Q: Is the emoji picker connected to the thread which the emojis are added to? If not, store thread ID which the picker is opened from as a property -->
+    </section>
+    <app-thread *ngIf="thread" [thread]="thread" />
+</div>

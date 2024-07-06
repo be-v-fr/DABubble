@@ -10,12 +10,12 @@
   <div class="profileImg">
     <img class="#" src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}" />
   </div>
-  <div class="imgedit">
-    <img src="/assets/img/icons/edit.svg">
+  <div class="imgedit" (click)="openEditAvatar()">
+    <img src="/assets/img/icons/edit.svg" >
   </div>
   <div class="userName">
       <div class="nameAndEdit">
-    <h1>{{ mainUser.name || 'Sofia Müller'}}</h1>
+    <h1>{{ mainUser.name || '...'}}</h1>
     <p class="edit" (click)="openEditProfile(mainUser)">Bearbeiten</p>
   </div>
     <div class="online">
@@ -29,7 +29,7 @@
       <p>E-Mail-Adresse</p>
     </div>
     <div class="showEmail">
-      <p>{{ mainUser.email || 'sofia.muel&#64;beispiel.com' }}</p>
+      <p>{{ mainUser.email || 'vorname.name@beispiel.de' }}</p>
     </div>
   </div>
 </div>
