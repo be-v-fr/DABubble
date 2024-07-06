@@ -1,172 +1,176 @@
 @import "../../../styles.scss";
 
-.btn-container {
+:host {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 25px;
+  max-height: 350px;
 
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 5px 10px 5px 0px;
+  .exp-btn-container {
+    max-height: 300px;
 
-    .icon {
-      font-size: 30px;
-    }
-
-    .channel-title {
+    .btn-container {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 27.28px;
-    }
+      justify-content: space-between;
 
-    .add-icon {
-      padding: 3px;
-    }
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 5px 10px 5px 0px;
 
-    &:hover {
-      color: $purple-blue-bright;
-
-      .add-icon {
-        background-color: $violet-bright;
-        border-radius: 15px;
-      }
-    }
-  }
-}
-
-.menu {
-  height: 100%;
-  .channel-menu {
-    max-height: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 25px;
-    overflow-y: auto;
-    @include scrollbar();
-
-    ul {
-      list-style-type: none;
-      margin-top: 25px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 25px;
-      padding: 0;
-
-      li {
-        padding: 4px 20px;
-        border-radius: 30px;
-
-        a {
-          text-decoration: none;
-          font-size: 18px;
-          font-weight: 700;
-          line-height: 24.55px;
-          color: inherit;
-
-          span {
-            font-size: 24px;
-          }
+        .icon {
+          font-size: 30px;
         }
 
-        &:hover {
-          color: $purple-blue-bright;
-          background-color: $violet-bright;
-        }
-      }
-    }
-
-    button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-size: 18px;
-      font-weight: 400;
-      line-height: 24.5px;
-      padding-left: 17px;
-
-      .add-circle-icon {
-        transition: transform 0.2s ease-in-out;
-      }
-
-      &:hover {
-        color: $purple-blue-bright;
-
-        .add-circle-icon {
-          transform: scale(1.1);
-        }
-      }
-    }
-  }
-
-  .messages-menu {
-    display: flex;
-    height: 280px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 25px;
-    overflow-y: auto;
-    @include scrollbar();
-
-    ul {
-      list-style-type: none;
-      margin-top: 65px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 25px;
-      padding: 0;
-
-      li {
-        padding: 4px 20px;
-        border-radius: 35px;
-
-        a {
+        .channel-title {
           display: flex;
           align-items: center;
-          gap: 15px;
-          text-decoration: none;
-          font-size: 18px;
-          font-weight: 400;
-          line-height: 24.55px;
-          color: inherit;
+          gap: 10px;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 27.28px;
+        }
 
-          .message-img-container {
-            position: relative;
-            img {
-              width: 50px;
-              height: 50px;
-            }
-            .on-off-line-sign {
-              position: absolute;
-              top: 40px;
-              left: 35px;
-              width: 14px;
-              height: 14px;
-              // background-color: $onlinedot-online;
-              border: 2px solid white;
-              border-radius: 100%;
-            }
-          }
+        .add-icon {
+          padding: 3px;
         }
 
         &:hover {
           color: $purple-blue-bright;
-          background-color: $violet-bright;
+
+          .add-icon {
+            background-color: $violet-bright;
+            border-radius: 15px;
+          }
+        }
+      }
+    }
+
+    .menu {
+      height: 100%;
+
+      .channel-menu {
+        ul {
+          list-style-type: none;
+          margin-top: 25px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          gap: 25px;
+          padding: 0;
+          overflow-y: auto;
+          @include scrollbar();
+
+
+          li {
+            padding: 4px 20px;
+            border-radius: 30px;
+
+            a {
+              text-decoration: none;
+              font-size: 18px;
+              font-weight: 700;
+              line-height: 24.55px;
+              color: inherit;
+
+              span {
+                font-size: 24px;
+              }
+            }
+
+            &:hover {
+              color: $purple-blue-bright;
+              background-color: $violet-bright;
+            }
+          }
+        }
+
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          font-size: 18px;
+          font-weight: 400;
+          line-height: 24.5px;
+          padding-left: 17px;
+
+          .add-circle-icon {
+            transition: transform 0.2s ease-in-out;
+          }
+
+          &:hover {
+            color: $purple-blue-bright;
+
+            .add-circle-icon {
+              transform: scale(1.1);
+            }
+          }
+        }
+      }
+
+      .messages-menu {
+        height: 100%;
+
+        ul {
+          height: 100%;
+          list-style-type: none;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
+          padding: 0;
+          overflow-y: auto;
+          @include scrollbar();
+
+          li {
+            padding: 4px 20px;
+            border-radius: 35px;
+
+            a {
+              display: flex;
+              align-items: center;
+              gap: 15px;
+              text-decoration: none;
+              font-size: 18px;
+              font-weight: 400;
+              line-height: 24.55px;
+              color: inherit;
+
+              .message-img-container {
+                position: relative;
+
+                img {
+                  width: 50px;
+                  height: 50px;
+                }
+
+                .on-off-line-sign {
+                  position: absolute;
+                  top: 40px;
+                  left: 35px;
+                  width: 14px;
+                  height: 14px;
+                  // background-color: $onlinedot-online;
+                  border: 2px solid white;
+                  border-radius: 100%;
+                }
+              }
+            }
+
+            &:hover {
+              color: $purple-blue-bright;
+              background-color: $violet-bright;
+            }
+          }
         }
       }
     }
   }
+
+
 }
