@@ -19,6 +19,9 @@ import { PostsService } from '../../../services/content/posts.service';
 import { Post } from '../../../models/post.class';
 import { AuthService } from '../../../services/auth.service';
 import { TimeService } from '../../../services/time.service';
+import { User } from '../../../models/user.class';
+import { ActivityService } from '../../../services/activity.service';
+import { MemberListComponent } from '../../member-list/member-list.component';
 
 @Component({
   selector: 'app-main-chat',
@@ -55,6 +58,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
     private channelsService: ChannelsService,
     private threadsService: ThreadsService,
     private postsService: PostsService,
+    private activityService: ActivityService,
     public timeService: TimeService,
     private router: Router,
     private route: ActivatedRoute
