@@ -18,6 +18,9 @@ import { Subscription } from 'rxjs';
 import { PostsService } from '../../../services/content/posts.service';
 import { Post } from '../../../models/post.class';
 import { AuthService } from '../../../services/auth.service';
+import { MemberListComponent } from '../../member-list/member-list.component';
+import { ActivityService } from '../../../services/activity.service';
+import { User } from '../../../models/user.class';
 
 @Component({
   selector: 'app-main-chat',
@@ -45,6 +48,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   channelThreads?: Thread[];
   channelThreadsFirstPosts?: Post[];
   emojiPicker = false;
+  activeUsers: User[] = [];
 
   constructor(
     private emojiService: EmojiService,
@@ -53,6 +57,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
     private channelsService: ChannelsService,
     private threadsService: ThreadsService,
     private postsService: PostsService,
+    private activityService: ActivityService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -63,6 +68,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(params => {
       if (params['channel']) { this.initChannel(params['channel']) }
     });
+    this.activeUsers = this.activityService.getActiveUsers();
   }
 
   subAuth() {
@@ -139,6 +145,13 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   onEditChannel(): void {
     this.dialog.open(EditChannelComponent);
+  }
+
+  openMemberList(): void {
+    this.dialog.open(MemberListComponent, {
+      data: { activeUsers: this.activeUsers }
+    });
+
   }
 
   openThread(event: any) {

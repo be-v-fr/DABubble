@@ -9,38 +9,16 @@
   </div>
   <div class="usersMenu">
     <!-- <a routerLink="/#"> -->
-    <div class="message-img-container">
+    <div *ngFor="let user of activeUsers" class="message-img-container">
       <button>
-      <img src="../../../assets/img/avatar/avatar_01.svg" alt="Avatar" />
-      <span>Frederik Beck (Du)</span>
-      <span class="online"></span>
-    </button>
-    </div>
-    <!-- </a> -->
-
-    <!-- <a routerLink="/#"> -->
-    <div class="message-img-container">
-      <button>
-      <img src="../../../assets/img/avatar/avatar_00.svg" alt="Avatar" />
-      <span>Sofia Müller</span>
-      <span class="online"></span>
-    </button>
-
-    </div>
-    <!-- </a> -->
-
-    <!-- <a routerLink="/#"> -->
-    <div class="message-img-container">
-      <button>
-      <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar" />
-      <span>Noah Braun</span>
-      <span class="online"></span>
-    </button>
-
+        <img [src]="user.avatarSrc" alt="Avatar" />
+        <span>{{ user.name }}</span>
+        <span class="online"></span>
+      </button>
     </div>
 
     <div class="addMemberBtn">
-      <button>
+      <button (click)="addmember()">
         <span class="material-icons-outlined icon">person_add_alt</span>
         <span class="addMemberText">Mitglieder hinzufügen</span>
       </button>
