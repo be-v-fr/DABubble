@@ -1,8 +1,9 @@
 import { Component, Inject, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { EditMainUserProfileCardComponent } from '../edit-main-user-profile-card/edit-main-user-profile-card.component';
 import { User } from '../../../models/user.class';
+import { EditMainUserProfileCardComponent } from '../edit-main-user-profile-card/edit-main-user-profile-card.component';
+import { EditMainUserAvatarComponent } from '../../edit-main-user-avatar/edit-main-user-avatar.component';
 
 @Component({
   selector: 'app-main-user-profile-card',
@@ -16,6 +17,7 @@ export class MainUserProfileCardComponent {
 
   constructor (
     private dialogRef: MatDialogRef<MainUserProfileCardComponent>,
+    private dialogAvatarRef: MatDialogRef<EditMainUserAvatarComponent>,
     public dialogUserRef: MatDialogRef<EditMainUserProfileCardComponent>,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -46,6 +48,21 @@ export class MainUserProfileCardComponent {
     });
   }
 
+  openEditAvatar() {
+    this.dialogAvatarRef = this.dialog.open(EditMainUserAvatarComponent, {
+        data: {
+            mainUser: this.mainUser
+        }
+    });
+
+    this.dialogAvatarRef.afterOpened().subscribe( () => {
+      this.closeDialog();
+    });
+
+    this.dialogAvatarRef.afterClosed().subscribe(result => {
+      console.log('The dialog "EditMainUserAvatar" was Closed.', result);
+    });
+  }
 
 
 

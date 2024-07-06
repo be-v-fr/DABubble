@@ -1,10 +1,10 @@
 import { Component, inject, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../../models/user.class';
 import { EditMainUserAvatarComponent } from '../../edit-main-user-avatar/edit-main-user-avatar.component';
-import { UsersService } from '../../../services/users.service';
 import { FormsModule, NgForm } from '@angular/forms';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
     selector: 'app-edit-main-user-profile-card',
@@ -15,16 +15,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 })
 export class EditMainUserProfileCardComponent {
     public mainUser: User = new User;
+    public userData: User = new User;   
     private usersService = inject(UsersService);
-    userData = {
-        uid: '',
-        name: '',
-        email: '',
-        password: ''
-      }
-    
+
     constructor (
         private dialogRef: MatDialogRef<EditMainUserProfileCardComponent>,
+        private dialogAvatarRef: MatDialogRef<EditMainUserAvatarComponent>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -41,8 +37,9 @@ export class EditMainUserProfileCardComponent {
     
     async saveMainUser() {
         if (this.userData.email !== this.mainUser.email) {
-            console.log('Update email necessary');
+            console.log('Update email necessary', this.mainUser);
         }
+        console.log('mainUser: ', this.mainUser);
         this.mainUser.name = this.userData.name;
         this.mainUser.email = this.userData.email;
         await this.usersService.updateUser(this.mainUser);
@@ -54,7 +51,19 @@ export class EditMainUserProfileCardComponent {
     }
 
     openPickAvatar() {
-        
+        this.dialogAvatarRef = this.dialog.open(EditMainUserAvatarComponent, {
+            data: {
+                mainUser: this.mainUser
+            }
+        });
+      
+        this.dialogAvatarRef.afterOpened().subscribe( () => {
+            this.closeDialog();
+        });
+      
+        this.dialogAvatarRef.afterClosed().subscribe(result => {
+            console.log('The dialog "EditMainUserAvatar" was Closed.', result);
+        });
     }
     
 }

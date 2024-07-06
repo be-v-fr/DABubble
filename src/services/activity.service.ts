@@ -92,4 +92,8 @@ export class ActivityService implements OnDestroy {
       state: state
     };
   }
+
+  getActiveUsers(): User[] {
+    return this.usersService.users.filter(user => this.getUserState(user).state === 'active');
+  }
 }

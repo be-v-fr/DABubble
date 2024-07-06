@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, input, inject } from '@angular/core';
+import { TimeService } from '../../../services/time.service';
 
 @Component({
   selector: 'app-time-separator',
@@ -8,5 +9,6 @@ import { Component } from '@angular/core';
   styleUrl: './time-separator.component.scss'
 })
 export class TimeSeparatorComponent {
-
+  timestamp = input.required<number>();
+  public timeService = inject(TimeService);
 }

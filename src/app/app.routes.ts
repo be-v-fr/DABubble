@@ -14,6 +14,7 @@ import { RequestPwResetComponent } from './auth/request-pw-reset/request-pw-rese
 import { ResetPwComponent } from './auth/reset-pw/reset-pw.component';
 import { LogOutCardComponent } from './main-user/log-out-card/log-out-card.component';
 import { EditChannelComponent } from './edit-channel/edit-channel.component';
+import { MemberListComponent } from './member-list/member-list.component';
 import { AddMembersAfterAddChannelComponent } from './add-members-after-add-channel/add-members-after-add-channel.component';
 import { NewMessageComponent } from './components/new-message/new-message.component';
 import { MainChatComponent } from './components/main-chat/main-chat.component';
@@ -55,6 +56,7 @@ export const routes: Routes = [
     { path: 'LogOut', component: LogOutCardComponent },
     { path: 'addMemberChannel', component: AddMembersAfterAddChannelComponent },
     { path: 'addMember', component: AddMembersComponent },
+    {path: 'memberList', component: MemberListComponent},
     { path: 'editChannel', component: EditChannelComponent },
     { path: 'editMainAvatar', component: EditMainUserAvatarComponent },
     { path: 'playground', component: PLAYGROUNDComponent }, // remove later
