@@ -25,4 +25,20 @@ export class TimeService {
     const month = months[date.getMonth()];
     return `${dayOfWeek}, ${day} ${month}`;
   }
+
+  toRelativeDate(timestamp: number): string {
+    const now = new Date();
+    const date = new Date(timestamp);
+    const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const msInDay = 86400;
+    const diffInMs = midnight.getTime() - date.getTime();
+    if (diffInMs < msInDay) {
+      return this.toRelativeDate(timestamp);
+    } else {
+      const diffInDays = Math.floor(diffInMs / msInDay);
+      if (diffInDays === 1) {return "gestern"}
+      else if (diffInDays === 2) {return "vorgestern"}
+      else {return `vor ${diffInDays} Tagen`}
+    }
+  }
 }
