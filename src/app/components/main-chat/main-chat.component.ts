@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 import { PostsService } from '../../../services/content/posts.service';
 import { Post } from '../../../models/post.class';
 import { AuthService } from '../../../services/auth.service';
+import { TimeService } from '../../../services/time.service';
 
 @Component({
   selector: 'app-main-chat',
@@ -53,6 +54,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
     private channelsService: ChannelsService,
     private threadsService: ThreadsService,
     private postsService: PostsService,
+    public timeService: TimeService,
     private router: Router,
     private route: ActivatedRoute
   ) { }

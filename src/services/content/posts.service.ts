@@ -102,7 +102,7 @@ export class PostsService implements OnDestroy {
 
 
   getThreadPosts(posts: Post[], thread_id: string): Post[] {
-    posts.filter(p => p.thread_id == thread_id);
+    posts = posts.filter(p => p.thread_id == thread_id);
     posts.sort((a, b) => a.date - b.date);
     posts.forEach(p => p = new Post(p))
     return posts;
