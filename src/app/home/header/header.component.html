@@ -15,7 +15,10 @@
         <span class="userprofile-name">{{ mainUser.name || '...' }}</span>
         <div class="userprofile-image-box">
             <img src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}">
-            <div class="onlinedot" [ngClass]="{'online': activityService.getUserState(mainUser).state == 'active'}" [ngClass]="{'idle': activityService.getUserState(mainUser).state == 'idle'}"></div>
+            <div class="onlinedot" 
+                [ngClass]="{'online': activityService.getUserState(mainUser).state == 'active'}" 
+                [ngClass]="{'idle': activityService.getUserState(mainUser).state == 'idle'}"
+            ></div>
         </div>
         <div class="userprofile-menu-box">
             <img src="/assets/img/icons/dropdown_arrow.svg">

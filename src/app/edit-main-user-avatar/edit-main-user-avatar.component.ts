@@ -188,7 +188,7 @@ export class EditMainUserAvatarComponent {
         this.resetFileError();
     }
 
-    async saveAvatar() {
+    async saveAvatarOld() {
         if(this.defaultAvatar !== '-2') {
             // Anderes Bild ist ausgewählt worden
             switch (this.defaultAvatar) {
@@ -233,6 +233,48 @@ export class EditMainUserAvatarComponent {
             }
         }
         this.loading = false;
+        this.dialogRef.close(this.userData);
+    }
+
+
+
+
+
+    async saveAvatar() {
+        try {
+            if (this.defaultAvatar !== '-2') {
+                if (['00', '01', '02', '03', '04', '05'].includes(this.defaultAvatar)) {
+                    // Einer der Standard-Avatare gewählt
+                    this.userData.avatarSrc = `assets/img/avatar/avatar_${this.defaultAvatar}.svg`;
+                    this.avatarChanged.emit(this.userData.avatarSrc);
+                } else {
+                    // Hochgeladenes Bild gewählt
+                    this.loading = true;
+                    this.resetFileError();
+                    
+                    const input = this.userInput;
+                    if (input.files) {
+                        const response = await this.storageService.uploadAvatar(input.files[0], this.userData.uid);
+                        if (response.includes(this.userData.uid)) {
+                            this.userData.avatarSrc = response;
+                            await this.updateUserAndCloseDialog();
+                            await this.cancelTempAvatar();
+                            return;
+                        }
+                    }
+                }
+                await this.updateUserAndCloseDialog();
+            }
+        } catch (err) {
+            this.onError(err instanceof Error ? err : new Error(String(err)));
+        } finally {
+            this.loading = false;
+            this.dialogRef.close(this.userData);
+        }
+    }
+    
+    private async updateUserAndCloseDialog() {
+        await this.usersService.updateUser(new User(this.userData));
         this.dialogRef.close(this.userData);
     }
 }

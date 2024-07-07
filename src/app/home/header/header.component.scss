@@ -104,7 +104,7 @@
         width: 17px;
         height: 17px;
         box-sizing: border-box;
-        background-color: $onlinedot-offline;
+        background-color: $onlinedot-online;
         border: 2px solid $onlinedot-border;
         border-radius: 50%;
         &.online {
@@ -112,6 +112,9 @@
         }
         &.idle {
             background-color: #c8c82e;
+        }
+        &.offline {
+            background-color: $onlinedot-offline;
         }
     }
 }
