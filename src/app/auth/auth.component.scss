@@ -67,7 +67,8 @@
     position: relative;
     cursor: text;
 
-    img {
+    .icon {
+        color: $grey;
         position: absolute;
         top: 18px;
         left: 32px;

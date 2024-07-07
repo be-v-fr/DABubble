@@ -10,7 +10,7 @@
         </h1>
         <p class="advice">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
         <div class="form-field bg-violet">
-            <img src="assets/img/icons/person.svg" alt="Name" [ngClass]="{'to-black': user.name}">
+            <span class="material-icons-outlined icon" [ngClass]="{'to-black': user.name}">person</span>
             <input type="text" placeholder="Name und Nachname" [(ngModel)]="user.name" name="name" #name="ngModel"
                 required>
             @if(name.touched && !name.valid)
@@ -19,7 +19,7 @@
             </p>}
         </div>
         <div class="form-field bg-violet">
-            <img src="assets/img/icons/mail.svg" alt="E-Mail" [ngClass]="{'to-black': user.email}">
+            <span class="material-icons-outlined icon" [ngClass]="{'to-black': user.email}">mail</span>
             <input type="email" placeholder="beispielname@email.com" [(ngModel)]="user.email" name="email"
                 #email="ngModel" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
             @if(email.touched && !email.valid)
@@ -28,7 +28,7 @@
             </p>}
         </div>
         <div class="form-field bg-violet">
-            <img src="assets/img/icons/lock.svg" alt="Password" [ngClass]="{'to-black': user.password}">
+            <span class="material-icons-outlined icon" [ngClass]="{'to-black': user.password}">lock</span>
             <input type="password" placeholder="Passwort" [(ngModel)]="user.password" name="password"
                 #password="ngModel" minlength="6" required>
             @if(password.touched && password.value.length == 0)
