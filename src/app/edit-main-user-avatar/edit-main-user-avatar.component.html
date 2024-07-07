@@ -1,20 +1,30 @@
 <div class="content-wrapper">
     <form class="content-main content-card" (ngSubmit)="saveAvatar()" #pickAvatarForm="ngForm" >
         <h1>Wähle einen Avatar</h1>
-        <div class="test">
-            {{ userData.email }}
+        <div class="currentAvatar-container">
+            <div class="current">
+                <!-- <span>Aktuell:</span> -->
+                <div class="avatar-container" (click)="selectCustomAvatar('-2')" [ngClass]="{'btn_active': defaultAvatar == '-2'}">
+                    <img class="#" src="{{ userData.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}" />
+                </div>
+            </div>
         </div>
         <div class="avatar-picker">
             @for (i of ['00','01','02','03','04','05']; track i) {
                 <div class="avatar-container" (click)="selectDefaultAvatar(i)" [ngClass]="{'btn_active': defaultAvatar == i}">
-                        <img src="assets/img/avatar/large_avatar_{{ i }}.svg" alt="Avatar {{ i }}" />
+                        <img class="#" src="assets/img/avatar/large_avatar_{{ i }}.svg" alt="Avatar {{ i }}" />
                 </div>
             }
         </div>
         <div class="upload-avatar-container">
-            <span>eigenes Bild verwenden</span>
+            <span>eigenes<br>Bild verwenden</span>
             <input type="file" #fileInput name="fileInput" style="display: none" ngModel (change)="onCustomSelection($event)" accept="image/*"/>
             <button type="button" class="form-btn-secondary" (click)="fileInput.click()" [disabled]="loading">Datei hochladen</button>
+            @if (showNewPicture) {
+                <div class="avatar-container" (click)="selectCustomAvatar('-1')" [ngClass]="{'btn_active': defaultAvatar == '-1'}">
+                    <img class="#" src="{{ userTempData.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}" />
+                </div>
+            }
             @if(fileError) {
                 <p class="error-msg">
                     {{ fileError }}
@@ -22,7 +32,8 @@
             }
         </div>
         <div class="submit-btns">
-            <button type="submit" class="form-btn-primary">Speichern</button>
+            <button type="button" class="form-btn-secondary" (click)="closeDialog()">Abbrechen</button>
+            <button type="submit" class="form-btn-primary" [disabled]="loading">Speichern</button>
         </div>
     </form>
 </div>

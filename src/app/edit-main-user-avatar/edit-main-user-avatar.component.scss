@@ -1,7 +1,6 @@
 @import '../../styles.scss';
-// ##################################################################################
-// ##################################################################################
-// ##################################################################################
+
+
 .content-wrapper {
     width: 100%;
     height: 100%;
@@ -24,31 +23,25 @@
             text-align: center;
             position: relative;
             font-family: "Nunito", sans-serif;
-            .back-btn-container {
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                display: flex;
-                align-items: center;
-                .black-to-blue-btn {
-                    width: 40px;
-                    height: 40px;
-                }
-            }
-        }
-        h2 {
-            width: 100%;
-            text-align: center;
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            font-family: "Nunito", sans-serif;
         }
     }
 }
 
+.content-wrapper .content-main {
+    gap: 22px;
+    h1 .back-btn-container {
+        left: -28px;
+    }
+}
+
+span, p {
+    font-size: 20px;
+}
+
 .avatar-container {
+    &:hover {
+        cursor: pointer;
+    }
     img {
         border: 3px solid transparent;
         border-radius: 99px;
@@ -62,6 +55,42 @@
     }
 }
 
+.currentAvatar-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .current {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .avatar-container {
+            img {
+                width: 168px;
+                height: 168px;
+            }
+        }
+    }
+}
+
+.avatar-picker{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+}
+
+.upload-avatar-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    position: relative;
+}
 
 .error-msg {
     position: absolute;
@@ -87,57 +116,3 @@
     justify-content: flex-end;
 }
 
-// ##################################################################################
-// ##################################################################################
-// ##################################################################################
-.content-wrapper .content-main {
-    gap: 22px;
-    h1 .back-btn-container {
-        left: -28px;
-    }
-}
-
-span,
-p {
-    font-size: 20px;
-}
-
-.avatar-selection-container {
-    width: 184px;
-    height: 184px;
-    border-radius: 50%;
-    background: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    @include transition(75ms);
-    cursor: pointer;
-    .avatar-selection {
-        width: 168px;
-        height: 168px;
-        border-radius: 50%;
-        object-fit: cover;
-        object-position: center;      
-    }
-    &:hover {
-        background: $grey-light;
-    }
-    &:active {
-        background: $violet-bright;
-    }
-}
-
-.upload-avatar-container {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    margin-bottom: 24px;
-    position: relative;
-}
-
-.avatar-picker{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    cursor: pointer;
-}

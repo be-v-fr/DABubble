@@ -1,15 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { LogOutCardComponent } from '../../main-user/log-out-card/log-out-card.component';
 import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { UsersService } from '../../../services/users.service';
+import { ActivityService } from '../../../services/activity.service';
 import { User } from '../../../models/user.class';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
+    CommonModule,
     LogOutCardComponent,
     MatDialogModule
   ],
@@ -30,7 +33,8 @@ export class HeaderComponent {
     public dialog: MatDialog, 
     private router: Router,
     private authService: AuthService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    public activityService: ActivityService
   ) {}
 
   openUserLogoutCard(): void {
