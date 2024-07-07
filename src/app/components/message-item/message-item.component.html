@@ -28,7 +28,6 @@
             <button>{{threadLength - 1}} Antworten</button>
             <span *ngIf="lastReply">Letzte Antwort {{timeService.toRelativeDate(lastReply)}}</span>
         </div>
-        <!-- TO DO: Connect reactions to service: -->
         <div class="reactions-container" *ngIf="groupedEmojis && currentUser">
             <div *ngFor="let emoji of objectKeys(groupedEmojis); let i = index" class="reaction">
                 <div class="reaction-info">
@@ -47,4 +46,3 @@
     </div>
 </div>
 <emoji-mart title="Pick your emoji…" (emojiClick)="addEmoji($event)" emoji="point_up" *ngIf="emojiPicker"></emoji-mart>
-<!-- Q: Is the emoji picker connected to the thread which the emojis are added to? If not, store thread ID which the picker is opened from as a property -->
