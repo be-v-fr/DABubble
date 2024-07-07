@@ -3,6 +3,7 @@ import { Firestore, collection, doc, onSnapshot, updateDoc, deleteDoc } from '@a
 import { Subject } from 'rxjs';
 import { CollectionReference, DocumentReference, addDoc } from 'firebase/firestore';
 import { Reaction } from '../../models/reaction.class';
+import { UsersService } from '../users.service';
 
 
 @Injectable({
@@ -13,6 +14,7 @@ export class ReactionsService implements OnDestroy {
   unsubReactions;
 
   firestore: Firestore = inject(Firestore);
+  usersService: UsersService = inject(UsersService);
 
 
   /**
@@ -106,14 +108,23 @@ export class ReactionsService implements OnDestroy {
     return reactions.filter(r => r.post_id === post_id).slice();
   }
 
+  
+  getGroupedEmojis(reactions: Reaction[]): { [key: string]: { count: number, users: string[] } } {
+    let groups: { [key: string]: { count: number, users: string[] } } = {};
 
-  getGroupedEmojis(reactions: Reaction[]): {} {
-    let groups: any = {};
     reactions.forEach(r => {
-      let number = parseInt(groups[r.emoji]);
-      number = isNaN(number) ? 1 : number + 1;
-      groups[r.emoji] = number;
+      if (!groups[r.emoji]) {
+        groups[r.emoji] = { count: 0, users: [] };
+      }
+      groups[r.emoji].count++;
+      if (r.user_id) {
+        const user = this.usersService.getUserByUid(r.user_id);
+        if (user) {
+          groups[r.emoji].users.push(user.name);
+        }
+      }
     });
+
     return groups;
   }
 }

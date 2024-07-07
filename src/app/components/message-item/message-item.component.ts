@@ -31,13 +31,15 @@ export class MessageItemComponent implements OnDestroy {
   @Output() showEmojiPicker = new EventEmitter<boolean>();
 
   author: User;
-  private emojiSub = new Subscription();
+  emojiPicker = false;
   postReactions?: Reaction[];
-  groupedEmojis: { [key: string]: number } = {};
+  groupedEmojis: { [key: string]: { count: number, users: string[] } } = {};
   currentUser?: User;
 
   public timeService = inject(TimeService);
   private usersSub = new Subscription();
+  private emojiSub = new Subscription();
+
 
   constructor(
     private dialog: MatDialog,
@@ -52,24 +54,27 @@ export class MessageItemComponent implements OnDestroy {
     this.emojiSub = this.subEmoji();
   }
 
-  emojiPicker = false;
 
   onShowEmojiPicker() {
     this.emojiPicker = !this.emojiPicker;
     this.showEmojiPicker.emit(this.emojiPicker);
   }
 
+
   onOpenNewThread() {
 
   }
+
 
   getAuthor(): User {
     return this.usersService.getUserByUid(this.post.user_id);
   }
 
+
   subUsers(): Subscription {
     return this.usersService.users$.subscribe(() => this.author = this.getAuthor());
   }
+
 
   subAuth() {
     return this.authService.user$.subscribe(() => {
@@ -80,12 +85,14 @@ export class MessageItemComponent implements OnDestroy {
     });
   }
 
+
   openUserProfile(uid: string): void {
     if (uid) {
       this.dialog.open(UserProfileCardComponent);
       // TO DO: transfer UID to ProfileCardComponent
     }
   }
+
 
   subEmoji() {
     return this.reactionsService.reactions$.subscribe((reactions) => {
@@ -98,6 +105,7 @@ export class MessageItemComponent implements OnDestroy {
   objectKeys(obj: any): string[] {
     return Object.keys(obj);
   }
+
 
   onHandleEmoji(emoji: string) {
     let curremoji = this.postReactions?.find(r => r.emoji === emoji && r.user_id === this.currentUser?.uid);
@@ -112,6 +120,7 @@ export class MessageItemComponent implements OnDestroy {
     }
   }
 
+
   addEmoji(event: any) {
     this.reactionsService.addDoc(new Reaction(
       {
@@ -123,6 +132,7 @@ export class MessageItemComponent implements OnDestroy {
 
     this.emojiPicker = !this.emojiPicker;
   }
+
 
   ngOnDestroy(): void {
     this.usersSub.unsubscribe();
