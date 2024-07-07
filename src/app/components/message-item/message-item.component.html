@@ -1,8 +1,8 @@
 <div *ngIf="post" class="message-container" [class.reversed]="messageSender">
     <div class="reaction-bar-container">
         <!-- <button>
-            <span class="reaction-icon">👍</span>
-        </button> -->
+                <span class="reaction-icon">👍</span>
+            </button> -->
         <button>
             <span (click)="onShowEmojiPicker()" class="material-icons-outlined">add_reaction</span>
         </button>
@@ -45,4 +45,6 @@
         </div>
     </div>
 </div>
-<emoji-mart title="Pick your emoji…" (emojiClick)="addEmoji($event)" emoji="point_up" *ngIf="emojiPicker"></emoji-mart>
+<div class="emoji-container" *ngIf="emojiPicker" (click)="onShowEmojiPicker()">
+    <emoji-mart title="Pick your emoji…" (emojiClick)="addEmoji($event)" emoji="point_up"></emoji-mart>
+</div>
