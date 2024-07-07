@@ -58,6 +58,12 @@ export class ActivityService implements OnDestroy {
     window.addEventListener('MSPointerMove', () => this.setLastActivity());
   }
 
+
+  /**
+   * The interval in this function has two different functions:
+   * - One function sets/updates the public "userStates" property
+   * - The "activitySettingAllowed" is set to true again to allow reacting to activity of the current user
+   */
   initInterval() {
     setInterval(() => {
       this.setUserStates();

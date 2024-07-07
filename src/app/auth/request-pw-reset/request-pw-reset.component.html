@@ -10,7 +10,7 @@
         </h1>
         <p class="advice">Bitte geben Sie Ihre E-Mail-Adresse ein.</p>
         <div class="form-field bg-violet">
-            <img src="assets/img/icons/mail.svg" alt="E-Mail" [ngClass]="{'to-black': data.email}">
+            <span class="material-icons-outlined icon" [ngClass]="{'to-black': data.email}">mail</span>
             <input type="email" placeholder="beispielname@email.com" [(ngModel)]="data.email" name="email"
                 #email="ngModel" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
             @if(email.touched && !email.valid)

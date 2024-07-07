@@ -30,7 +30,7 @@ export class TimeService {
     const now = new Date();
     const date = new Date(timestamp);
     const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const msInDay = 86400;
+    const msInDay = 86400000;
     const diffInMs = midnight.getTime() - date.getTime();
     if (diffInMs < msInDay) {
       return this.toRelativeDate(timestamp);

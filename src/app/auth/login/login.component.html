@@ -4,7 +4,7 @@
         <h1>Anmeldung</h1>
         <p class="advice">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
         <div class="form-field bg-violet">
-            <img src="assets/img/icons/mail.svg" alt="E-Mail" [ngClass]="{'to-black': userData.email}">
+            <span class="material-icons-outlined icon" [ngClass]="{'to-black': userData.email}">mail</span>
             <input type="email" placeholder="beispielname@email.com" [(ngModel)]="userData.email" name="email"
                 #email="ngModel" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
             @if((email.touched || logInForm.submitted) && !email.valid)
@@ -13,7 +13,7 @@
             </p>}
         </div>
         <div class="form-field bg-violet">
-            <img src="assets/img/icons/lock.svg" alt="Password" [ngClass]="{'to-black': userData.password}">
+            <span class="material-icons-outlined icon" [ngClass]="{'to-black': userData.password}">lock</span>
             <input type="password" placeholder="Passwort" [(ngModel)]="userData.password" name="password"
                 #password="ngModel" required>
             @if((password.touched || logInForm.submitted) && !password.valid)
