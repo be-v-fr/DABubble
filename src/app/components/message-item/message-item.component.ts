@@ -32,6 +32,7 @@ export class MessageItemComponent implements OnDestroy {
 
   author: User;
   private emojiSub = new Subscription();
+  postReactions?: Reaction[];
   groupedEmojis: { [key: string]: number } = {};
   currentUser?: User;
 
@@ -79,19 +80,6 @@ export class MessageItemComponent implements OnDestroy {
     });
   }
 
-  subEmoji() {
-    return this.reactionsService.reactions$.subscribe((reactions) => {
-      let postReactions = this.reactionsService.getPostReactions(reactions, this.post.post_id);
-      this.groupedEmojis = this.reactionsService.getGroupedEmojis(postReactions);
-    });
-  }
-
-
-  // Hilfsfunktion, um die Schlüssel eines Objekts zu bekommen
-  objectKeys(obj: any): string[] {
-    return Object.keys(obj);
-  }
-
   openUserProfile(uid: string): void {
     if (uid) {
       this.dialog.open(UserProfileCardComponent);
@@ -99,6 +87,30 @@ export class MessageItemComponent implements OnDestroy {
     }
   }
 
+  subEmoji() {
+    return this.reactionsService.reactions$.subscribe((reactions) => {
+      this.postReactions = this.reactionsService.getPostReactions(reactions, this.post.post_id);
+      this.groupedEmojis = this.reactionsService.getGroupedEmojis(this.postReactions);
+    });
+  }
+
+  // Hilfsfunktion, um die Schlüssel eines Objekts zu bekommen
+  objectKeys(obj: any): string[] {
+    return Object.keys(obj);
+  }
+
+  onHandleEmoji(emoji: string) {
+    let curremoji = this.postReactions?.find(r => r.emoji === emoji && r.user_id === this.currentUser?.uid);
+    if (curremoji) {
+      this.reactionsService.deleteDoc(curremoji.reaction_id);
+    } else {
+      this.reactionsService.addDoc(new Reaction({
+        user_id: this.currentUser?.uid,
+        post_id: this.post.post_id,
+        emoji: emoji
+      }))
+    }
+  }
 
   addEmoji(event: any) {
     this.reactionsService.addDoc(new Reaction(

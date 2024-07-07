@@ -35,8 +35,10 @@
                     <div class="reaction-info-name">{{ currentUser.name }}</div>
                     <div class="reaction-info-sub-info">hat reagiert</div>
                 </div>
-                <div class="emoji">{{ emoji }}</div>
-                <span>{{ groupedEmojis[emoji] }}</span>
+                <div class="reaction-emoji-container" (click)="onHandleEmoji(emoji)">
+                    <div class="emoji">{{ emoji }}</div>
+                    <span>{{ groupedEmojis[emoji] }}</span>
+                </div>
             </div>
 
             <button class="add-emoji-btn" (click)="onShowEmojiPicker()">

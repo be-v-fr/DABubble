@@ -167,6 +167,12 @@
                         display: none;
                     }
 
+                    .reaction-emoji-container {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
                     &:hover {
                         cursor: pointer;
                         border: 1px solid $purple-blue;
