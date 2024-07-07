@@ -52,7 +52,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
   activeUsers: User[] = [];
 
   constructor(
-    private emojiService: EmojiService,
     private dialog: MatDialog,
     private authService: AuthService,
     private channelsService: ChannelsService,
@@ -131,18 +130,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
     this.emojiPicker = newState;
   }
 
-  addEmoji(event: any) {
-    this.emojiService.addEmoji({
-      unified: event.emoji.unified,
-      native: event.emoji.native
-    });
-    this.emojiPicker = !this.emojiPicker;
-    console.log(this.emojiService.getEmojis());
-  }
-
-  get emojis() {
-    return this.emojiService.getEmojis();
-  }
 
   onEditChannel(): void {
     this.dialog.open(EditChannelComponent);
@@ -153,11 +140,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
       data: { activeUsers: this.activeUsers }
     });
 
-  }
-
-  openThread(event: any) {
-    this.thread = this.channelThreads?.find(tr => tr.thread_id === event)
-    console.log(this.thread);
   }
 
   createThread(message: string) {
