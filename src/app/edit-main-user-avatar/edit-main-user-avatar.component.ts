@@ -23,73 +23,56 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
     templateUrl: './edit-main-user-avatar.component.html',
     styleUrl: './edit-main-user-avatar.component.scss',
 })
-export class EditMainUserAvatarComponent implements OnInit, OnDestroy {
+export class EditMainUserAvatarComponent {
     private authService = inject(AuthService);
     private storageService = inject(StorageService);
     private usersService = inject(UsersService);
-    public userData: User = new User;   
+    public userData: User = new User;
+    public userTempData: User = new User;
+    private userInput!: HTMLInputElement
     private router = inject(Router);
 
-    @Inject(MAT_DIALOG_DATA) public data: any;
     @Output() avatarChanged = new EventEmitter<string>();
     userSub = new Subscription();
     usersSub = new Subscription();
     customFile: any = '';
-    defaultAvatar: string = '';
-    loading: boolean = true;
+    defaultAvatar: string = '-2';
+    loading: boolean = false;
+    showNewPicture: boolean = false;
     initializing: boolean = true;
     fileError: string | null = null;
-
-    constructor(private dialogRef: MatDialogRef<EditMainUserAvatarComponent>) {}
-
-    /**
-     * This function creates an authentication service subscription for user authentication.
-     */
-    ngOnInit(): void {
-        this.userSub = this.subUser();
+    
+    constructor(
+        private dialogRef: MatDialogRef<EditMainUserAvatarComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        this.userData = this.data.mainUser;
+        this.userTempData.uid = '' + this.data.mainUser.uid;
+        this.userTempData.name = '' + this.data.mainUser.name;
+        this.userTempData.email = '' + this.data.mainUser.email;
+        this.userTempData.avatarSrc = '' + this.data.mainUser.avatarSrc;
+        this.userTempData.lastActivity = 0 + this.data.mainUser.lastActivity;
     }
 
-    /**
-     * This function unsubscribes all subscriptions.
-     */
-    ngOnDestroy(): void {
-        this.userSub.unsubscribe();
-        this.usersSub.unsubscribe();
-    }
-
-    subUser(): Subscription {
-        return this.authService.user$.subscribe((user) => {
-            if (user && user.displayName) {
-                this.loading = false;
-                const uid = this.authService.getCurrentUid();
-                if (uid) {
-                    this.userData.uid = uid;
-                }
-                this.userData.name = user.displayName;
-                this.syncAvatar(); // Synchronize avatar when user data is retrieved
-            }
-        });
-    }
-
-    /**
-     * This function updates the "userData" property avatar to the users service.
-     */
-    syncAvatar() {
-        this.userData.avatarSrc = this.usersService.getUserByUid(this.userData.uid).avatarSrc;
-        this.userData.email = this.usersService.getUserByUid(this.userData.uid).email;
-        this.userData.lastActivity = this.usersService.getUserByUid(this.userData.uid).lastActivity;
-    }
 
     /**
      * This function sets a selected avatar from the default avatars assortment.
      * @param index avatar index as in the corresponding file name
      */
     selectDefaultAvatar(index: string) {
-        this.resetFileError();
-        this.userData.avatarSrc = `assets/img/avatar/avatar_${index}.svg`;
-        console.log('edit-main-user-avatar - selectDefAvatar - userData: ', this.userData);
         this.defaultAvatar = index;
-        this.avatarChanged.emit(this.userData.avatarSrc);
+        // this.resetFileError();
+        // this.userTempData.avatarSrc = `assets/img/avatar/avatar_${index}.svg`;
+        // this.avatarChanged.emit(this.userTempData.avatarSrc);
+    }
+
+    /**
+     * This function sets a selected avatar from the custom avatars current or temp.
+     * @param index avatar index as in the corresponding file name
+     */
+    selectCustomAvatar(index: string) {
+        this.defaultAvatar = index;
+        this.avatarChanged.emit(this.userTempData.avatarSrc);
     }
 
     /**
@@ -100,12 +83,59 @@ export class EditMainUserAvatarComponent implements OnInit, OnDestroy {
         this.resetFileError();
         this.loading = true;
         const input = e.target as HTMLInputElement;
+        this.userInput = e.target as HTMLInputElement;
         if (input.files) {
             this.storageService
-                .uploadAvatar(input.files[0], this.userData.uid)
-                // .then((response) => this.onCustomUpload(response))
+                .uploadTempAvatar(input.files[0], this.userTempData.uid)
+                .then((response) => this.onCustomTempUpload(response))
                 .catch((err: Error) => this.onError(err));
         }
+    }
+
+    
+  /**
+   * This function updates the user data to the custom avatar upload. 
+   * @param response - upload process response
+   */
+  async onCustomUpload(response: any) {
+    if (response.includes(this.userData.uid)) {
+      this.userData.avatarSrc = response;
+      this.usersService.updateUser(new User(this.userData))
+        .then(() => this.loading = false)
+        .catch((err: Error) => this.onError(err));
+    }
+  }
+
+
+  /**
+   * This function updates the user data to the custom avatar upload. 
+   * @param response - upload process response
+   */
+  async onCustomTempUpload(response: any) {
+    if (response.includes(this.userTempData.uid)) {
+      this.userTempData.avatarSrc = response;
+      this.defaultAvatar = '-1';
+      this.loading = false;
+      this.showNewPicture = true;
+    //   this.usersService.updateUser(new User(this.userTempData))
+    //     .then(() => this.loading = false)
+    //     .catch((err: Error) => this.onError(err));
+    }
+  }
+
+
+
+    async cancelTempAvatar() {
+        this.loading = true;
+        await this.storageService.cancelAvatar(this.userTempData.uid);
+        this.dialogRef.close();
+    }
+
+
+    async closeDialog() {
+        this.loading = true;
+        await this.storageService.cancelAvatar(this.userTempData.uid);
+        this.dialogRef.close();
     }
 
     /**
@@ -158,12 +188,51 @@ export class EditMainUserAvatarComponent implements OnInit, OnDestroy {
         this.resetFileError();
     }
 
-    saveAvatar() {
-        this.usersService
-            .updateUser(new User(this.userData))
-            .then(() => {
-                this.dialogRef.close(this.userData);
-            })
-        .catch((err: Error) => this.onError(err));
+    async saveAvatar() {
+        if(this.defaultAvatar !== '-2') {
+            // Anderes Bild ist ausgewählt worden
+            switch (this.defaultAvatar) {
+                case '00':
+                case '01':
+                case '02':
+                case '03':
+                case '04':
+                case '05':
+                    // Einer der Standard-Avatare gewählt
+                    this.userData.avatarSrc = `assets/img/avatar/avatar_${this.defaultAvatar}.svg`;
+                    this.avatarChanged.emit(this.userData.avatarSrc);
+                    this.usersService
+                        .updateUser(new User(this.userData))
+                        .then(() => {
+                            this.dialogRef.close(this.userData);
+                        })
+                        .catch((err: Error) => this.onError(err));
+                    break;
+            
+                default:
+                    // hochgeladenes Bild gewählt
+                    this.loading = true;
+                    this.resetFileError();
+                    const input = this.userInput;
+                    if (input.files) {
+                        this.storageService
+                            .uploadAvatar(input.files[0], this.userData.uid)
+                            .then((response) => {
+                                if (response.includes(this.userData.uid)) {
+                                    this.userData.avatarSrc = response;
+                                    this.usersService.updateUser(new User(this.userData))
+                                        .then(() => {
+                                            this.cancelTempAvatar()
+                                        })
+                                        .catch((err: Error) => this.onError(err));
+                                }
+                            })
+                            .catch((err: Error) => this.onError(err));
+                    }
+                break;
+            }
+        }
+        this.loading = false;
+        this.dialogRef.close(this.userData);
     }
 }
