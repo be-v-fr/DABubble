@@ -39,7 +39,7 @@
                     {{ currentChannel.name }}
                 </h3>
                 <p>
-                    Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
+                    Du hast diesen Channel {{ timeService.getRelativeDay(0) }} erstellt. Das ist der Anfang des Channels
                     <span># {{ currentChannel.name }}.</span>
                 </p>
             </div>

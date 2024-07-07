@@ -26,7 +26,7 @@
         </div>
         <div *ngIf="threadLength && threadLength > 1" class="message-answers">
             <button>{{threadLength - 1}} Antworten</button>
-            <span *ngIf="lastReply">Letzte Antwort {{timeService.toRelativeDate(lastReply)}}</span>
+            <span *ngIf="lastReply">Letzte Antwort {{timeService.toRelativeDateWithClock(lastReply)}}</span>
         </div>
         <!-- TO DO: Connect reactions to service: -->
         <div class="reactions-container" *ngIf="groupedEmojis && currentUser">
