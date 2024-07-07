@@ -67,8 +67,8 @@ export class ReactionsService implements OnDestroy {
    * @param doc - doc to be added
    */
   async addDoc(reaction: Reaction) {
-    
-    await addDoc(this.getColRef(), reaction.toJson()) 
+
+    await addDoc(this.getColRef(), reaction.toJson())
       .then((response: any) => {
         reaction.reaction_id = response.id;
         this.updateDoc(reaction);
@@ -103,9 +103,7 @@ export class ReactionsService implements OnDestroy {
 
 
   getPostReactions(reactions: Reaction[], post_id: string): Reaction[] {
-    reactions.filter(r => r.post_id == post_id);
-    reactions.forEach(r => r = new Reaction(r));
-    return reactions;
+    return reactions.filter(r => r.post_id === post_id).slice();
   }
 
 

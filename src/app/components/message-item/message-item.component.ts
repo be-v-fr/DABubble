@@ -80,15 +80,12 @@ export class MessageItemComponent implements OnDestroy {
   }
 
   subEmoji() {
-    return this.reactionsService.reactions$.subscribe((r) => {
-      console.log(this.post.post_id);
-
-      let emojis = this.reactionsService.getPostReactions(r, this.post.post_id);
-      console.log(emojis);
-
-      this.groupedEmojis = this.reactionsService.getGroupedEmojis(emojis);
-    })
+    return this.reactionsService.reactions$.subscribe((reactions) => {
+      let postReactions = this.reactionsService.getPostReactions(reactions, this.post.post_id);
+      this.groupedEmojis = this.reactionsService.getGroupedEmojis(postReactions);
+    });
   }
+
 
   // Hilfsfunktion, um die Schlüssel eines Objekts zu bekommen
   objectKeys(obj: any): string[] {
@@ -104,7 +101,6 @@ export class MessageItemComponent implements OnDestroy {
 
 
   addEmoji(event: any) {
-
     this.reactionsService.addDoc(new Reaction(
       {
         user_id: this.currentUser?.uid,
@@ -115,7 +111,6 @@ export class MessageItemComponent implements OnDestroy {
 
     this.emojiPicker = !this.emojiPicker;
   }
-
 
   ngOnDestroy(): void {
     this.usersSub.unsubscribe();
