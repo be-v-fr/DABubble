@@ -18,6 +18,7 @@
             <div class="onlinedot" 
                 [ngClass]="{'online': activityService.getUserState(mainUser).state == 'active'}" 
                 [ngClass]="{'idle': activityService.getUserState(mainUser).state == 'idle'}"
+                [ngClass]="{'offline': activityService.getUserState(mainUser).state == 'loggedOut'}"
             ></div>
         </div>
         <div class="userprofile-menu-box">

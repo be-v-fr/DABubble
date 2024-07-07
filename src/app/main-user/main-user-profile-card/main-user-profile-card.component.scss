@@ -63,32 +63,56 @@
 }
 
 .userName {
-    display: flex;
-    flex-direction: column;
+    position: absolute;
     width: 420px;
     height: 86px;
-    position: absolute;
-    top: 370px;
     left: 40px;
-    p:first-child {
-        width: 16px;
-        height: 16px;
-        background-color: #92c83e;
-        border-radius: 100%;
-    }
-    p:last-child {
-        font-weight: 400;
-        font-size: 20px;
-        color: #92c83e;
+    top: 370px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    .online {
+        height: 27px;
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 15px;
+        // margin-top: 15px;
+        .onlinedot {
+            position: relative;
+            content: '';
+            bottom: 6px;
+            right: 0px;
+            width: 16px;
+            height: 16px;
+            box-sizing: border-box;
+            background-color: $onlinedot-online;
+            border: 2px solid $onlinedot-border;
+            border-radius: 50%;
+            &.online {
+                background-color: $onlinedot-online;
+            }
+            &.idle {
+                background-color: #c8c82e;
+            }
+            &.offline {
+                background-color: $onlinedot-offline;
+            }
+        }
+        .status-text {
+            font-weight: 400;
+            font-size: 20px;
+            // color: #92c83e;
+            &.online {
+                color: $onlinedot-online;
+            }
+            &.idle {
+                color: #c8c82e;
+            }
+        }
     }
 }
 
-.online {
-    display: flex;
-    align-items: baseline;
-    gap: 15px;
-    margin-top: 15px;
-}
 
 .emailContainer {
     display: flex;

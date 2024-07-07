@@ -3,12 +3,17 @@ import { RouterLink } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../../models/user.class';
 import { EditMainUserProfileCardComponent } from '../edit-main-user-profile-card/edit-main-user-profile-card.component';
-import { EditMainUserAvatarComponent } from '../../edit-main-user-avatar/edit-main-user-avatar.component';
+import { EditMainUserAvatarComponent } from '../../main-user/edit-main-user-avatar/edit-main-user-avatar.component';
+import { ActivityService } from '../../../services/activity.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-main-user-profile-card',
     standalone: true,
-    imports: [RouterLink],
+    imports: [
+        CommonModule,
+        RouterLink
+    ],
     templateUrl: './main-user-profile-card.component.html',
     styleUrl: './main-user-profile-card.component.scss'
 })
@@ -19,6 +24,7 @@ export class MainUserProfileCardComponent {
         private dialogRef: MatDialogRef<MainUserProfileCardComponent>,
         private dialogAvatarRef: MatDialogRef<EditMainUserAvatarComponent>,
         public dialogUserRef: MatDialogRef<EditMainUserProfileCardComponent>,
+        public activityService: ActivityService,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {

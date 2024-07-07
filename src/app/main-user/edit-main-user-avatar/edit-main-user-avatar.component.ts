@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, OnDestroy, Inject, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
-import { LegalFooterComponent } from '../auth/legal-footer/legal-footer.component';
-import { AuthService } from './../../services/auth.service';
+import { LegalFooterComponent } from '../../auth/legal-footer/legal-footer.component';
+import { AuthService } from './../../../services/auth.service';
 import { Subscription } from 'rxjs';
-import { StorageService } from './../../services/storage.service';
-import { UsersService } from './../../services/users.service';
-import { User } from './../../models/user.class';
+import { StorageService } from './../../../services/storage.service';
+import { UsersService } from './../../../services/users.service';
+import { User } from './../../../models/user.class';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 @Component({

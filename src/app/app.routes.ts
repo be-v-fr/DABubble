@@ -21,7 +21,7 @@ import { MainChatComponent } from './components/main-chat/main-chat.component';
 import { AddMembersComponent } from './add-members/add-members.component';
 import { AddChannelComponent } from './add-channel/add-channel.component';
 import { DirectMessageComponent } from './components/direct-message/direct-message.component';
-import { EditMainUserAvatarComponent } from './edit-main-user-avatar/edit-main-user-avatar.component';
+import { EditMainUserAvatarComponent } from './main-user/edit-main-user-avatar/edit-main-user-avatar.component';
 import { authGuard } from './shared/auth.guard';
 
 import { PLAYGROUNDComponent } from './playground/playground.component'; // remove later
