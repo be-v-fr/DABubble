@@ -11,6 +11,7 @@ import { Reaction } from '../../models/reaction.class';
 export class ReactionsService implements OnDestroy {
   reactions$: Subject<Reaction[]> = new Subject<Reaction[]>();
   unsubReactions;
+
   firestore: Firestore = inject(Firestore);
 
 
@@ -66,7 +67,8 @@ export class ReactionsService implements OnDestroy {
    * @param doc - doc to be added
    */
   async addDoc(reaction: Reaction) {
-    await addDoc(this.getColRef(), reaction.toJson())
+    
+    await addDoc(this.getColRef(), reaction.toJson()) 
       .then((response: any) => {
         reaction.reaction_id = response.id;
         this.updateDoc(reaction);

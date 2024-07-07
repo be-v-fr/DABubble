@@ -1,16 +1,18 @@
-import { Component, EventEmitter, Input, Output, inject, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, OnDestroy, OnInit } from '@angular/core';
 import { TimeSeparatorComponent } from '../time-separator/time-separator.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
 import { UserProfileCardComponent } from '../../user-profile-card/user-profile-card.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ThreadsService } from '../../../services/content/threads.service';
-import { Thread } from '../../../models/thread.class';
 import { Post } from '../../../models/post.class';
 import { UsersService } from '../../../services/users.service';
 import { User } from '../../../models/user.class';
 import { TimeService } from '../../../services/time.service';
 import { Subscription } from 'rxjs';
+import { Reaction } from '../../../models/reaction.class';
+import { ReactionsService } from '../../../services/content/reactions.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-message-item',
@@ -24,22 +26,29 @@ export class MessageItemComponent implements OnDestroy {
   @Input() post: Post = new Post();
   @Input() threadLength?: number;
   @Input() lastReply?: number;
-  @Input() emojis: { unified: string, native: string, count: number }[] = [];
   @Input() messageSender = false;
   @Input() hideEmojiPicker = false;
   @Output() showEmojiPicker = new EventEmitter<boolean>();
-  @Output() id = new EventEmitter<string>();
+
   author: User;
+  private emojiSub = new Subscription();
+  groupedEmojis: { [key: string]: number } = {};
+  currentUser?: User;
+
   public timeService = inject(TimeService);
   private usersSub = new Subscription();
 
   constructor(
     private dialog: MatDialog,
     private threadsService: ThreadsService,
-    private usersService: UsersService
+    private authService: AuthService,
+    private usersService: UsersService,
+    private reactionsService: ReactionsService,
   ) {
     this.author = this.getAuthor();
     this.usersSub = this.subUsers();
+    this.subAuth();
+    this.emojiSub = this.subEmoji();
   }
 
   emojiPicker = false;
@@ -49,28 +58,42 @@ export class MessageItemComponent implements OnDestroy {
     this.showEmojiPicker.emit(this.emojiPicker);
   }
 
-  async onOpenNewThread() {
-    try {
-      const threadId = await this.threadsService.addDoc(new Thread({
-        channel_id: 'test2-ljbkjvkjvkjv',
-        date: new Date().getTime(),
-      }));
-      this.id.emit(threadId);
-    } catch (err) {
-      console.error('Error adding document:', err);
-    }
-  }
+  onOpenNewThread() {
 
+  }
 
   getAuthor(): User {
     return this.usersService.getUserByUid(this.post.user_id);
   }
 
-
   subUsers(): Subscription {
     return this.usersService.users$.subscribe(() => this.author = this.getAuthor());
   }
 
+  subAuth() {
+    return this.authService.user$.subscribe(() => {
+      const uid = this.authService.getCurrentUid();
+      if (uid) {
+        this.currentUser = this.usersService.getUserByUid(uid);
+      }
+    });
+  }
+
+  subEmoji() {
+    return this.reactionsService.reactions$.subscribe((r) => {
+      console.log(this.post.post_id);
+
+      let emojis = this.reactionsService.getPostReactions(r, this.post.post_id);
+      console.log(emojis);
+
+      this.groupedEmojis = this.reactionsService.getGroupedEmojis(emojis);
+    })
+  }
+
+  // Hilfsfunktion, um die Schlüssel eines Objekts zu bekommen
+  objectKeys(obj: any): string[] {
+    return Object.keys(obj);
+  }
 
   openUserProfile(uid: string): void {
     if (uid) {
@@ -79,8 +102,24 @@ export class MessageItemComponent implements OnDestroy {
     }
   }
 
+
+  addEmoji(event: any) {
+
+    this.reactionsService.addDoc(new Reaction(
+      {
+        user_id: this.currentUser?.uid,
+        post_id: this.post.post_id,
+        emoji: event.emoji.native
+      }
+    ));
+
+    this.emojiPicker = !this.emojiPicker;
+  }
+
+
   ngOnDestroy(): void {
     this.usersSub.unsubscribe();
+    this.emojiSub.unsubscribe();
   }
 }
 
