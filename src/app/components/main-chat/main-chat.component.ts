@@ -101,7 +101,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
   setThreads(threads: Thread[]): void {
     if (this.currentChannel.channel_id.length > 0) {
       this.channelThreads = this.threadsService.getChannelThreads(threads, this.currentChannel.channel_id);
-      console.log(`Threads in current channel (id: ${this.currentChannel.channel_id}):`, this.channelThreads);
     }
   }
 
