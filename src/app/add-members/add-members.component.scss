@@ -4,11 +4,9 @@
   width: 514px;
   height: 294px;
   background-color: white;
-
 }
 .form-btn-primary {
   width: 147px;
-
   margin-top: 20px;
   margin-left: 327px;
 }
@@ -40,17 +38,17 @@
     }
   }
 }
-.inputContainer{
+.inputContainer {
   margin-top: 20px;
 }
-.additional-input {
+.additionalInputContainer {
   width: 434px;
   height: 55px;
   border: 1px solid rgba(173, 176, 217, 1);
   border-radius: 30px;
   padding: 15px 20px;
   margin-left: 40px;
-  input{
+  input {
     font-weight: 400;
     font-size: 18px;
   }
@@ -66,5 +64,78 @@
     color: $purple-blue-bright;
     background-color: $violet-bright;
     border-radius: 20px;
+  }
+}
+
+.userListCard{
+  display: flex;
+  width: 335px;
+  min-height: 171px;
+  background-color: white;
+  margin-left: 60px;
+  top: 60%;
+  position: absolute;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 0px 20px 20px 20px;
+  flex-direction: column;
+  border: 1px solid rgba(173, 176, 217, 1);
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    object-fit: cover;
+  }
+  .userListDetail {
+    display: flex;
+    width: 177px;
+    height: 58px;
+    gap: 15px;
+    align-items: center;
+    margin-left: 40px;
+    margin-top: 24px;
+    padding: 8px 10px;
+
+    cursor: pointer;
+    &:hover {
+      color: $purple-blue-bright;
+      background-color: $violet-bright;
+      border-radius: 30px;
+    }
+    span {
+      font-size: 18px;
+      font-weight: 400;
+    }
+  }
+}
+
+.selectedUserInput {
+  display: flex;
+  align-items: center;
+  border-radius: 35px;
+  padding: 5px;
+  width: 206px;
+  height: 40px;
+  background-color: rgba(236, 238, 254, 1);
+  padding: 4px 20px;
+  gap: 15px;
+  margin-top: -7.5px;
+
+  img {
+    width: 34px;
+    height: 34px;
+    border-radius: 100%;
+  }
+
+  span {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: black;
+    font-size: 18px;
   }
 }

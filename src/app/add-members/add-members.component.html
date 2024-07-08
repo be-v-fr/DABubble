@@ -1,20 +1,54 @@
 <div class="container">
+
   <div class="headlineAndCloseBtn">
     <div>
-    <span>Leute hinzufügen</span>
-    <span># Entwicklerteam</span>
-  </div>
+      <span>Leute hinzufügen</span>
+      <span># Entwicklerteam</span>
+    </div>
+
     <button class="close-thread-btn">
-      <span class="material-icons-outlined">close</span>
+      <span class="material-icons-outlined" (click)="closeCard()">close</span>
     </button>
   </div>
+
   <div class="inputContainer">
-    <div class="additional-input">
+    <div class="additionalInputContainer">
       <label for="specificPeople"></label>
-      <input type="text" id="specificPeopleInput" placeholder="Name eingeben" [(ngModel)]="selection"/>
+      <div class="selectedUserInput" *ngIf="selectedUser">
+        <img [src]="selectedUser.avatarSrc" alt="Avatar" />
+        <span>{{ selectedUser.name }}</span>
+        <button (click)="clearSelection()">x</button>
+      </div>
+      <input
+        *ngIf="!selectedUser"
+        type="text"
+        id="specificPeopleInput"
+        placeholder="Name eingeben"
+        (input)="onSearch()"
+        [(ngModel)]="selection"
+      />
     </div>
     <div>
-      <button type="submit" [disabled]="!selection" class="form-btn-primary">Hinzufügen</button>
+      <button
+        type="submit"
+        [disabled]="!selection"
+        (click)="addUserToMembers()"
+        class="form-btn-primary"
+      >
+        Hinzufügen
+      </button>
     </div>
   </div>
-</div> 
+</div>
+<div *ngIf="showUserList" class="userListCard">
+  <div
+    *ngFor="let user of filteredUsers"
+    (click)="selectUser(user)"
+    class="userListDetail"
+  >
+    <img [src]="user.avatarSrc" alt="Avatar" />
+    <div class="user-info">
+      <span class="user-name">{{ user.name }}</span>
+    </div>
+  </div>
+</div>

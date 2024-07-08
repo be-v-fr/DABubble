@@ -4,15 +4,14 @@
       <span>Mitglieder</span>
     </div>
     <button class="close-thread-btn">
-      <span class="material-icons-outlined">close</span>
+      <span class="material-icons-outlined" (click)="closeCard()">close</span>
     </button>
   </div>
   <div class="usersMenu">
-    <!-- <a routerLink="/#"> -->
     <div *ngFor="let user of activeUsers" class="message-img-container">
       <button>
         <img [src]="user.avatarSrc" alt="Avatar" />
-        <span>{{ user.name }}</span>
+        <span (click)="openUserProfile()">{{ user.name }}</span>
         <span class="online"></span>
       </button>
     </div>
@@ -22,8 +21,6 @@
         <span class="material-icons-outlined icon">person_add_alt</span>
         <span class="addMemberText">Mitglieder hinzufügen</span>
       </button>
-
-      <!-- </a> -->
     </div>
   </div>
 </div>

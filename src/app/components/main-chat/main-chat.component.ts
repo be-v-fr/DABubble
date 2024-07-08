@@ -19,7 +19,9 @@ import { PostsService } from '../../../services/content/posts.service';
 import { Post } from '../../../models/post.class';
 import { AuthService } from '../../../services/auth.service';
 import { TimeService } from '../../../services/time.service';
-
+import { User } from '../../../models/user.class';
+import { MemberListComponent } from '../../member-list/member-list.component';
+import { ActivityService } from '../../../services/activity.service';
 @Component({
   selector: 'app-main-chat',
   standalone: true,
@@ -47,6 +49,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   channelThreadsFirstPosts?: Post[];
   emojiPicker = false;
   activeUsers: User[] = [];
+  
 
   constructor(
     private emojiService: EmojiService,
@@ -57,7 +60,8 @@ export class MainChatComponent implements OnInit, OnDestroy {
     private postsService: PostsService,
     public timeService: TimeService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private activityService: ActivityService
   ) { }
 
 
