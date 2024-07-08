@@ -50,5 +50,6 @@
     </div>
 </div>
 <div class="emoji-container" *ngIf="emojiPicker" (click)="onShowEmojiPicker()">
-    <emoji-mart title="Pick your emoji…" (emojiClick)="addEmoji($event)" emoji="point_up"></emoji-mart>
+    <emoji-mart title="Pick your emoji…" appClickStopPropagation (emojiClick)="addEmoji($event)"
+        emoji="point_up"></emoji-mart>
 </div>

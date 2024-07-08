@@ -13,11 +13,17 @@ import { Subscription } from 'rxjs';
 import { Reaction } from '../../../models/reaction.class';
 import { ReactionsService } from '../../../services/content/reactions.service';
 import { AuthService } from '../../../services/auth.service';
+import { ClickStopPropagationDirective } from '../../shared/click-stop-propagation.directive';
 
 @Component({
   selector: 'app-message-item',
   standalone: true,
-  imports: [CommonModule, TimeSeparatorComponent, PickerComponent],
+  imports: [
+    CommonModule,
+    TimeSeparatorComponent,
+    PickerComponent,
+    ClickStopPropagationDirective
+  ],
   templateUrl: './message-item.component.html',
   styleUrl: './message-item.component.scss'
 })

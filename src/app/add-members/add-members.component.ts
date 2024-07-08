@@ -49,7 +49,9 @@ export class AddMembersComponent implements OnInit {
     this.selection = '';
   }
 
-  addUserToMembers() {}
+  addUserToMembers() {
+    
+  }
 
   closeCard(){
     this.dialogRef.close();
