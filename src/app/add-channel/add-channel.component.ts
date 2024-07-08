@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ExpandableButtonComponent } from '../components/expandable-button/expandable-button.component';
+// import { ExpandableButtonComponent } from '../components/expandable-button/expandable-button.component';
 import { ChannelsService } from '../../services/content/channels.service';
 import { Channel } from '../../models/channel.class';
 import { ActivatedRoute, Router, Params } from '@angular/router';
@@ -28,11 +28,13 @@ export class AddChannelComponent {
     this.dialogRef.close();
   }
 
+
   /**
    * This function is triggered by the add channel submission.
    * @param form - add channel form
    */
   async onSubmit(form: NgForm) {
+    console.log('submit!');
     if (form.submitted && form.valid) {
       const id = await this.channelsService.addDoc(this.channel);
       this.addChannelToParams(id);

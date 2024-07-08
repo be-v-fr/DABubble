@@ -44,7 +44,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   private postsSub: Subscription | null = null;
   currentUid: string | null = null;
   currentChannel = new Channel();
-  thread?: Thread;
+  currentThread?: Thread;
   channelThreads?: Thread[];
   channelThreadsFirstPosts?: Post[];
   emojiPicker = false;

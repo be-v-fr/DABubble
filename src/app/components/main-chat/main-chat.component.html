@@ -1,5 +1,6 @@
 <div class="main-container">
     <section class="main-container">
+        @if(currentChannel.channel_id.length > 0) {
         <div class="main-header">
             <button class="channel-btn" (click)="onEditChannel()">
                 # {{ currentChannel.name }}
@@ -46,6 +47,7 @@
             }
         </div>
         <app-message-box [channelName]="currentChannel.name" (sent)="createThread($event)" />
+        }
     </section>
-    <app-thread *ngIf="thread" [thread]="thread" />
+    <app-thread *ngIf="currentThread" [thread]="currentThread" />
 </div>
