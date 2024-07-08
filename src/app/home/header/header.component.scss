@@ -83,6 +83,7 @@
     text-align: right;
 	overflow: hidden;
 	display: -webkit-box;
+    line-clamp: 1;
 	-webkit-line-clamp: 1;
 	-webkit-box-orient: horizontal; 
 }
@@ -106,6 +107,15 @@
         background-color: $onlinedot-online;
         border: 2px solid $onlinedot-border;
         border-radius: 50%;
+        &.online {
+            background-color: $onlinedot-online;
+        }
+        &.idle {
+            background-color: #c8c82e;
+        }
+        &.offline {
+            background-color: $onlinedot-offline;
+        }
     }
 }
 

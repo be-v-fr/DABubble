@@ -30,15 +30,32 @@ export class TimeService {
     const now = new Date();
     const date = new Date(timestamp);
     const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const msInDay = 86400;
+    const msInDay = 86400000;
+    const diffInMs = midnight.getTime() - date.getTime();
+    const diffInDays = Math.floor(diffInMs / msInDay);
+    return this.getRelativeDay(diffInDays);
+  }
+
+  getRelativeDay(diffInDays: number): string {
+    switch(diffInDays) {
+      case 0: return 'heute';
+      case 1: return 'gestern';
+      case 2: return 'vorgestern';
+    }
+    return `vor ${diffInDays} Tagen`;
+  }
+
+  toRelativeDateWithClock(timestamp: number): string {
+    const now = new Date();
+    const date = new Date(timestamp);
+    const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const msInDay = 86400000;
     const diffInMs = midnight.getTime() - date.getTime();
     if (diffInMs < msInDay) {
-      return this.toRelativeDate(timestamp);
+      return this.toClock(timestamp);
     } else {
       const diffInDays = Math.floor(diffInMs / msInDay);
-      if (diffInDays === 1) {return "gestern"}
-      else if (diffInDays === 2) {return "vorgestern"}
-      else {return `vor ${diffInDays} Tagen`}
+      return this.getRelativeDay(diffInDays);
     }
   }
 }

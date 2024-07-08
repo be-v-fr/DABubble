@@ -68,9 +68,7 @@ export class HomeComponent {
     subUsers(): Subscription {
         return this.usersService.users$.subscribe(() => {
             this.syncCurrentUser();
-            console.log('current user:', this.currentUser); // remove later
             this.syncUsers();
-            console.log('full users array:', this.users); // remove later
         });
     }
 

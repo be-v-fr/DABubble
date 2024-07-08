@@ -5,7 +5,7 @@
     <div class="pseudo-logo-wrapper"></div>
     <div class="searchbar-wrapper">
         <div class="searchbar-box">
-            <input type="text" placeholder="Code learning durchsuchen">
+            <input id="searchbar" type="text" placeholder="Code learning durchsuchen">
             <div class="searchbar-icon">
                 <img src="/assets/img/icons/search.svg">
             </div>
@@ -15,7 +15,11 @@
         <span class="userprofile-name">{{ mainUser.name || '...' }}</span>
         <div class="userprofile-image-box">
             <img src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}">
-            <div class="onlinedot"></div>
+            <div class="onlinedot" 
+                [ngClass]="{'online': activityService.getUserState(mainUser).state == 'active'}" 
+                [ngClass]="{'idle': activityService.getUserState(mainUser).state == 'idle'}"
+                [ngClass]="{'offline': activityService.getUserState(mainUser).state == 'loggedOut'}"
+            ></div>
         </div>
         <div class="userprofile-menu-box">
             <img src="/assets/img/icons/dropdown_arrow.svg">

@@ -25,6 +25,7 @@ export class ActivityService implements OnDestroy {
     this.initInterval();
     this.syncCurrentUser();
     this.authSub = this.subAuth();
+    this.usersSub = this.subUsers();
   }
 
   ngOnDestroy(): void {
@@ -34,10 +35,8 @@ export class ActivityService implements OnDestroy {
 
   subAuth(): Subscription {
     return this.authService.user$.subscribe((user: any) => {
-      if (user) {
-        this.setUserStates();
-        this.usersSub = this.subUsers();
-      }
+      if (user) {this.setUserStates()}
+      this.setLastActivityOnAuth(user);
     });
   }
 
@@ -47,6 +46,7 @@ export class ActivityService implements OnDestroy {
       this.setUserStates();
     });
   }
+
 
   initListeners() {
     window.addEventListener('mousemove', () => this.setLastActivity());
@@ -58,6 +58,12 @@ export class ActivityService implements OnDestroy {
     window.addEventListener('MSPointerMove', () => this.setLastActivity());
   }
 
+
+  /**
+   * The interval in this function has two different functions:
+   * - One function sets/updates the public "userStates" property
+   * - The "activitySettingAllowed" is set to true again to allow reacting to activity of the current user
+   */
   initInterval() {
     setInterval(() => {
       this.setUserStates();
@@ -73,9 +79,22 @@ export class ActivityService implements OnDestroy {
     }
   }
 
+  setLastActivityOnAuth(user: any) {
+    if(user && this.currentUser.lastActivity == -1) {
+      this.currentUser.lastActivity = Date.now();
+      this.usersService.updateUser(this.currentUser);
+    } else if (!user && this.currentUser.lastActivity > 0) {
+      this.currentUser.lastActivity = -1;
+      this.usersService.updateUser(this.currentUser);
+    }
+  }
+
   syncCurrentUser(): void {
     const uid = this.authService.getCurrentUid();
-    if (uid) { this.currentUser = this.usersService.getUserByUid(uid) }
+    if (uid) {
+      this.currentUser = this.usersService.getUserByUid(uid);
+      this.setLastActivityOnAuth(true);
+    }
   }
 
   setUserStates(): void {

@@ -1,6 +1,6 @@
 @import '../../styles.scss';
 
-button {
+button.nav-button {
     position: absolute;
     top: 600px;
     display: flex;
@@ -10,12 +10,13 @@ button {
     font-weight: 500;
     line-height: 24px;
     max-width: 347px;
-    padding: 23px 14px 23px 14px;
+    padding: 23px 14px;
     border-radius: 0 0 30px 30px;
     background-color: white;
     z-index: 1;
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
     transform: rotate(-90deg);
+    transition: left 0.3s ease;
 
     .close {
         transform: rotate(90deg);
@@ -43,7 +44,6 @@ button {
     gap: 22px;
     height: 100%;
     width: 100%;
-    // max-width: 1879px;
     max-height: calc(100% - 150px);
 
     app-navigation,
@@ -51,9 +51,19 @@ button {
         height: 100%;
     }
 
+    app-navigation {
+        opacity: 0;
+        width: 0;
+        transition: all 0.3s;
+
+        &.expanded {
+            opacity: 1;
+            width: 366px;
+        }
+    }
+
     .main-content {
         height: 100%;
         flex-grow: 1;
     }
-
 }

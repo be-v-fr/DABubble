@@ -1,0 +1,118 @@
+@import '../../../styles.scss';
+
+
+.content-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .content-main {
+        width: 606px;
+        padding: 56px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        box-shadow: 0px 2px 10px 0px #00000014;
+        h1 {
+            color: #444df2;
+            font-size: 46px;
+            font-weight: 700;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            font-family: "Nunito", sans-serif;
+        }
+    }
+}
+
+.content-wrapper .content-main {
+    gap: 22px;
+    h1 .back-btn-container {
+        left: -28px;
+    }
+}
+
+span, p {
+    font-size: 20px;
+}
+
+.avatar-container {
+    &:hover {
+        cursor: pointer;
+    }
+    img {
+        border: 3px solid transparent;
+        border-radius: 99px;
+        width: 64px;
+        height: 64px;
+    }
+    &.btn_active {
+        img {
+            border: 3px solid $onlinedot-online;
+        }
+    }
+}
+
+.currentAvatar-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .current {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .avatar-container {
+            img {
+                width: 168px;
+                height: 168px;
+            }
+        }
+    }
+}
+
+.avatar-picker{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+}
+
+.upload-avatar-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.error-msg {
+    position: absolute;
+    top: calc(100% + 3px);
+    left: 0;
+    color: $magenta;
+    font-size: 14px;
+    animation: fade-in 250ms ease-out;
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+}
+
+.submit-btns {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    justify-content: flex-end;
+}
+

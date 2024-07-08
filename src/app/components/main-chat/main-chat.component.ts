@@ -20,8 +20,14 @@ import { Post } from '../../../models/post.class';
 import { AuthService } from '../../../services/auth.service';
 import { TimeService } from '../../../services/time.service';
 import { User } from '../../../models/user.class';
+<<<<<<< HEAD
 import { MemberListComponent } from '../../member-list/member-list.component';
 import { ActivityService } from '../../../services/activity.service';
+=======
+import { ActivityService } from '../../../services/activity.service';
+import { MemberListComponent } from '../../member-list/member-list.component';
+
+>>>>>>> 42907a32bf2d514468dd97fd2816e0162ee11269
 @Component({
   selector: 'app-main-chat',
   standalone: true,
@@ -52,12 +58,12 @@ export class MainChatComponent implements OnInit, OnDestroy {
   
 
   constructor(
-    private emojiService: EmojiService,
     private dialog: MatDialog,
     private authService: AuthService,
     private channelsService: ChannelsService,
     private threadsService: ThreadsService,
     private postsService: PostsService,
+    private activityService: ActivityService,
     public timeService: TimeService,
     private router: Router,
     private route: ActivatedRoute,
@@ -101,7 +107,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
   setThreads(threads: Thread[]): void {
     if (this.currentChannel.channel_id.length > 0) {
       this.channelThreads = this.threadsService.getChannelThreads(threads, this.currentChannel.channel_id);
-      console.log(`Threads in current channel (id: ${this.currentChannel.channel_id}):`, this.channelThreads);
     }
   }
 
@@ -132,18 +137,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
     this.emojiPicker = newState;
   }
 
-  addEmoji(event: any) {
-    this.emojiService.addEmoji({
-      unified: event.emoji.unified,
-      native: event.emoji.native
-    });
-    this.emojiPicker = !this.emojiPicker;
-    console.log(this.emojiService.getEmojis());
-  }
-
-  get emojis() {
-    return this.emojiService.getEmojis();
-  }
 
   onEditChannel(): void {
     this.dialog.open(EditChannelComponent);
@@ -154,11 +147,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
       data: { activeUsers: this.activeUsers }
     });
 
-  }
-
-  openThread(event: any) {
-    this.thread = this.channelThreads?.find(tr => tr.thread_id === event)
-    console.log(this.thread);
   }
 
   createThread(message: string) {

@@ -1,8 +1,8 @@
 <div *ngIf="post" class="message-container" [class.reversed]="messageSender">
     <div class="reaction-bar-container">
         <!-- <button>
-            <span class="reaction-icon">👍</span>
-        </button> -->
+                <span class="reaction-icon">👍</span>
+            </button> -->
         <button>
             <span (click)="onShowEmojiPicker()" class="material-icons-outlined">add_reaction</span>
         </button>
@@ -26,22 +26,29 @@
         </div>
         <div *ngIf="threadLength && threadLength > 1" class="message-answers">
             <button>{{threadLength - 1}} Antworten</button>
-            <span *ngIf="lastReply">Letzte Antwort {{timeService.toRelativeDate(lastReply)}}</span>
+            <span *ngIf="lastReply">Letzte Antwort {{timeService.toRelativeDateWithClock(lastReply)}}</span>
         </div>
-        <!-- TO DO: Connect reactions to service: -->
-        <div class="reactions-container" *ngIf="emojis.length > 0 ">
-            <div class="reaction" *ngFor="let emoji of emojis">
+        <div class="reactions-container" *ngIf="groupedEmojis && currentUser">
+            <div *ngFor="let emoji of objectKeys(groupedEmojis)" class="reaction">
                 <div class="reaction-info">
-                    <div class="reaction-info-emoji">{{ emoji?.native }}</div>
-                    <div class="reaction-info-name">Max Musterman</div>
+                    <div class="reaction-info-emoji">{{ emoji }}</div>
+                    <div class="reaction-info-name">
+                        <div class="info-name" *ngFor="let user of groupedEmojis[emoji].users">{{ user }}</div>
+                    </div>
                     <div class="reaction-info-sub-info">hat reagiert</div>
                 </div>
-                <div class="emoji">{{ emoji?.native }}</div>
-                <span>{{ emoji?.count }}</span>
+                <div class="reaction-emoji-container" (click)="onHandleEmoji(emoji)">
+                    <div class="emoji">{{ emoji }}</div>
+                    <span>{{ groupedEmojis[emoji].count }}</span>
+                </div>
             </div>
+
             <button class="add-emoji-btn" (click)="onShowEmojiPicker()">
                 <span class="material-icons-outlined icon">add_reaction</span>
             </button>
         </div>
     </div>
+</div>
+<div class="emoji-container" *ngIf="emojiPicker" (click)="onShowEmojiPicker()">
+    <emoji-mart title="Pick your emoji…" (emojiClick)="addEmoji($event)" emoji="point_up"></emoji-mart>
 </div>
