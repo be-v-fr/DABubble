@@ -1,0 +1,1882 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>da-bubble documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">da-bubble documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  PickAvatarComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/auth/pick-avatar/pick-avatar.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>This component displays the avatar picking page
+with the avatar picking form at the center.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>OnDestroy</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-pick-avatar</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>FormsModule</code>
+                            <code>RouterLink</code>
+                                <code><a href="../components/LegalFooterComponent.html" target="_self" >LegalFooterComponent</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./pick-avatar.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./pick-avatar.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#authService" >authService</a>
+                            </li>
+                            <li>
+                                <a href="#customFile" >customFile</a>
+                            </li>
+                            <li>
+                                <a href="#fileError" >fileError</a>
+                            </li>
+                            <li>
+                                <a href="#initializing" >initializing</a>
+                            </li>
+                            <li>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#router" >router</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#storageService" >storageService</a>
+                            </li>
+                            <li>
+                                <a href="#userData" >userData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#usersService" >usersService</a>
+                            </li>
+                            <li>
+                                <a href="#usersSub" >usersSub</a>
+                            </li>
+                            <li>
+                                <a href="#userSub" >userSub</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getFileError" >getFileError</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#onCustomSelection" >onCustomSelection</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#onCustomUpload" >onCustomUpload</a>
+                            </li>
+                            <li>
+                                <a href="#onError" >onError</a>
+                            </li>
+                            <li>
+                                <a href="#onSubmit" >onSubmit</a>
+                            </li>
+                            <li>
+                                <a href="#resetFileError" >resetFileError</a>
+                            </li>
+                            <li>
+                                <a href="#selectDefaultAvatar" >selectDefaultAvatar</a>
+                            </li>
+                            <li>
+                                <a href="#setFileError" >setFileError</a>
+                            </li>
+                            <li>
+                                <a href="#setPreSelectionAvatar" >setPreSelectionAvatar</a>
+                            </li>
+                            <li>
+                                <a href="#subUser" >subUser</a>
+                            </li>
+                            <li>
+                                <a href="#subUsers" >subUsers</a>
+                            </li>
+                            <li>
+                                <a href="#syncAvatar" >syncAvatar</a>
+                            </li>
+                            <li>
+                                <a href="#unselectAvatar" >unselectAvatar</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFileError"></a>
+                    <span class="name">
+                        <span ><b>getFileError</b></span>
+                        <a href="#getFileError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getFileError(response?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="170"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:170</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function translates the internal error messages to German error messages
+to be displayed to the user.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>response</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>error from upload or update response</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>German error message for the UI</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="53"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function unsubscribes all subscriptions.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="45"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function creates an authentication service subscription for user authentication.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCustomSelection"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>onCustomSelection</b></span>
+                        <a href="#onCustomSelection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onCustomSelection(e: Event)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="119"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:119</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function handles custom avatar selection by contacting the file storage service.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>e</td>
+                                            <td>
+                                                        <code>Event</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>click event on hidden file input element (triggered by custom upload button)</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCustomUpload"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>onCustomUpload</b></span>
+                        <a href="#onCustomUpload"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onCustomUpload(response: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="145"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:145</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function updates the user data to the custom avatar upload.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>response</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>upload process response</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onError"></a>
+                    <span class="name">
+                        <span ><b>onError</b></span>
+                        <a href="#onError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onError(err: Error)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="135"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:135</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function handles errors/exceptions during avatar picking.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>err</td>
+                                            <td>
+                                                        <code>Error</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>error</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSubmit"></a>
+                    <span class="name">
+                        <span ><b>onSubmit</b></span>
+                        <a href="#onSubmit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSubmit(form: NgForm)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="201"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:201</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function is triggered by the pick avatar form submission.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>form</td>
+                                            <td>
+                                                        <code>NgForm</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>pick avatar form</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetFileError"></a>
+                    <span class="name">
+                        <span ><b>resetFileError</b></span>
+                        <a href="#resetFileError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetFileError()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="182"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:182</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function removes the file error message by resetting it.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectDefaultAvatar"></a>
+                    <span class="name">
+                        <span ><b>selectDefaultAvatar</b></span>
+                        <a href="#selectDefaultAvatar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>selectDefaultAvatar(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="109"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:109</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function sets a selected avatar from the default avatars assortment.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>avatar index as in the corresponding file name</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setFileError"></a>
+                    <span class="name">
+                        <span ><b>setFileError</b></span>
+                        <a href="#setFileError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setFileError(response?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="159"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:159</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function sets the &quot;fileError&quot; property.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>response</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>error from upload or update response</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setPreSelectionAvatar"></a>
+                    <span class="name">
+                        <span ><b>setPreSelectionAvatar</b></span>
+                        <a href="#setPreSelectionAvatar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setPreSelectionAvatar()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="82"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:82</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function sets the avatar which is displayed to the user
+before the user has selected any avatar. (Google users are being
+displayed their Google avatar.)</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subUser"></a>
+                    <span class="name">
+                        <span ><b>subUser</b></span>
+                        <a href="#subUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>subUser()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function defines the user authentication process.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Subscription</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>authentication service subscription</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subUsers"></a>
+                    <span class="name">
+                        <span ><b>subUsers</b></span>
+                        <a href="#subUsers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>subUsers()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="100"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:100</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function defines the users synchronization process.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Subscription</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>users service subscription</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="syncAvatar"></a>
+                    <span class="name">
+                        <span ><b>syncAvatar</b></span>
+                        <a href="#syncAvatar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>syncAvatar()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="91"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:91</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function updates the &quot;userData&quot; property avatar to the users service.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="unselectAvatar"></a>
+                    <span class="name">
+                        <span ><b>unselectAvatar</b></span>
+                        <a href="#unselectAvatar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>unselectAvatar()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="191"
+                                    class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:191</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function unselects the current avatar in favor of
+a blank user profile picture.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>authService</b></span>
+                        <a href="#authService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(AuthService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="customFile"></a>
+                    <span class="name">
+                        <span ><b>customFile</b></span>
+                        <a href="#customFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fileError"></a>
+                    <span class="name">
+                        <span ><b>fileError</b></span>
+                        <a href="#fileError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initializing"></a>
+                    <span class="name">
+                        <span ><b>initializing</b></span>
+                        <a href="#initializing"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="router"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>router</b></span>
+                        <a href="#router"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(Router)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="storageService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>storageService</b></span>
+                        <a href="#storageService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(StorageService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userData"></a>
+                    <span class="name">
+                        <span ><b>userData</b></span>
+                        <a href="#userData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    uid: &#x27;&#x27;,
+    name: &#x27;...&#x27;,
+    avatarSrc: &#x27;assets/img/profile_blank.svg&#x27;
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="usersService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>usersService</b></span>
+                        <a href="#usersService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(UsersService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="usersSub"></a>
+                    <span class="name">
+                        <span ><b>usersSub</b></span>
+                        <a href="#usersSub"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subscription()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userSub"></a>
+                    <span class="name">
+                        <span ><b>userSub</b></span>
+                        <a href="#userSub"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subscription()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/auth/pick-avatar/pick-avatar.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CommonModule } from &#x27;@angular/common&#x27;;
+import { Component, inject, OnInit, OnDestroy } from &#x27;@angular/core&#x27;;
+import { FormsModule, NgForm } from &#x27;@angular/forms&#x27;;
+import { RouterLink, Router } from &#x27;@angular/router&#x27;;
+import { LegalFooterComponent } from &#x27;../legal-footer/legal-footer.component&#x27;;
+import { AuthService } from &#x27;../../../services/auth.service&#x27;;
+import { Subscription } from &#x27;rxjs&#x27;;
+import { StorageService } from &#x27;../../../services/storage.service&#x27;;
+import { UsersService } from &#x27;../../../services/users.service&#x27;;
+import { User } from &#x27;../../../models/user.class&#x27;;
+
+
+/**
+ * This component displays the avatar picking page
+ * with the avatar picking form at the center.
+ */
+@Component({
+  selector: &#x27;app-pick-avatar&#x27;,
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterLink, LegalFooterComponent],
+  templateUrl: &#x27;./pick-avatar.component.html&#x27;,
+  styleUrl: &#x27;./pick-avatar.component.scss&#x27;
+})
+export class PickAvatarComponent implements OnInit, OnDestroy {
+  private authService &#x3D; inject(AuthService);
+  private storageService &#x3D; inject(StorageService);
+  private usersService &#x3D; inject(UsersService);
+  private router &#x3D; inject(Router);
+  userData &#x3D; {
+    uid: &#x27;&#x27;,
+    name: &#x27;...&#x27;,
+    avatarSrc: &#x27;assets/img/profile_blank.svg&#x27;
+  }
+  userSub &#x3D; new Subscription();
+  usersSub &#x3D; new Subscription();
+  customFile: any &#x3D; &#x27;&#x27;;
+  loading: boolean &#x3D; true;
+  initializing: boolean &#x3D; true;
+  fileError: string | null &#x3D; null;
+
+
+  /**
+   * This function creates an authentication service subscription for user authentication.
+   */
+  ngOnInit(): void {
+    this.userSub &#x3D; this.subUser();
+  }
+
+
+  /**
+   * This function unsubscribes all subscriptions.
+   */
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe();
+    this.usersSub.unsubscribe();
+  }
+
+
+  /**
+   * This function defines the user authentication process.
+   * @returns authentication service subscription
+   */
+  subUser(): Subscription {
+    return this.authService.user$.subscribe((user) &#x3D;&gt; {
+      if (user &amp;&amp; user.displayName) {
+        this.loading &#x3D; false;
+        this.initializing &#x3D; false;
+        const uid &#x3D; this.authService.getCurrentUid();
+        if (uid) { this.userData.uid &#x3D; uid };
+        this.setPreSelectionAvatar();
+        this.userData.name &#x3D; user.displayName;
+      }
+    });
+  }
+
+
+  /**
+   * This function sets the avatar which is displayed to the user
+   * before the user has selected any avatar. (Google users are being
+   * displayed their Google avatar.)
+   */
+  setPreSelectionAvatar() {
+    this.syncAvatar();
+    this.usersSub &#x3D; this.subUsers();
+  }
+
+
+  /**
+   * This function updates the &quot;userData&quot; property avatar to the users service.
+   */
+  syncAvatar() {
+    this.userData.avatarSrc &#x3D; this.usersService.getUserByUid(this.userData.uid).avatarSrc;
+  }
+
+
+  /**
+   * This function defines the users synchronization process.
+   * @returns users service subscription
+   */
+  subUsers(): Subscription {
+    return this.usersService.users$.subscribe(() &#x3D;&gt; this.syncAvatar());
+  }
+
+
+  /**
+   * This function sets a selected avatar from the default avatars assortment.
+   * @param index avatar index as in the corresponding file name
+   */
+  selectDefaultAvatar(index: string) {
+    this.resetFileError();
+    this.userData.avatarSrc &#x3D; &#x60;assets/img/avatar/avatar_${index}.svg&#x60;;
+  }
+
+
+  /**
+   * This function handles custom avatar selection by contacting the file storage service.
+   * @param e click event on hidden file input element (triggered by custom upload button)
+   */
+  async onCustomSelection(e: Event) {
+    this.resetFileError();
+    this.loading &#x3D; true;
+    const input &#x3D; e.target as HTMLInputElement;
+    if (input.files) {
+      this.storageService.uploadAvatar(input.files[0], this.userData.uid)
+        .then((response) &#x3D;&gt; this.onCustomUpload(response))
+        .catch((err: Error) &#x3D;&gt; this.onError(err));
+    }
+  }
+
+
+  /**
+   * This function handles errors/exceptions during avatar picking.
+   * @param err - error
+   */
+  onError(err: Error) {
+    this.setFileError(err.toString());
+    this.loading &#x3D; false;
+  }
+
+
+  /**
+   * This function updates the user data to the custom avatar upload. 
+   * @param response - upload process response
+   */
+  async onCustomUpload(response: any) {
+    if (response.includes(this.userData.uid)) {
+      this.userData.avatarSrc &#x3D; response;
+      this.usersService.updateUser(new User(this.userData))
+        .then(() &#x3D;&gt; this.loading &#x3D; false)
+        .catch((err: Error) &#x3D;&gt; this.onError(err));
+    }
+  }
+
+
+  /**
+   * This function sets the &quot;fileError&quot; property.
+   * @param response - error from upload or update response
+   */
+  setFileError(response?: string) {
+    this.fileError &#x3D; response ? this.getFileError(response) : this.getFileError();
+  }
+
+
+  /**
+   * This function translates the internal error messages to German error messages
+   * to be displayed to the user.
+   * @param response - error from upload or update response
+   * @returns German error message for the UI
+   */
+  getFileError(response?: string): string {
+    if (response &amp;&amp; response.includes(&#x27;err/not-an-image&#x27;)) {
+      return &#x27;Ungültiger Dateityp.&#x27;
+    } else {
+      return &#x27;Upload fehlgeschlagen.&#x27;
+    }
+  }
+
+
+  /**
+   * This function removes the file error message by resetting it.
+   */
+  resetFileError(): void {
+    this.fileError &#x3D; null;
+  }
+
+
+  /**
+   * This function unselects the current avatar in favor of
+   * a blank user profile picture. 
+   */
+  unselectAvatar() {
+    this.userData.avatarSrc &#x3D; &#x27;assets/img/profile_blank.svg&#x27;;
+    this.resetFileError();
+  }
+
+
+  /**
+   * This function is triggered by the pick avatar form submission.
+   * @param form - pick avatar form
+   */
+  onSubmit(form: NgForm) {
+    if (form.submitted &amp;&amp; form.valid) { this.router.navigateByUrl(&#x27;&#x27;) }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;content-wrapper&quot;&gt;
+    &lt;form class&#x3D;&quot;content-main content-card&quot; #pickAvatarForm&#x3D;&quot;ngForm&quot; (ngSubmit)&#x3D;&quot;onSubmit(pickAvatarForm)&quot;&gt;
+        &lt;h1&gt;
+            Wähle deinen Avatar
+            &lt;div class&#x3D;&quot;back-btn-container&quot;&gt;
+                &lt;a routerLink&#x3D;&quot;/auth/logIn&quot; class&#x3D;&quot;black-to-blue-btn&quot;&gt;
+                    &lt;img src&#x3D;&quot;assets/img/icons/go_back_arrow.svg&quot; alt&#x3D;&quot;go back&quot;&gt;
+                &lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/h1&gt;
+        &lt;div class&#x3D;&quot;avatar-selection-container&quot; (click)&#x3D;&quot;unselectAvatar()&quot;&gt;
+            &lt;img [src]&#x3D;&quot;userData.avatarSrc&quot; alt&#x3D;&quot;blank profile picture&quot; class&#x3D;&quot;avatar-selection&quot;&gt;
+        &lt;/div&gt;
+        &lt;section class&#x3D;&quot;form-bottom&quot;&gt;
+            &lt;h2 [ngClass]&#x3D;&quot;{&#x27;text-grey&#x27;: initializing}&quot;&gt;{{userData.name}}&lt;/h2&gt;
+            &lt;p&gt;Aus der Liste wählen&lt;/p&gt;
+            &lt;div class&#x3D;&quot;avatar-picker&quot;&gt;
+                @for (i of [&#x27;00&#x27;,&#x27;01&#x27;,&#x27;02&#x27;,&#x27;03&#x27;,&#x27;04&#x27;,&#x27;05&#x27;]; track i)
+                {&lt;div class&#x3D;&quot;avatar-container&quot; (click)&#x3D;&quot;selectDefaultAvatar(i)&quot;&gt;
+                    &lt;img src&#x3D;&quot;assets/img/avatar/avatar_{{i}}.svg&quot; alt&#x3D;&quot;Avatar {{i}}&quot;&gt;
+                &lt;/div&gt;}
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;upload-avatar-container&quot;&gt;
+                &lt;span&gt;eigenes Bild verwenden&lt;/span&gt;
+                &lt;input type&#x3D;&quot;file&quot; #fileInput name&#x3D;&quot;fileInput&quot; style&#x3D;&quot;display: none&quot; ngModel
+                    (change)&#x3D;&quot;onCustomSelection($event)&quot; accept&#x3D;&quot;image/*&quot;&gt;
+                &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;form-btn-secondary&quot; (click)&#x3D;&quot;fileInput.click()&quot; [disabled]&#x3D;&quot;loading&quot;&gt;Datei
+                    hochladen&lt;/button&gt;
+                @if(fileError)
+                {&lt;p class&#x3D;&quot;error-msg&quot;&gt;
+                    {{fileError}}
+                &lt;/p&gt;}
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;submit-btns&quot;&gt;
+                &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;form-btn-primary&quot; [disabled]&#x3D;&quot;loading&quot;&gt;Weiter&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
+    &lt;/form&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="content-wrapper">    <form class="content-main content-card" #pickAvatarForm="ngForm" (ngSubmit)="onSubmit(pickAvatarForm)">        <h1>            Wähle deinen Avatar            <div class="back-btn-container">                <a routerLink="/auth/logIn" class="black-to-blue-btn">                    <img src="assets/img/icons/go_back_arrow.svg" alt="go back">                </a>            </div>        </h1>        <div class="avatar-selection-container" (click)="unselectAvatar()">            <img [src]="userData.avatarSrc" alt="blank profile picture" class="avatar-selection">        </div>        <section class="form-bottom">            <h2 [ngClass]="{\'text-grey\': initializing}">{{userData.name}}</h2>            <p>Aus der Liste wählen</p>            <div class="avatar-picker">                @for (i of [\'00\',\'01\',\'02\',\'03\',\'04\',\'05\']; track i)                {<div class="avatar-container" (click)="selectDefaultAvatar(i)">                    <img src="assets/img/avatar/avatar_{{i}}.svg" alt="Avatar {{i}}">                </div>}            </div>            <div class="upload-avatar-container">                <span>eigenes Bild verwenden</span>                <input type="file" #fileInput name="fileInput" style="display: none" ngModel                    (change)="onCustomSelection($event)" accept="image/*">                <button type="button" class="form-btn-secondary" (click)="fileInput.click()" [disabled]="loading">Datei                    hochladen</button>                @if(fileError)                {<p class="error-msg">                    {{fileError}}                </p>}            </div>            <div class="submit-btns">                <button type="submit" class="form-btn-primary" [disabled]="loading">Weiter</button>            </div>        </section>    </form></div></div>'
+    var COMPONENTS = [{'name': 'AddChannelComponent', 'selector': 'app-add-channel'},{'name': 'AddMembersAfterAddChannelComponent', 'selector': 'app-add-members-after-add-channel'},{'name': 'AddMembersComponent', 'selector': 'app-add-members'},{'name': 'AnimationIntroComponent', 'selector': 'app-animation-intro'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthComponent', 'selector': 'app-auth'},{'name': 'DirectMessageComponent', 'selector': 'app-direct-message'},{'name': 'EditChannelComponent', 'selector': 'app-edit-channel'},{'name': 'EditMainUserAvatarComponent', 'selector': 'app-edit-main-user-avatar'},{'name': 'EditMainUserProfileCardComponent', 'selector': 'app-edit-main-user-profile-card'},{'name': 'EditUserProfileCardComponent', 'selector': 'app-edit-user-profile-card'},{'name': 'ExpandableButtonComponent', 'selector': 'app-expandable-button'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'ImpressComponent', 'selector': 'app-impress'},{'name': 'LegalFooterComponent', 'selector': 'app-legal-footer'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogOutCardComponent', 'selector': 'app-edit-user-log-out-card'},{'name': 'MainChatComponent', 'selector': 'app-main-chat'},{'name': 'MainUserProfileCardComponent', 'selector': 'app-main-user-profile-card'},{'name': 'MemberListComponent', 'selector': 'app-member-list'},{'name': 'MessageBoxComponent', 'selector': 'app-message-box'},{'name': 'MessageItemComponent', 'selector': 'app-message-item'},{'name': 'NavigationComponent', 'selector': 'app-navigation'},{'name': 'NewMessageComponent', 'selector': 'app-new-message'},{'name': 'PickAvatarComponent', 'selector': 'app-pick-avatar'},{'name': 'PLAYGROUNDComponent', 'selector': 'app-playground'},{'name': 'PrivacypolicyComponent', 'selector': 'app-privacypolicy'},{'name': 'RequestPwResetComponent', 'selector': 'app-request-pw-reset'},{'name': 'ResetPwComponent', 'selector': 'app-reset-pw'},{'name': 'SignUpComponent', 'selector': 'app-sign-up'},{'name': 'ThreadComponent', 'selector': 'app-thread'},{'name': 'TimeSeparatorComponent', 'selector': 'app-time-separator'},{'name': 'ToastNotificationComponent', 'selector': 'app-toast-notification'},{'name': 'UserProfileCardComponent', 'selector': 'app-user-profile-card'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'PickAvatarComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'PickAvatarComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

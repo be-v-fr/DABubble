@@ -1,0 +1,745 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>da-bubble documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">da-bubble documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  PrivacypolicyComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/home/legal/privacypolicy/privacypolicy.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-privacypolicy</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./privacypolicy.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./privacypolicy.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#hideBackBtn" >hideBackBtn</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#historyBack" >historyBack</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(location: Location, route: ActivatedRoute)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/home/legal/privacypolicy/privacypolicy.component.ts:13</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>location</td>
+                                                  
+                                                        <td>
+                                                                    <code>Location</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                    <code>ActivatedRoute</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="historyBack"></a>
+                    <span class="name">
+                        <span ><b>historyBack</b></span>
+                        <a href="#historyBack"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>historyBack()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="26"
+                                    class="link-to-prism">src/app/home/legal/privacypolicy/privacypolicy.component.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="20"
+                                    class="link-to-prism">src/app/home/legal/privacypolicy/privacypolicy.component.ts:20</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hideBackBtn"></a>
+                    <span class="name">
+                        <span ><b>hideBackBtn</b></span>
+                        <a href="#hideBackBtn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/home/legal/privacypolicy/privacypolicy.component.ts:13</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule, Location } from &#x27;@angular/common&#x27;;
+import { ActivatedRoute } from &#x27;@angular/router&#x27;;
+
+@Component({
+  selector: &#x27;app-privacypolicy&#x27;,
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: &#x27;./privacypolicy.component.html&#x27;,
+  styleUrl: &#x27;./privacypolicy.component.scss&#x27;
+})
+export class PrivacypolicyComponent implements OnInit {
+  hideBackBtn: boolean &#x3D; false;
+
+  constructor(
+    private location: Location,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+      this.route.queryParams.subscribe(params &#x3D;&gt; {
+        this.hideBackBtn &#x3D; (params[&#x27;back&#x27;] &#x3D;&#x3D;&#x3D; &#x27;false&#x27;);
+      });
+  }
+
+  historyBack() {
+    this.location.back();
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;content-wrapper&quot;&gt;
+    &lt;div class&#x3D;&quot;content-main content-card&quot;&gt;
+        &lt;a (click)&#x3D;&quot;historyBack()&quot; class&#x3D;&quot;goback&quot; [ngClass]&#x3D;&quot;{&#x27;hide&#x27;: hideBackBtn}&quot;&gt;
+            &lt;img src&#x3D;&quot;assets/img/icons/go_back_arrow.svg&quot; alt&#x3D;&quot;go back&quot;&gt;
+        &lt;/a&gt;
+        &lt;h1&gt;Datenschutz&lt;/h1&gt;
+        &lt;div class&#x3D;&quot;content-scrollbox&quot;&gt;
+            &lt;h2&gt;Allgemeine Hinweise&lt;/h2&gt;
+            &lt;p&gt;
+                Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit
+                Ihren personenbezogenen Daten passiert, wenn Sie diese Internetseiten besuchen.
+                Personenbezogene Daten sind alle Daten, mit denen Sie persönlich
+                identifiziert werden können. Ausführliche Informationen zum Thema
+                Datenschutz entnehmen Sie diesen unter diesem Text aufgeführten
+                Datenschutzhinweisen.
+            &lt;/p&gt;
+            &lt;h2&gt;Verantwortlich&lt;/h2&gt;
+            &lt;p&gt;
+                Die Datenverarbeitung auf diesen Internetseiten erfolgt durch den Betreiber der Internetseiten.
+                Kontaktdaten:
+            &lt;/p&gt;
+            &lt;h3 class&#x3D;&quot;black&quot;&gt;Alexander Leitermann&lt;/h3&gt;
+            &lt;p&gt;Grünwalder Str. 69a&lt;br&gt;
+                81547 München
+            &lt;/p&gt;
+            &lt;p class&#x3D;&quot;email&quot;&gt;E-Mail: kontakt&lt;span&gt;&amp;nbsp;&lt;/span&gt;&amp;commat;&lt;span&gt;&amp;nbsp;&lt;/span&gt;leitermann.online&lt;/p&gt;
+        
+            &lt;h2&gt;Art der Daten&lt;/h2&gt;
+            &lt;h3&gt;1. Nutzung der Internetseite&lt;/h3&gt;
+            &lt;p&gt;Bei jedem Aufruf dieser Internetseiten werden automatisch Daten und 
+                Informationen vom Computersystem des aufrufenden Geräts erfasst. Dies 
+                sind z. B. Informationen wie:
+            &lt;/p&gt;
+            &lt;ul&gt;
+                &lt;li&gt;Informationen über den Typ und die Version Ihres Internet-Browsers&lt;/li&gt;
+                &lt;li&gt;Das Betriebssystem Ihres Computers oder Smartphones&lt;/li&gt;
+                &lt;li&gt;Ihr Internet-Anbieter&lt;/li&gt;
+                &lt;li&gt;Ihre IP-Adresse&lt;/li&gt;
+                &lt;li&gt;Datum und Uhrzeit des Zugriffs&lt;/li&gt;
+                &lt;li&gt;Geografischer Standort&lt;/li&gt;
+                &lt;li&gt;Internetseiten, von denen Sie zu mir gekommen sind&lt;/li&gt;
+                &lt;li&gt;Internetseiten, die Sie von meinen Internetseiten aus besuchen&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;p&gt;Derartige technische Informationen werden in sogenannten &quot;Log Files&quot; (Protokolldateien)
+                erfasst, damit die Internetseiten korrekt bei Ihnen angezeigt werden und bei 
+                technischen Problemen die Ursachen ermittelt werden können. Ebenso dienen diese 
+                Informationen der technischen Optimierung der Internetseiten und dem Zweck der 
+                Sicherheit der Serversysteme und Netze. In diesen Zwecken liegt auch ein berechtigtes 
+                Interesse an der Datenverarbeitung nach Art. 6 Abs. 1 S. 1 lit. f DSGVO.
+            &lt;/p&gt;
+            &lt;p&gt;Die Erfassung der Daten zur Bereitstellung der Internetseiten und die Speicherung der Daten 
+                in Log Files ist für den Betrieb der Internetseiten zwingend erforderlich.
+            &lt;/p&gt;
+            &lt;h3&gt;2. Kontaktformular&lt;/h3&gt;
+            &lt;p&gt;Mit dem Kontaktformular werden folgende personenbezogene Daten erhoben:&lt;p&gt;
+            &lt;ul&gt;
+                &lt;li&gt;Name - Ihren Namen (Vorname, Name) für die korrekte Anrede in der Kommunikation mit Ihnen&lt;/li&gt;
+                &lt;li&gt;E-Mail Adresse - Ihre gültige elektronische Adresse, damit Sie eine Antwort erhalten können&lt;/li&gt;
+                &lt;li&gt;Passwort - Ein gültiges Passwort, welches für den erfolgreichen Login benötigt wird.&lt;/li&gt;
+                &lt;li&gt;Profilbild (optional) - Ein Bild, welches anderen Nutzern erlaubt, Sie rasch und eindeutig zu erkennen&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;p&gt;Die Rechtsgrundlage für die Datenverarbeitung ist Art. 6 Abs. 1 lit. f DSGVO, da der Betreiber ein 
+                berechtigtes Interesse an der Beantwortung Ihres Anliegens und an einer unkomplizierten 
+                Kontaktaufnahme-Möglichkeit hat.
+            &lt;/p&gt;
+            
+            &lt;h2&gt;Umgang&lt;/h2&gt;
+            &lt;p&gt;Der Betreiber verarbeitet personenbezogene Daten grundsätzlich nur, soweit dies zur 
+                Bereitstellung einer funktionsfähigen Internetseite sowie deren Inhalte 
+                erforderlich ist. Die Verarbeitung von personenbezogenen Daten erfolgt 
+                regelmäßig nur nach Einwilligung. Eine Ausnahme gilt für Fälle, in denen 
+                eine vorherige Einwilligung aus tatsächlichen Gründen nicht eingeholt 
+                werden kann und die Verarbeitung der Daten gesetzlich zulässig ist.
+            &lt;/p&gt;
+        
+            &lt;h2&gt;Rechtsgrundlage&lt;/h2&gt;
+            &lt;p&gt;Soweit der Betreiber für Verarbeitungsvorgänge personenbezogener Daten eine Einwilligung der 
+                betroffenen Person eingeholt hat, dient Art. 6 Abs. 1 S. 1 lit. a DSGVO als Rechtsgrundlage.
+            &lt;/p&gt;
+            &lt;p&gt;Soweit eine Verarbeitung personenbezogener Daten zur Erfüllung einer rechtlichen Verpflichtung 
+                erforderlich ist, der der Betreiber unterliegt, dient Art. 6 Abs. 1 S. 1 lit. c DSGVO als Rechtsgrundlage.
+            &lt;/p&gt;
+            &lt;p&gt;Ist die Verarbeitung zur Wahrung eines berechtigten Interesses vom Betreiber oder eines Dritten 
+                erforderlich und überwiegen die Interessen, Grundrechte und Grundfreiheiten des Betroffenen 
+                das erstgenannte Interesse nicht, so dient Art. 6 Abs. 1 S. 1 lit. f DSGVO als 
+                Rechtsgrundlage für die Verarbeitung.
+            &lt;/p&gt;
+        
+            &lt;h2&gt;Speicherdauer&lt;/h2&gt;
+            &lt;p&gt;Die personenbezogenen Daten welche in den IONOS WebAnalytics (Hosting-Dienstleister) 
+                anonymisiert und ohne Personenbezug in den Log Files verarbeitet werden, bleiben wenigstens 
+                für die Dauer der Beauftragung durch den Betreiber gespeichert.
+            &lt;/p&gt;
+            &lt;p&gt;Die erhobenen personenbezogenen Daten aus dem Kontaktformular sowie aus direkt empfangenen E-Mails
+                werden für die Dauer der Kommunikation mit Ihnen gespeichert. 
+            &lt;/p&gt;
+            &lt;p&gt;Sind die Daten für den vorgesehenen Zweck nicht mehr erforderlich, müssen diese gemäß Art. 17 DSGVO 
+                unverzüglich gelöscht werden. Die Speicherdauer kann abhängig von der Art der Daten durch andere 
+                Vorschriften und Gesetze vorgeschrieben und länger sein. 
+            &lt;/p&gt;
+        
+            &lt;h2&gt;Ihre Rechte&lt;/h2&gt;
+            &lt;p&gt;Wenn der Betreiber Ihre personenbezogenen Daten verarbeitet, gelten Sie als Betroffener gemäß 
+                der DSGVO und es stehen Ihnen – nach erfolgreicher Identifizierung – folgende 
+                Rechte gegenüber dem Betreiber zu:
+            &lt;/p&gt;
+            &lt;ul&gt;
+                &lt;li&gt;Auskunftsrecht (Artikel 15 DSGVO, § 34 BDSG)&lt;/li&gt;
+                &lt;li&gt;Recht auf Löschung (Artikel 17 DSGVO, § 35 BDSG)&lt;/li&gt;
+                &lt;li&gt;Recht auf Berichtigung (Artikel 16 DSGVO, § 34 BDSG)&lt;/li&gt;
+                &lt;li&gt;Recht auf Einschränkung der Verarbeitung (Artikel 18 DSGVO)&lt;/li&gt;
+                &lt;li&gt;Recht auf Datenübertragbarkeit (Artikel 20 DSGVO)&lt;/li&gt;
+                &lt;li&gt;Recht, Ihre Einwilligung jederzeit zu widerrufen (Artikel 7 Abs. 3 DSGVO)&lt;/li&gt;
+                &lt;li&gt;Widerspruchsrecht (Artikel 21 DSGVO)&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;p&gt;Um Ihre hier beschriebenen Rechte auszuüben, können Sie den Betreiber jederzeit unter den unter 
+                „Verantwortlich” aufgeführten Kontaktdaten kontaktieren.
+            &lt;/p&gt;
+            &lt;p&gt;Sie können jederzeit eine Beschwerde bei einer Aufsichtsbehörde über die Erhebung und 
+                Verarbeitung Ihrer personenbezogenen Daten durch &lt;span class&#x3D;&quot;color&quot;&gt;dabubble-257.developerakademie.net&lt;/span&gt; 
+                einreichen (Beschwerderecht nach Art. 77 DSGVO). Sie können sich an die Datenschutzbehörde Ihres Wohnsitzes wenden, die 
+                Ihren Antrag dann an die zuständige Behörde weiterleiten wird.
+            &lt;/p&gt;
+        
+            &lt;h2&gt;Gewährleistung des Schutzes&lt;/h2&gt;
+            &lt;p&gt;Der Betreiber von &lt;span class&#x3D;&quot;color&quot;&gt;dabubble-257.developerakademie.net&lt;/span&gt; sorgt durch sein Handeln
+                und mit technischen Möglichkeiten für die sichere Verwahrung der personenbezogenen Daten.
+                Der Hosting-Dienstleister verwendet technische Maßnahmen zum Schutz der erhobenen Daten für 
+                die Log Files.
+            &lt;/p&gt;
+        
+            &lt;h2&gt;Links von Dritten&lt;/h2&gt;
+            &lt;p&gt;Gelegentlich kann der Betreiber nach eigenem Ermessen Produkte oder Dienste von Dritten auf diesen 
+                Internetseiten anbieten. Diese Internetseiten von Drittanbietern verfügen über separate, 
+                unabhängige Datenschutzrichtlinien. Der Betreiber von &lt;span class&#x3D;&quot;color&quot;&gt;dabubble-257.developerakademie.net&lt;/span&gt; 
+                übernimmt daher keine Verantwortung oder Haftung für den Inhalt und die Aktivitäten dieser 
+                verlinkten Internetseiten. Trotzdem wird versucht, die Integrität der eigenen Internetseiten zu schützen 
+                und der Betreiber begrüßt jedes Feedback zu den verlinkten Internetseiten.
+            &lt;/p&gt;
+        
+            &lt;h2&gt;Tools von Drittanbietern&lt;/h2&gt;
+            &lt;h3&gt;Hosting&lt;/h3&gt;
+            &lt;p&gt;Diese Internetseiten werden im Auftrag bei einem Hoster zum Abruf bereitgestellt. Der Hosting-Dienstleister ist:&lt;/p&gt;
+            &lt;p&gt;IONOS SE&lt;/p&gt;
+            &lt;p&gt;Elgendorfer Str. 57 &lt;br&gt;
+                56410 Montabaur &lt;br&gt;
+            &amp;nbsp;&lt;/p&gt;
+            &lt;h3&gt;WebAnalytics&lt;/h3&gt;
+            &lt;p&gt;Die unter &quot;Art der Daten&quot; genannten Daten zu Punkt 1 werden von diesem 
+                Dienstleister unter dem Namen &quot;WebAnalytics&quot; in den erwähnten Log Files verarbeitet. Die IP-Adresse 
+                wird nach der Übermittlung Direkt anonymisiert und ohne Personenbezug verarbeitet. Zum Schutz von 
+                personenbezogenen Daten verwendet WebAnalytics keine Cookies.
+            &lt;/p&gt;
+        
+            &lt;h2&gt;Datenweitergabe&lt;/h2&gt;
+            &lt;p&gt;In einigen wenigen Fällen wird der Betreiber vom Gesetzgeber zur Auskunft verpflichtet für Zwecke 
+                der Strafverfolgung an Strafverfolgungsbehörden und Gerichte.
+            &lt;/p&gt;
+            &lt;p&gt;Rechtsgrundlage für diese Verarbeitung ist Art. 6 Abs. 1 lit. c DSGVO.&lt;/p&gt;
+        
+            &lt;h2&gt;&lt;/h2&gt;
+            &lt;p&gt;&lt;/p&gt;
+
+        &lt;/div&gt;
+    
+    &lt;/div&gt;
+    &lt;!-- &lt;img src&#x3D;&quot;assets/img/logo_name.svg&quot; alt&#x3D;&quot;DABubble&quot; class&#x3D;&quot;logo&quot;&gt; --&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="content-wrapper">    <div class="content-main content-card">        <a (click)="historyBack()" class="goback" [ngClass]="{\'hide\': hideBackBtn}">            <img src="assets/img/icons/go_back_arrow.svg" alt="go back">        </a>        <h1>Datenschutz</h1>        <div class="content-scrollbox">            <h2>Allgemeine Hinweise</h2>            <p>                Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit                Ihren personenbezogenen Daten passiert, wenn Sie diese Internetseiten besuchen.                Personenbezogene Daten sind alle Daten, mit denen Sie persönlich                identifiziert werden können. Ausführliche Informationen zum Thema                Datenschutz entnehmen Sie diesen unter diesem Text aufgeführten                Datenschutzhinweisen.            </p>            <h2>Verantwortlich</h2>            <p>                Die Datenverarbeitung auf diesen Internetseiten erfolgt durch den Betreiber der Internetseiten.                Kontaktdaten:            </p>            <h3 class="black">Alexander Leitermann</h3>            <p>Grünwalder Str. 69a<br>                81547 München            </p>            <p class="email">E-Mail: kontakt<span>&nbsp;</span>&commat;<span>&nbsp;</span>leitermann.online</p>                    <h2>Art der Daten</h2>            <h3>1. Nutzung der Internetseite</h3>            <p>Bei jedem Aufruf dieser Internetseiten werden automatisch Daten und                 Informationen vom Computersystem des aufrufenden Geräts erfasst. Dies                 sind z. B. Informationen wie:            </p>            <ul>                <li>Informationen über den Typ und die Version Ihres Internet-Browsers</li>                <li>Das Betriebssystem Ihres Computers oder Smartphones</li>                <li>Ihr Internet-Anbieter</li>                <li>Ihre IP-Adresse</li>                <li>Datum und Uhrzeit des Zugriffs</li>                <li>Geografischer Standort</li>                <li>Internetseiten, von denen Sie zu mir gekommen sind</li>                <li>Internetseiten, die Sie von meinen Internetseiten aus besuchen</li>            </ul>            <p>Derartige technische Informationen werden in sogenannten "Log Files" (Protokolldateien)                erfasst, damit die Internetseiten korrekt bei Ihnen angezeigt werden und bei                 technischen Problemen die Ursachen ermittelt werden können. Ebenso dienen diese                 Informationen der technischen Optimierung der Internetseiten und dem Zweck der                 Sicherheit der Serversysteme und Netze. In diesen Zwecken liegt auch ein berechtigtes                 Interesse an der Datenverarbeitung nach Art. 6 Abs. 1 S. 1 lit. f DSGVO.            </p>            <p>Die Erfassung der Daten zur Bereitstellung der Internetseiten und die Speicherung der Daten                 in Log Files ist für den Betrieb der Internetseiten zwingend erforderlich.            </p>            <h3>2. Kontaktformular</h3>            <p>Mit dem Kontaktformular werden folgende personenbezogene Daten erhoben:<p>            <ul>                <li>Name - Ihren Namen (Vorname, Name) für die korrekte Anrede in der Kommunikation mit Ihnen</li>                <li>E-Mail Adresse - Ihre gültige elektronische Adresse, damit Sie eine Antwort erhalten können</li>                <li>Passwort - Ein gültiges Passwort, welches für den erfolgreichen Login benötigt wird.</li>                <li>Profilbild (optional) - Ein Bild, welches anderen Nutzern erlaubt, Sie rasch und eindeutig zu erkennen</li>            </ul>            <p>Die Rechtsgrundlage für die Datenverarbeitung ist Art. 6 Abs. 1 lit. f DSGVO, da der Betreiber ein                 berechtigtes Interesse an der Beantwortung Ihres Anliegens und an einer unkomplizierten                 Kontaktaufnahme-Möglichkeit hat.            </p>                        <h2>Umgang</h2>            <p>Der Betreiber verarbeitet personenbezogene Daten grundsätzlich nur, soweit dies zur                 Bereitstellung einer funktionsfähigen Internetseite sowie deren Inhalte                 erforderlich ist. Die Verarbeitung von personenbezogenen Daten erfolgt                 regelmäßig nur nach Einwilligung. Eine Ausnahme gilt für Fälle, in denen                 eine vorherige Einwilligung aus tatsächlichen Gründen nicht eingeholt                 werden kann und die Verarbeitung der Daten gesetzlich zulässig ist.            </p>                    <h2>Rechtsgrundlage</h2>            <p>Soweit der Betreiber für Verarbeitungsvorgänge personenbezogener Daten eine Einwilligung der                 betroffenen Person eingeholt hat, dient Art. 6 Abs. 1 S. 1 lit. a DSGVO als Rechtsgrundlage.            </p>            <p>Soweit eine Verarbeitung personenbezogener Daten zur Erfüllung einer rechtlichen Verpflichtung                 erforderlich ist, der der Betreiber unterliegt, dient Art. 6 Abs. 1 S. 1 lit. c DSGVO als Rechtsgrundlage.            </p>            <p>Ist die Verarbeitung zur Wahrung eines berechtigten Interesses vom Betreiber oder eines Dritten                 erforderlich und überwiegen die Interessen, Grundrechte und Grundfreiheiten des Betroffenen                 das erstgenannte Interesse nicht, so dient Art. 6 Abs. 1 S. 1 lit. f DSGVO als                 Rechtsgrundlage für die Verarbeitung.            </p>                    <h2>Speicherdauer</h2>            <p>Die personenbezogenen Daten welche in den IONOS WebAnalytics (Hosting-Dienstleister)                 anonymisiert und ohne Personenbezug in den Log Files verarbeitet werden, bleiben wenigstens                 für die Dauer der Beauftragung durch den Betreiber gespeichert.            </p>            <p>Die erhobenen personenbezogenen Daten aus dem Kontaktformular sowie aus direkt empfangenen E-Mails                werden für die Dauer der Kommunikation mit Ihnen gespeichert.             </p>            <p>Sind die Daten für den vorgesehenen Zweck nicht mehr erforderlich, müssen diese gemäß Art. 17 DSGVO                 unverzüglich gelöscht werden. Die Speicherdauer kann abhängig von der Art der Daten durch andere                 Vorschriften und Gesetze vorgeschrieben und länger sein.             </p>                    <h2>Ihre Rechte</h2>            <p>Wenn der Betreiber Ihre personenbezogenen Daten verarbeitet, gelten Sie als Betroffener gemäß                 der DSGVO und es stehen Ihnen – nach erfolgreicher Identifizierung – folgende                 Rechte gegenüber dem Betreiber zu:            </p>            <ul>                <li>Auskunftsrecht (Artikel 15 DSGVO, § 34 BDSG)</li>                <li>Recht auf Löschung (Artikel 17 DSGVO, § 35 BDSG)</li>                <li>Recht auf Berichtigung (Artikel 16 DSGVO, § 34 BDSG)</li>                <li>Recht auf Einschränkung der Verarbeitung (Artikel 18 DSGVO)</li>                <li>Recht auf Datenübertragbarkeit (Artikel 20 DSGVO)</li>                <li>Recht, Ihre Einwilligung jederzeit zu widerrufen (Artikel 7 Abs. 3 DSGVO)</li>                <li>Widerspruchsrecht (Artikel 21 DSGVO)</li>            </ul>            <p>Um Ihre hier beschriebenen Rechte auszuüben, können Sie den Betreiber jederzeit unter den unter                 „Verantwortlich” aufgeführten Kontaktdaten kontaktieren.            </p>            <p>Sie können jederzeit eine Beschwerde bei einer Aufsichtsbehörde über die Erhebung und                 Verarbeitung Ihrer personenbezogenen Daten durch <span class="color">dabubble-257.developerakademie.net</span>                 einreichen (Beschwerderecht nach Art. 77 DSGVO). Sie können sich an die Datenschutzbehörde Ihres Wohnsitzes wenden, die                 Ihren Antrag dann an die zuständige Behörde weiterleiten wird.            </p>                    <h2>Gewährleistung des Schutzes</h2>            <p>Der Betreiber von <span class="color">dabubble-257.developerakademie.net</span> sorgt durch sein Handeln                und mit technischen Möglichkeiten für die sichere Verwahrung der personenbezogenen Daten.                Der Hosting-Dienstleister verwendet technische Maßnahmen zum Schutz der erhobenen Daten für                 die Log Files.            </p>                    <h2>Links von Dritten</h2>            <p>Gelegentlich kann der Betreiber nach eigenem Ermessen Produkte oder Dienste von Dritten auf diesen                 Internetseiten anbieten. Diese Internetseiten von Drittanbietern verfügen über separate,                 unabhängige Datenschutzrichtlinien. Der Betreiber von <span class="color">dabubble-257.developerakademie.net</span>                 übernimmt daher keine Verantwortung oder Haftung für den Inhalt und die Aktivitäten dieser                 verlinkten Internetseiten. Trotzdem wird versucht, die Integrität der eigenen Internetseiten zu schützen                 und der Betreiber begrüßt jedes Feedback zu den verlinkten Internetseiten.            </p>                    <h2>Tools von Drittanbietern</h2>            <h3>Hosting</h3>            <p>Diese Internetseiten werden im Auftrag bei einem Hoster zum Abruf bereitgestellt. Der Hosting-Dienstleister ist:</p>            <p>IONOS SE</p>            <p>Elgendorfer Str. 57 <br>                56410 Montabaur <br>            &nbsp;</p>            <h3>WebAnalytics</h3>            <p>Die unter "Art der Daten" genannten Daten zu Punkt 1 werden von diesem                 Dienstleister unter dem Namen "WebAnalytics" in den erwähnten Log Files verarbeitet. Die IP-Adresse                 wird nach der Übermittlung Direkt anonymisiert und ohne Personenbezug verarbeitet. Zum Schutz von                 personenbezogenen Daten verwendet WebAnalytics keine Cookies.            </p>                    <h2>Datenweitergabe</h2>            <p>In einigen wenigen Fällen wird der Betreiber vom Gesetzgeber zur Auskunft verpflichtet für Zwecke                 der Strafverfolgung an Strafverfolgungsbehörden und Gerichte.            </p>            <p>Rechtsgrundlage für diese Verarbeitung ist Art. 6 Abs. 1 lit. c DSGVO.</p>                    <h2></h2>            <p></p>        </div>        </div>    <!-- <img src="assets/img/logo_name.svg" alt="DABubble" class="logo"> --></div></div>'
+    var COMPONENTS = [{'name': 'AddChannelComponent', 'selector': 'app-add-channel'},{'name': 'AddMembersAfterAddChannelComponent', 'selector': 'app-add-members-after-add-channel'},{'name': 'AddMembersComponent', 'selector': 'app-add-members'},{'name': 'AnimationIntroComponent', 'selector': 'app-animation-intro'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthComponent', 'selector': 'app-auth'},{'name': 'DirectMessageComponent', 'selector': 'app-direct-message'},{'name': 'EditChannelComponent', 'selector': 'app-edit-channel'},{'name': 'EditMainUserAvatarComponent', 'selector': 'app-edit-main-user-avatar'},{'name': 'EditMainUserProfileCardComponent', 'selector': 'app-edit-main-user-profile-card'},{'name': 'EditUserProfileCardComponent', 'selector': 'app-edit-user-profile-card'},{'name': 'ExpandableButtonComponent', 'selector': 'app-expandable-button'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'ImpressComponent', 'selector': 'app-impress'},{'name': 'LegalFooterComponent', 'selector': 'app-legal-footer'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogOutCardComponent', 'selector': 'app-edit-user-log-out-card'},{'name': 'MainChatComponent', 'selector': 'app-main-chat'},{'name': 'MainUserProfileCardComponent', 'selector': 'app-main-user-profile-card'},{'name': 'MemberListComponent', 'selector': 'app-member-list'},{'name': 'MessageBoxComponent', 'selector': 'app-message-box'},{'name': 'MessageItemComponent', 'selector': 'app-message-item'},{'name': 'NavigationComponent', 'selector': 'app-navigation'},{'name': 'NewMessageComponent', 'selector': 'app-new-message'},{'name': 'PickAvatarComponent', 'selector': 'app-pick-avatar'},{'name': 'PLAYGROUNDComponent', 'selector': 'app-playground'},{'name': 'PrivacypolicyComponent', 'selector': 'app-privacypolicy'},{'name': 'RequestPwResetComponent', 'selector': 'app-request-pw-reset'},{'name': 'ResetPwComponent', 'selector': 'app-reset-pw'},{'name': 'SignUpComponent', 'selector': 'app-sign-up'},{'name': 'ThreadComponent', 'selector': 'app-thread'},{'name': 'TimeSeparatorComponent', 'selector': 'app-time-separator'},{'name': 'ToastNotificationComponent', 'selector': 'app-toast-notification'},{'name': 'UserProfileCardComponent', 'selector': 'app-user-profile-card'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'PrivacypolicyComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'PrivacypolicyComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

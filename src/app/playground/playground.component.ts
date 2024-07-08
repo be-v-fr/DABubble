@@ -29,7 +29,12 @@ export class PLAYGROUNDComponent implements OnInit, OnDestroy {
   threadsSub = new Subscription();
   postsSub = new Subscription();
   reactionsSub = new Subscription();
+
+  /**
+   * Array of channels.
+   */
   channels: Channel[] = [];
+  
   threads: Thread[] = [];
   posts: Post[] = [];
   reactions: Reaction[] = [];
