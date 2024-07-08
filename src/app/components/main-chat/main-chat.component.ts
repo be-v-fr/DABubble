@@ -20,14 +20,8 @@ import { Post } from '../../../models/post.class';
 import { AuthService } from '../../../services/auth.service';
 import { TimeService } from '../../../services/time.service';
 import { User } from '../../../models/user.class';
-<<<<<<< HEAD
 import { MemberListComponent } from '../../member-list/member-list.component';
 import { ActivityService } from '../../../services/activity.service';
-=======
-import { ActivityService } from '../../../services/activity.service';
-import { MemberListComponent } from '../../member-list/member-list.component';
-
->>>>>>> 42907a32bf2d514468dd97fd2816e0162ee11269
 @Component({
   selector: 'app-main-chat',
   standalone: true,
@@ -67,7 +61,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
     public timeService: TimeService,
     private router: Router,
     private route: ActivatedRoute,
-    private activityService: ActivityService
   ) { }
 
 

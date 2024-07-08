@@ -57,7 +57,7 @@ export class HomeComponent {
 
     subAuth(): Subscription {
         return this.authService.user$.subscribe((user) => {
-            if (user) {
+            if (user && !(this.currentUser.uid.length > 0)) {
                 this.syncUsers();
                 this.usersSub = this.subUsers();
                 this.channelsSub = this.subChannels();
@@ -82,7 +82,10 @@ export class HomeComponent {
 
     syncCurrentUser(): void {
         const uid = this.authService.getCurrentUid();
-        if (uid) { this.currentUser = this.usersService.getUserByUid(uid) }
+        if (uid) {
+            this.currentUser = this.usersService.getUserByUid(uid);
+            if(this.userChannels.length == 0) {this.setUserChannels(this.channelsService.channels)}
+         }
     }
 
     setUserChannels(channels: Channel[]): void {

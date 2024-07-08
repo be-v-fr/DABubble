@@ -3,6 +3,7 @@ import { Firestore, collection, doc, onSnapshot, setDoc, updateDoc, deleteDoc } 
 import { Subject } from 'rxjs';
 import { User } from '../models/user.class';
 import { CollectionReference, DocumentReference, addDoc } from 'firebase/firestore';
+import { ChannelsService } from './content/channels.service';
 
 
 /**
@@ -19,6 +20,7 @@ export class UsersService implements OnDestroy {
   users$: Subject<void> = new Subject<void>();
   unsubUsers;
   firestore: Firestore = inject(Firestore);
+  private channelsService = inject(ChannelsService);
 
 
   /**
@@ -80,6 +82,7 @@ export class UsersService implements OnDestroy {
   async addUser(user: User) {
     user.lastActivity = Date.now();
     await setDoc(this.getSingleDocRef(user.uid), user.toJson())
+      .then(() => this.channelsService.initUserChannels(user))
       .catch((err: Error) => { console.error(err) });
   }
 

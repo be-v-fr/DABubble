@@ -3,6 +3,7 @@ import { Firestore, collection, doc, onSnapshot, updateDoc, deleteDoc } from '@a
 import { Subject } from 'rxjs';
 import { CollectionReference, DocumentReference, addDoc } from 'firebase/firestore';
 import { Channel } from '../../models/channel.class';
+import { User } from '../../models/user.class';
 
 
 @Injectable({
@@ -69,11 +70,11 @@ export class ChannelsService implements OnDestroy {
    */
   async addDoc(channel: Channel): Promise<string> {
     await addDoc(this.getColRef(), channel.toJson())
-    .then((response: any) => {
-      channel.channel_id = response.id;
-      this.updateDoc(channel);
-    })
-    .catch((err: Error) => { console.error(err) });
+      .then((response: any) => {
+        channel.channel_id = response.id;
+        this.updateDoc(channel);
+      })
+      .catch((err: Error) => { console.error(err) });
     return channel.channel_id;
   }
 
@@ -100,5 +101,18 @@ export class ChannelsService implements OnDestroy {
     const docRef = this.getSingleDocRef(channel_id);
     await deleteDoc(docRef)
       .catch((err: Error) => { console.error(err) });
+  }
+
+
+  async initUserChannels(user: User) {
+    const selfChannel = new Channel({
+      'name': user.name,
+      'author_uid': user.uid,
+      'description': 'Benutze diesen Kanal für deine eigenen Notizen und Uploads.',
+      'members_uids': [user.uid]
+    });
+    await this.addDoc(selfChannel)
+      .catch((err: Error) => { console.error(err) });
+    // SUGGESTION: Add User to collective "Team" Channel?
   }
 }
