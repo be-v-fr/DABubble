@@ -122,14 +122,17 @@ export class MessageItemComponent implements OnDestroy {
 
 
   addEmoji(event: any) {
-    this.reactionsService.addDoc(new Reaction(
-      {
-        user_id: this.currentUser?.uid,
-        post_id: this.post.post_id,
-        emoji: event.emoji.native
-      }
-    ));
+    let curremoji = this.postReactions?.find(r => r.emoji === event.emoji.native && r.user_id === this.currentUser?.uid);
 
+    if (!curremoji) {
+      this.reactionsService.addDoc(new Reaction(
+        {
+          user_id: this.currentUser?.uid,
+          post_id: this.post.post_id,
+          emoji: event.emoji.native
+        }
+      ));
+    }
     this.emojiPicker = !this.emojiPicker;
   }
 
