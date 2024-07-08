@@ -9,9 +9,9 @@
   </div>
   <div class="usersMenu">
     <div *ngFor="let user of activeUsers" class="message-img-container">
-      <button>
+      <button (click)="openUserProfile()">
         <img [src]="user.avatarSrc" alt="Avatar" />
-        <span (click)="openUserProfile()">{{ user.name }}</span>
+        <span>{{ user.name }}</span>
         <span class="online"></span>
       </button>
     </div>
