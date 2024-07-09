@@ -42,7 +42,7 @@ export class ActivityService implements OnDestroy {
 
   subUsers(): Subscription {
     return this.usersService.users$.subscribe(() => {
-      this.syncCurrentUser();
+      this.syncCurrentUser(); // löst auch setLastActivityOnAuth() aus - das sollte möglichst nur bei auth-Ereignissen passieren
       this.setUserStates();
     });
   }

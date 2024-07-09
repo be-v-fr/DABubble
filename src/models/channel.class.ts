@@ -5,6 +5,7 @@ export class Channel {
     description: string;
     members_uids: string[];
     date: number;
+    isPmChannel: boolean;
     
     constructor(obj?: any) {
         this.channel_id = obj && obj.channel_id ? obj.channel_id : '';
@@ -13,6 +14,7 @@ export class Channel {
         this.description = obj && obj.description ? obj.description : '';
         this.members_uids = obj && obj.members_uids ? obj.members_uids : [];
         this.date = obj && obj.date ? obj.date : Date.now();
+        this.isPmChannel = obj && obj.isPmChannel ? obj.isPmChannel : false;
     }
 
     toJson() {

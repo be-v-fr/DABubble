@@ -3,6 +3,7 @@ import { Firestore, collection, doc, onSnapshot, updateDoc, deleteDoc } from '@a
 import { Subject } from 'rxjs';
 import { CollectionReference, DocumentReference, addDoc } from 'firebase/firestore';
 import { Post } from '../../models/post.class';
+import { Thread } from '../../models/thread.class';
 
 
 @Injectable({
@@ -106,5 +107,20 @@ export class PostsService implements OnDestroy {
     posts.sort((a, b) => a.date - b.date);
     posts.forEach(p => p = new Post(p))
     return posts;
+  }
+
+
+  getFirstPost(posts: Post[], thread_id: string): Post {
+    const threadPosts = this.getThreadPosts(posts, thread_id);
+    return threadPosts[0];
+  }
+
+
+  getThreadsFirstPosts(posts: Post[], threads: Thread[]): Post[] {
+    let firstPosts: Post[] = new Array(threads.length);
+    for (let i = 0; i < threads.length; i++) {
+      firstPosts[i] = this.getFirstPost(posts, threads[i].thread_id);
+    }
+    return firstPosts;
   }
 }

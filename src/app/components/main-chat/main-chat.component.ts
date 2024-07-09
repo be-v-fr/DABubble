@@ -46,10 +46,10 @@ export class MainChatComponent implements OnInit, OnDestroy {
   currentChannel = new Channel();
   currentThread?: Thread;
   channelThreads?: Thread[];
-  channelThreadsFirstPosts?: Post[];
+  channelThreadsFirstPosts: Post[] = [];
   emojiPicker = false;
   activeUsers: User[] = [];
-  
+
 
   constructor(
     private dialog: MatDialog,
@@ -100,6 +100,8 @@ export class MainChatComponent implements OnInit, OnDestroy {
   setThreads(threads: Thread[]): void {
     if (this.currentChannel.channel_id.length > 0) {
       this.channelThreads = this.threadsService.getChannelThreads(threads, this.currentChannel.channel_id);
+      this.postsSub?.unsubscribe();
+      this.postsSub = this.subPosts();
     }
   }
 
@@ -107,13 +109,22 @@ export class MainChatComponent implements OnInit, OnDestroy {
     return this.threadsSub = this.threadsService.threads$.subscribe((threads) => this.setThreads(threads));
   }
 
-  getFirstPost(thread_id: string): Post {
-    const threadPosts = this.postsService.getThreadPosts(this.postsService.posts, thread_id);
-    return threadPosts[0];
+  subPosts(): Subscription {
+    return this.postsService.posts$.subscribe((posts) => {
+      if (this.channelThreads) {
+        this.channelThreadsFirstPosts = this.postsService.getThreadsFirstPosts(posts, this.channelThreads);
+      }
+    });
   }
 
-  isCurrentUserAuthor(author_id: string): boolean {
-    return this.currentUid == author_id;
+  getFirstPost(thread_id: string): Post {
+    const post: Post | undefined = this.channelThreadsFirstPosts.find(p => p.thread_id == thread_id)
+    return post ? post : new Post();
+  }
+
+  isCurrentUserAuthor(thread_id: string): boolean {
+    const firstPost = this.getFirstPost(thread_id);
+    return this.currentUid == firstPost.user_id;
   }
 
   getThreadLength(thread_id: string): number {

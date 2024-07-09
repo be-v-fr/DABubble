@@ -28,7 +28,7 @@
                     *ngIf="i == 0 || timeService.toDate(thread.date) != timeService.toDate(channelThreads[i - 1].date)" />
                 <app-message-item [post]="getFirstPost(thread.thread_id)" [hideEmojiPicker]="emojiPicker"
                     (showEmojiPicker)="handleEmojiStateChange($event)"
-                    [messageSender]="isCurrentUserAuthor(getFirstPost(thread.thread_id).user_id)"
+                    [messageSender]="isCurrentUserAuthor(thread.thread_id)"
                     [threadLength]="getThreadLength(thread.thread_id)"
                     [lastReply]="getLastReplyTime(thread.thread_id)" />
             </div>
