@@ -65,7 +65,6 @@ export class ThreadsService implements OnDestroy {
    * The Firestore document ID will be identical to the doc's Firebase authentication ID.
    * @param doc - doc to be added
    */
-
   async addDoc(thread: Thread): Promise<string> {
     try {
       const response = await addDoc(this.getColRef(), thread.toJson());
@@ -115,6 +114,7 @@ export class ThreadsService implements OnDestroy {
       .catch((err: Error) => { console.error(err) });
   }
 
+  
   getChannelThreads(threads: Thread[], channel_id: string): Thread[] {
     threads = threads.filter(t => t.channel_id == channel_id);
     threads.sort((a, b) => a.date - b.date);

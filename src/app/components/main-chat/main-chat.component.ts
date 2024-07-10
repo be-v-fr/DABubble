@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { MessageItemComponent } from '../message-item/message-item.component';
 import { MessageBoxComponent } from '../message-box/message-box.component';
 import { TimeSeparatorComponent } from '../time-separator/time-separator.component';
-import { EmojiService } from '../../../services/emoji-service/emoji-service';
 import { ChannelsService } from '../../../services/content/channels.service';
 import { Channel } from '../../../models/channel.class';
 import { EditChannelComponent } from '../../edit-channel/edit-channel.component';
