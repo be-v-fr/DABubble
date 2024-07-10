@@ -24,7 +24,8 @@ export class Channel {
             author_uid: this.author_uid,
             description: this.description,
             members_uids: this.members_uids,
-            date: this.date
+            date: this.date,
+            isPmChannel: this.isPmChannel
         };
     }
 }

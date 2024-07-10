@@ -86,6 +86,7 @@ export class ChannelsService implements OnDestroy {
    */
   async updateDoc(channel: Channel) {
     if (channel.channel_id) {
+      channel = new Channel(channel);
       const docRef = this.getSingleDocRef(channel.channel_id);
       await updateDoc(docRef, channel.toJson())
         .catch((err: Error) => { console.error(err) });
