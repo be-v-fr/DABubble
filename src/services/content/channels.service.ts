@@ -107,7 +107,7 @@ export class ChannelsService implements OnDestroy {
   async initUserChannels(user: User) {
     await this.initTeamChannel(user);
   }
-<<<<<<< HEAD
+
 
   async initTeamChannel(user: User) {
     const teamChannels: Channel[] = this.channels.filter(c => c.name == 'Team');
@@ -143,6 +143,3 @@ export class ChannelsService implements OnDestroy {
   // await this.addDoc(selfChannel)
   //   .catch((err: Error) => { console.error(err) });
 }
-=======
-}
->>>>>>> af5692853ef14126875b5950869db76bba18d7f6
