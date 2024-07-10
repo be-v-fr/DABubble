@@ -82,6 +82,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   initChannel(channel_id: string): void {
     this.setChannel(channel_id);
     this.setThreads(this.threadsService.threads);
+    this.channelSub.unsubscribe();
     this.channelSub = this.subChannel(channel_id);
   }
 
@@ -93,6 +94,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   subChannel(channel_id: string): Subscription {
     return this.channelsService.channels$.subscribe(() => {
       this.setChannel(channel_id);
+      this.threadsSub?.unsubscribe();
       this.subThreads();
     });
   }
