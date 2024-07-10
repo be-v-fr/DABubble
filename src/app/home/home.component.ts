@@ -59,7 +59,9 @@ export class HomeComponent {
         return this.authService.user$.subscribe((user) => {
             if (user && !(this.currentUser.uid.length > 0)) {
                 this.syncUsers();
+                this.usersSub.unsubscribe();
                 this.usersSub = this.subUsers();
+                this.channelsSub.unsubscribe();
                 this.channelsSub = this.subChannels();
             }
         });
@@ -84,12 +86,17 @@ export class HomeComponent {
         const uid = this.authService.getCurrentUid();
         if (uid) {
             this.currentUser = this.usersService.getUserByUid(uid);
-            if(this.userChannels.length == 0) {this.setUserChannels(this.channelsService.channels)}
-         }
+            if (this.userChannels.length == 0) { this.setUserChannels(this.channelsService.channels) }
+        }
     }
 
     setUserChannels(channels: Channel[]): void {
-        this.userChannels = channels.filter(c => c.members_uids.includes(this.currentUser.uid));
+        channels = channels.filter(c => c.members_uids.includes(this.currentUser.uid));
+        this.userChannels = channels.sort((a, b) => {
+            const textA = a.name.toLowerCase();
+            const textB = b.name.toLowerCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
     }
 
     onShowNavigation() {

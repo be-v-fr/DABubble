@@ -45,10 +45,10 @@ export class MainChatComponent implements OnInit, OnDestroy {
   currentChannel = new Channel();
   currentThread?: Thread;
   channelThreads?: Thread[];
-  channelThreadsFirstPosts?: Post[];
+  channelThreadsFirstPosts: Post[] = [];
   emojiPicker = false;
   activeUsers: User[] = [];
-  
+
 
   constructor(
     private dialog: MatDialog,
@@ -81,6 +81,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   initChannel(channel_id: string): void {
     this.setChannel(channel_id);
     this.setThreads(this.threadsService.threads);
+    this.channelSub.unsubscribe();
     this.channelSub = this.subChannel(channel_id);
   }
 
@@ -92,6 +93,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   subChannel(channel_id: string): Subscription {
     return this.channelsService.channels$.subscribe(() => {
       this.setChannel(channel_id);
+      this.threadsSub?.unsubscribe();
       this.subThreads();
     });
   }
@@ -99,6 +101,9 @@ export class MainChatComponent implements OnInit, OnDestroy {
   setThreads(threads: Thread[]): void {
     if (this.currentChannel.channel_id.length > 0) {
       this.channelThreads = this.threadsService.getChannelThreads(threads, this.currentChannel.channel_id);
+      this.setFirstPosts(this.postsService.posts);
+      this.postsSub?.unsubscribe();
+      this.postsSub = this.subPosts();
     }
   }
 
@@ -106,13 +111,24 @@ export class MainChatComponent implements OnInit, OnDestroy {
     return this.threadsSub = this.threadsService.threads$.subscribe((threads) => this.setThreads(threads));
   }
 
-  getFirstPost(thread_id: string): Post {
-    const threadPosts = this.postsService.getThreadPosts(this.postsService.posts, thread_id);
-    return threadPosts[0];
+  setFirstPosts(posts: Post[]): void {
+    if (this.channelThreads) {
+      this.channelThreadsFirstPosts = this.postsService.getThreadsFirstPosts(posts, this.channelThreads);
+    }
   }
 
-  isCurrentUserAuthor(author_id: string): boolean {
-    return this.currentUid == author_id;
+  subPosts(): Subscription {
+    return this.postsService.posts$.subscribe((posts) => this.setFirstPosts(posts));
+  }
+
+  getFirstPost(thread_id: string): Post {
+    const post: Post | undefined = this.channelThreadsFirstPosts.find(p => p.thread_id == thread_id)
+    return post ? post : new Post();
+  }
+
+  isCurrentUserAuthor(thread_id: string): boolean {
+    const firstPost = this.getFirstPost(thread_id);
+    return this.currentUid == firstPost.user_id;
   }
 
   getThreadLength(thread_id: string): number {

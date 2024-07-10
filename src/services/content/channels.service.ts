@@ -86,6 +86,7 @@ export class ChannelsService implements OnDestroy {
    */
   async updateDoc(channel: Channel) {
     if (channel.channel_id) {
+      channel = new Channel(channel);
       const docRef = this.getSingleDocRef(channel.channel_id);
       await updateDoc(docRef, channel.toJson())
         .catch((err: Error) => { console.error(err) });
@@ -105,14 +106,47 @@ export class ChannelsService implements OnDestroy {
 
 
   async initUserChannels(user: User) {
-    const selfChannel = new Channel({
-      'name': user.name,
-      'author_uid': user.uid,
-      'description': 'Benutze diesen Kanal für deine eigenen Notizen und Uploads.',
-      'members_uids': [user.uid]
-    });
-    await this.addDoc(selfChannel)
-      .catch((err: Error) => { console.error(err) });
-    // SUGGESTION: Add User to collective "Team" Channel?
+    await this.initTeamChannel(user);
   }
+
+
+  async initTeamChannel(user: User) {
+    const teamChannel: Channel | undefined = this.getTeamChannel();
+    if(teamChannel) {await this.addUserToChannel(user, teamChannel)}
+    else{await this.addDoc(new Channel(this.getTeamChannelData(user)))}
+  }
+
+  getTeamChannel(): Channel | undefined {
+    const teamChannels: Channel[] = this.channels.filter(c => c.name == 'Team');
+    if (teamChannels.length > 0) {
+      teamChannels.sort((a, b) => a.date - b.date);
+      return teamChannels[0];
+    } else { return undefined }
+  }
+
+  getTeamChannelData(user: User): any {
+    return {
+      name: 'Team',
+      description: 'Dieser Channel steht dem gesamten Team offen. Hier kannst du zusammen mit deinem Team Meetings abhalten, Dokumente teilen und Entscheidungen treffen.',
+      author_uid: user.uid,
+      members_uids: [user.uid],
+      date: Date.now(),
+      isPmChannel: false
+    }
+  }
+
+  async addUserToChannel(user: User, channel: Channel) {
+    channel.members_uids.push(user.uid);
+    await this.updateDoc(channel);
+  }
+
+
+  // const selfChannel = new Channel({
+  //   'name': user.name,
+  //   'author_uid': user.uid,
+  //   'description': 'Benutze diesen Kanal für deine eigenen Notizen und Uploads.',
+  //   'members_uids': [user.uid]
+  // });
+  // await this.addDoc(selfChannel)
+  //   .catch((err: Error) => { console.error(err) });
 }

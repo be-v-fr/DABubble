@@ -22,4 +22,12 @@ export class User {
             lastActivity: this.lastActivity
         };
     }
+
+    isGuest(): boolean {
+        return this.email.length == 0;
+    }
+
+    isInactive(): boolean {
+        return Date.now() - this.lastActivity > 86400000;
+    }
 }

@@ -4,8 +4,8 @@
   width: 415px;
   height: 411px;
 }
-.mat-mdc-dialog-surface .mdc-dialog__surface{
-  border-radius: 10px !important; 
+.mat-mdc-dialog-container._mat-animation-noopable.mdc-dialog__surface {
+  border-radius: 30px;
 }
 
 .headlineAndCloseBtn {
