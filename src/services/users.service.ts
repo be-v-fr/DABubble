@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { User } from '../models/user.class';
 import { CollectionReference, DocumentReference, addDoc } from 'firebase/firestore';
 import { ChannelsService } from './content/channels.service';
-
+import { StorageService } from './storage.service';
 
 /**
  * This injectable handles generic users operations.
@@ -21,6 +21,7 @@ export class UsersService implements OnDestroy {
   unsubUsers;
   firestore: Firestore = inject(Firestore);
   private channelsService = inject(ChannelsService);
+  private storageService = inject(StorageService);
 
 
   /**
@@ -132,5 +133,14 @@ export class UsersService implements OnDestroy {
    */
   isRegisteredUser(authUid: string): boolean {
     return this.getUserByUid(authUid).uid.length > 0;
+  }
+
+  async clearUpInactiveGuests() {
+    this.users.forEach(u => {
+      if(u.isGuest() && u.isInactive()) {
+        this.deleteUser(u.uid);
+        this.storageService.deleteUserAvatars(u.uid);
+      }
+    });
   }
 }

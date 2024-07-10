@@ -12,6 +12,7 @@ import {
 } from "@angular/fire/auth";
 import { sendPasswordResetEmail, confirmPasswordReset } from "firebase/auth";
 import { Observable, from } from "rxjs";
+import { UsersService } from "./users.service";
 
 
 /**
@@ -24,6 +25,7 @@ import { Observable, from } from "rxjs";
 })
 export class AuthService {
   firebaseAuth = inject(Auth);
+  usersService = inject(UsersService);
   user$ = user(this.firebaseAuth);
 
 
@@ -55,7 +57,7 @@ export class AuthService {
       this.firebaseAuth,
       email,
       password
-    ).then(() => { });
+    ).then(() => this.usersService.clearUpInactiveGuests());
     return from(promise);
   }
 
