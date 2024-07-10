@@ -111,22 +111,28 @@ export class ChannelsService implements OnDestroy {
 
 
   async initTeamChannel(user: User) {
+    const teamChannel: Channel | undefined = this.getTeamChannel();
+    if(teamChannel) {await this.addUserToChannel(user, teamChannel)}
+    else{await this.addDoc(new Channel(this.getTeamChannelData(user)))}
+  }
+
+  getTeamChannel(): Channel | undefined {
     const teamChannels: Channel[] = this.channels.filter(c => c.name == 'Team');
     if (teamChannels.length > 0) {
       teamChannels.sort((a, b) => a.date - b.date);
-      await this.addUserToChannel(user, teamChannels[0]);
-    } else {
-      await this.addDoc(new Channel(this.getTeamChannelData(user)))
-    }
+      return teamChannels[0];
+    } else { return undefined }
   }
 
   getTeamChannelData(user: User): any {
-    return {name: 'Team',
+    return {
+      name: 'Team',
       description: 'Dieser Channel steht dem gesamten Team offen. Hier kannst du zusammen mit deinem Team Meetings abhalten, Dokumente teilen und Entscheidungen treffen.',
       author_uid: user.uid,
       members_uids: [user.uid],
       date: Date.now(),
-      isPmChannel: false}
+      isPmChannel: false
+    }
   }
 
   async addUserToChannel(user: User, channel: Channel) {
