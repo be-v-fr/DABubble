@@ -100,6 +100,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   setThreads(threads: Thread[]): void {
     if (this.currentChannel.channel_id.length > 0) {
       this.channelThreads = this.threadsService.getChannelThreads(threads, this.currentChannel.channel_id);
+      this.setFirstPosts(this.postsService.posts);
       this.postsSub?.unsubscribe();
       this.postsSub = this.subPosts();
     }
@@ -109,12 +110,14 @@ export class MainChatComponent implements OnInit, OnDestroy {
     return this.threadsSub = this.threadsService.threads$.subscribe((threads) => this.setThreads(threads));
   }
 
+  setFirstPosts(posts: Post[]): void {
+    if (this.channelThreads) {
+      this.channelThreadsFirstPosts = this.postsService.getThreadsFirstPosts(posts, this.channelThreads);
+    }
+  }
+
   subPosts(): Subscription {
-    return this.postsService.posts$.subscribe((posts) => {
-      if (this.channelThreads) {
-        this.channelThreadsFirstPosts = this.postsService.getThreadsFirstPosts(posts, this.channelThreads);
-      }
-    });
+    return this.postsService.posts$.subscribe((posts) => this.setFirstPosts(posts));
   }
 
   getFirstPost(thread_id: string): Post {
