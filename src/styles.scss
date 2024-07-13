@@ -171,7 +171,6 @@ a {
 
     &:hover {
         background-color: $violet-bright;
-
         img {
             filter: invert(32%) sepia(31%) saturate(5534%) hue-rotate(229deg) brightness(97%) contrast(95%);
         }
