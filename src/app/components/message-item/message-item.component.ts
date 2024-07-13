@@ -32,9 +32,11 @@ export class MessageItemComponent implements OnDestroy {
   @Input() post: Post = new Post();
   @Input() threadLength?: number;
   @Input() lastReply?: number;
-  @Input() messageSender = false;
+  @Input() messageSender?: boolean;
   @Input() hideEmojiPicker = false;
   @Output() showEmojiPicker = new EventEmitter<boolean>();
+  @Output() threadId = new EventEmitter<string>();
+
 
   author: User;
   emojiPicker = false;
@@ -49,7 +51,6 @@ export class MessageItemComponent implements OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    private threadsService: ThreadsService,
     private authService: AuthService,
     private usersService: UsersService,
     private reactionsService: ReactionsService,
@@ -68,7 +69,7 @@ export class MessageItemComponent implements OnDestroy {
 
 
   onOpenNewThread() {
-
+    this.threadId.emit(this.post.thread_id);
   }
 
 
@@ -125,7 +126,6 @@ export class MessageItemComponent implements OnDestroy {
       }))
     }
   }
-
 
   addEmoji(event: any) {
     let curremoji = this.postReactions?.find(r => r.emoji === event.emoji.native && r.user_id === this.currentUser?.uid);

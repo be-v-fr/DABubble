@@ -43,7 +43,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   private postsSub: Subscription | null = null;
   currentUid: string | null = null;
   currentChannel = new Channel();
-  currentThread?: Thread;
+  currentPost?: Post;
   channelThreads?: Thread[];
   channelThreadsFirstPosts: Post[] = [];
   emojiPicker = false;
@@ -69,6 +69,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
       if (params['channel']) { this.initChannel(params['channel']) }
     });
     this.activeUsers = this.activityService.getActiveUsers();
+
   }
 
   subAuth() {
@@ -108,7 +109,9 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
   subThreads(): Subscription {
-    return this.threadsSub = this.threadsService.threads$.subscribe((threads) => this.setThreads(threads));
+    return this.threadsSub = this.threadsService.threads$.subscribe((threads) => {
+      this.setThreads(threads);
+    });
   }
 
   setFirstPosts(posts: Post[]): void {
@@ -154,6 +157,13 @@ export class MainChatComponent implements OnInit, OnDestroy {
     this.dialog.open(MemberListComponent, {
       data: { activeUsers: this.activeUsers }
     });
+
+  }
+
+  handleThread(event: string) {
+     this.currentPost = this.postsService.posts.find(p => p.thread_id === event);
+     console.log(this.currentPost);
+     
 
   }
 
