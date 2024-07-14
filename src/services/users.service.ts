@@ -103,10 +103,13 @@ export class UsersService implements OnDestroy {
     const user = new User({
       name: 'Gast' // OPTIONAL: Add Guest counter for unique name
     });
-    const uid = await addDoc(collection(this.firestore, 'users'), user.toJson())
-    console.log('new guest registered with uid:', uid.toString());
-    localStorage.setItem('GUEST_uid', uid.toString());
-    this.channelsService.initUserChannels(user);
+    await addDoc(collection(this.firestore, 'users'), user.toJson())
+      .then((response: any) => {
+        const uid = response.id;
+        console.log('new guest registered with uid:', uid.toString());
+        localStorage.setItem('GUEST_uid', uid.toString());
+        this.channelsService.initUserChannels(user);
+      });
   }
 
 
