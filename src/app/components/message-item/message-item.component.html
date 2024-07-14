@@ -1,8 +1,5 @@
-<div *ngIf="post" class="message-container" [class.reversed]="messageSender">
-    <div class="reaction-bar-container">
-        <!-- <button>
-                <span class="reaction-icon">👍</span>
-            </button> -->
+<div *ngIf="post" class="message-container" [class.reversed]="!messageSender">
+    <div class="reaction-bar-container" *ngIf="!isMainPostThread">
         <button>
             <span (click)="onShowEmojiPicker()" class="material-icons-outlined">add_reaction</span>
         </button>
@@ -10,15 +7,15 @@
             <span class="material-icons-outlined">insert_comment</span>
         </button>
         <button>
-            <span class="material-icons-outlined">more_verti</span>
+            <span class="material-icons-outlined">more_vert</span>
         </button>
     </div>
     <div class="img-container">
-        <img src="{{author.avatarSrc}}" alt="Avatar">
+        <img [src]="author?.avatarSrc" alt="Avatar">
     </div>
     <div class="message-content">
         <div class="user-name-container">
-            <div class="user-name" (click)="openUserProfile(post.user_id)">{{author.name}}</div>
+            <div class="user-name" (click)="openUserProfile(post.user_id)">{{author?.name}}</div>
             <span>{{timeService.toClock(post.date)}} Uhr</span>
         </div>
         <div class="message">
@@ -28,7 +25,7 @@
             <button>{{threadLength - 1}} Antworten</button>
             <span *ngIf="lastReply">Letzte Antwort {{timeService.toRelativeDateWithClock(lastReply)}}</span>
         </div>
-        <div class="reactions-container" *ngIf="groupedEmojis && currentUser">
+        <div class="reactions-container" *ngIf="groupedEmojis && currentUser && !isMainPostThread">
             <div *ngFor="let emoji of objectKeys(groupedEmojis)" class="reaction">
                 <div class="reaction-info">
                     <div class="reaction-info-emoji">{{ emoji }}</div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, OnDestroy, OnInit, Inject, OnChanges, SimpleChanges } from '@angular/core';
 import { TimeSeparatorComponent } from '../time-separator/time-separator.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
@@ -27,37 +27,49 @@ import { ClickStopPropagationDirective } from '../../shared/click-stop-propagati
   templateUrl: './message-item.component.html',
   styleUrl: './message-item.component.scss'
 })
-export class MessageItemComponent implements OnDestroy {
+export class MessageItemComponent implements OnChanges, OnDestroy {
 
   @Input() post: Post = new Post();
   @Input() threadLength?: number;
   @Input() lastReply?: number;
-  @Input() messageSender = false;
+  @Input() messageSender?: boolean;
+  @Input() isMainPostThread = false;
   @Input() hideEmojiPicker = false;
   @Output() showEmojiPicker = new EventEmitter<boolean>();
+  @Output() threadId = new EventEmitter<string>();
 
-  author: User;
+  author: User | undefined;
   emojiPicker = false;
-  postReactions?: Reaction[];
+  postReactions: Reaction[] = [];
   groupedEmojis: { [key: string]: { count: number, users: string[] } } = {};
-  currentUser?: User;
+  currentUser: User | undefined;
 
-  public timeService = inject(TimeService);
   private usersSub = new Subscription();
   private emojiSub = new Subscription();
 
-
   constructor(
     private dialog: MatDialog,
-    private threadsService: ThreadsService,
     private authService: AuthService,
     private usersService: UsersService,
     private reactionsService: ReactionsService,
+    @Inject(TimeService) public timeService: TimeService
   ) {
-    this.author = this.getAuthor();
     this.usersSub = this.subUsers();
     this.subAuth();
     this.emojiSub = this.subEmoji();
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['post'] && changes['post'].currentValue) {
+      this.author = this.getAuthor();
+    }
+  }
+
+
+  ngOnDestroy(): void {
+    this.usersSub.unsubscribe();
+    this.emojiSub.unsubscribe();
   }
 
 
@@ -68,12 +80,19 @@ export class MessageItemComponent implements OnDestroy {
 
 
   onOpenNewThread() {
-
+    this.threadId.emit(this.post.thread_id);
   }
 
 
-  getAuthor(): User {
-    return this.usersService.getUserByUid(this.post.user_id);
+  getAuthor(): User | undefined {
+    if (this.post && this.post.user_id) {
+      const user = this.usersService.getUserByUid(this.post.user_id);
+      if (!user) {
+        console.error(`Benutzer mit der UID ${this.post.user_id} wurde nicht gefunden.`);
+      }
+      return user;
+    }
+    return undefined; // Falls this.post undefined ist oder this.post.user_id nicht gesetzt ist
   }
 
 
@@ -82,7 +101,7 @@ export class MessageItemComponent implements OnDestroy {
   }
 
 
-  subAuth() {
+  subAuth(): Subscription {
     return this.authService.user$.subscribe(() => {
       const uid = this.authService.getCurrentUid();
       if (uid) {
@@ -95,57 +114,48 @@ export class MessageItemComponent implements OnDestroy {
   openUserProfile(uid: string): void {
     if (uid) {
       this.dialog.open(UserProfileCardComponent);
-      // TO DO: transfer UID to ProfileCardComponent
+      // TO DO: Übertragung der UID an ProfileCardComponent
     }
   }
 
 
-  subEmoji() {
+  subEmoji(): Subscription {
     return this.reactionsService.reactions$.subscribe((reactions) => {
       this.postReactions = this.reactionsService.getPostReactions(reactions, this.post.post_id);
       this.groupedEmojis = this.reactionsService.getGroupedEmojis(this.postReactions);
     });
   }
 
-  // Hilfsfunktion, um die Schlüssel eines Objekts zu bekommen
+
   objectKeys(obj: any): string[] {
     return Object.keys(obj);
   }
 
 
   onHandleEmoji(emoji: string) {
-    let curremoji = this.postReactions?.find(r => r.emoji === emoji && r.user_id === this.currentUser?.uid);
-    if (curremoji) {
-      this.reactionsService.deleteDoc(curremoji.reaction_id);
+    let currentEmoji = this.postReactions?.find(r => r.emoji === emoji && r.user_id === this.currentUser?.uid);
+    if (currentEmoji) {
+      this.reactionsService.deleteDoc(currentEmoji.reaction_id);
     } else {
       this.reactionsService.addDoc(new Reaction({
         user_id: this.currentUser?.uid,
         post_id: this.post.post_id,
         emoji: emoji
-      }))
+      }));
     }
   }
 
 
   addEmoji(event: any) {
-    let curremoji = this.postReactions?.find(r => r.emoji === event.emoji.native && r.user_id === this.currentUser?.uid);
-
-    if (!curremoji) {
-      this.reactionsService.addDoc(new Reaction(
-        {
-          user_id: this.currentUser?.uid,
-          post_id: this.post.post_id,
-          emoji: event.emoji.native
-        }
-      ));
+    let currentEmoji = this.postReactions?.find(r => r.emoji === event.emoji.native && r.user_id === this.currentUser?.uid);
+    if (!currentEmoji) {
+      this.reactionsService.addDoc(new Reaction({
+        user_id: this.currentUser?.uid,
+        post_id: this.post.post_id,
+        emoji: event.emoji.native
+      }));
     }
     this.emojiPicker = !this.emojiPicker;
-  }
-
-
-  ngOnDestroy(): void {
-    this.usersSub.unsubscribe();
-    this.emojiSub.unsubscribe();
   }
 }
 

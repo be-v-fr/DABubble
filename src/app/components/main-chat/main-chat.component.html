@@ -1,5 +1,5 @@
 <div class="main-container">
-    <section class="main-container">
+    <section class="main-section">
         @if(currentChannel.channel_id.length > 0) {
         <div class="main-header">
             <button class="channel-btn" (click)="onEditChannel()">
@@ -29,8 +29,8 @@
                 <app-message-item [post]="getFirstPost(thread.thread_id)" [hideEmojiPicker]="emojiPicker"
                     (showEmojiPicker)="handleEmojiStateChange($event)"
                     [messageSender]="isCurrentUserAuthor(thread.thread_id)"
-                    [threadLength]="getThreadLength(thread.thread_id)"
-                    [lastReply]="getLastReplyTime(thread.thread_id)" />
+                    [threadLength]="getThreadLength(thread.thread_id)" [lastReply]="getLastReplyTime(thread.thread_id)"
+                    (threadId)="handleThread($event)" />
             </div>
             }
             } @else {
@@ -49,5 +49,5 @@
         <app-message-box [channelName]="currentChannel.name" (sent)="createThread($event)" />
         }
     </section>
-    <app-thread *ngIf="currentThread" [thread]="currentThread" />
+    <app-thread class="thread" *ngIf="currentPost" [post]="currentPost" />
 </div>

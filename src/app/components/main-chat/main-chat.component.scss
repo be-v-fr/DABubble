@@ -1,21 +1,20 @@
 @import "../../../styles.scss";
 
-.main-container{
+.main-container {
   height: 100%;
   display: flex;
   gap: 22px;
 
-  .main-container {
-    position: relative;
+  .main-section {
+    height: 100%;
     display: flex;
+    flex-grow: 4;
+    position: relative;
     flex-direction: column;
     align-items: center;
-    flex-grow: 1;
-    // width: 989px;
-    height: 100%;
     background-color: white;
     border-radius: 30px;
-  
+
     .main-header {
       width: 100%;
       display: flex;
@@ -24,7 +23,7 @@
       padding: 25px 40px;
       border-radius: 30px 30px 0 0;
       box-shadow: 0px 0px 6px 0px rgb(0, 0, 0, 0.2);
-  
+
       .channel-btn {
         display: flex;
         align-items: center;
@@ -33,78 +32,79 @@
         font-weight: 700px;
         line-height: 32.74px;
         padding: 6px 10px;
-  
+
         span {
           font-size: 30px;
         }
-  
+
         &:hover {
           color: $purple-blue-bright;
           background-color: $violet-bright;
           border-radius: 100px;
         }
-  
+
         img {
           margin-left: 10px;
           margin-right: 10px;
         }
       }
-  
+
       .main-header-members {
         display: flex;
         align-items: center;
         gap: 10px;
-  
+
         .members-btn {
           width: 142px;
           height: 46px;
           display: flex;
           align-items: center;
           gap: 10px;
-  
+
           &:hover {
             color: $purple-blue-bright;
             background-color: #eceefe;
             border-radius: 100px;
           }
-  
+
           .m-images-container {
             margin-left: 10px;
-  
+
             img {
               margin-left: -10px;
             }
           }
-  
+
           span {
             font-size: 20px;
             font-weight: 600;
           }
         }
-  
+
         .add-members-btn {
           background-color: $violet-bright;
           padding: 8px 10px;
           border-radius: 100%;
-  
+
           &:hover {
             color: $purple-blue-bright;
           }
-  
+
           span {
             font-size: 24px;
           }
         }
       }
     }
-  
+
     .message-items-container {
       width: 100%;
       height: 100%;
       margin-top: 22px;
       overflow-y: auto;
       @include scrollbar();
-  
+
+
       .create-channel-message-container {
         height: 100%;
         display: flex;
@@ -112,33 +112,39 @@
         align-items: flex-start;
         justify-content: flex-end;
         padding: 0 45px;
-  
+
         h3 {
           width: fit-content;
           font-size: 24px;
           font-weight: 700;
           line-height: 32.74px;
-  
+
           &:hover {
             color: $purple-blue-bright;
           }
         }
-  
+
         p {
           font-size: 20px;
           font-weight: 400;
           line-height: 27.28px;
-  
+
           span {
             color: $purple-blue-bright;
           }
         }
       }
     }
-  
+
     app-message-box {
       width: 90%;
     }
   }
-}
 
+  .thread {
+    height: 100%;
+    display: flex;
+    flex-grow: 2;
+  }
+
+}
