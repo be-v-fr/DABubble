@@ -16,22 +16,22 @@
         gap: 30px;
         box-shadow: 0px 2px 10px 0px #00000014;
         h1 {
-            color: #444df2;
+            color: $purple-blue-active;
             font-size: 46px;
             font-weight: 700;
             width: 100%;
             text-align: center;
             position: relative;
             font-family: "Nunito", sans-serif;
+            h1 .back-btn-container {
+                left: -28px;
+            }
         }
     }
 }
 
 .content-wrapper .content-main {
     gap: 22px;
-    h1 .back-btn-container {
-        left: -28px;
-    }
 }
 
 span, p {
@@ -39,21 +39,60 @@ span, p {
 }
 
 .avatar-container {
+    border-radius: 100%;
+    transition: transform 150ms ease;
+    img {
+        border: 4px solid transparent;
+        border-radius: 99px;
+        width: 72px;
+        height: 72px;
+    }
     &:hover {
         cursor: pointer;
-    }
-    img {
-        border: 3px solid transparent;
-        border-radius: 99px;
-        width: 64px;
-        height: 64px;
-    }
-    &.btn_active {
         img {
-            border: 3px solid $onlinedot-online;
+            border: 4px solid #e6e6e6;
         }
     }
+    &.defaultPic {
+        width: 72px;
+        height: 72px;
+        background-image: url(/assets/img/avatar/empty_avatar.svg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        img {
+            border: 4px solid #fff;
+        }
+        &:hover img {
+            border: 4px solid #e6e6e6;
+        }
+        &.btn_active img {
+            border: 4px solid $onlinedot-online;
+        }
+    }
+    &.defaultPic200 {
+        width: 168px;
+        height: 168px;
+        background-image: url(/assets/img/avatar/empty_avatar.svg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        img {
+            border: 4px solid #fff;
+            border-radius: 199px;
+            width: 168px;
+            height: 168px;
+        }
+        &:hover img {
+            border: 4px solid #e6e6e6;
+        }
+        &.btn_active img {
+            border: 4px solid $onlinedot-online;
+        }
+    }
+    &.btn_active img {
+        border: 4px solid $onlinedot-online;
+    }
 }
+
 
 .currentAvatar-container {
     width: 100%;
@@ -65,12 +104,6 @@ span, p {
         display: flex;
         justify-content: center;
         align-items: center;
-        .avatar-container {
-            img {
-                width: 168px;
-                height: 168px;
-            }
-        }
     }
 }
 
@@ -90,21 +123,20 @@ span, p {
     gap: 24px;
     margin-bottom: 24px;
     position: relative;
-}
-
-.error-msg {
-    position: absolute;
-    top: calc(100% + 3px);
-    left: 0;
-    color: $magenta;
-    font-size: 14px;
-    animation: fade-in 250ms ease-out;
-    @keyframes fade-in {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
+    .error-msg {
+        position: absolute;
+        top: calc(100% + 3px);
+        left: 0;
+        color: $magenta;
+        font-size: 14px;
+        animation: fade-in 250ms ease-out;
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
     }
 }

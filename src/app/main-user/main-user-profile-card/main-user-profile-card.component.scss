@@ -50,6 +50,13 @@
         height: 200px;
         border-radius: 100%;
     }
+    &.defaultPic {
+        width: 200px;
+        height: 200px;
+        background-image: url(/assets/img/avatar/empty_avatar.svg);
+        background-size: cover;
+        border-radius: 100%;
+    }
 }
 
 .imgedit {
