@@ -1,7 +1,7 @@
 import { Injectable, inject, OnDestroy } from '@angular/core';
 import { Firestore, collection, doc, onSnapshot, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
-import { CollectionReference, DocumentReference, addDoc } from 'firebase/firestore';
+import { CollectionReference, DocumentReference, DocumentSnapshot, addDoc, getDoc } from 'firebase/firestore';
 import { Thread } from '../../models/thread.class';
 import { PostsService } from './posts.service';
 import { Post } from '../../models/post.class';
@@ -21,19 +21,12 @@ export class ThreadsService implements OnDestroy {
     this.unsubThreads = this.subThreads();
   }
 
+
   ngOnDestroy() {
     this.unsubThreads(); // Unsubscribe from Firestore snapshot
   }
 
-  // subThreads() {
-  //   return onSnapshot(this.getColRef(), (querySnapshot) => {
-  //     const threads: Thread[] = [];
-  //     querySnapshot.forEach((doc) => threads.push(doc.data() as Thread));
-  //     this.threads = threads;
-  //     this.threads$.next(threads);
-  //   });
-  // }
-
+  
   subThreads() {
     // Abonnement auf die Firestore-Snapshot der Threads-Kollektion
     return onSnapshot(this.getColRef(), (querySnapshot) => {
@@ -46,7 +39,7 @@ export class ThreadsService implements OnDestroy {
 
       // Aktualisierung der lokal gespeicherten Threads
       this.threads = threads;
-      
+
       // Aktualisierung der Subject, um Komponenten über Änderungen zu informieren
       this.threads$.next(threads);
     });
@@ -57,9 +50,11 @@ export class ThreadsService implements OnDestroy {
     return collection(this.firestore, 'threads');
   }
 
+
   getSingleDocRef(thread_id: string): DocumentReference {
     return doc(this.getColRef(), thread_id);
   }
+
 
   async addDoc(thread: Thread): Promise<string> {
     try {
@@ -74,18 +69,21 @@ export class ThreadsService implements OnDestroy {
     }
   }
 
+
   async createThread(message: string, channel_id: string, author_id: string): Promise<string> {
     try {
       const thread = new Thread({ channel_id });
       const thread_id = await this.addDoc(thread);
       const post = new Post({ message, user_id: author_id, thread_id });
       await this.postsService.addDoc(post);
+      
       return thread_id;
     } catch (err) {
       console.error('Fehler beim Erstellen des Threads oder Posts:', err);
       throw err;
     }
   }
+
 
   async updateDoc(thread: Thread) {
     if (thread.thread_id) {
@@ -97,6 +95,7 @@ export class ThreadsService implements OnDestroy {
     }
   }
 
+
   async deleteDoc(thread_id: string) {
     const docRef = this.getSingleDocRef(thread_id);
     await deleteDoc(docRef).catch((err: Error) => {
@@ -104,6 +103,7 @@ export class ThreadsService implements OnDestroy {
       throw err;
     });
   }
+
 
   getChannelThreads(threads: Thread[], channel_id: string): Thread[] {
     const filteredThreads = threads.filter(t => t.channel_id === channel_id);
