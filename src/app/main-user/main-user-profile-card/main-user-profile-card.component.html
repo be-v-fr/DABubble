@@ -2,9 +2,7 @@
     <div class="head">
         <p>Profil</p>
         <div class="close-thread-btn">
-            <a (click)="closeDialog()">
-                <img src="/assets/img/userProfileImg/close.svg" />
-            </a>
+            <span class="material-icons-outlined">close</span>
         </div>
     </div>
     <div class="profileImg defaultPic">
@@ -39,50 +37,3 @@
             <p>{{ mainUser.email || 'vorname.name@beispiel.de' }}</p>
         </div>
     </div>
-  <div class="head">
-    <p>Profil</p>
-    <div class="close-thread-btn" (click)="closeDialog()">
-      <span class="material-icons-outlined">close</span>
-    </div>
-  </div>
-  <div class="profileImg">
-    <img
-      class="#"
-      src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}"
-    />
-  </div>
-  <div class="imgedit" (click)="openEditAvatar()">
-    <img src="/assets/img/icons/edit.svg" />
-  </div>
-  <div class="userName">
-    <div class="nameAndEdit">
-      <h1>{{ mainUser.name || "..." }}</h1>
-      <p class="edit" (click)="openEditProfile(mainUser)">Bearbeiten</p>
-    </div>
-    <div class="online">
-      <div
-        class="onlinedot"
-        [ngClass]="{
-          online: activityService.getUserState(mainUser).state == 'active'
-        }"
-        [ngClass]="{
-          idle: activityService.getUserState(mainUser).state == 'idle'
-        }"
-      ></div>
-      @if (activityService.getUserState(mainUser).state == 'active') {
-      <p class="status-text online">Aktiv</p>
-      } @else if (activityService.getUserState(mainUser).state == 'idle') {
-      <p class="status-text idle">Abwesend</p>
-      }
-    </div>
-  </div>
-  <div class="emailContainer">
-    <div class="email">
-      <img src="/assets/img/userProfileImg/mail.png" />
-      <p>E-Mail-Adresse</p>
-    </div>
-    <div class="showEmail">
-      <p>{{ mainUser.email || "vorname.name@beispiel.de" }}</p>
-    </div>
-  </div>
-</div>
