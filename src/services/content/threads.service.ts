@@ -6,7 +6,6 @@ import { Thread } from '../../models/thread.class';
 import { PostsService } from './posts.service';
 import { Post } from '../../models/post.class';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -18,53 +17,50 @@ export class ThreadsService implements OnDestroy {
   firestore: Firestore = inject(Firestore);
   private postsService = inject(PostsService);
 
-  /**
-   * Create subscription
-   */
   constructor() {
     this.unsubThreads = this.subThreads();
   }
 
-  /**
-   * Unsubscribe
-   */
   ngOnDestroy() {
-    // this.unsubThreads();
+    this.unsubThreads(); // Unsubscribe from Firestore snapshot
   }
 
+  // subThreads() {
+  //   return onSnapshot(this.getColRef(), (querySnapshot) => {
+  //     const threads: Thread[] = [];
+  //     querySnapshot.forEach((doc) => threads.push(doc.data() as Thread));
+  //     this.threads = threads;
+  //     this.threads$.next(threads);
+  //   });
+  // }
+
   subThreads() {
-    return onSnapshot(this.getColRef(), (list: any) => {
-      let threads: Thread[] = [];
-      list.forEach((element: any) => threads.push(element.data()));
+    // Abonnement auf die Firestore-Snapshot der Threads-Kollektion
+    return onSnapshot(this.getColRef(), (querySnapshot) => {
+      const threads: Thread[] = [];
+      querySnapshot.forEach((doc) => {
+        // Hier sicherstellen, dass die Daten tatsächlich vom Typ Thread sind
+        const threadData = doc.data() as Thread;
+        threads.push(threadData);
+      });
+
+      // Aktualisierung der lokal gespeicherten Threads
       this.threads = threads;
+      
+      // Aktualisierung der Subject, um Komponenten über Änderungen zu informieren
       this.threads$.next(threads);
     });
   }
 
-  /**
-   * Get reference to Firestore "threads" collection
-   * @returns reference
-   */
+
   getColRef(): CollectionReference {
     return collection(this.firestore, 'threads');
   }
 
-
-  /**
-   * Get reference to single doc Firestore data
-   * @param thread_id - Firestore thread ID
-   * @returns reference
-   */
   getSingleDocRef(thread_id: string): DocumentReference {
     return doc(this.getColRef(), thread_id);
   }
 
-
-  /**
-   * Add doc to Firestore collection.
-   * The Firestore document ID will be identical to the doc's Firebase authentication ID.
-   * @param doc - doc to be added
-   */
   async addDoc(thread: Thread): Promise<string> {
     try {
       const response = await addDoc(this.getColRef(), thread.toJson());
@@ -73,52 +69,45 @@ export class ThreadsService implements OnDestroy {
       await this.updateDoc(thread);
       return response.id;
     } catch (err) {
-      console.error(err);
+      console.error('Fehler beim Hinzufügen des Threads:', err);
       throw err;
     }
   }
 
   async createThread(message: string, channel_id: string, author_id: string): Promise<string> {
     try {
-      const thread = new Thread({ channel_id: channel_id });
+      const thread = new Thread({ channel_id });
       const thread_id = await this.addDoc(thread);
-      const post = new Post({ message: message, user_id: author_id, thread_id: thread_id });
+      const post = new Post({ message, user_id: author_id, thread_id });
       await this.postsService.addDoc(post);
       return thread_id;
     } catch (err) {
-      console.error(err);
-      throw err;  
+      console.error('Fehler beim Erstellen des Threads oder Posts:', err);
+      throw err;
     }
   }
 
-  /**
-   * Update doc in Firestore collection.
-   * The update will only be executed if the doc (i.e., its Firestore ID) exists in the Firestore collection.
-   * @param doc - doc to be updated
-   */
   async updateDoc(thread: Thread) {
     if (thread.thread_id) {
       const docRef = this.getSingleDocRef(thread.thread_id);
-      await updateDoc(docRef, thread.toJson())
-        .catch((err: Error) => { console.error(err) });
+      await updateDoc(docRef, thread.toJson()).catch((err: Error) => {
+        console.error('Fehler beim Aktualisieren des Threads:', err);
+        throw err;
+      });
     }
   }
 
-  /**
-   * Delete doc from Firestore collection
-   * @param uid - Firestore doc ID of doc to be deleted
-   */
   async deleteDoc(thread_id: string) {
     const docRef = this.getSingleDocRef(thread_id);
-    await deleteDoc(docRef)
-      .catch((err: Error) => { console.error(err) });
+    await deleteDoc(docRef).catch((err: Error) => {
+      console.error('Fehler beim Löschen des Threads:', err);
+      throw err;
+    });
   }
 
-  
   getChannelThreads(threads: Thread[], channel_id: string): Thread[] {
-    threads = threads.filter(t => t.channel_id == channel_id);
-    threads.sort((a, b) => a.date - b.date);
-    threads.forEach(t => t = new Thread(t));
-    return threads;
+    const filteredThreads = threads.filter(t => t.channel_id === channel_id);
+    filteredThreads.sort((a, b) => a.date - b.date);
+    return filteredThreads.map(t => new Thread(t));
   }
 }

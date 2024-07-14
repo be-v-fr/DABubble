@@ -10,9 +10,8 @@
     </div>
     <div class="thread-content">
         <div class="thread-message">
-            <app-message-item [post]="post()" [hideEmojiPicker]="emojiPicker"
-                (showEmojiPicker)="handleStateChange($event)" [messageSender]="true" [hideEmojiPicker]="emojiPicker"
-                (showEmojiPicker)="handleStateChange($event)" />
+            <app-message-item [isMainPostThread]="true" [post]="post()" [hideEmojiPicker]="emojiPicker" [messageSender]="true"
+                [hideEmojiPicker]="emojiPicker" (showEmojiPicker)="handleStateChange($event)" />
             <div class="antworten-separator">2 Antworten</div>
         </div>
 

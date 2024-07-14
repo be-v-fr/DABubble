@@ -85,10 +85,18 @@ export class HomeComponent {
     syncCurrentUser(): void {
         const uid = this.authService.getCurrentUid();
         if (uid) {
-            this.currentUser = this.usersService.getUserByUid(uid);
-            if (this.userChannels.length == 0) { this.setUserChannels(this.channelsService.channels) }
+            const user = this.usersService.getUserByUid(uid);
+            if (user) {
+                this.currentUser = user;
+                if (this.userChannels.length === 0) {
+                    this.setUserChannels(this.channelsService.channels);
+                }
+            } else {
+                console.error(`Benutzer mit der UID ${uid} wurde nicht gefunden.`);
+            }
         }
     }
+
 
     setUserChannels(channels: Channel[]): void {
         channels = channels.filter(c => c.members_uids.includes(this.currentUser.uid));

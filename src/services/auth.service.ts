@@ -101,7 +101,7 @@ export class AuthService {
     ).then(() => { });
     return from(promise);
   }
-  
+
 
   /**
    * Log out

@@ -35,7 +35,7 @@ export class ActivityService implements OnDestroy {
 
   subAuth(): Subscription {
     return this.authService.user$.subscribe((user: any) => {
-      if (user) {this.setUserStates()}
+      if (user) { this.setUserStates() }
       this.setLastActivityOnAuth(user);
     });
   }
@@ -80,7 +80,7 @@ export class ActivityService implements OnDestroy {
   }
 
   setLastActivityOnAuth(user: any) {
-    if(user && this.currentUser.lastActivity == -1) {
+    if (user && this.currentUser.lastActivity == -1) {
       this.currentUser.lastActivity = Date.now();
       this.usersService.updateUser(this.currentUser);
     } else if (!user && this.currentUser.lastActivity > 0) {
@@ -92,10 +92,24 @@ export class ActivityService implements OnDestroy {
   syncCurrentUser(): void {
     const uid = this.authService.getCurrentUid();
     if (uid) {
-      this.currentUser = this.usersService.getUserByUid(uid);
-      this.setLastActivityOnAuth(true);
+      const user = this.usersService.getUserByUid(uid);
+      if (user) {
+        this.currentUser = user;
+        this.setLastActivityOnAuth(true);
+      } else {
+        console.error(`Benutzer mit der UID ${uid} wurde nicht gefunden.`);
+      }
     }
   }
+
+
+  // syncCurrentUser(): void {
+  //   const uid = this.authService.getCurrentUid();
+  //   if (uid) {
+  //     this.currentUser = this.usersService.getUserByUid(uid);
+  //     this.setLastActivityOnAuth(true);
+  //   }
+  // }
 
   setUserStates(): void {
     this.userStates = [];
@@ -114,7 +128,7 @@ export class ActivityService implements OnDestroy {
 
   getActiveUsers(): User[] {
     return this.usersService.users.filter(user => this.getUserState(user).state === 'active');
-  } 
+  }
 
   getAllUsers(): User[] {
     return this.usersService.users;

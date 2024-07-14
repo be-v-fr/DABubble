@@ -118,10 +118,9 @@ export class UsersService implements OnDestroy {
    * @param uid - Firestore user ID
    * @returns user object
    */
-  getUserByUid(uid: string): User {
-    let user = new User();
-    this.users.forEach(u => { if (u.uid == uid) { user = u } });
-    return user;
+  getUserByUid(uid: string): User | undefined {
+    let user = this.users.find(u => u.uid === uid);
+    return user ? user : undefined;
   }
 
 
@@ -132,12 +131,14 @@ export class UsersService implements OnDestroy {
    * @returns check result
    */
   isRegisteredUser(authUid: string): boolean {
-    return this.getUserByUid(authUid).uid.length > 0;
+    const user = this.getUserByUid(authUid);
+    return !!user;
   }
+
 
   async clearUpInactiveGuests() {
     this.users.forEach(u => {
-      if(u.isGuest() && u.isInactive()) {
+      if (u.isGuest() && u.isInactive()) {
         this.deleteUser(u.uid);
         this.storageService.deleteUserAvatars(u.uid);
       }
