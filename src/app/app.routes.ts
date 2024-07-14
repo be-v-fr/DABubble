@@ -26,39 +26,44 @@ import { authGuard } from './shared/auth.guard';
 
 import { PLAYGROUNDComponent } from './playground/playground.component'; // remove later
 
-
 export const routes: Routes = [
-    { path: '', canActivate: [authGuard], pathMatch: 'full', component: HomeComponent},
-    {
-        path: '', component: HomeComponent,
-        children: [
-            { path: 'new', component: NewMessageComponent },
-            { path: 'main-chat', component: MainChatComponent },
-            { path: 'direct-message/:id', component: DirectMessageComponent },
-        ]
-    },
-    {
-        path: 'auth', component: AuthComponent,
-        children: [
-            { path: 'logIn', component: LoginComponent },
-            { path: 'signUp', component: SignUpComponent },
-            { path: 'pickAvatar', component: PickAvatarComponent },
-            { path: 'requestPwReset', component: RequestPwResetComponent },
-            { path: 'resetPw', component: ResetPwComponent }
-        ]
-    },
-    { path: 'impress', component: ImpressComponent },
-    { path: 'privacypolicy', component: PrivacypolicyComponent },
-    { path: 'userProfile', component: UserProfileCardComponent },
-    { path: 'mainUser', component: MainUserProfileCardComponent },
-    { path: 'editUser', component: EditUserProfileCardComponent },
-    { path: 'editMainUser', component: EditMainUserProfileCardComponent },
-    { path: 'LogOut', component: LogOutCardComponent },
-    { path: 'addMemberChannel', component: AddMembersAfterAddChannelComponent },
-    { path: 'addMember', component: AddMembersComponent },
-    {path: 'memberList', component: MemberListComponent},
-    { path: 'editChannel', component: EditChannelComponent },
-    { path: 'editMainAvatar', component: EditMainUserAvatarComponent },
-    { path: 'playground', component: PLAYGROUNDComponent }, // remove later
-
+  {
+    path: '',
+    canActivate: [authGuard],
+    pathMatch: 'full',
+    component: HomeComponent,
+  },
+  {
+    path: '',
+    component: HomeComponent,
+    children: [
+      { path: 'new', component: NewMessageComponent },
+      { path: 'main-chat', component: MainChatComponent },
+      { path: 'direct-message/:id', component: DirectMessageComponent },
+    ],
+  },
+  {
+    path: 'auth',
+    component: AuthComponent,
+    children: [
+      { path: 'logIn', component: LoginComponent },
+      { path: 'signUp', component: SignUpComponent },
+      { path: 'pickAvatar', component: PickAvatarComponent },
+      { path: 'requestPwReset', component: RequestPwResetComponent },
+      { path: 'resetPw', component: ResetPwComponent },
+    ],
+  },
+  { path: 'impress', component: ImpressComponent },
+  { path: 'privacypolicy', component: PrivacypolicyComponent },
+  { path: 'userProfile', component: UserProfileCardComponent },
+  { path: 'mainUser', component: MainUserProfileCardComponent },
+  { path: 'editUser', component: EditUserProfileCardComponent },
+  { path: 'editMainUser', component: EditMainUserProfileCardComponent },
+  { path: 'LogOut', component: LogOutCardComponent },
+  { path: 'addMemberChannel', component: AddMembersAfterAddChannelComponent },
+  { path: 'addMember', component: AddMembersComponent },
+  { path: 'memberList', component: MemberListComponent },
+  { path: 'editChannel', component: EditChannelComponent },
+  { path: 'editMainAvatar', component: EditMainUserAvatarComponent },
+  { path: 'playground', component: PLAYGROUNDComponent }, // remove later
 ];
