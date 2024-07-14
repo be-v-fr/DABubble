@@ -135,8 +135,7 @@ export class LoginComponent {
     this.loading = true;
     this.showToast = true;
     this.authService.logInAsGuest().subscribe({
-      next: () => this.onGuestLogIn(),
-      error: (err) => this.onError(err)
+      next: () => this.onGuestLogIn()
     });
   }
 

@@ -1,13 +1,11 @@
 <div class="userCard">
     <div class="head">
         <p>Profil</p>
-        <div class="close-btn">
-            <a (click)="closeDialog()">
-                <img src="/assets/img/userProfileImg/close.svg" />
-            </a>
+        <div class="close-thread-btn">
+            <span class="material-icons-outlined">close</span>
         </div>
     </div>
-    <div class="profileImg">
+    <div class="profileImg defaultPic">
         <img class="#" src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}" />
     </div>
     <div class="imgedit" (click)="openEditAvatar()">
@@ -39,5 +37,3 @@
             <p>{{ mainUser.email || 'vorname.name@beispiel.de' }}</p>
         </div>
     </div>
-</div>
-  

@@ -1,8 +1,18 @@
 import { Injectable, inject, OnDestroy } from '@angular/core';
-import { Firestore, collection, doc, onSnapshot, setDoc, updateDoc, deleteDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  doc,
+  onSnapshot,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  CollectionReference,
+  DocumentReference,
+  addDoc
+} from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
 import { User } from '../models/user.class';
-import { CollectionReference, DocumentReference, addDoc } from 'firebase/firestore';
 import { ChannelsService } from './content/channels.service';
 import { StorageService } from './storage.service';
 
@@ -78,6 +88,7 @@ export class UsersService implements OnDestroy {
   /**
    * Add user to Firestore collection.
    * The Firestore document ID will be identical to the user's Firebase authentication ID.
+   * Use only for registered users.
    * @param user - user to be added
    */
   async addUser(user: User) {
@@ -85,6 +96,20 @@ export class UsersService implements OnDestroy {
     await setDoc(this.getSingleDocRef(user.uid), user.toJson())
       .then(() => this.channelsService.initUserChannels(user))
       .catch((err: Error) => { console.error(err) });
+  }
+
+
+  async addGuestUser() {
+    const user = new User({
+      name: 'Gast' // OPTIONAL: Add Guest counter for unique name
+    });
+    await addDoc(collection(this.firestore, 'users'), user.toJson())
+      .then((response: any) => {
+        const uid = response.id;
+        console.log('new guest registered with uid:', uid.toString());
+        localStorage.setItem('GUEST_uid', uid.toString());
+        this.channelsService.initUserChannels(user);
+      });
   }
 
 

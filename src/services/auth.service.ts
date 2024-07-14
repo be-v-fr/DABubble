@@ -5,14 +5,14 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
-  signInAnonymously,
   signOut,
   updateProfile,
   user
 } from "@angular/fire/auth";
 import { sendPasswordResetEmail, confirmPasswordReset } from "firebase/auth";
-import { Observable, from } from "rxjs";
+import { Observable, from, merge, BehaviorSubject, map } from "rxjs";
 import { UsersService } from "./users.service";
+import { User } from "../models/user.class";
 
 
 /**
@@ -26,7 +26,18 @@ import { UsersService } from "./users.service";
 export class AuthService {
   firebaseAuth = inject(Auth);
   usersService = inject(UsersService);
-  user$ = user(this.firebaseAuth);
+  firebaseUser$ = user(this.firebaseAuth);
+  guestUser$: BehaviorSubject<User | null>;
+  user$: Observable<any>;
+
+
+  constructor() {
+    const guestUser: User | null = this.currentUserIsGuest() ? this.getCurrentGuest() : null;
+    this.guestUser$ = new BehaviorSubject<User | null>(guestUser);
+    this.user$ = merge(this.firebaseUser$, this.guestUser$.asObservable()).pipe(
+      map(user => user ? user : null)
+    );
+  }
 
 
   /**
@@ -72,12 +83,22 @@ export class AuthService {
 
 
   logInAsGuest(): Observable<void> {
-    const promise = signInAnonymously(
-      this.firebaseAuth
-    ).then(() => { });
+    const promise = new Promise(() => {
+      if (!localStorage.getItem('GUEST_uid')) { this.usersService.addGuestUser() }
+      localStorage.setItem('GUEST_logIn', 'true');
+      this.guestUser$.next(this.getCurrentGuest());
+    }).then(() => { })
     return from(promise);
   }
 
+  currentUserIsGuest(): boolean {
+    const state = localStorage.getItem('GUEST_logIn');
+    return (state == 'true' && this.getGuestUid() ? true : false);
+  }
+
+  getGuestUid(): string | null {
+    return localStorage.getItem('GUEST_uid');
+  }
 
   /**
    * Send password reset email
@@ -108,13 +129,29 @@ export class AuthService {
    * @returns log out result
    */
   logOut(): Observable<void> {
+    if (localStorage.getItem('GUEST_logIn') == 'true') {
+      localStorage.setItem('GUEST_logIn', 'false');
+      this.guestUser$.next(null);
+    }
     const promise = signOut(this.firebaseAuth);
     return from(promise);
   }
 
 
   getCurrent() {
-    return this.firebaseAuth.currentUser;
+    const guestLogIn = localStorage.getItem('GUEST_logIn');
+    if (guestLogIn) { return this.getCurrentGuest() }
+    else { return this.firebaseAuth.currentUser };
+  }
+
+
+  getCurrentGuest(): User | null {
+    const guestLogIn = localStorage.getItem('GUEST_logIn');
+    const guestUid = localStorage.getItem('GUEST_uid');
+    if (guestLogIn == 'true' && guestUid) {
+      const userData = this.usersService.users.find(u => u.uid == guestUid);
+      return new User(userData);
+    } else { return null }
   }
 
 
@@ -123,7 +160,12 @@ export class AuthService {
    * @returns user ID (actual uid or undefined in case there is no log in)
    */
   getCurrentUid(): string | undefined {
-    const current = this.firebaseAuth.currentUser;
-    return current ? current.uid : undefined;
+    const guestLogIn = localStorage.getItem('GUEST_logIn');
+    const guestUid = localStorage.getItem('GUEST_uid');
+    if (guestLogIn == 'true' && guestUid) { return guestUid }
+    else {
+      const current = this.firebaseAuth.currentUser;
+      return current ? current.uid : undefined;
+    }
   }
 }
