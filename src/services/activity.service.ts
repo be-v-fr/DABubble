@@ -35,15 +35,17 @@ export class ActivityService implements OnDestroy {
 
   subAuth(): Subscription {
     return this.authService.user$.subscribe((user: any) => {
-      if (user) {this.setUserStates()}
+      console.log('user$ (auth) triggered');
+      if (user) { this.setUserStates() }
       this.setLastActivityOnAuth(user);
     });
   }
 
   subUsers(): Subscription {
     return this.usersService.users$.subscribe(() => {
-      this.syncCurrentUser(); // löst auch setLastActivityOnAuth() aus - das sollte möglichst nur bei auth-Ereignissen passieren
+      this.syncCurrentUser();
       this.setUserStates();
+      console.log('users$ triggered');
     });
   }
 
@@ -76,24 +78,27 @@ export class ActivityService implements OnDestroy {
       this.currentUser.lastActivity = Date.now();
       this.usersService.updateUser(this.currentUser);
       this.activitySettingAllowed = false;
+      console.log('activity set');
     }
   }
 
   setLastActivityOnAuth(user: any) {
-    if(user && this.currentUser.lastActivity == -1) {
+    if (user && this.currentUser.lastActivity == -1) {
       this.currentUser.lastActivity = Date.now();
       this.usersService.updateUser(this.currentUser);
+      console.log('auth activity set: active');
     } else if (!user && this.currentUser.lastActivity > 0) {
       this.currentUser.lastActivity = -1;
       this.usersService.updateUser(this.currentUser);
+      console.log('auth activity set: logged out');      
     }
   }
 
   syncCurrentUser(): void {
     const uid = this.authService.getCurrentUid();
     if (uid) {
-      this.currentUser = this.usersService.getUserByUid(uid);
-      this.setLastActivityOnAuth(true);
+      const user = this.usersService.getUserByUid(uid);
+      if (user) {this.currentUser = user}
     }
   }
 
@@ -114,7 +119,7 @@ export class ActivityService implements OnDestroy {
 
   getActiveUsers(): User[] {
     return this.usersService.users.filter(user => this.getUserState(user).state === 'active');
-  } 
+  }
 
   getAllUsers(): User[] {
     return this.usersService.users;

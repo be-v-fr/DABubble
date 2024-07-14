@@ -10,7 +10,7 @@ export class User {
         this.name = obj && obj.name ? obj.name : '';
         this.email = obj && obj.email ? obj.email : '';
         this.avatarSrc = obj && obj.avatarSrc ? obj.avatarSrc : 'assets/img/profile_blank.svg';
-        this.lastActivity = obj && obj.lastActivity ? obj.lastActivity : 0;        
+        this.lastActivity = obj && obj.lastActivity ? obj.lastActivity : Date.now();        
     }
 
     toJson() {

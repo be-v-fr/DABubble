@@ -101,6 +101,21 @@ export class PostsService implements OnDestroy {
       .catch((err: Error) => { console.error(err) });
   }
 
+  // getThreadPosts(posts: Post[], thread_id: string): Post[] {
+  //   return posts
+  //     .filter(p => p.thread_id === thread_id)
+  //     .sort((a, b) => a.date - b.date);
+  // }
+
+  // getFirstPost(posts: Post[], thread_id: string): Post | undefined {
+  //   return this.getThreadPosts(posts, thread_id)[0];
+  // }
+
+  // getThreadsFirstPosts(posts: Post[], threads: Thread[]): Post[] {
+  //   return threads
+  //     .map(thread => this.getFirstPost(posts, thread.thread_id))
+  //     .filter(post => post !== undefined) as Post[];
+  // }
 
   getThreadPosts(posts: Post[], thread_id: string): Post[] {
     posts = posts.filter(p => p.thread_id == thread_id);

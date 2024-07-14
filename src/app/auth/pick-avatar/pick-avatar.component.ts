@@ -86,11 +86,18 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
 
 
   /**
-   * This function updates the "userData" property avatar to the users service.
-   */
+ * Diese Funktion aktualisiert die "avatarSrc"-Eigenschaft des "userData"-Objekts im Benutzerservice.
+ */
   syncAvatar() {
-    this.userData.avatarSrc = this.usersService.getUserByUid(this.userData.uid).avatarSrc;
+    const user = this.usersService.getUserByUid(this.userData.uid);
+    if (user) {
+      this.userData.avatarSrc = user.avatarSrc;
+    } else {
+      console.error(`Benutzer mit der UID ${this.userData.uid} wurde nicht gefunden.`);
+      // Optional: Hier kannst du eine Standard-Avatarquelle setzen oder eine andere Fehlerbehandlung durchführen
+    }
   }
+
 
 
   /**
