@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit, input } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
 import { MessageItemComponent } from '../message-item/message-item.component';
@@ -10,7 +9,7 @@ import { ChannelsService } from '../../../services/content/channels.service';
 import { Channel } from '../../../models/channel.class';
 import { EditChannelComponent } from '../../edit-channel/edit-channel.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ThreadComponent } from "../thread/thread.component";
+import { ThreadComponent } from '../thread/thread.component';
 import { ThreadsService } from '../../../services/content/threads.service';
 import { Thread } from '../../../models/thread.class';
 import { Subscription } from 'rxjs';
@@ -21,11 +20,12 @@ import { TimeService } from '../../../services/time.service';
 import { User } from '../../../models/user.class';
 import { MemberListComponent } from '../../member-list/member-list.component';
 import { ActivityService } from '../../../services/activity.service';
+
 @Component({
   selector: 'app-main-chat',
   standalone: true,
   templateUrl: './main-chat.component.html',
-  styleUrl: './main-chat.component.scss',
+  styleUrls: ['./main-chat.component.scss'],
   imports: [
     CommonModule,
     PickerComponent,
@@ -36,7 +36,6 @@ import { ActivityService } from '../../../services/activity.service';
   ]
 })
 export class MainChatComponent implements OnInit, OnDestroy {
-
   private authSub = new Subscription();
   private channelSub = new Subscription();
   private threadsSub: Subscription | null = null;
@@ -44,7 +43,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   currentUid: string | null = null;
   currentChannel = new Channel();
   currentPost?: Post;
-  channelThreads?: Thread[];
+  channelThreads: Thread[] = [];
   channelThreadsFirstPosts: Post[] = [];
   emojiPicker = false;
   activeUsers: User[] = [];
@@ -59,33 +58,39 @@ export class MainChatComponent implements OnInit, OnDestroy {
     public timeService: TimeService,
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.authSub = this.subAuth();
     this.route.queryParams.subscribe(params => {
-      if (params['channel']) { this.initChannel(params['channel']) }
+      if (params['channel']) {
+        this.initChannel(params['channel']);
+      }
     });
     this.activeUsers = this.activityService.getActiveUsers();
-  }
-
-  ngOnDestroy(): void {
-    this.authSub.unsubscribe();
-    this.channelSub.unsubscribe();
-    this.threadsSub?.unsubscribe();
-    this.postsSub?.unsubscribe();
   }
 
   subAuth(): Subscription {
     return this.authService.user$.subscribe(() => {
       const uid = this.authService.getCurrentUid();
-      if (uid) { this.currentUid = uid; }
+      if (uid) {
+        this.currentUid = uid;
+      }
     });
   }
 
   initChannel(channel_id: string): void {
+    this.setChannel(channel_id);
+    this.setThreads(this.threadsService.threads);
     this.channelSub.unsubscribe();
     this.channelSub = this.subChannel(channel_id);
+  }
+
+  setChannel(channel_id: string): void {
+    const channel = this.channelsService.channels.find(c => c.channel_id === channel_id);
+    if (channel) {
+      this.currentChannel = channel;
+    }
   }
 
   subChannel(channel_id: string): Subscription {
@@ -95,17 +100,18 @@ export class MainChatComponent implements OnInit, OnDestroy {
     });
   }
 
-  setChannel(channel_id: string): void {
-    const channel = this.channelsService.channels.find(c => c.channel_id === channel_id);
-    if (channel) { this.currentChannel = channel; }
-  }
-
-  subThreads(): void {
-    this.threadsSub = this.threadsService.threads$.subscribe((threads) => {
+  setThreads(threads: Thread[]): void {
+    if (this.currentChannel.channel_id.length > 0) {
       this.channelThreads = this.threadsService.getChannelThreads(threads, this.currentChannel.channel_id);
       this.setFirstPosts(this.postsService.posts);
       this.postsSub?.unsubscribe();
       this.postsSub = this.subPosts();
+    }
+  }
+
+  subThreads(): Subscription {
+    return this.threadsService.threads$.subscribe((threads) => {
+      this.setThreads(threads);
     });
   }
 
@@ -122,7 +128,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
   getFirstPost(thread_id: string): Post {
-    const post: Post | undefined = this.channelThreadsFirstPosts.find(p => p.thread_id === thread_id);
+    const post = this.channelThreadsFirstPosts.find(p => p.thread_id === thread_id);
     return post ? post : new Post();
   }
 
@@ -163,5 +169,12 @@ export class MainChatComponent implements OnInit, OnDestroy {
     if (this.currentUid) {
       this.threadsService.createThread(message, this.currentChannel.channel_id, this.currentUid);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.authSub.unsubscribe();
+    this.channelSub.unsubscribe();
+    this.threadsSub?.unsubscribe();
+    this.postsSub?.unsubscribe();
   }
 }
