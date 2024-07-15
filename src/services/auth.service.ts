@@ -32,8 +32,8 @@ export class AuthService {
 
 
   constructor() {
-    const guestUser: User | null = this.currentUserIsGuest() ? this.getCurrentGuest() : null;
-    this.guestUser$ = new BehaviorSubject<User | null>(guestUser);
+    if(this.currentUserIsGuest()) {this.logInAsGuest()}
+    this.guestUser$ = new BehaviorSubject<User | null>(this.getCurrentGuest());
     this.user$ = merge(this.firebaseUser$, this.guestUser$.asObservable()).pipe(
       map(user => user ? user : null)
     );
@@ -83,17 +83,26 @@ export class AuthService {
 
 
   logInAsGuest(): Observable<void> {
-    const promise = new Promise(() => {
-      if (!localStorage.getItem('GUEST_uid')) { this.usersService.addGuestUser() }
+    const promise = new Promise(async () => {
+      if (!localStorage.getItem('GUEST_uid')) { await this.usersService.addGuestUser() }
       localStorage.setItem('GUEST_logIn', 'true');
+      if (!this.getCurrentGuest()) { await this.handleMissingGuestLogIn() }
       this.guestUser$.next(this.getCurrentGuest());
-    }).then(() => { })
+    }).then(() => {})
     return from(promise);
   }
 
+
+  async handleMissingGuestLogIn() {
+    const uid = localStorage.getItem('GUEST_uid');
+    const guest = new User({ uid: uid, name: 'Gast' });
+    await this.usersService.setGuestUser(guest);
+  }
+
+
   currentUserIsGuest(): boolean {
     const state = localStorage.getItem('GUEST_logIn');
-    return (state == 'true' && this.getGuestUid() ? true : false);
+    return (state == 'true' && (this.getGuestUid() ? true : false));
   }
 
   getGuestUid(): string | null {
@@ -150,8 +159,9 @@ export class AuthService {
     const guestUid = localStorage.getItem('GUEST_uid');
     if (guestLogIn == 'true' && guestUid) {
       const userData = this.usersService.users.find(u => u.uid == guestUid);
-      return new User(userData);
-    } else { return null }
+      if (userData) { return new User(userData) }
+    }
+    return null;
   }
 
 

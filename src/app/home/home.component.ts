@@ -57,6 +57,7 @@ export class HomeComponent {
 
     subAuth(): Subscription {
         return this.authService.user$.subscribe((user) => {
+            console.log('auth user in home component:', user);
             if (user && !(this.currentUser.uid.length > 0)) {
                 this.syncUsers();
                 this.usersSub.unsubscribe();

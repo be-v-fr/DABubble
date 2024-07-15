@@ -94,7 +94,7 @@ export class UsersService implements OnDestroy {
   async addUser(user: User) {
     user.lastActivity = Date.now();
     await setDoc(this.getSingleDocRef(user.uid), user.toJson())
-      .then(() => this.channelsService.initUserChannels(user))
+      .then(async () => await this.channelsService.initUserChannels(user))
       .catch((err: Error) => { console.error(err) });
   }
 
@@ -104,12 +104,16 @@ export class UsersService implements OnDestroy {
       name: 'Gast' // OPTIONAL: Add Guest counter for unique name
     });
     await addDoc(collection(this.firestore, 'users'), user.toJson())
-      .then((response: any) => {
-        const uid = response.id;
-        console.log('new guest registered with uid:', uid.toString());
-        localStorage.setItem('GUEST_uid', uid.toString());
-        this.channelsService.initUserChannels(user);
+      .then(async (response: any) => {
+        localStorage.setItem('GUEST_uid', response.id);
+        await this.channelsService.initUserChannels(user);
       });
+  }
+
+
+  async setGuestUser(user: User) {
+    await setDoc(this.getSingleDocRef(user.uid), user.toJson())
+      .then(() => {});
   }
 
 
@@ -144,6 +148,7 @@ export class UsersService implements OnDestroy {
    * @returns user object
    */
   getUserByUid(uid: string): User | undefined {
+    console.log('users array:', this.users);
     let user = this.users.find(u => u.uid === uid);
     return user ? user : undefined;
   }

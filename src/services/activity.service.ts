@@ -21,11 +21,11 @@ export class ActivityService implements OnDestroy {
   public userStates: UserState[] = [];
 
   constructor() {
-    this.initListeners();
-    this.initInterval();
-    this.syncCurrentUser();
-    this.authSub = this.subAuth();
-    this.usersSub = this.subUsers();
+    // this.initListeners();
+    // this.initInterval();
+    // this.syncCurrentUser();
+    // this.authSub = this.subAuth();
+    // this.usersSub = this.subUsers();
   }
 
   ngOnDestroy(): void {
