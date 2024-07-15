@@ -24,7 +24,6 @@ import { DirectMessageComponent } from './components/direct-message/direct-messa
 import { EditMainUserAvatarComponent } from './main-user/edit-main-user-avatar/edit-main-user-avatar.component';
 import { authGuard } from './shared/auth.guard';
 
-import { PLAYGROUNDComponent } from './playground/playground.component'; // remove later
 
 export const routes: Routes = [
   {
@@ -65,5 +64,4 @@ export const routes: Routes = [
   { path: 'memberList', component: MemberListComponent },
   { path: 'editChannel', component: EditChannelComponent },
   { path: 'editMainAvatar', component: EditMainUserAvatarComponent },
-  { path: 'playground', component: PLAYGROUNDComponent }, // remove later
 ];

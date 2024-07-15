@@ -5,7 +5,7 @@
 </button>
 <app-header [mainUser]="currentUser"></app-header>
 <div class="main-container">
-    <app-navigation [ngClass]="{ 'expanded ': showNav}" [user_id]="currentUser.uid"
+    <app-navigation [ngClass]="{ 'expanded ': showNav}" [user]="currentUser"
         [userChannels]="userChannels"></app-navigation>
     <div class="main-content">
         <router-outlet></router-outlet>

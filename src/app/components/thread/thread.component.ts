@@ -37,21 +37,13 @@ export class ThreadComponent implements OnInit, OnDestroy {
     constructor(
         private authService: AuthService,
         private reactionsService: ReactionsService,
-        private threadService: ThreadsService,
         private dialog: MatDialog) { }
 
 
     ngOnInit(): void {
         this.authSub = this.subAuth();
-        this.threadSub = this.subThreads();
-        this.reactionsSub = this.subReactions();
     }
 
-    subThreads(): Subscription {
-        return this.threadService.threads$.subscribe((thread) => {
-            this.thread = thread.find(tr => tr.thread_id === this.post().thread_id);
-        })
-    }
 
     subAuth(): Subscription {
         return this.authService.user$.subscribe(() => {
@@ -69,21 +61,10 @@ export class ThreadComponent implements OnInit, OnDestroy {
         });
     }
 
+
     // Hilfsfunktion, um die Schlüssel eines Objekts zu bekommen
     objectKeys(obj: any): string[] {
         return Object.keys(obj);
-    }
-
-    createAnswer(event: string): void {
-        if (this.currUid) {
-            this.threadService.createThread(event, this.currChannel().channel_id, this.currUid)
-                .then(res => {
-                    this.newThreadId = res;
-                })
-                .catch(error => {
-                    console.error('Error creating answer:', error);
-                });
-        }
     }
 
 
@@ -95,6 +76,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
     openUserProfile(): void {
         this.dialog.open(UserProfileCardComponent);
     }
+
 
     ngOnDestroy(): void {
         this.authSub.unsubscribe();

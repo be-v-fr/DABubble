@@ -3,6 +3,7 @@ import { ExpandableButtonComponent } from '../expandable-button/expandable-butto
 import { RouterLink } from '@angular/router';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
+import { User } from '../../../models/user.class';
 
 @Component({
   selector: 'app-navigation',
@@ -12,7 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './navigation.component.scss'
 })
 export class NavigationComponent {
-  @Input() user_id: string = '';
+  @Input() user?: User;
   @Input() showNav: boolean = true;
   @Input() userChannels: Channel[] = [];
 }

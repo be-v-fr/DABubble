@@ -97,13 +97,17 @@ export class HomeComponent {
 
 
     setUserChannels(channels: Channel[]): void {
-        channels = channels.filter(c => c.members_uids.includes(this.currentUser.uid));
+        // Filter the channels to include only those where the current user is a member
+        channels = channels.filter(c => Array.isArray(c.members) && c.members.some(m => m.uid === this.currentUser.uid));
+
+        // Sort the channels alphabetically by name
         this.userChannels = channels.sort((a, b) => {
             const textA = a.name.toLowerCase();
             const textB = b.name.toLowerCase();
             return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
         });
     }
+
 
     onShowNavigation() {
         this.showNav = !this.showNav;

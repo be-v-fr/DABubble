@@ -6,6 +6,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { ChannelsService } from '../../services/content/channels.service';
 import { Channel } from '../../models/channel.class';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-add-channel',
@@ -19,6 +20,7 @@ export class AddChannelComponent {
 
   constructor(
     public dialogRef: MatDialogRef<AddChannelComponent>,
+    private authService: AuthService,
     private channelsService: ChannelsService,
     private router: Router,
     private activatedRoute: ActivatedRoute
@@ -36,11 +38,28 @@ export class AddChannelComponent {
   async onSubmit(form: NgForm) {
     console.log('submit!');
     if (form.submitted && form.valid) {
-      const id = await this.channelsService.addDoc(this.channel);
-      this.addChannelToParams(id);
+      // Validierung und Vorbereitung des Kanals
+      const preparedChannel = this.prepareChannel(this.channel);
+  
+      // Hinzufügen des Kanals über den Service
+      await this.channelsService.addChannel(preparedChannel).then(res => {
+        this.addChannelToParams(res);
+      });
+  
+      // Schließen des Dialogs oder andere Nachbearbeitung
       this.dialogRef.close();
     }
   }
+
+  prepareChannel(channel: Channel): Channel {
+    // Führe hier Validierungen, Bereinigungen oder andere Vorbereitungen durch
+    // Z. B.:
+    // channel.name = channel.name.trim(); // Beispiel für Bereinigung
+    const autor = this.authService.getCurrent();
+    channel.author_uid = autor!.uid;
+    return channel;
+  }
+
 
   addChannelToParams(channel_id: string): void {
     const queryParams: Params = { channel: channel_id };

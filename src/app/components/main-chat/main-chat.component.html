@@ -1,6 +1,5 @@
 <div class="main-container">
     <section class="main-section">
-        @if(currentChannel.channel_id.length > 0) {
         <div class="main-header">
             <button class="channel-btn" (click)="onEditChannel()">
                 # {{ currentChannel.name }}
@@ -21,16 +20,14 @@
             </div>
         </div>
         <div class="message-items-container">
-            @if(channelThreads && channelThreads.length > 0) {
-            @for (thread of channelThreads; track thread; let i = $index) {
+            @if(currentChannel && currentChannel.posts.length > 0) {
+            @for (post of currentChannel.posts; track post.post_id; let i = $index) {
             <div class="message-item-container">
-                <app-time-separator [timestamp]="thread.date"
-                    *ngIf="i == 0 || timeService.toDate(thread.date) != timeService.toDate(channelThreads[i - 1].date)" />
+                <app-time-separator [timestamp]="post.thread.date" />
                 <app-message-item [post]="channelThreadsFirstPosts[i]" [hideEmojiPicker]="emojiPicker"
                     (showEmojiPicker)="handleEmojiStateChange($event)"
-                    [messageSender]="isCurrentUserAuthor(thread.thread_id)"
-                    [threadLength]="getThreadLength(thread.thread_id)" [lastReply]="getLastReplyTime(thread.thread_id)"
-                    (threadId)="handleThread($event)" />
+                    [messageSender]="isCurrentUserAuthor(post.thread.thread_id)"
+                    [lastReply]="getLastReplyTime(post.thread.thread_id)" (threadId)="handleThread($event)" />
             </div>
             }
             } @else {
@@ -46,8 +43,7 @@
             </div>
             }
         </div>
-        <app-message-box [channelName]="currentChannel.name" (sent)="createThread($event)" />
-        }
+        <app-message-box [channelName]="currentChannel.name" />
     </section>
     <app-thread class="thread" *ngIf="currentPost" [currChannel]="currentChannel" [post]="currentPost" />
 </div>

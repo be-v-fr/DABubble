@@ -32,7 +32,7 @@ export class AuthService {
 
 
   constructor() {
-    if(this.currentUserIsGuest()) {this.logInAsGuest()}
+    if (this.currentUserIsGuest()) { this.logInAsGuest() }
     this.guestUser$ = new BehaviorSubject<User | null>(this.getCurrentGuest());
     this.user$ = merge(this.firebaseUser$, this.guestUser$.asObservable()).pipe(
       map(user => user ? user : null)
@@ -88,7 +88,7 @@ export class AuthService {
       localStorage.setItem('GUEST_logIn', 'true');
       if (!this.getCurrentGuest()) { await this.handleMissingGuestLogIn() }
       this.guestUser$.next(this.getCurrentGuest());
-    }).then(() => {})
+    }).then(() => { })
     return from(promise);
   }
 

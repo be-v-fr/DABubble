@@ -5,116 +5,101 @@ import { CollectionReference, DocumentReference, addDoc } from 'firebase/firesto
 import { Channel } from '../../models/channel.class';
 import { User } from '../../models/user.class';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class ChannelsService implements OnDestroy {
-  channels: Channel[] = [];
   channels$: Subject<Channel[]> = new Subject<Channel[]>();
+  channels: Channel[] = [];
   unsubChannels;
   firestore: Firestore = inject(Firestore);
 
-
-  /**
-   * Create subscription
-   */
   constructor() {
     this.unsubChannels = this.subChannels();
   }
 
-
-  /**
-   * Unsubscribe
-   */
   ngOnDestroy() {
     this.unsubChannels();
   }
 
+  getAllChannels(): Channel[] {
+    return this.channels.slice();
+  }
+
+  getChannel(id: string): Channel {
+    return this.channels.find(c => c.channel_id === id)!;
+  }
+
+  async addChannel(channel: Channel): Promise<string> {
+    await this.storeChannel(channel);
+    this.channels.push(channel);
+    this.channels$.next(this.channels.slice());
+    return channel.channel_id;
+  }
+
+  updateChannel(newChannel: Channel) {
+    const channelIndex = this.channels.findIndex(c => c.channel_id === newChannel.channel_id);
+    if (channelIndex !== -1) {
+      this.channels[channelIndex] = newChannel;
+      this.channels$.next(this.channels.slice());
+      this.updateChannelInStorage(newChannel);
+    }
+  }
+
+  deleteChannel(channel: Channel) {
+    const channelIndex = this.channels.indexOf(channel);
+    this.channels.splice(channelIndex, 1);
+    this.channels$.next(this.channels.slice());
+    this.deleteChannelInStorage(channel.channel_id);
+  }
 
   subChannels() {
     return onSnapshot(this.getColRef(), (list: any) => {
-      let channels: Channel[] = [];
+      const channels: Channel[] = [];
       list.forEach((element: any) => {
-        channels.push(element.data());
+        channels.push(new Channel(element.data()));
       });
       this.channels = channels;
       this.channels$.next(channels);
     });
   }
 
-
-  /**
-   * Get reference to Firestore "channels" collection
-   * @returns reference
-   */
   getColRef(): CollectionReference {
     return collection(this.firestore, 'channels');
   }
 
-
-  /**
-   * Get reference to single doc Firestore data
-   * @param id - Firestore task ID
-   * @returns reference
-   */
   getSingleDocRef(uid: string): DocumentReference {
     return doc(this.getColRef(), uid);
   }
 
-
-  /**
-   * Add doc to Firestore collection.
-   * The Firestore document ID will be identical to the doc's Firebase authentication ID.
-   * @param doc - doc to be added
-   */
-  async addDoc(channel: Channel): Promise<string> {
-    await addDoc(this.getColRef(), channel.toJson())
-      .then((response: any) => {
-        channel.channel_id = response.id;
-        this.updateDoc(channel);
-      })
-      .catch((err: Error) => { console.error(err) });
+  async storeChannel(channel: Channel): Promise<string> {
+    const response = await addDoc(this.getColRef(), channel.toJson());
+    channel.channel_id = response.id;
+    this.updateChannelInStorage(channel);
     return channel.channel_id;
   }
 
-
-  /**
-   * Update doc in Firestore collection.
-   * The update will only be executed if the doc (i.e., its Firestore ID) exists in the Firestore collection.
-   * @param doc - doc to be updated
-   */
-  async updateDoc(channel: Channel) {
+  async updateChannelInStorage(channel: Channel) {
     if (channel.channel_id) {
       const docRef = this.getSingleDocRef(channel.channel_id);
-      await updateDoc(docRef, channel.toJson())
-        .catch((err: Error) => { console.error(err) });
+      await updateDoc(docRef, channel.toJson()).catch((err: Error) => { console.error(err) });
     }
   }
 
-
-  /**
-   * Delete doc from Firestore collection
-   * @param channel_id - Firestore doc ID of doc to be deleted
-   */
-  async deleteDoc(channel_id: string) {
+  async deleteChannelInStorage(channel_id: string) {
     const docRef = this.getSingleDocRef(channel_id);
-    await deleteDoc(docRef)
-      .catch((err: Error) => { console.error(err) });
+    await deleteDoc(docRef).catch((err: Error) => { console.error(err) });
   }
-
 
   async initUserChannels(user: User) {
     await this.initTeamChannel(user);
   }
 
-
   async initTeamChannel(user: User) {
     const teamChannel: Channel | undefined = this.getTeamChannel();
-    if(teamChannel) {await this.addUserToChannel(user, teamChannel)}
-    else{await this.addDoc(new Channel(this.getTeamChannelData(user)))}
+    if (teamChannel) { await this.addUserToChannel(user, teamChannel) }
+    else { await this.storeChannel(new Channel(this.getTeamChannelData(user))) }
   }
-
 
   getTeamChannel(): Channel | undefined {
     const teamChannels: Channel[] = this.channels.filter(c => c.name == 'Team');
@@ -124,31 +109,19 @@ export class ChannelsService implements OnDestroy {
     } else { return undefined }
   }
 
-
   getTeamChannelData(user: User): any {
     return {
       name: 'Team',
       description: 'Dieser Channel steht dem gesamten Team offen. Hier kannst du zusammen mit deinem Team Meetings abhalten, Dokumente teilen und Entscheidungen treffen.',
       author_uid: user.uid,
-      members_uids: [user.uid],
+      members: [user.toJson()], // Convert User object to JSON
       date: Date.now(),
       isPmChannel: false
-    }
+    };
   }
 
-  
   async addUserToChannel(user: User, channel: Channel) {
-    channel.members_uids.push(user.uid);
-    await this.updateDoc(channel);
+    channel.members.push(user);
+    await this.updateChannelInStorage(channel);
   }
-
-
-  // const selfChannel = new Channel({
-  //   'name': user.name,
-  //   'author_uid': user.uid,
-  //   'description': 'Benutze diesen Kanal für deine eigenen Notizen und Uploads.',
-  //   'members_uids': [user.uid]
-  // });
-  // await this.addDoc(selfChannel)
-  //   .catch((err: Error) => { console.error(err) });
 }

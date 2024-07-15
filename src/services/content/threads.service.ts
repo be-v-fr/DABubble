@@ -70,19 +70,19 @@ export class ThreadsService implements OnDestroy {
   }
 
 
-  async createThread(message: string, channel_id: string, author_id: string): Promise<string> {
-    try {
-      const thread = new Thread({ channel_id });
-      const thread_id = await this.addDoc(thread);
-      const post = new Post({ message, user_id: author_id, thread_id });
-      await this.postsService.addDoc(post);
+  // async createThread(message: string, channel_id: string, author_id: string): Promise<string> {
+  //   try {
+  //     const thread = new Thread({ channel_id });
+  //     const thread_id = await this.addDoc(thread);
+  //     const post = new Post({ message, user_id: author_id, thread_id });
+  //     await this.postsService.addDoc(post);
       
-      return thread_id;
-    } catch (err) {
-      console.error('Fehler beim Erstellen des Threads oder Posts:', err);
-      throw err;
-    }
-  }
+  //     return thread_id;
+  //   } catch (err) {
+  //     console.error('Fehler beim Erstellen des Threads oder Posts:', err);
+  //     throw err;
+  //   }
+  // }
 
 
   async updateDoc(thread: Thread) {
@@ -105,9 +105,9 @@ export class ThreadsService implements OnDestroy {
   }
 
 
-  getChannelThreads(threads: Thread[], channel_id: string): Thread[] {
-    const filteredThreads = threads.filter(t => t.channel_id === channel_id);
-    filteredThreads.sort((a, b) => a.date - b.date);
-    return filteredThreads.map(t => new Thread(t));
-  }
+  // getChannelThreads(threads: Thread[], channel_id: string): Thread[] {
+  //   const filteredThreads = threads.filter(t => t.channel_id === channel_id);
+  //   filteredThreads.sort((a, b) => a.date - b.date);
+  //   return filteredThreads.map(t => new Thread(t));
+  // }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject, OnDestroy, OnInit, Inject, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnDestroy, Inject, OnChanges, SimpleChanges } from '@angular/core';
 import { TimeSeparatorComponent } from '../time-separator/time-separator.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
@@ -30,7 +30,6 @@ import { ClickStopPropagationDirective } from '../../shared/click-stop-propagati
 export class MessageItemComponent implements OnChanges, OnDestroy {
 
   @Input() post: Post = new Post();
-  @Input() threadLength?: number;
   @Input() lastReply?: number;
   @Input() messageSender?: boolean;
   @Input() isMainPostThread = false;
@@ -80,7 +79,7 @@ export class MessageItemComponent implements OnChanges, OnDestroy {
 
 
   onOpenNewThread() {
-    this.threadId.emit(this.post.thread_id);
+    this.threadId.emit(this.post.thread.thread_id);
   }
 
 
