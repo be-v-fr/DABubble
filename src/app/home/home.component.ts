@@ -57,7 +57,6 @@ export class HomeComponent {
 
     subAuth(): Subscription {
         return this.authService.user$.subscribe((user) => {
-            console.log('auth user in home component:', user);
             if (user && !(this.currentUser.uid.length > 0)) {
                 this.syncUsers();
                 this.usersSub.unsubscribe();
@@ -92,8 +91,6 @@ export class HomeComponent {
                 if (this.userChannels.length === 0) {
                     this.setUserChannels(this.channelsService.channels);
                 }
-            } else {
-                console.error(`Benutzer mit der UID ${uid} wurde nicht gefunden.`);
             }
         }
     }
