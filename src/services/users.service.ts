@@ -148,7 +148,6 @@ export class UsersService implements OnDestroy {
    * @returns user object
    */
   getUserByUid(uid: string): User | undefined {
-    console.log('users array:', this.users);
     let user = this.users.find(u => u.uid === uid);
     return user ? user : undefined;
   }
