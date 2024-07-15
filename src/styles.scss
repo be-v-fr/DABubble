@@ -1,6 +1,6 @@
 @import "./fonts.scss";
-@import 'material-icons/iconfont/material-icons.css';
-@import '@ctrl/ngx-emoji-mart/picker';
+@import "material-icons/iconfont/material-icons.css";
+@import "@ctrl/ngx-emoji-mart/picker";
 
 $violet-bright: #eceefe;
 $purple-light: #adb0d9;
@@ -10,7 +10,7 @@ $purple-blue-brighter: #797ef3;
 $purple-blue-active: #444df2;
 $grey: #686868;
 $grey-light: #e6e6e6;
-$magenta: #ED1E79;
+$magenta: #ed1e79;
 $onlinedot-border: #eceefe; // this is identical to "violet-bright"
 $onlinedot-online: #92c83e;
 $onlinedot-offline: #686868; // this is identical to "grey"
@@ -39,7 +39,9 @@ $onlinedot-offline: #686868; // this is identical to "grey"
         background-clip: padding-box;
         border-radius: 7px;
         background-color: $purple-light;
-        box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+        box-shadow:
+            inset -1px -1px 0px rgba(0, 0, 0, 0.05),
+            inset 1px 1px 0px rgba(0, 0, 0, 0.05);
     }
 
     &::-webkit-scrollbar-button {
@@ -213,10 +215,13 @@ a {
     height: 42px;
 
     &:hover {
-        border: 1px solid #ADB0D9;
+        border: 1px solid #adb0d9;
+    }
+    
+    @media screen and (max-width: 1024px) {
+        height: 39px;
     }
 }
-
 
 .mat-mdc-dialog-container._mat-animation-noopable .mdc-dialog__surface {
     border-radius: 30px;

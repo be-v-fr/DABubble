@@ -1,4 +1,4 @@
-@import '../../styles.scss';
+@import "../../styles.scss";
 
 .content-wrapper {
     width: 100%;
@@ -48,6 +48,29 @@
             margin-bottom: 12px;
             font-family: "Nunito", sans-serif;
         }
+
+        @media screen and (max-width: 1440px) {
+            width: 564px;
+            padding: 56px 35px;
+        }
+
+        @media screen and (max-height: 920px) {
+            max-width: 564px;
+            padding: 35px 35px;
+        }
+
+        @media screen and (max-width: 1024px) {
+            gap: 0px;
+
+            h1 {
+                font-size: 32px;
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            max-width: calc(100vw - 32px);
+            padding: 35px 20px;
+        }
     }
 }
 
@@ -55,6 +78,10 @@
     font-size: 20px;
     font-weight: 400;
     text-align: center;
+    @media screen and (max-width: 1024px) {
+        font-size: 17px;
+        margin-bottom: 10px;
+    }
 }
 
 .form-field {
@@ -96,6 +123,15 @@
         &:focus {
             border-color: $purple-blue-bright;
         }
+        @media screen and (max-width: 1024px) {
+            padding: 13px 32px 13px 86px;
+        }
+    }
+
+    @media screen and (max-width: 1024px) {
+        height: 50px;
+        margin-top: 10px;
+        margin-bottom: 20px;
     }
 }
 
@@ -114,6 +150,9 @@
             opacity: 1;
         }
     }
+    @media screen and (max-width: 1024px) {
+        font-size: 13px;
+    }
 }
 
 .or-seperator-container {
@@ -126,6 +165,10 @@
         flex: 1;
         border: none;
         height: 1px;
+    }
+
+    @media screen and (max-width: 1024px) {
+        margin-bottom: 20px;
     }
 }
 
@@ -145,7 +188,7 @@
 
     span {
         width: 190px;
-        color: #444DF2;
+        color: #444df2;
         font-size: 18px;
         font-weight: 400;
         @include transition();
@@ -188,10 +231,10 @@
         }
     }
     .custom-checkbox-empty {
-        background-image: url('../../assets/img/checkbox_empty.svg');
+        background-image: url("../../assets/img/checkbox_empty.svg");
     }
     .custom-checkbox-checked {
-        background-image: url('../../assets/img/checkbox_checked.svg');
+        background-image: url("../../assets/img/checkbox_checked.svg");
     }
     &:hover {
         background: $violet-bright;
@@ -205,6 +248,9 @@
 .submit-btns {
     display: flex;
     gap: 30px;
+    @media screen and (max-width: 1024px) {
+        gap: 20px;
+    }
 }
 
 app-legal-footer {
@@ -214,4 +260,11 @@ app-legal-footer {
     bottom: 30px;
     display: flex;
     justify-content: center;
+}
+
+@media screen and (max-width: 1024px) {
+    .link-purple-bg {
+        font-size: 17px;
+        margin-bottom: 16px;
+    }
 }
