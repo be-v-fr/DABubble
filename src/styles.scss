@@ -226,3 +226,10 @@ a {
 .mat-mdc-dialog-container._mat-animation-noopable .mdc-dialog__surface {
     border-radius: 30px;
 }
+
+.d-640 {
+    display: none;
+    @media screen and (max-width: 640px) {
+        display: initial;
+    }
+}
