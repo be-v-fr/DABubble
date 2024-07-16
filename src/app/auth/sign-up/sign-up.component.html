@@ -48,12 +48,12 @@
                     <input type="checkbox" [ngModel]="false" name="privacy" #privacy="ngModel" required>
                 </div>
             </div>
-            <span>
-                Ich stimme der
+            <p>
+                <span>Ich stimme der</span>
                 <a routerLink="/privacypolicy" [queryParams]="{'back': false}" target="_blank"
                     class="link-purple-bg">Datenschutzerklärung</a>
-                zu.
-            </span>
+                <span>zu.</span>
+            </p>
         </div>
         <div class="submit-btns">
             <button type="submit" class="form-btn-primary" [disabled]="!signUpForm.valid || loading">Weiter</button>
