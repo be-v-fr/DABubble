@@ -6,11 +6,23 @@
     h1 .back-btn-container {
         left: -28px;
     }
+    @media screen and (max-width: 640px) {
+        gap: 0;
+        h1 .back-btn-container {
+            left: 0;
+        }
+    }
 }
 
 span,
 p {
     font-size: 20px;
+    @media screen and (max-width: 640px) {
+        font-size: 18px;
+    }
+    @media screen and (max-width: 408px) {
+        font-size: 17px;
+    }
 }
 
 .avatar-selection-container {
@@ -28,13 +40,21 @@ p {
         height: 168px;
         border-radius: 50%;
         object-fit: cover;
-        object-position: center;      
+        object-position: center;
     }
     &:hover {
         background: $grey-light;
     }
     &:active {
         background: $violet-bright;
+    }
+    @media screen and (max-width: 640px) {
+        width: 132px;
+        height: 132px;
+        .avatar-selection {
+            width: 120px;
+            height: 120px;
+        }
     }
 }
 
@@ -71,6 +91,36 @@ p {
                 background: $violet-bright;
             }
         }
+        @media screen and (max-width: 640px) {
+            padding: 0 4%;
+            .avatar-container {
+                width: 64px;
+                height: 64px;
+                img {
+                    width: 56px;
+                    height: 56px;
+                }
+            }
+        }
+        @media screen and (max-width: 480px) {
+            padding: 0;
+            .avatar-container {
+                width: 60px;
+                height: 60px;
+                img {
+                    width: 54px;
+                    height: 54px;
+                }
+                @media screen and (max-width: 408px) {
+                    width: 50px;
+                    height: 50px;
+                    img {
+                        width: 46px;
+                        height: 46px;
+                    }
+                }
+            }
+        }
     }
     .upload-avatar-container {
         display: flex;
@@ -78,5 +128,19 @@ p {
         gap: 24px;
         margin-bottom: 24px;
         position: relative;
+        .form-btn-secondary {
+            min-width: 189px;
+            @media screen and (max-width: 408px) {
+                min-width: 154px;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 408px) {
+    .form-btn {
+        font-size: 17px;
     }
 }

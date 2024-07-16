@@ -8,25 +8,28 @@
     gap: 20px;
 }
 
-// .logo-wrapper {
-//     padding-top: 25px;
-//     padding-left: 45px;
-//     padding-bottom: 20px;
-//     min-width: 386px;
-//     width: 386px;
-//     display: flex;
-//     flex-direction: row;
-//     img {
-//         height: 70px;
-//         width: auto;
-//     }
-// }
-
-.pseudo-logo-wrapper {
+.logo-wrapper {
+    z-index: 999;
+    padding-top: 25px;
+    padding-left: 45px;
+    padding-bottom: 20px;
     min-width: 386px;
     width: 386px;
-    height: 115px;
+    display: flex;
+    flex-direction: row;
+    background-color: $violet-bright;
+    cursor: pointer;
+    img {
+        height: 70px;
+        width: auto;
+    }
 }
+
+// .pseudo-logo-wrapper {
+//     min-width: 386px;
+//     width: 386px;
+//     height: 115px;
+// }
 
 .searchbar-wrapper {
     width: 100%;
@@ -52,12 +55,16 @@
             align-items: center;
         }
     }
+    @media screen and (max-width: 1024px) {
+        display: none;
+    }
 }
 
 .userprofile-wrapper {
     padding-right: 35px;
     min-width: 505px;
-    width: 505px;
+    max-width: 505px;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -75,6 +82,13 @@
         font-size: 32px;
         font-weight: 700;
     }
+    @media screen and (max-width: 1440px) {
+        min-width: calc((100% - 410px)/2);
+    }
+    @media screen and (max-width: 1024px) {
+        min-width: auto;
+        width: fit-content;
+    }
 }
 
 .userprofile-name {
@@ -86,6 +100,9 @@
     line-clamp: 1;
 	-webkit-line-clamp: 1;
 	-webkit-box-orient: horizontal; 
+    @media screen and (max-width: 1024px) {
+        display: none;
+    }
 }
 
 .userprofile-image-box {
@@ -123,5 +140,8 @@
     img {
         width: 30px;
         height: 30px;
+    }
+    @media screen and (max-width: 1024px) {
+        display: none;
     }
 }
