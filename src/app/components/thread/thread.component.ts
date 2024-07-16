@@ -6,9 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { UserProfileCardComponent } from '../../user-profile-card/user-profile-card.component';
 import { Post } from '../../../models/post.class';
-import { ReactionsService } from '../../../services/content/reactions.service';
 import { Subscription } from 'rxjs';
-import { ThreadsService } from '../../../services/content/threads.service';
 import { Thread } from '../../../models/thread.class';
 import { AuthService } from '../../../services/auth.service';
 import { Channel } from '../../../models/channel.class';
@@ -36,7 +34,6 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
     constructor(
         private authService: AuthService,
-        private reactionsService: ReactionsService,
         private dialog: MatDialog) { }
 
 
@@ -54,12 +51,12 @@ export class ThreadComponent implements OnInit, OnDestroy {
         });
     }
 
-    subReactions(): Subscription {
-        return this.reactionsService.reactions$.subscribe((r) => {
-            const reactions = this.reactionsService.getPostReactions(r, this.post().post_id);
-            this.groupedEmojis = this.reactionsService.getGroupedEmojis(reactions);
-        });
-    }
+    // subReactions(): Subscription {
+    //     return this.reactionsService.reactions$.subscribe((r) => {
+    //         const reactions = this.reactionsService.getPostReactions(r, this.post().post_id);
+    //         this.groupedEmojis = this.reactionsService.getGroupedEmojis(reactions);
+    //     });
+    // }
 
 
     // Hilfsfunktion, um die Schlüssel eines Objekts zu bekommen

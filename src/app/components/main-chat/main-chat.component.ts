@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { v4 as uuidv4 } from 'uuid';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
@@ -11,13 +12,13 @@ import { EditChannelComponent } from '../../edit-channel/edit-channel.component'
 import { MatDialog } from '@angular/material/dialog';
 import { ThreadComponent } from '../thread/thread.component';
 import { Subscription } from 'rxjs';
-import { PostsService } from '../../../services/content/posts.service';
 import { Post } from '../../../models/post.class';
 import { AuthService } from '../../../services/auth.service';
 import { TimeService } from '../../../services/time.service';
 import { User } from '../../../models/user.class';
 import { MemberListComponent } from '../../member-list/member-list.component';
 import { ActivityService } from '../../../services/activity.service';
+import { Thread } from '../../../models/thread.class';
 
 @Component({
   selector: 'app-main-chat',
@@ -36,7 +37,7 @@ import { ActivityService } from '../../../services/activity.service';
 export class MainChatComponent implements OnInit, OnDestroy {
   private authSub = new Subscription();
   private channelSub = new Subscription();
-  
+
   currentUid: string | null = null;
   currentChannel = new Channel();
   currentPost?: Post;
@@ -48,12 +49,11 @@ export class MainChatComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private authService: AuthService,
     private channelsService: ChannelsService,
-    private postsService: PostsService,
     private activityService: ActivityService,
     public timeService: TimeService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {}
+  ) { }
 
 
   ngOnInit(): void {
@@ -111,21 +111,49 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
 
-  getThreadLength(thread_id: string): number {
-    return this.postsService.getThreadPosts(this.postsService.posts, thread_id).length;
-  }
+  // getThreadLength(thread_id: string): number {
+  //   return this.postsService.getThreadPosts(this.postsService.posts, thread_id).length;
+  // }
 
 
-  getLastReplyTime(thread_id: string): number {
-    const threadPosts = this.postsService.getThreadPosts(this.postsService.posts, thread_id);
-    const lastIndex = threadPosts.length - 1;
-    return threadPosts[lastIndex].date;
-  }
+  // getLastReplyTime(thread_id: string): number {
+  //   const threadPosts = this.postsService.getThreadPosts(this.postsService.posts, thread_id);
+  //   const lastIndex = threadPosts.length - 1;
+  //   return threadPosts[lastIndex].date;
+  // }
 
 
   handleEmojiStateChange(newState: boolean): void {
     this.emojiPicker = newState;
   }
+
+  onCreatePost(event: string) {
+    if (!this.currentUid) {
+      console.error('Current user ID is not set.');
+      return;
+    }
+    if (!this.currentChannel.channel_id) {
+      console.error('Current channel ID is not set.');
+      return;
+    }
+
+    const newPost = new Post({
+      post_id: uuidv4(),
+      message: event,
+      user_id: this.currentUid,
+      thread: new Thread({
+        thread_id: uuidv4(),
+        date: Date.now(),
+        posts: [],
+      }),
+      date: Date.now(), // Add date if needed
+      reactions: [] // Initialize reactions array if needed
+    });
+    this.channelsService.addPostToChannel(this.currentChannel.channel_id, newPost)
+      .then(() => console.log('Post successfully added to the channel'))
+      .catch(err => console.error('Error adding post to the channel:', err));
+  }
+
 
 
   onEditChannel(): void {
@@ -141,6 +169,8 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
 
   handleThread(event: string): void {
+    console.log(event);
+
     // this.currentPost = this.postsService.posts.find(p => p.thread_id === event);
   }
 

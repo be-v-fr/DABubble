@@ -24,10 +24,10 @@
             @for (post of currentChannel.posts; track post.post_id; let i = $index) {
             <div class="message-item-container">
                 <app-time-separator [timestamp]="post.thread.date" />
-                <app-message-item [post]="channelThreadsFirstPosts[i]" [hideEmojiPicker]="emojiPicker"
+                <app-message-item [post]="post" [hideEmojiPicker]="emojiPicker"
                     (showEmojiPicker)="handleEmojiStateChange($event)"
                     [messageSender]="isCurrentUserAuthor(post.thread.thread_id)"
-                    [lastReply]="getLastReplyTime(post.thread.thread_id)" (threadId)="handleThread($event)" />
+                    (threadId)="handleThread($event)" />
             </div>
             }
             } @else {
@@ -43,7 +43,7 @@
             </div>
             }
         </div>
-        <app-message-box [channelName]="currentChannel.name" />
+        <app-message-box [channelName]="currentChannel.name" (sent)="onCreatePost($event)"/>
     </section>
     <app-thread class="thread" *ngIf="currentPost" [currChannel]="currentChannel" [post]="currentPost" />
 </div>

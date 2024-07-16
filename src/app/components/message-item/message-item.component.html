@@ -11,17 +11,17 @@
         </button>
     </div>
     <div class="img-container">
-        <img [src]="author?.avatarSrc" alt="Avatar">
+        <img [src]="currentUser?.avatarSrc" alt="Avatar">
     </div>
     <div class="message-content">
         <div class="user-name-container">
-            <div class="user-name" (click)="openUserProfile(post.user_id)">{{author?.name}}</div>
+            <div class="user-name" (click)="openUserProfile(post.user_id)">{{currentUser?.name}}</div>
             <span>{{timeService.toClock(post.date)}} Uhr</span>
         </div>
         <div class="message">
             <div class="message-text">{{ post.message }}</div>
         </div>
-        <div  class="message-answers">
+        <div class="message-answers">
             <button>1 Antworten</button>
             <span *ngIf="lastReply">Letzte Antwort {{timeService.toRelativeDateWithClock(lastReply)}}</span>
         </div>

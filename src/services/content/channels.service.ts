@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { CollectionReference, DocumentReference, addDoc } from 'firebase/firestore';
 import { Channel } from '../../models/channel.class';
 import { User } from '../../models/user.class';
+import { Post } from '../../models/post.class';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,17 @@ export class ChannelsService implements OnDestroy {
     this.unsubChannels();
   }
 
+  subChannels() {
+    return onSnapshot(this.getColRef(), (list: any) => {
+      const channels: Channel[] = [];
+      list.forEach((element: any) => {
+        channels.push(new Channel(element.data()));
+      });
+      this.channels = channels;
+      this.channels$.next(channels);
+    });
+  }
+
   getAllChannels(): Channel[] {
     return this.channels.slice();
   }
@@ -37,31 +49,31 @@ export class ChannelsService implements OnDestroy {
     return channel.channel_id;
   }
 
-  updateChannel(newChannel: Channel) {
+  async addPostToChannel(channel_id: string, newPost: Post) {
+    const channel = this.channels.find(c => c.channel_id === channel_id);
+    if (channel) {
+      channel.posts.push(newPost);
+      await this.updateChannelInStorage(channel);
+      this.channels$.next(this.channels.slice());
+    } else {
+      console.error(`Channel with ID ${channel_id} not found`);
+    }
+  }
+
+  async updateChannel(newChannel: Channel) {
     const channelIndex = this.channels.findIndex(c => c.channel_id === newChannel.channel_id);
     if (channelIndex !== -1) {
       this.channels[channelIndex] = newChannel;
       this.channels$.next(this.channels.slice());
-      this.updateChannelInStorage(newChannel);
+      await this.updateChannelInStorage(newChannel);
     }
   }
 
-  deleteChannel(channel: Channel) {
+  async deleteChannel(channel: Channel) {
     const channelIndex = this.channels.indexOf(channel);
     this.channels.splice(channelIndex, 1);
     this.channels$.next(this.channels.slice());
-    this.deleteChannelInStorage(channel.channel_id);
-  }
-
-  subChannels() {
-    return onSnapshot(this.getColRef(), (list: any) => {
-      const channels: Channel[] = [];
-      list.forEach((element: any) => {
-        channels.push(new Channel(element.data()));
-      });
-      this.channels = channels;
-      this.channels$.next(channels);
-    });
+    await this.deleteChannelInStorage(channel.channel_id);
   }
 
   getColRef(): CollectionReference {

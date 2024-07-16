@@ -29,6 +29,7 @@ export class MessageBoxComponent {
     if (form.submitted && form.valid) { 
       this.sent.emit(this.data.message);
       // clear form
+      form.reset()
     }
   }
 }
