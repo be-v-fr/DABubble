@@ -71,6 +71,11 @@
             max-width: calc(100vw - 32px);
             padding: 35px 20px;
         }
+
+        @media screen and (max-width: 400px) {
+            max-width: calc(100vw - 20px);
+            padding: 24px 12px;
+        }
     }
 }
 
@@ -81,6 +86,9 @@
     @media screen and (max-width: 1024px) {
         font-size: 17px;
         margin-bottom: 10px;
+    }
+    @media screen and (max-width: 400px) {
+        font-size: 14px;
     }
 }
 
@@ -123,15 +131,42 @@
         &:focus {
             border-color: $purple-blue-bright;
         }
-        @media screen and (max-width: 1024px) {
-            padding: 13px 32px 13px 86px;
-        }
     }
 
     @media screen and (max-width: 1024px) {
         height: 50px;
         margin-top: 10px;
         margin-bottom: 20px;
+        .icon {
+            top: 13px;
+        }
+
+        input {
+            padding: 13px 32px 13px 86px;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .icon {
+            left: 24px;
+        }
+
+        input {
+            padding: 13px 24px 13px 64px;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        .icon {
+            left: 20px;
+            width: 20px;
+            height: 20px;
+        }
+
+        input {
+            padding: 13px 20px 13px 56px;
+            font-size: 16px;
+        }
     }
 }
 
@@ -169,41 +204,6 @@
 
     @media screen and (max-width: 1024px) {
         margin-bottom: 20px;
-    }
-}
-
-.google-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    cursor: pointer;
-    border: 1px solid $violet-bright;
-
-    img {
-        position: initial;
-        width: 38px;
-        height: 38px;
-    }
-
-    span {
-        width: 190px;
-        color: #444df2;
-        font-size: 18px;
-        font-weight: 400;
-        @include transition();
-    }
-    @include transition();
-
-    &:hover {
-        border-color: $grey;
-    }
-
-    &:active {
-        border-color: $purple-blue-bright;
-        span {
-            font-weight: 700;
-        }
     }
 }
 
@@ -251,6 +251,13 @@
     @media screen and (max-width: 1024px) {
         gap: 20px;
     }
+    @media screen and (max-width: 400px) {
+        gap: 14px;
+        .form-btn {
+            padding-left: 20px;
+            padding-right: 20px;
+            font-size: 17px;        }
+    }
 }
 
 app-legal-footer {
@@ -262,9 +269,13 @@ app-legal-footer {
     justify-content: center;
 }
 
-@media screen and (max-width: 1024px) {
-    .link-purple-bg {
+.link-purple-bg {
+    @media screen and (max-width: 1024px) {
         font-size: 17px;
         margin-bottom: 16px;
+    }
+
+    @media screen and (max-width: 400px) {
+        font-size: 16px;
     }
 }

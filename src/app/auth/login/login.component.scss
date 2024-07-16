@@ -1,4 +1,50 @@
-@import '../auth.component.scss';
+@import "../auth.component.scss";
+
+.google-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    border: 1px solid $violet-bright;
+
+    img {
+        position: initial;
+        width: 38px;
+        height: 38px;
+    }
+
+    span {
+        width: 190px;
+        color: #444df2;
+        font-size: 18px;
+        font-weight: 400;
+        @include transition();
+    }
+    @include transition();
+
+    &:hover {
+        border-color: $grey;
+    }
+
+    &:active {
+        border-color: $purple-blue-bright;
+        span {
+            font-weight: 700;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        gap: 12px;
+        img {
+            width: 32px;
+            height: 32px;
+        }
+        span {
+            font-size: 17px;
+        }
+    }
+}
 
 .create-account-hint {
     position: absolute;
@@ -28,6 +74,12 @@
         gap: 0;
         a {
             right: 0;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        p, a {
+            font-size: 17px;
         }
     }
 }
