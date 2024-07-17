@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LegalFooterComponent } from './legal-footer/legal-footer.component';
+import { AnimationIntroService } from '../animation-intro/service/animation-intro.service';
 
 
 /**
@@ -10,10 +12,10 @@ import { LegalFooterComponent } from './legal-footer/legal-footer.component';
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [RouterOutlet, LegalFooterComponent],
+  imports: [RouterOutlet, CommonModule, LegalFooterComponent],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
 export class AuthComponent {
-
+  public introService = inject(AnimationIntroService);
 }

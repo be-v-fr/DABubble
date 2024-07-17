@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { AnimationIntroComponent } from './animation-intro/animation-intro.component';
+import { AnimationIntroService } from './animation-intro/service/animation-intro.service';
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
 
@@ -20,16 +21,16 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'DaBubble';
   awaitingInit: boolean = true;
-  afterAnimation: boolean = false;
   uid: string | null = null;
   private authService = inject(AuthService);
+  public introService = inject(AnimationIntroService);
   userSub = new Subscription();
 
 
   // ###############################################
   // This parameter (if set to true) suppresses both the animation and the authentication
   // and redirects automatically to the home component.
-  TESTING: boolean = true;
+  TESTING: boolean = false;
   // ###############################################
 
 
@@ -46,6 +47,9 @@ export class AppComponent implements OnInit, OnDestroy {
    * This function creates an authentication service subscription for user authentication.
    */
   ngOnInit(): void {
+    if(this.TESTING) {
+      this.introService.afterAnimation = true;
+    }
     if (!this.TESTING) {
       const url = new URL(window.location.href);
       if (!url.search.includes('mode')) { this.router.navigate(['/auth/logIn']) }
@@ -101,6 +105,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
   onAnimationComplete() {
-    this.afterAnimation = true;
+    this.introService.afterAnimation = true;
+    setTimeout(() => this.introService.afterAnimationPlusTimeout = true, 100);
   }
 }

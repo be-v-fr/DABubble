@@ -7,6 +7,8 @@ import { AuthService } from '../../../services/auth.service';
 import { UsersService } from '../../../services/users.service';
 import { ActivityService } from '../../../services/activity.service';
 import { User } from '../../../models/user.class';
+import { AnimationIntroService } from '../../animation-intro/service/animation-intro.service';
+
 
 @Component({
   selector: 'app-header',
@@ -34,7 +36,8 @@ export class HeaderComponent {
     private router: Router,
     private authService: AuthService,
     private usersService: UsersService,
-    public activityService: ActivityService
+    public activityService: ActivityService,
+    public introService: AnimationIntroService
   ) {}
 
   openUserLogoutCard(): void {

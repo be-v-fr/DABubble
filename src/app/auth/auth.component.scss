@@ -238,6 +238,18 @@
     }
 }
 
+.logo-wrapper {
+    position: absolute;
+    left: 75px;
+    top: 75px;
+    width: 242px;
+    height: 70px;
+    cursor: pointer;
+    .logo {
+        width: 100%;
+        height: 100%;
+    }
+}
 
 app-legal-footer {
     position: absolute;
