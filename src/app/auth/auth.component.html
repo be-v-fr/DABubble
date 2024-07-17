@@ -1,5 +1,7 @@
-<router-outlet />
-<a href="" class="logo-wrapper" [ngClass]="{'transparent': !introService.afterAnimation}">
-    <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
-</a>
-<app-legal-footer />
+<div class="auth-outer-wrapper">
+    <a href="" class="logo-wrapper" [ngClass]="{'transparent': !introService.afterAnimation}">
+        <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
+    </a>
+    <router-outlet />
+    <app-legal-footer />
+</div>
