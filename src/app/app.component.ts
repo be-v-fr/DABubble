@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
   // ###############################################
   // This parameter (if set to true) suppresses both the animation and the authentication
   // and redirects automatically to the home component.
-  TESTING: boolean = false;
+  TESTING: boolean = true;
   // ###############################################
 
 
