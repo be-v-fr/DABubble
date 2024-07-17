@@ -1,14 +1,6 @@
 @import '../auth.component.scss';
 @import '../sign-up/sign-up.component.scss';
-
-.content-wrapper .content-main {
-    width: 696px;
-    padding-left: 96px;
-    padding-right: 96px;
-    h1 .back-btn-container {
-        left: -60px;
-    }
-}
+@import '../request-pw-reset/request-pw-reset.component.scss';
 
 .form-field input {
     padding: 18px 32px;
@@ -20,4 +12,8 @@
     flex-direction: column;
     gap: 30px;
     padding: 0 48px;
+    @media screen and (max-width: 1024px) {
+        padding: 0;
+        gap: 12px;
+    }
 }

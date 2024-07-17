@@ -8,4 +8,10 @@
     h1 .back-btn-container {
         left: -60px;
     }
+    @media screen and (max-width: 640px) {
+        padding: 35px 20px;
+        h1 .back-btn-container {
+            left: 0;
+        }
+    }
 }
