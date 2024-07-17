@@ -1,10 +1,12 @@
 import { Injectable, inject, OnDestroy } from '@angular/core';
+import { v4 as uuidv4 } from 'uuid';
 import { Firestore, collection, doc, onSnapshot, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
 import { CollectionReference, DocumentReference, addDoc } from 'firebase/firestore';
 import { Channel } from '../../models/channel.class';
 import { User } from '../../models/user.class';
 import { Post } from '../../models/post.class';
+import { Thread } from '../../models/thread.class';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +51,19 @@ export class ChannelsService implements OnDestroy {
     return channel.channel_id;
   }
 
-  async addPostToChannel(channel_id: string, newPost: Post) {
+  async addPostToChannel(channel_id: string, uid: string, message: string) {
+    const newPost = new Post({
+      post_id: uuidv4(),
+      message: message,
+      user_id: uid,
+      thread: new Thread({
+        thread_id: uuidv4(),
+        date: Date.now(),
+        posts: [],
+      }),
+      date: Date.now(),
+      reactions: []
+    });
     const channel = this.channels.find(c => c.channel_id === channel_id);
     if (channel) {
       channel.posts.push(newPost);
@@ -59,6 +73,32 @@ export class ChannelsService implements OnDestroy {
       console.error(`Channel with ID ${channel_id} not found`);
     }
   }
+
+  async addPostToThread(channel_id: string, thread_id: string, uid: string, message: string) {
+    const newPost = new Post({
+      post_id: uuidv4(),
+      message: message,
+      user_id: uid,
+      thread: new Thread(),
+      date: Date.now(),
+      reactions: []
+    });
+
+    const channel = this.channels.find(c => c.channel_id === channel_id);
+    if (channel) {
+      const post = channel.posts.find(p => p.thread.thread_id === thread_id);
+      if (post) {
+        post.thread.posts.push(newPost);
+        await this.updateChannelInStorage(channel);
+        this.channels$.next(this.channels.slice());
+      } else {
+        console.error(`Thread with ID ${thread_id} not found in channel ${channel_id}`);
+      }
+    } else {
+      console.error(`Channel with ID ${channel_id} not found`);
+    }
+  }
+
 
   async updateChannel(newChannel: Channel) {
     const channelIndex = this.channels.findIndex(c => c.channel_id === newChannel.channel_id);

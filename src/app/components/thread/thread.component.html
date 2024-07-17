@@ -10,16 +10,17 @@
     </div>
     <div class="thread-content">
         <div class="thread-message">
-            <app-message-item [isMainPostThread]="true" [post]="post()" [hideEmojiPicker]="emojiPicker"
+            <app-message-item [post]="post!" [isMainPostThread]="true" [hideEmojiPicker]="emojiPicker"
                 [messageSender]="true" [hideEmojiPicker]="emojiPicker" (showEmojiPicker)="handleStateChange($event)" />
-            <div class="antworten-separator">2 Antworten</div>
+            <div class="antworten-separator">{{ post?.thread?.posts?.length }} Antworten</div>
         </div>
-
+        @for (thPost of post?.thread?.posts; track $index) {
         <div class="thread-antworten">
-            <app-message-item [hideEmojiPicker]="emojiPicker" (showEmojiPicker)="handleStateChange($event)"
-                [messageSender]="false" />
+            <app-message-item [post]="thPost" [hideEmojiPicker]="emojiPicker"
+                (showEmojiPicker)="handleStateChange($event)" [messageSender]="false" />
         </div>
+        }
     </div>
-    <app-message-box [replying]="true"  />
+    <app-message-box [replying]="true" (sent)="onCreatePost($event)" />
     <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="emojiPicker"></emoji-mart>
 </div>

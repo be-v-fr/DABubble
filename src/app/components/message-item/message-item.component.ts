@@ -26,8 +26,10 @@ import { ClickStopPropagationDirective } from '../../shared/click-stop-propagati
 })
 export class MessageItemComponent implements OnInit, OnDestroy {
 
+  // thread.posts[lastIndex].date;
+
   @Input() post: Post = new Post();
-  @Input() lastReply?: number;
+  @Input() lastReply = this.post?.thread.posts[this.post.thread.posts.length - 1]?.date ?? null;;
   @Input() messageSender?: boolean;
   @Input() isMainPostThread = false;
   @Input() hideEmojiPicker = false;
@@ -58,14 +60,7 @@ export class MessageItemComponent implements OnInit, OnDestroy {
     this.authSub.unsubscribe();
   }
 
-  onShowEmojiPicker() {
-    this.emojiPicker = !this.emojiPicker;
-    this.showEmojiPicker.emit(this.emojiPicker);
-  }
-
   onOpenNewThread() {
-    console.log(this.post);
-    
     this.threadId.emit(this.post.thread.thread_id);
   }
 
@@ -90,12 +85,18 @@ export class MessageItemComponent implements OnInit, OnDestroy {
   }
 
   // TO DO: Handle Emoji
+
+  onShowEmojiPicker() {
+    this.emojiPicker = !this.emojiPicker;
+    this.showEmojiPicker.emit(this.emojiPicker);
+  }
+
   onHandleEmoji(emoji: string) {
-    
+
   }
 
   addEmoji(event: any) {
-    
+
     this.emojiPicker = !this.emojiPicker;
   }
 }

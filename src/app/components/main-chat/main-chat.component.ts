@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { v4 as uuidv4 } from 'uuid';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
@@ -40,10 +39,10 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   currentUid: string | null = null;
   currentChannel = new Channel();
-  currentPost?: Post;
-  channelThreadsFirstPosts: Post[] = [];
+  currPost: Post | undefined;
   emojiPicker = false;
   activeUsers: User[] = [];
+  currentDate: number = Date.now();
 
   constructor(
     private dialog: MatDialog,
@@ -99,35 +98,17 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
 
-  getFirstPost(thread_id: string): Post {
-    const post = this.channelThreadsFirstPosts.find(p => p.thread.thread_id === thread_id);
-    return post ? post : new Post();
-  }
-
-
-  isCurrentUserAuthor(thread_id: string): boolean {
-    const firstPost = this.getFirstPost(thread_id);
+  isCurrentUserAuthor(): boolean {
+    const firstPost = this.currentChannel.posts[0];
     return this.currentUid === firstPost.user_id;
   }
-
-
-  // getThreadLength(thread_id: string): number {
-  //   return this.postsService.getThreadPosts(this.postsService.posts, thread_id).length;
-  // }
-
-
-  // getLastReplyTime(thread_id: string): number {
-  //   const threadPosts = this.postsService.getThreadPosts(this.postsService.posts, thread_id);
-  //   const lastIndex = threadPosts.length - 1;
-  //   return threadPosts[lastIndex].date;
-  // }
 
 
   handleEmojiStateChange(newState: boolean): void {
     this.emojiPicker = newState;
   }
 
-  onCreatePost(event: string) {
+  onCreatePost(message: string) {
     if (!this.currentUid) {
       console.error('Current user ID is not set.');
       return;
@@ -137,19 +118,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const newPost = new Post({
-      post_id: uuidv4(),
-      message: event,
-      user_id: this.currentUid,
-      thread: new Thread({
-        thread_id: uuidv4(),
-        date: Date.now(),
-        posts: [],
-      }),
-      date: Date.now(), // Add date if needed
-      reactions: [] // Initialize reactions array if needed
-    });
-    this.channelsService.addPostToChannel(this.currentChannel.channel_id, newPost)
+    this.channelsService.addPostToChannel(this.currentChannel.channel_id, this.currentUid, message)
       .then(() => console.log('Post successfully added to the channel'))
       .catch(err => console.error('Error adding post to the channel:', err));
   }
@@ -168,12 +137,19 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
 
-  handleThread(event: string): void {
-    console.log(event);
-
-    // this.currentPost = this.postsService.posts.find(p => p.thread_id === event);
+  handleThread(threadId: string): void {
+    if (this.currentChannel && this.currentChannel.posts) {
+      const post = this.currentChannel.posts.find(post => post.thread.thread_id === threadId);
+      if (!post) {
+        console.error(`Thread with ID ${threadId} not found.`);
+        this.currPost = undefined;
+      } else {
+        this.currPost = post;
+      }
+    } else {
+      console.error('Current channel or posts are not defined.');
+    }
   }
-
 
   ngOnDestroy(): void {
     this.authSub.unsubscribe();
