@@ -8,6 +8,17 @@
             <img src="../../../assets/img/icons/edit_square.svg" alt=" Edit Squere">
         </a>
     </div>
+
+    <div class="mobile-searchbar-wrapper">
+        <div class="searchbar-box">
+            <input id="searchbar" type="text" placeholder="Gehe zu ...">
+            <div class="searchbar-icon">
+                <img src="/assets/img/icons/search.svg">
+            </div>
+        </div>
+    </div>
+
+
     <div class="nav-main">
         <app-expandable-button title="Channels" icon="workspaces" [showBtn]="true" [user]="user" [userChannels]="userChannels" />
         <app-expandable-button title="Direktnachrichten" [user]="user" icon="account_circle" [showBtn]="false" />

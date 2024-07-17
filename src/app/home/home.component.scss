@@ -67,3 +67,19 @@ button.nav-button {
         flex-grow: 1;
     }
 }
+
+@media screen and (max-width: 768px){
+    button.nav-button {
+        display: none;
+    }
+    .main-container {
+        max-height: inherit;
+        padding: 0;
+        gap: 0;
+
+        app-navigation.expanded{
+            width: 100%;
+        }
+    }
+
+  }
