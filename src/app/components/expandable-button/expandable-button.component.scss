@@ -69,7 +69,6 @@
           overflow-y: auto;
           @include scrollbar();
 
-
           li {
             padding: 4px 20px;
             border-radius: 30px;
@@ -119,6 +118,10 @@
 
       .messages-menu {
         height: 100%;
+        overflow-y: auto;
+        &::-webkit-scrollbar {
+          display: none;
+        }
 
         ul {
           height: 100%;
@@ -128,8 +131,6 @@
           align-items: flex-start;
           gap: 25px;
           padding: 0;
-          overflow-y: auto;
-          @include scrollbar();
 
           li {
             padding: 4px 20px;
@@ -172,9 +173,36 @@
             }
           }
         }
+        
+
       }
     }
   }
+  .new-message-icon{
+    display: none;
+  }
+}
 
+@media screen and (max-width: 768px) {
+  .cross-btn span {
+    color: rgba(83, 90, 241, 1);
+  }
+  .add-channel {
+    color: rgba(83, 90, 241, 1);
+  }
+
+  .messages-menu ul {
+    margin-left: 36px;
+    margin-top: 30px;
+  }
+  .exp-btn-container{
+    max-height: unset !important;
+  }
+  .new-message-icon{
+    display: block !important;
+    position: absolute;
+    right: 16px;
+    top: 815px;
+  }
 
 }

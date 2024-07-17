@@ -148,3 +148,9 @@
   }
 
 }
+
+@media screen and (max-width: 768px){
+  .main-container{
+    display: none;
+  }
+}

@@ -51,5 +51,50 @@
         width: 100%;
       }
     }
+
+    .mobile-searchbar-wrapper{
+      display: none;
+    }
   }
+
+ 
 }
+@media screen and (max-width: 768px) {
+
+  section{
+    border-radius: unset !important;
+  }
+  
+   .nav-header {
+    display: none !important;
+  } 
+  .mobile-searchbar-wrapper{
+    display: block !important;
+    width: 100%;
+    .searchbar-box {
+        height: 42px;
+        background-color: #fff;
+        border-radius: 42px;
+        border: 1px solid rgba(173, 176, 217, 1);
+        padding: 8px 24px;
+        display: flex;
+             input {
+            width: 100%;
+            font-size: 17px;
+            &::placeholder {
+                color: $grey;
+            }
+        }
+        .searchbar-icon {
+            display: flex;
+            
+        } 
+    }
+  }
+
+  
+}
+
+
+
+

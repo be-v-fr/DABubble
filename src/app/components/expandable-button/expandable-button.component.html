@@ -8,7 +8,7 @@
                 {{ title() }}
             </div>
         </button>
-        <button *ngIf="showBtn()" (click)="onAddChannelClick()">
+        <button *ngIf="showBtn()" (click)="onAddChannelClick()" class="cross-btn">
             <span class="material-icons-outlined add-icon">add</span>
         </button>
     </div>
@@ -22,7 +22,7 @@
                     </a>
                 </li>}
             </ul>
-            <button (click)="onAddChannelClick()">
+            <button (click)="onAddChannelClick()" class="add-channel">
                 <span class="material-icons-outlined add-circle-icon">add_circle_outline</span>
                 <span>Channel hinzufügen</span>
             </button>
@@ -98,6 +98,9 @@
                         <span>Noah Braun</span>
                     </a>
                 </li>
+                <div class="new-message-icon">
+                    <img src="../../../assets/img/icons/new_message.svg">
+                </div>
             </ul>
         </div>
     </div>
