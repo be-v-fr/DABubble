@@ -227,6 +227,10 @@ a {
     border-radius: 30px;
 }
 
+.hide {
+    display: none;
+}
+
 .d-640 {
     display: none;
     @media screen and (max-width: 640px) {

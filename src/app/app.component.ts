@@ -20,6 +20,7 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'DaBubble';
   awaitingInit: boolean = true;
+  afterAnimation: boolean = false;
   uid: string | null = null;
   private authService = inject(AuthService);
   userSub = new Subscription();
@@ -33,7 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
   /**
-   * The constructor sets the login page as the default route.
+   * The constructor declares a Router instance
    * @param router - Router instance
    */
   constructor(private router: Router) {
@@ -45,12 +46,12 @@ export class AppComponent implements OnInit, OnDestroy {
    * This function creates an authentication service subscription for user authentication.
    */
   ngOnInit(): void {
-      if(!this.TESTING) {
-        const url = new URL(window.location.href);
-        if(!url.search.includes('mode')) {this.router.navigate(['/auth/logIn'])}
-        this.userSub = this.subUser();
-        this.awaitMax();
-      }
+    if (!this.TESTING) {
+      const url = new URL(window.location.href);
+      if (!url.search.includes('mode')) { this.router.navigate(['/auth/logIn']) }
+      this.userSub = this.subUser();
+      this.awaitMax();
+    }
   }
 
 
@@ -84,17 +85,22 @@ export class AppComponent implements OnInit, OnDestroy {
    * authentication components. The authentication process itself will not be affected since it is handled via
    * subscriptions which continue in the runtime environment.
    */
-    awaitMax(): void {
-      setTimeout(() => this.awaitingInit = false, 1000);
-    }
+  awaitMax(): void {
+    setTimeout(() => this.awaitingInit = false, 1000);
+  }
 
 
-    onProtectedRoute(): boolean {
-      const route = this.router.url;
-      return !(
-        route.includes('auth') ||
-        route.includes('impress') ||
-        route.includes('privacypolicy')
-      ); 
-    }
+  onProtectedRoute(): boolean {
+    const route = this.router.url;
+    return !(
+      route.includes('auth') ||
+      route.includes('impress') ||
+      route.includes('privacypolicy')
+    );
+  }
+
+
+  onAnimationComplete() {
+    this.afterAnimation = true;
+  }
 }

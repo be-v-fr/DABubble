@@ -193,10 +193,6 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
     }
 }
 
-.hide {
-    display: none;
-}
-
 .paused {
     animation-play-state: paused !important;
     .logo-container {
