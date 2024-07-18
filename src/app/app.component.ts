@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
-import { AnimationIntroComponent } from './animation-intro/animation-intro.component';
 import { AnimationIntroService } from './animation-intro/service/animation-intro.service';
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
@@ -14,13 +13,12 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, AnimationIntroComponent],
+  imports: [CommonModule, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'DaBubble';
-  awaitingInit: boolean = true;
   uid: string | null = null;
   private authService = inject(AuthService);
   public introService = inject(AnimationIntroService);
@@ -30,7 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
   // ###############################################
   // This parameter (if set to true) suppresses both the animation and the authentication
   // and redirects automatically to the home component.
-  TESTING: boolean = true;
+  TESTING: boolean = false;
   // ###############################################
 
 
@@ -48,7 +46,9 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     if(this.TESTING) {
+      this.introService.awaitingInit = false;
       this.introService.afterAnimation = true;
+      this.introService.afterAnimationPlusTimeout = true;
     }
     if (!this.TESTING) {
       const url = new URL(window.location.href);
@@ -76,7 +76,7 @@ export class AppComponent implements OnInit, OnDestroy {
       if (user && user.uid) {
         this.uid = user.uid;
         this.router.navigate(['']);
-        this.awaitingInit = false;
+        this.introService.awaitingInit = false;
       }
     });
   }
@@ -90,7 +90,7 @@ export class AppComponent implements OnInit, OnDestroy {
    * subscriptions which continue in the runtime environment.
    */
   awaitMax(): void {
-    setTimeout(() => this.awaitingInit = false, 1000);
+    setTimeout(() => this.introService.awaitingInit = false, 1000);
   }
 
 
@@ -101,11 +101,5 @@ export class AppComponent implements OnInit, OnDestroy {
       route.includes('impress') ||
       route.includes('privacypolicy')
     );
-  }
-
-
-  onAnimationComplete() {
-    this.introService.afterAnimation = true;
-    setTimeout(() => this.introService.afterAnimationPlusTimeout = true, 100);
   }
 }

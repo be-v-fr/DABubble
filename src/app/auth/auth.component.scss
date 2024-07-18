@@ -267,7 +267,8 @@
         left: 0;
         top: 0;
         width: 204px;
-        height: 56px;        
+        height: 56px;
+        margin-top: calc(-56px - 16px);
     }
 }
 
