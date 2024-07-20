@@ -11,6 +11,8 @@ import { TimeService } from '../../../services/time.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { ClickStopPropagationDirective } from '../../shared/click-stop-propagation.directive';
+import { ChannelsService } from '../../../services/content/channels.service';
+import { Reaction } from '../../../models/reaction.class';
 
 @Component({
   selector: 'app-message-item',
@@ -22,14 +24,12 @@ import { ClickStopPropagationDirective } from '../../shared/click-stop-propagati
     ClickStopPropagationDirective
   ],
   templateUrl: './message-item.component.html',
-  styleUrl: './message-item.component.scss'
+  styleUrls: ['./message-item.component.scss'] // fix styleUrl to styleUrls
 })
-export class MessageItemComponent implements OnInit, OnDestroy {
-
-  // thread.posts[lastIndex].date;
+export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() post: Post = new Post();
-  @Input() lastReply = this.post?.thread.posts[this.post.thread.posts.length - 1]?.date ?? null;;
+  @Input() lastReply = this.post?.thread.posts[this.post.thread.posts.length - 1]?.date ?? null;
   @Input() messageSender?: boolean;
   @Input() isMainPostThread = false;
   @Input() hideEmojiPicker = false;
@@ -40,7 +40,6 @@ export class MessageItemComponent implements OnInit, OnDestroy {
   emojiPicker = false;
   groupedEmojis: { [key: string]: { count: number, users: string[] } } = {};
   currentUser: User | undefined;
-  users?: User[];
 
   private authSub = new Subscription();
 
@@ -48,23 +47,31 @@ export class MessageItemComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private authService: AuthService,
     private usersService: UsersService,
-    @Inject(TimeService) public timeService: TimeService
+    private channelsService: ChannelsService,
+    public timeService: TimeService
   ) { }
 
-
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.authSub = this.subAuth();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['post'] && changes['post'].currentValue) {
+      this.updateGroupedEmojis();
+    }
   }
 
   ngOnDestroy(): void {
     this.authSub.unsubscribe();
   }
 
-  onOpenNewThread() {
-    this.threadId.emit(this.post.thread.thread_id);
+  private async updateGroupedEmojis(): Promise<void> {
+    if (this.post.reactions && this.post.reactions.length > 0) {
+      this.groupedEmojis = await this.getGroupedEmojis(this.post.reactions);
+    }
   }
 
-  subAuth(): Subscription {
+  private subAuth(): Subscription {
     return this.authService.user$.subscribe(() => {
       const uid = this.authService.getCurrentUid();
       if (uid) {
@@ -73,10 +80,15 @@ export class MessageItemComponent implements OnInit, OnDestroy {
     });
   }
 
+  onOpenNewThread() {
+    this.threadId.emit(this.post.thread.thread_id);
+  }
+
   openUserProfile(uid: string): void {
     if (uid) {
-      this.dialog.open(UserProfileCardComponent);
-      // TO DO: Übertragung der UID an ProfileCardComponent
+      this.dialog.open(UserProfileCardComponent, {
+        data: { uid }
+      });
     }
   }
 
@@ -84,20 +96,67 @@ export class MessageItemComponent implements OnInit, OnDestroy {
     return Object.keys(obj);
   }
 
-  // TO DO: Handle Emoji
-
   onShowEmojiPicker() {
     this.emojiPicker = !this.emojiPicker;
     this.showEmojiPicker.emit(this.emojiPicker);
   }
 
-  onHandleEmoji(emoji: string) {
+  async onHandleReaction(emoji: any) {
+    if (!this.currentUser) {
+      console.error('Current user is not defined');
+      return;
+    }
 
+    const existingReaction = this.post.reactions.find(r => r.emoji === emoji && r.user.uid === this.currentUser?.uid);
+    if (!existingReaction) {
+      try {
+        await this.channelsService.addReactionToPost(this.post.channel_id, this.post.post_id, this.currentUser, emoji);
+      } catch (error) {
+        console.error('Error adding reaction to post:', error);
+      }
+    } else {
+      await this.channelsService.deleteReactionFromPost(this.post.channel_id, this.post.post_id, this.currentUser.uid, emoji);
+    }
+
+    this.emojiPicker = false;
   }
 
-  addEmoji(event: any) {
+  async onAddReaction(event: { emoji: { native: string } }) {
+    if (!this.currentUser) {
+      console.error('Current user is not defined');
+      return;
+    }
 
-    this.emojiPicker = !this.emojiPicker;
+    const existingReaction = this.post.reactions.find(r => r.emoji === event.emoji.native && r.user.uid === this.currentUser?.uid);
+    if (!existingReaction) {
+      try {
+        await this.channelsService.addReactionToPost(this.post.channel_id, this.post.post_id, this.currentUser, event.emoji.native);
+      } catch (error) {
+        console.error('Error adding reaction to post:', error);
+      }
+    }
+
+    this.emojiPicker = false;
+  }
+
+  async getGroupedEmojis(reactions: Reaction[]): Promise<{ [key: string]: { count: number, users: string[] } }> {
+    let groups: { [key: string]: { count: number, users: string[] } } = {};
+
+    for (const reaction of reactions) {
+      if (!groups[reaction.emoji]) {
+        groups[reaction.emoji] = { count: 0, users: [] };
+      }
+      groups[reaction.emoji].count++;
+
+      if (reaction.user) {
+        try {
+          groups[reaction.emoji].users.push(reaction.user.name);
+        } catch (error) {
+          console.error(`Failed to get user with ID ${reaction.user.uid}`, error);
+        }
+      }
+    }
+
+    return groups;
   }
 }
-

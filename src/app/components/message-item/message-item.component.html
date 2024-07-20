@@ -34,7 +34,7 @@
                     </div>
                     <div class="reaction-info-sub-info">hat reagiert</div>
                 </div>
-                <div class="reaction-emoji-container" (click)="onHandleEmoji(emoji)">
+                <div class="reaction-emoji-container" (click)="onHandleReaction(emoji)">
                     <div class="emoji">{{ emoji }}</div>
                     <span>{{ groupedEmojis[emoji].count }}</span>
                 </div>
@@ -47,6 +47,6 @@
     </div>
 </div>
 <div class="emoji-container" *ngIf="emojiPicker" (click)="onShowEmojiPicker()">
-    <emoji-mart title="Pick your emoji…" appClickStopPropagation (emojiClick)="addEmoji($event)"
+    <emoji-mart title="Pick your emoji…" appClickStopPropagation (emojiClick)="onAddReaction($event)"
         emoji="point_up"></emoji-mart>
 </div>

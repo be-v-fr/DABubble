@@ -7,6 +7,8 @@ import { Channel } from '../../models/channel.class';
 import { User } from '../../models/user.class';
 import { Post } from '../../models/post.class';
 import { Thread } from '../../models/thread.class';
+import { Reaction } from '../../models/reaction.class';
+import { UsersService } from '../users.service';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +56,7 @@ export class ChannelsService implements OnDestroy {
   async addPostToChannel(channel_id: string, uid: string, message: string) {
     const newPost = new Post({
       post_id: uuidv4(),
+      channel_id: channel_id,
       message: message,
       user_id: uid,
       thread: new Thread({
@@ -99,6 +102,66 @@ export class ChannelsService implements OnDestroy {
     }
   }
 
+  async addReactionToPost(channelId: string, postId: string, user: User, reaction: string): Promise<void> {
+    try {
+      const newReaction = new Reaction({
+        reaction_id: uuidv4(),
+        user: user,
+        post_id: postId,
+        emoji: reaction
+      });
+
+      const channel = this.channels.find(c => c.channel_id === channelId);
+      if (!channel) {
+        console.error(`Channel with ID ${channelId} not found`);
+        return;
+      }
+
+      const post = channel.posts.find(p => p.post_id === postId);
+      if (!post) {
+        console.error(`Post with ID ${postId} not found in channel ${channelId}`);
+        return;
+      }
+
+      post.reactions.push(newReaction);
+
+      await this.updateChannelInStorage(channel);
+
+      this.channels$.next(this.channels.slice());
+    } catch (error) {
+      console.error('An error occurred while adding reaction to post:', error);
+    }
+  }
+
+  async deleteReactionFromPost(channelId: string, postId: string, userId: string, emoji: string): Promise<void> {
+    try {
+      const channel = this.channels.find(c => c.channel_id === channelId);
+      if (!channel) {
+        console.error(`Channel with ID ${channelId} not found`);
+        return;
+      }
+
+      const post = channel.posts.find(p => p.post_id === postId);
+      if (!post) {
+        console.error(`Post with ID ${postId} not found in channel ${channelId}`);
+        return;
+      }
+
+      const reactionIndex = post.reactions.findIndex(r => r.user.uid === userId && r.emoji === emoji);
+      if (reactionIndex === -1) {
+        console.error(`Reaction not found for user ${userId} with emoji ${emoji}`);
+        return;
+      }
+
+      post.reactions.splice(reactionIndex, 1);
+
+      await this.updateChannelInStorage(channel);
+
+      this.channels$.next(this.channels.slice());
+    } catch (error) {
+      console.error('An error occurred while deleting reaction from post:', error);
+    }
+  }
 
   async updateChannel(newChannel: Channel) {
     const channelIndex = this.channels.findIndex(c => c.channel_id === newChannel.channel_id);

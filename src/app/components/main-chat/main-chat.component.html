@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="message-items-container">
-            @if(currentChannel && currentChannel.posts.length > 0) {
+            @if(currentChannel && currentChannel.posts.length > 0 && !currentChannel.isPmChannel) {
             @for (post of currentChannel.posts; track post.post_id; let i = $index) {
             <div class="message-item-container">
                 <app-time-separator [timestamp]="post.date" />
