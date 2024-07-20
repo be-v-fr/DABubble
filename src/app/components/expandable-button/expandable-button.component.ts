@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, input } from '@angular/core';
+import { Component, HostListener, Input, input } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
 import { AddChannelComponent } from '../../add-channel/add-channel.component';
@@ -21,6 +21,7 @@ import { User } from '../../../models/user.class';
 })
 export class ExpandableButtonComponent {
   isMenuExpanded = true;
+  isOpen = true
   title = input.required<string>();
   icon = input.required<string>();
   showBtn = input.required<boolean>();
@@ -34,11 +35,25 @@ export class ExpandableButtonComponent {
 
   toggleMenu() {
     this.isMenuExpanded = !this.isMenuExpanded;
+    this.isOpen = !this.isOpen;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    if (window.innerWidth <= 768) {
+      this.isOpen = false;
+    }
   }
 
   onAddChannelClick(): void {
     const dialogRef = this.dialog.open(AddChannelComponent);
     dialogRef.componentInstance.channel.author_uid = this.user!.uid;
     dialogRef.componentInstance.channel.members.push(this.user!);
+  }
+
+  onUserClick(): void {
+    if (window.innerWidth <= 768) {
+      this.isOpen = false;
+    }
   }
 }

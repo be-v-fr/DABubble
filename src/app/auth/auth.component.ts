@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LegalFooterComponent } from './legal-footer/legal-footer.component';
+import { AnimationIntroComponent } from '../animation-intro/animation-intro.component';
 import { AnimationIntroService } from '../animation-intro/service/animation-intro.service';
 
 
@@ -12,7 +13,7 @@ import { AnimationIntroService } from '../animation-intro/service/animation-intr
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, LegalFooterComponent],
+  imports: [RouterOutlet, CommonModule, AnimationIntroComponent, LegalFooterComponent],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
