@@ -1,4 +1,4 @@
-<section>
+<section *ngIf="isVisible">
     <div class="nav-header">
         <button class="logo-btn">
             <img src="../../../assets/img/workspace_logo.svg" alt="Workspace Logo">
@@ -20,7 +20,7 @@
 
 
     <div class="nav-main">
-        <app-expandable-button title="Channels" icon="workspaces" [showBtn]="true" [user]="user" [userChannels]="userChannels" />
-        <app-expandable-button title="Direktnachrichten" [user]="user" icon="account_circle" [showBtn]="false" />
+        <app-expandable-button title="Channels" icon="workspaces" [showBtn]="true" [user]="user" [userChannels]="userChannels" (userClick)="closeNavigation()" />
+        <app-expandable-button title="Direktnachrichten" [user]="user" icon="account_circle" [showBtn]="false" (userClick)="closeNavigation()"/>
     </div>
 </section>

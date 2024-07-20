@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, Input, input } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, input, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { AddChannelComponent } from '../../add-channel/add-channel.component';
 import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
@@ -21,27 +21,33 @@ import { User } from '../../../models/user.class';
 })
 export class ExpandableButtonComponent {
   isMenuExpanded = true;
-  isOpen = true
+  isOpen = true;
   title = input.required<string>();
   icon = input.required<string>();
   showBtn = input.required<boolean>();
   online = true;
   @Input() user?: User;
   @Input() userChannels: Channel[] = [];
+  @Output() userClick = new EventEmitter<void>();
 
-  constructor(
-    private dialog: MatDialog,
-  ) { }
+
+  constructor(private dialog: MatDialog, private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd && window.innerWidth <= 768) {
+        this.isMenuExpanded = false;
+      }
+    });
+  }
 
   toggleMenu() {
     this.isMenuExpanded = !this.isMenuExpanded;
-    this.isOpen = !this.isOpen;
   }
 
-  @HostListener('window:resize', ['$event'])
+   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     if (window.innerWidth <= 768) {
-      this.isOpen = false;
+      this.isMenuExpanded = false;
+      this.userClick.emit();
     }
   }
 
@@ -53,7 +59,6 @@ export class ExpandableButtonComponent {
 
   onUserClick(): void {
     if (window.innerWidth <= 768) {
-      this.isOpen = false;
-    }
+      this.userClick.emit();        }
   }
 }

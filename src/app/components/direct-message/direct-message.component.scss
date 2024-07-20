@@ -120,3 +120,35 @@
     }
   }
 }
+.mobile-wrapper{
+  display: contents;
+}
+
+@media screen and (max-width: 768px) {
+// .direct-m-container{
+//   height: 90%;
+// }
+.mobile-wrapper{
+  position: absolute;
+  left: 0;
+  right:0;
+  height: 90vh;
+  display: block;
+  .direct-m-container{
+    border-radius: 0;
+    .direct-m-header{
+      border-radius: 0;
+    }
+  }
+ 
+       
+}
+
+
+  #mobile-direct-m-mem p {
+  display: block;
+}
+
+
+
+}
