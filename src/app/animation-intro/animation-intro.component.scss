@@ -85,7 +85,7 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
 
 .logo-img-container {
     height: 100%;
-    width: 242px;
+    width: 100%;
     position: relative;
     img {
         position: relative;
@@ -96,7 +96,7 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
 
 .logo-text-container {
     height: 100%;
-    width: 242px;
+    width: 100%;
     position: relative;
     display: flex;
     justify-content: flex-end;
