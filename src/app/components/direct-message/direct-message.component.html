@@ -1,3 +1,4 @@
+<div class="mobile-wrapper">
 <div class="direct-m-container">
   <div class="direct-m-header">
     <div class="header-img-container">
@@ -15,7 +16,7 @@
 </div>
   </div>
   <div class="direct-m-content">
-    <div class="direct-m-mem">
+    <div class="direct-m-mem" id="mobile-direct-m-mem">
       <div class="direct-m-mem-header">
         <div class="member-img-container">
           <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar" />
@@ -23,7 +24,7 @@
         <span (click)="openUserProfile()">Noah Braun</span>
       </div>
       <p>
-        Diese Unterhaltung findet nur zwischen <span>&#64;Sofia Müller</span>und
+        Diese Unterhaltung findet nur zwischen <span>&#64;Sofia Müller</span> und
         dir statt.
       </p>
     </div>
@@ -34,4 +35,5 @@
     emoji="point_up"
     *ngIf="emojiPicker"
   ></emoji-mart>
+</div>
 </div>
