@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { User } from '../../models/user.class';
 import { AddMembersComponent } from '../add-members/add-members.component';
 import { UserProfileCardComponent } from '../user-profile-card/user-profile-card.component';
-import { UsersService } from '../../services/users.service';
+import { Channel } from '../../models/channel.class';
 
 @Component({
   selector: 'app-member-list',
@@ -15,18 +15,21 @@ import { UsersService } from '../../services/users.service';
 })
 export class MemberListComponent {
   activeUsers: User[];
+  channel: Channel;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { activeUsers: User[] },
+    @Inject(MAT_DIALOG_DATA) public data: { activeUsers: User[], channel: Channel },
     private dialog: MatDialog,
-    private dialogRef: MatDialogRef<any>,
-    private usersService: UsersService
+    private dialogRef: MatDialogRef<any>
   ) {
     this.activeUsers = data.activeUsers;
+    this.channel = data.channel;
   }
 
   addMember(): void {
-    const dialogRef = this.dialog.open(AddMembersComponent);
+    const dialogRef = this.dialog.open(AddMembersComponent, {
+      data: { channel: this.channel }
+    });
 
     dialogRef.afterClosed().subscribe((newUsers: User[]) => {
       if (newUsers && newUsers.length > 0) {

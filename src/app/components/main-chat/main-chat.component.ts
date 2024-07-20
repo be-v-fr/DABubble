@@ -17,7 +17,6 @@ import { TimeService } from '../../../services/time.service';
 import { User } from '../../../models/user.class';
 import { MemberListComponent } from '../../member-list/member-list.component';
 import { ActivityService } from '../../../services/activity.service';
-import { Thread } from '../../../models/thread.class';
 
 @Component({
   selector: 'app-main-chat',
@@ -34,10 +33,10 @@ import { Thread } from '../../../models/thread.class';
   ]
 })
 export class MainChatComponent implements OnInit, OnDestroy {
-  private authSub = new Subscription();
-  private channelSub = new Subscription();
+  private authSub!: Subscription;
+  private channelSub!: Subscription;
 
-  currentUid: string | null = null;
+  currentUid: string | undefined;
   currentChannel = new Channel();
   currPost: Post | undefined;
   emojiPicker = false;
@@ -54,67 +53,48 @@ export class MainChatComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
   ) { }
 
-
   ngOnInit(): void {
-    this.authSub = this.subAuth();
+    this.authSub = this.authService.user$.subscribe(() => {
+      this.currentUid = this.authService.getCurrentUid();
+    });
+
     this.route.queryParams.subscribe(params => {
       if (params['channel']) {
         this.initChannel(params['channel']);
       }
     });
-    this.activeUsers = this.activityService.getActiveUsers();
-  }
 
-
-  subAuth(): Subscription {
-    return this.authService.user$.subscribe(() => {
-      const uid = this.authService.getCurrentUid();
-      if (uid) {
-        this.currentUid = uid;
+    this.channelSub = this.channelsService.channels$.subscribe(() => {
+      if (this.currentChannel.channel_id) {
+        this.setChannel(this.currentChannel.channel_id);
       }
     });
   }
 
-
   initChannel(channel_id: string): void {
     this.setChannel(channel_id);
-    this.channelSub.unsubscribe();
-    this.channelSub = this.subChannel(channel_id);
   }
-
 
   setChannel(channel_id: string): void {
     const channel = this.channelsService.channels.find(c => c.channel_id === channel_id);
     if (channel) {
       this.currentChannel = channel;
+      this.activeUsers = this.activityService.getActiveUsers();
     }
   }
-
-
-  subChannel(channel_id: string): Subscription {
-    return this.channelsService.channels$.subscribe(() => {
-      this.setChannel(channel_id);
-    });
-  }
-
 
   isCurrentUserAuthor(): boolean {
     const firstPost = this.currentChannel.posts[0];
     return this.currentUid === firstPost.user_id;
   }
 
-
   handleEmojiStateChange(newState: boolean): void {
     this.emojiPicker = newState;
   }
 
-  onCreatePost(message: string) {
-    if (!this.currentUid) {
-      console.error('Current user ID is not set.');
-      return;
-    }
-    if (!this.currentChannel.channel_id) {
-      console.error('Current channel ID is not set.');
+  onCreatePost(message: string): void {
+    if (!this.currentUid || !this.currentChannel.channel_id) {
+      console.error('User ID or channel ID is not set.');
       return;
     }
 
@@ -123,28 +103,24 @@ export class MainChatComponent implements OnInit, OnDestroy {
       .catch(err => console.error('Error adding post to the channel:', err));
   }
 
-
-
   onEditChannel(): void {
     this.dialog.open(EditChannelComponent, { data: this.currentChannel });
   }
 
-
   openMemberList(): void {
     this.dialog.open(MemberListComponent, {
-      data: { activeUsers: this.activeUsers }
+      data: { activeUsers: this.activeUsers, channel: this.currentChannel }
     });
   }
-
 
   handleThread(threadId: string): void {
     if (this.currentChannel && this.currentChannel.posts) {
       const post = this.currentChannel.posts.find(post => post.thread.thread_id === threadId);
-      if (!post) {
+      if (post) {
+        this.currPost = post;
+      } else {
         console.error(`Thread with ID ${threadId} not found.`);
         this.currPost = undefined;
-      } else {
-        this.currPost = post;
       }
     } else {
       console.error('Current channel or posts are not defined.');

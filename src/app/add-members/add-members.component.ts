@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../models/user.class';
 import { ActivityService } from '../../services/activity.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ChannelsService } from '../../services/content/channels.service';
+import { Channel } from '../../models/channel.class';
 
 @Component({
   selector: 'app-add-members',
@@ -17,11 +19,16 @@ export class AddMembersComponent implements OnInit {
   filteredUsers: User[] = [];
   selectedUser: User | null = null;
   showUserList: boolean = false;
+  channel: Channel;
 
   constructor(
     private activityService: ActivityService,
-    private dialogRef: MatDialogRef<AddMembersComponent>
-  ) {}
+    private dialogRef: MatDialogRef<AddMembersComponent>,
+    private channelService: ChannelsService,
+    @Inject(MAT_DIALOG_DATA) public data: { channel: Channel }
+  ) {
+    this.channel = data.channel;
+  }
 
   ngOnInit(): void {
     this.filteredUsers = this.activityService.getAllUsers();
@@ -52,6 +59,7 @@ export class AddMembersComponent implements OnInit {
 
   addUserToMembers() {
     if (this.selectedUser) {
+      this.channelService.addMemberToChannel(this.selectedUser, this.channel.channel_id);
       this.dialogRef.close([this.selectedUser]);
     }
   }

@@ -8,11 +8,11 @@
             <div class="main-header-members">
                 <button class="members-btn" (click)="openMemberList()">
                     <div class="m-images-container">
-                        <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
-                        <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
-                        <img src="/assets/img/avatar/avatar.svg" alt="Avatar">
+                        @for (member of activeUsers; track $index) {
+                        <img src="{{member.avatarSrc}}" alt="Avatar">
+                        }
                     </div>
-                    <span>3</span>
+                    <span>{{activeUsers.length}}</span>
                 </button>
                 <button class="add-members-btn">
                     <span class="material-icons-outlined icon">person_add_alt</span>

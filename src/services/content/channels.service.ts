@@ -53,6 +53,22 @@ export class ChannelsService implements OnDestroy {
     return channel.channel_id;
   }
 
+  async addMemberToChannel(user: User, channelId: string) {
+    const channel = this.getChannel(channelId);
+    if (channel) {
+      // Check if user is already a member
+      const userExists = channel.members.some(member => member.uid === user.uid);
+      if (!userExists) {
+        channel.members.push(user);
+        await this.updateChannel(channel);
+      } else {
+        console.error(`User with ID ${user.uid} is already a member of the channel.`);
+      }
+    } else {
+      console.error(`Channel with ID ${channelId} not found`);
+    }
+  }
+
   async addPostToChannel(channel_id: string, uid: string, message: string) {
     const newPost = new Post({
       post_id: uuidv4(),

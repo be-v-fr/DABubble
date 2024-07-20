@@ -71,6 +71,10 @@
             margin-left: 10px;
 
             img {
+              width: 40px;
+              height: 40px;
+              border-radius: 30px;
+              border: 2px solid white;
               margin-left: -10px;
             }
           }
@@ -149,8 +153,8 @@
 
 }
 
-@media screen and (max-width: 768px){
-  .main-container{
+@media screen and (max-width: 768px) {
+  .main-container {
     display: none;
   }
 }
