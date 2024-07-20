@@ -31,85 +31,79 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
 }
 
 @mixin logo-wrapper-start() {
-    width: 100vw;
-    height: 100dvh;
+    transform: translate(50vw, 50dvh);
 }
 
 @mixin logo-wrapper-end-auth() {
-    width: calc(242px + 2 * 75px);
-    height: calc(70px + 2 * 75px);
+    transform: translate(75px, 75px);
 }
 
 @mixin logo-wrapper-end-main() {
-    width: calc(242px + 2 * 45px);
-    height: calc(70px + 2 * 25px);
+    transform: translate(65px, 25px);
 }
 
 .logo-wrapper {
     position: absolute;
-    z-index: 11;
     display: flex;
     justify-content: center;
     align-items: center;
+
     .logo-container {
-        width: 242px;
-        height: 70px;
+        position: absolute;
+        inset: 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 }
 
-.outer-wrapper-auth .logo-wrapper {
-    @extend .logo-wrapper;
-    padding: 75px;
-    @include logo-wrapper-end-auth();
+.outer-wrapper {
+    position: fixed;
+    inset: 0;
+    z-index: 11;
 }
 
-.outer-wrapper-main .logo-wrapper {
-    @extend .logo-wrapper;
-    padding: 25px 45px;
-    @include logo-wrapper-end-main();
+.outer-wrapper-auth {
+    @extend .outer-wrapper;
+    .logo-wrapper {
+        @extend .logo-wrapper;
+        width: 242px;
+        height: 70px;
+        @include logo-wrapper-end-auth();
+    }
 }
+
+.outer-wrapper-main {
+    @extend .outer-wrapper;
+    .logo-wrapper {
+        @extend .logo-wrapper;
+        width: 242px;
+        height: 70px;
+        @include logo-wrapper-end-main();
+    }
+} 
 
 .logo-img-container {
     height: 100%;
-    width: auto;
+    width: 242px;
     position: relative;
     img {
         position: relative;
         height: inherit;
         width: auto;
     }
-    .blinder {
-        position: absolute;
-        top: calc(50% - 50dvh);
-        bottom: calc(50% - 50dvh);
-        right: -36px;
-        width: 50vw;
-        background: $gradient-bg;
-        opacity: 0;
-        animation: hide-blinder 1ms;
-        animation-delay: calc($animation-duration * 0.4);
-        animation-fill-mode: backwards;
-        @keyframes hide-blinder {
-            from {
-                opacity: 1;
-            }
-            to {
-                opacity: 0;
-            }
-        }
-    }
 }
 
 .logo-text-container {
     height: 100%;
-    width: auto;
+    width: 242px;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
     img {
         position: relative;
         height: inherit;
-        z-index: -1;
+        width: auto;
     }
 }
 
@@ -138,7 +132,7 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
         to {
             @include logo-wrapper-end-main();
         }
-    }    
+    }
 }
 
 .logo-animate {
@@ -148,19 +142,17 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
         animation-fill-mode: backwards;
         @keyframes size-container {
             from {
-                width: 636px;
-                height: 184px;
+                transform: scale(2.63);
             }
             to {
-                width: 242px;
-                height: 70px;
+                transform: scale(1);
             }
         }
         .logo-img-container img {
             animation: move-img calc($animation-duration / 3) ease-in-out;
             @keyframes move-img {
                 from {
-                    left: 226px;
+                    left: 28.1%;
                 }
                 to {
                     left: 0;
@@ -193,13 +185,34 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
     }
 }
 
+.blinder {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 50%;
+    opacity: 0;
+    background: $gradient-bg;
+    animation: hide-blinder 1ms;
+    animation-delay: calc($animation-duration * 0.4);
+    animation-fill-mode: backwards;
+    @keyframes hide-blinder {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+    }
+}
+
 .paused {
     animation-play-state: paused !important;
     .logo-container {
         animation-play-state: paused;
         .logo-img-container img,
-        .logo-text-container img,
-        .blinder {
+        .logo-text-container img
+        {
             animation-play-state: paused;
         }
     }
