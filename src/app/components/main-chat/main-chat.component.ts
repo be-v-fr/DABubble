@@ -126,7 +126,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
 
   onEditChannel(): void {
-    this.dialog.open(EditChannelComponent);
+    this.dialog.open(EditChannelComponent, { data: this.currentChannel });
   }
 
 

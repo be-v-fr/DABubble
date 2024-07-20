@@ -163,12 +163,12 @@ export class ChannelsService implements OnDestroy {
     }
   }
 
-  async updateChannel(newChannel: Channel) {
-    const channelIndex = this.channels.findIndex(c => c.channel_id === newChannel.channel_id);
+  async updateChannel(channel: Channel) {
+    const channelIndex = this.channels.findIndex(c => c.channel_id === channel.channel_id);
     if (channelIndex !== -1) {
-      this.channels[channelIndex] = newChannel;
+      this.channels[channelIndex] = channel;
       this.channels$.next(this.channels.slice());
-      await this.updateChannelInStorage(newChannel);
+      await this.updateChannelInStorage(channel);
     }
   }
 
