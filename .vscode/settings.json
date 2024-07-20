@@ -1,5 +1,12 @@
 {
     "CodeGPT.Autocomplete.maxTokens": 1024,
     "CodeGPT.Autocomplete.suggestionDelay": 2600,
-    "CodeGPT.Autocomplete.enabled": true
+    "CodeGPT.Autocomplete.enabled": true,
+    "prettier.bracketSameLine": true,
+    "prettier.htmlWhitespaceSensitivity": "ignore",
+    "prettier.printWidth": 255,
+    "prettier.proseWrap": "preserve",
+    "prettier.tabWidth": 4,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.useTabs": true
 }

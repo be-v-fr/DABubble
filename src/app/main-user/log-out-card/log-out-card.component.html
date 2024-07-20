@@ -1,16 +1,17 @@
 <div class="userLogOutMenu">
-  <div class="userLogOutContainer">
-    <div (click)="openProfile()" class="profileButton">
-      <span>Profil</span>
+    <div class="userLogOutContainer">
+        <div class="fingerbar" (click)="close()">&nbsp;</div>
+        <div class="btn" (click)="openProfile()">
+            <span>Profil</span>
+        </div>
+        <div class="btn" (click)="logMeOut()">
+            <span>Log out</span>
+        </div>
+        <div class="btn" (click)="openImpress()">
+            <span>Impressum</span>
+        </div>
+        <div class="btn" (click)="openPriPol()">
+            <span>Datenschutz</span>
+        </div>
     </div>
-    <div (click)="logMeOut()">
-      <span>Log out</span>
-    </div>
-    <div (click)="openImpress()">
-      <span>Impressum</span>
-    </div>
-    <div (click)="openPriPol()">
-      <span>Datenschutz</span>
-    </div>
-  </div>
 </div>

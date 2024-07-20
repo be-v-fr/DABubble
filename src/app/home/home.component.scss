@@ -74,6 +74,7 @@ button.nav-button {
     }
     .main-container {
         max-height: inherit;
+        height: calc(100% - 80px); // Höhe 100% - Header, damit bei Dialog's kein Scrollbalken erscheint
         padding: 0;
         gap: 0;
 

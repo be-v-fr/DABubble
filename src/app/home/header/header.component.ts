@@ -12,52 +12,52 @@ import { AnimationIntroService } from '../../animation-intro/service/animation-i
 
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [
-    CommonModule,
-    LogOutCardComponent,
-    MatDialogModule,
-    AnimationIntroComponent
-  ],
-  providers: [
-     {
-       provide: MatDialogRef,
-       useValue: {}
-     }
-  ],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+    selector: 'app-header',
+    standalone: true,
+    imports: [
+        CommonModule,
+        LogOutCardComponent,
+        MatDialogModule,
+        AnimationIntroComponent
+    ],
+    providers: [
+        {
+            provide: MatDialogRef,
+            useValue: {}
+        }
+    ],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  @Input() mainUser: User = new User;
+    @Input() mainUser: User = new User;
 
-  constructor(
-    public dialogRef: MatDialogRef<LogOutCardComponent>, 
-    public dialog: MatDialog, 
-    private router: Router,
-    private authService: AuthService,
-    private usersService: UsersService,
-    public activityService: ActivityService,
-    public introService: AnimationIntroService
-  ) {}
+    constructor(
+        public dialogRef: MatDialogRef<LogOutCardComponent>, 
+        public dialog: MatDialog, 
+        private router: Router,
+        private authService: AuthService,
+        private usersService: UsersService,
+        public activityService: ActivityService,
+        public introService: AnimationIntroService
+    ) {}
 
-  openUserLogoutCard(): void {
-    this.dialogRef = this.dialog.open(LogOutCardComponent, {
-      data: {
-        mainUser: this.mainUser
-      }
-    });
+    openUserLogoutCard(): void {
+        this.dialogRef = this.dialog.open(LogOutCardComponent, {
+            data: {
+                mainUser: this.mainUser
+            }
+        });
 
-    this.dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog "LogOutCard" was Closed.', result); // remove later
-      if (result == 'logout') {
-        const user = new User(this.mainUser);
-        user.lastActivity = -1;
-        this.usersService.updateUser(user);
-        this.authService.logOut();
-        this.router.navigate(['auth/logIn']);
-      }
-    });
-  }
+        this.dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog "LogOutCard" was Closed.', result); // remove later
+            if (result == 'logout') {
+                const user = new User(this.mainUser);
+                user.lastActivity = -1;
+                this.usersService.updateUser(user);
+                this.authService.logOut();
+                this.router.navigate(['auth/logIn']);
+            }
+        });
+    }
 }

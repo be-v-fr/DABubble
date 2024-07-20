@@ -41,8 +41,10 @@
     }
 }
 
-.close-thread-btn {
+.close-btn {
     padding: 8px;
+    width: 40px;
+    height: 40px;
     color: rgb(0, 0, 0, 1);
     display: flex;
     justify-content: center;
@@ -50,9 +52,11 @@
     cursor: pointer;
   
     &:hover {
-        color: $purple-blue-bright;
         background-color: $violet-bright;
-        border-radius: 20px;
+        border-radius: 99px;
+        a img {
+            content: url("/assets/img/icons/close_hover.svg");
+        }
     }
 }
 

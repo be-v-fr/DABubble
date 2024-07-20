@@ -1,8 +1,10 @@
 <div class="userCard">
     <div class="head">
         <p>Profil</p>
-        <div class="close-thread-btn">
-            <span class="material-icons-outlined">close</span>
+        <div class="close-btn" (click)="closeDialog()">
+            <a (click)="closeDialog()">
+                <img src="/assets/img/icons/close.svg" />
+            </a>
         </div>
     </div>
     <div class="profileImg defaultPic">

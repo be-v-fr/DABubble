@@ -1,6 +1,7 @@
 <div class="header-wrapper">
-    <app-animation-intro [pause]="introService.awaitingInit" (then)="introService.onAnimationComplete()" *ngIf="!introService.afterAnimationPlusTimeout" />
-    <a href="" (click)="$event.preventDefault()" class="logo-wrapper" [ngClass]="{'transparent': !introService.afterAnimation}">
+    <!-- <app-animation-intro [pause]="introService.awaitingInit" (then)="introService.onAnimationComplete()" *ngIf="!introService.afterAnimationPlusTimeout" /> -->
+    <!-- <a href="" (click)="$event.preventDefault()" class="logo-wrapper" [ngClass]="{'transparent': !introService.afterAnimation}"> -->
+    <a href="" (click)="$event.preventDefault()" class="logo-wrapper">
         <img src="/assets/img/logo_name.svg" alt="DABubble" class="logo">
     </a>
     <div class="searchbar-wrapper">
