@@ -126,3 +126,47 @@
   }
 
 }
+
+@media screen and (max-width: 768px) {
+  .container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    width: 100%;
+  }
+
+  .explain{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 25px;
+    width: unset;
+  }
+  .channelName{
+    margin-left: 20px;
+    margin-right: 20px;
+    width: unset;
+
+  }
+
+  .headlineAndCloseBtn{
+    width: unset;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .explainChannel{
+    width: unset;
+    margin-left: 20px;
+    margin-right: 20px;
+    height: unset;
+
+  }
+
+  .addChannelBtn{
+    margin-top: 25px;
+    position: absolute;
+    right: 20px;
+  }
+}
