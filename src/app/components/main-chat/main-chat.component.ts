@@ -77,6 +77,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   setChannel(channel_id: string): void {
     const channel = this.channelsService.channels.find(c => c.channel_id === channel_id);
+    this.currentChannel.channel_id = channel_id;
     if (channel) {
       this.currentChannel = channel;
       this.activeUsers = this.activityService.getActiveUsers();
