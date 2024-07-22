@@ -1,6 +1,4 @@
 <app-animation-intro [authResponsive]="animationResponsive" [pause]="introService.awaitingAppInit" (then)="introService.onAnimationComplete()" *ngIf="!introService.afterAnimationPlusTimeout" />
-<!-- <app-animation-intro [pause]="introService.awaitingAppInit || introService.doingResponsiveCalculation" (then)="introService.onAnimationComplete()"/> -->
-<!-- <app-animation-intro [pause]="true" (then)="introService.onAnimationComplete()"/> -->
 <div class="auth-outer-wrapper">
     <a href="" class="logo-wrapper" [ngClass]="{'transparent': !introService.afterAnimation}">
         <img src="assets/img/logo_name.svg" alt="DABubble" class="logo">
