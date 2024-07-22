@@ -8,7 +8,6 @@ import { User } from '../../models/user.class';
 import { Post } from '../../models/post.class';
 import { Thread } from '../../models/thread.class';
 import { Reaction } from '../../models/reaction.class';
-import { UsersService } from '../users.service';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +55,6 @@ export class ChannelsService implements OnDestroy {
   async addMemberToChannel(user: User, channelId: string) {
     const channel = this.getChannel(channelId);
     if (channel) {
-      // Check if user is already a member
       const userExists = channel.members.some(member => member.uid === user.uid);
       if (!userExists) {
         channel.members.push(user);

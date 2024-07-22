@@ -5,6 +5,7 @@ import { MessageBoxComponent } from '../message-box/message-box.component';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { UserProfileCardComponent } from '../../user-profile-card/user-profile-card.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-direct-message',
@@ -14,7 +15,12 @@ import { UserProfileCardComponent } from '../../user-profile-card/user-profile-c
   imports: [CommonModule, MessageBoxComponent, PickerComponent],
 })
 export class DirectMessageComponent {
-  constructor(private dialog: MatDialog) {}
+
+  constructor(private route: ActivatedRoute, private dialog: MatDialog) { }
+
+  ngOnInit(): void {
+
+  }
 
   online = true;
   emojiPicker = false;

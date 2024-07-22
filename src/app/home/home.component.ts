@@ -98,7 +98,8 @@ export class HomeComponent {
 
     setUserChannels(channels: Channel[]): void {
         // Filter the channels to include only those where the current user is a member
-        channels = channels.filter(c => Array.isArray(c.members) && c.members.some(m => m.uid === this.currentUser.uid));
+        channels = channels.filter(c => Array.isArray(c.members) && c.members.some(m => m.uid === this.currentUser.uid) && c.isPmChannel === false);
+        console.log(channels);
 
         // Sort the channels alphabetically by name
         this.userChannels = channels.sort((a, b) => {
@@ -112,6 +113,5 @@ export class HomeComponent {
     onShowNavigation() {
         this.showNav = !this.showNav;
     }
-
 
 }

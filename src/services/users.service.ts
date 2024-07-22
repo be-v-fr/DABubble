@@ -47,6 +47,14 @@ export class UsersService implements OnDestroy {
     });
   }
 
+  getAllUsers(): User[] {
+    return this.users.slice();
+  }
+
+  getUserByUid(uid: string): User | undefined {
+    return this.users.find(u => u.uid === uid);
+  }
+
   getColRef(): CollectionReference {
     return collection(this.firestore, 'users');
   }
@@ -106,9 +114,6 @@ export class UsersService implements OnDestroy {
     }
   }
 
-  getUserByUid(uid: string): User | undefined {
-    return this.users.find(u => u.uid === uid);
-  }
 
   isRegisteredUser(authUid: string): boolean {
     return !!this.getUserByUid(authUid);

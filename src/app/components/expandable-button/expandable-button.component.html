@@ -29,75 +29,18 @@
         </div>
         <div *ngIf="!showBtn()" class="messages-menu">
             <ul>
+                @for (user of users; track $index) {
                 <li>
-                    <a routerLink="/direct-message/:id" (click)="onUserClick()">
+                    <a [routerLink]="['/direct-message', user.uid]" (click)="onUserClick(user)">
                         <div class="message-img-container">
                             <img src="../../../assets/img/avatar/avatar_01.svg" alt="Avatar">
                             <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
                                 class="on-off-line-sign"></span>
                         </div>
-                        <span>Gast (Du)</span>
+                        <span>{{ user.name }}</span>
                     </a>
                 </li>
-                <!-- <li>
-                    <a routerLink="/direct-message/:id">
-                        <div class="message-img-container">
-                            <img src="../../../assets/img/avatar/avatar_00.svg" alt="Avatar">
-                            <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
-                                class="on-off-line-sign"></span>
-                        </div>
-                        <span>Sofia Müller</span>
-                    </a>
-                </li>
-                <li>
-                    <a routerLink="/direct-message/:id">
-                        <div class="message-img-container">
-                            <img src="../../../assets/img/avatar/avatar_00.svg" alt="Avatar">
-                            <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
-                                class="on-off-line-sign"></span>
-                        </div>
-                        <span>Sofia Müller</span>
-                    </a>
-                </li>
-                <li>
-                    <a routerLink="/direct-message/:id">
-                        <div class="message-img-container">
-                            <img src="../../../assets/img/avatar/avatar_00.svg" alt="Avatar">
-                            <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
-                                class="on-off-line-sign"></span>
-                        </div>
-                        <span>Sofia Müller</span>
-                    </a>
-                </li>
-                <li>
-                    <a routerLink="/direct-message/:id">
-                        <div class="message-img-container">
-                            <img src="../../../assets/img/avatar/avatar_00.svg" alt="Avatar">
-                            <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
-                                class="on-off-line-sign"></span>
-                        </div>
-                        <span>Sofia Müller</span>
-                    </a>
-                </li>
-                <li>
-                    <a routerLink="/direct-message/:id">
-                        <div class="message-img-container">
-                            <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar">
-                            <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
-                                class="on-off-line-sign"></span>
-                        </div>
-                        <span>Noah Braun</span>
-                    </a>
-                </li>
-                <li>
-                    <a routerLink="/direct-message/:id">
-                        <div class="message-img-container">
-                            <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar">
-                            <span class="on-off-line-sign"></span>
-                        </div>
-                        <span>Noah Braun</span>
-                    </a>
-                </li> -->
+                }
                 <div class="new-message-icon">
                     <img src="../../../assets/img/icons/new_message.svg">
                 </div>
