@@ -46,7 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     if(this.TESTING) {
-      this.introService.awaitingInit = false;
+      this.introService.awaitingAppInit = false;
       this.introService.afterAnimation = true;
       this.introService.afterAnimationPlusTimeout = true;
     }
@@ -76,7 +76,7 @@ export class AppComponent implements OnInit, OnDestroy {
       if (user && user.uid) {
         this.uid = user.uid;
         this.router.navigate(['']);
-        this.introService.awaitingInit = false;
+        this.introService.awaitingAppInit = false;
       }
     });
   }
@@ -90,7 +90,7 @@ export class AppComponent implements OnInit, OnDestroy {
    * subscriptions which continue in the runtime environment.
    */
   awaitMax(): void {
-    setTimeout(() => this.introService.awaitingInit = false, 1000);
+    setTimeout(() => this.introService.awaitingAppInit = false, 1000);
   }
 
 

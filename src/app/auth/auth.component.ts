@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild, ElementRef } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LegalFooterComponent } from './legal-footer/legal-footer.component';
 import { AnimationIntroComponent } from '../animation-intro/animation-intro.component';
@@ -18,5 +18,14 @@ import { AnimationIntroService } from '../animation-intro/service/animation-intr
   styleUrl: './auth.component.scss'
 })
 export class AuthComponent {
+  @ViewChild('routerOutlet', { static: false, read: ElementRef }) routerOutlet!: ElementRef;
   public introService = inject(AnimationIntroService);
+  animationResponsive: boolean = (window.innerWidth <= 1024);
+
+  ngAfterViewInit() {
+    if (window.innerWidth <= 1024) {
+      const routerOutletHeight = this.routerOutlet.nativeElement.offsetHeight;
+      this.introService.updateLogoPosition(routerOutletHeight);
+    }
+  }
 }

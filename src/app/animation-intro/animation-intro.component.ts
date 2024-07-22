@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, inject, OnInit } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
+import { AnimationIntroService } from './service/animation-intro.service';
+
 
 
 /**
@@ -15,19 +18,36 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './animation-intro.component.html',
-  styleUrl: './animation-intro.component.scss'
+  styleUrl: './animation-intro.component.scss',
+  animations: [
+    trigger('translateLogoWrapperResponsive', [
+      state('center', style({
+        transform: 'translate(calc(50vw - 97px), 50dvh)'
+      })),
+      state('top', style({
+        transform: 'translate(calc(50vw - 97px), {{translateY}}px)'
+      }), { params: { translateY: 0 } }),
+      transition('center => top', [
+        animate('1008ms 1056ms ease-in-out')
+      ])
+    ])
+  ]
 })
 export class AnimationIntroComponent implements OnInit {
   @Input() animate: boolean = true;
+  @Input() authResponsive: boolean = false; 
+  animationState: 'center' | 'top' = 'center';
+  translateY: number | null = null;
   @Output() then = new EventEmitter<void>();
   after: boolean = false;
   private router = inject(Router);
+  private introService = inject(AnimationIntroService);
 
   private _pause: boolean = false;
   @Input()
   set pause(value: boolean) {
-      this._pause = value;
-      this.initAnimation();
+    this._pause = value;
+    this.initAnimation();
   };
   get pause(): boolean {
     return this._pause;
@@ -46,7 +66,14 @@ export class AnimationIntroComponent implements OnInit {
    * This function initializes the animation by checking the input parameters.
    */
   initAnimation(): void {
-    if (this.animate && !this.pause) {this.awaitAnimation()}
+    if (this.animate && !this.pause) {
+      const translateY: number | null = this.introService.logoResponsiveTranslateY;
+      if (this.authResponsive && translateY != null) {
+        this.translateY = translateY;
+        this.animationState = 'top';
+      }
+      this.awaitAnimation();
+    }
   }
 
 

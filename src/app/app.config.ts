@@ -8,7 +8,8 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getStorage, provideStorage } from '@angular/fire/storage'
 
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideAnimations } from '@angular/platform-browser/animations';
+// import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,7 +23,9 @@ export const appConfig: ApplicationConfig = {
       appId: "1:1048437261939:web:6545ca4790290b7b660c06"
     })),
     provideFirestore(() => getFirestore()),
-    provideAuth(() => getAuth()), provideAnimationsAsync('noop'),
+    provideAuth(() => getAuth()),
+    provideAnimations(),
+    // provideAnimationsAsync('noop'),
     provideStorage(() => getStorage())
   ]
 };

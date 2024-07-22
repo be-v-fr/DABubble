@@ -31,15 +31,19 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
 }
 
 @mixin logo-wrapper-start() {
-    transform: translate(50vw, 50dvh);
+    transform: translate(calc(50vw - 121px), 50dvh);
 }
 
 @mixin logo-wrapper-end-auth() {
     transform: translate(75px, 75px);
 }
 
-@mixin logo-wrapper-end-main() {
-    transform: translate(65px, 25px);
+@mixin logo-wrapper-end-main-desktop() {
+    transform: translate(50px, 25px);
+}
+
+@mixin logo-wrapper-end-main-mobile() {
+    transform: translate(16px, 15px);
 }
 
 .logo-wrapper {
@@ -47,6 +51,7 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
     display: flex;
     justify-content: center;
     align-items: center;
+    @include logo-wrapper-start();
 
     .logo-container {
         position: absolute;
@@ -69,7 +74,13 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
         @extend .logo-wrapper;
         width: 242px;
         height: 70px;
-        @include logo-wrapper-end-auth();
+        @media screen and (min-width: 1025px) {
+            @include logo-wrapper-end-auth();
+        }
+        @media screen and (max-width: 1024px) {
+            width: 194px;
+            height: 56px;
+        }
     }
 }
 
@@ -79,9 +90,14 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
         @extend .logo-wrapper;
         width: 242px;
         height: 70px;
-        @include logo-wrapper-end-main();
+        @include logo-wrapper-end-main-desktop();
+        @media screen and (max-width: 768px) {
+            width: 156px;
+            height: 45px;
+            @include logo-wrapper-end-main-mobile();
+        }
     }
-} 
+}
 
 .logo-img-container {
     height: 100%;
@@ -107,30 +123,43 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
     }
 }
 
-.outer-wrapper-auth .logo-animate {
-    animation: shrink-wrapper-auth calc($animation-duration * 0.42) ease-in-out;
-    animation-delay: calc($animation-duration * 0.44);
-    animation-fill-mode: backwards;
-    @keyframes shrink-wrapper-auth {
-        from {
-            @include logo-wrapper-start();
-        }
-        to {
-            @include logo-wrapper-end-auth();
+@media screen and (min-width: 1025px) {
+    .outer-wrapper-auth .logo-animate {
+        animation: move-wrapper-auth calc($animation-duration * 0.42) ease-in-out;
+        animation-delay: calc($animation-duration * 0.44);
+        animation-fill-mode: backwards;
+        @keyframes move-wrapper-auth {
+            from {
+                @include logo-wrapper-start();
+            }
+            to {
+                @include logo-wrapper-end-auth();
+            }
         }
     }
 }
 
 .outer-wrapper-main .logo-animate {
-    animation: shrink-wrapper-main calc($animation-duration * 0.42) ease-in-out;
+    animation: move-wrapper-main-desktop calc($animation-duration * 0.42) ease-in-out;
+    @media screen and (max-width: 768px) {
+        animation-name: move-wrapper-main-mobile;
+    }
     animation-delay: calc($animation-duration * 0.44);
     animation-fill-mode: backwards;
-    @keyframes shrink-wrapper-main {
+    @keyframes move-wrapper-main-desktop {
         from {
             @include logo-wrapper-start();
         }
         to {
-            @include logo-wrapper-end-main();
+            @include logo-wrapper-end-main-desktop();
+        }
+    }
+    @keyframes move-wrapper-main-mobile {
+        from {
+            @include logo-wrapper-start();
+        }
+        to {
+            @include logo-wrapper-end-main-mobile();
         }
     }
 }
@@ -190,7 +219,7 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
     top: 0;
     bottom: 0;
     left: 0;
-    right: 50%;
+    right: calc(50vw + 88px);
     opacity: 0;
     background: $gradient-bg;
     animation: hide-blinder 1ms;
@@ -211,8 +240,7 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
     .logo-container {
         animation-play-state: paused;
         .logo-img-container img,
-        .logo-text-container img
-        {
+        .logo-text-container img {
             animation-play-state: paused;
         }
     }

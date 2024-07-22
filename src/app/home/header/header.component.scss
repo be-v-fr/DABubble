@@ -14,6 +14,12 @@
     }
 }
 
+app-animation-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+}
+
 .logo-wrapper {
     z-index: 999;
     min-width: 336px;
