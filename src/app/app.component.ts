@@ -85,8 +85,8 @@ export class AppComponent implements OnInit, OnDestroy {
   /**
    * This function automatically aborts the visual display of the authentication process after a timeout duration.
    * 
-   * That simply means that the intro animation will start and the user can access the login form and other
-   * authentication components. The authentication process itself will not be affected since it is handled via
+   * That simply means that the intro animation will start and the user can access the "auth" route.
+   * The authentication process itself will not be affected since it is handled via
    * subscriptions which continue in the runtime environment.
    */
   awaitMax(): void {

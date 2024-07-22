@@ -5,4 +5,17 @@
 
 .fixed-width {
     width: 136px;
+    @media screen and (max-width: 408px) {
+            width: 120px;
+    }
+}
+
+@media screen and (max-width: 408px) {
+    a {
+        font-size: 16px;
+        padding: 0 6px;
+    }
+    .link-purple-border {
+        height: 28px;
+    }
 }
