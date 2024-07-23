@@ -20,6 +20,9 @@ p {
     @media screen and (max-width: 640px) {
         font-size: 18px;
     }
+    @media screen and (max-height: 800px) {
+        margin-bottom: 3px;
+    }
     @media screen and (max-width: 408px) {
         font-size: 17px;
     }
@@ -54,6 +57,14 @@ p {
         .avatar-selection {
             width: 120px;
             height: 120px;
+        }
+    }
+    @media screen and (max-height: 800px) {
+        width: 108px;
+        height: 108px;
+        .avatar-selection {
+            width: 100px;
+            height: 100px;
         }
     }
 }
@@ -102,6 +113,10 @@ p {
                 }
             }
         }
+        @media screen and (max-height: 800px) {
+            margin-top: 2px;
+            margin-bottom: 6px;
+        }
         @media screen and (max-width: 480px) {
             padding: 0;
             .avatar-container {
@@ -136,11 +151,17 @@ p {
                 padding-right: 10px;
             }
         }
+        @media screen and (max-width: 800px) {
+            margin-bottom: 6px;
+        }
     }
 }
 
-@media screen and (max-width: 408px) {
-    .form-btn {
+.form-btn {
+    @media screen and (max-width: 800px) {
+        height: 40px;
+    }
+    @media screen and (max-width: 408px) {
         font-size: 17px;
     }
 }

@@ -22,11 +22,11 @@ import { AnimationIntroService } from './service/animation-intro.service';
   animations: [
     trigger('translateLogoWrapperResponsive', [
       state('center', style({
-        transform: 'translate(calc(50vw - 97px), 50dvh)'
+        transform: 'translate(50vw, 50dvh)'
       })),
       state('top', style({
-        transform: 'translate(calc(50vw - 97px), {{translateY}}px)'
-      }), { params: { translateY: 0 } }),
+        transform: 'translate(calc(50vw + {{translateX}}px), {{translateY}}px)'
+      }), { params: { translateX: 0, translateY: 0 } }),
       transition('center => top', [
         animate('1008ms 1056ms ease-in-out')
       ])
@@ -37,6 +37,7 @@ export class AnimationIntroComponent implements OnInit {
   @Input() animate: boolean = true;
   @Input() authResponsive: boolean = false; 
   animationState: 'center' | 'top' = 'center';
+  translateX: number;
   translateY: number | null = null;
   @Output() then = new EventEmitter<void>();
   after: boolean = false;
@@ -51,6 +52,12 @@ export class AnimationIntroComponent implements OnInit {
   };
   get pause(): boolean {
     return this._pause;
+  }
+
+
+  constructor() {
+    if(window.innerWidth > 768) {this.translateX = -97}
+    else {this.translateX = -78}
   }
 
 

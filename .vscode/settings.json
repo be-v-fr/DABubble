@@ -8,5 +8,8 @@
     "prettier.proseWrap": "preserve",
     "prettier.tabWidth": 4,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "prettier.useTabs": true
+    "prettier.useTabs": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    }
 }

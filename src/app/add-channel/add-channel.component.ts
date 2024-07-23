@@ -30,7 +30,6 @@ export class AddChannelComponent {
     this.dialogRef.close();
   }
 
-
   /**
    * This function is triggered by the add channel submission.
    * @param form - add channel form
@@ -38,35 +37,20 @@ export class AddChannelComponent {
   async onSubmit(form: NgForm) {
     console.log('submit!');
     if (form.submitted && form.valid) {
-      // Validierung und Vorbereitung des Kanals
       const preparedChannel = this.prepareChannel(this.channel);
-  
-      // Hinzufügen des Kanals über den Service
+
       await this.channelsService.addChannel(preparedChannel).then(res => {
-        this.addChannelToParams(res);
+        this.channelsService.addChannelToRoute('main-chat', res);
       });
-  
-      // Schließen des Dialogs oder andere Nachbearbeitung
+
       this.dialogRef.close();
     }
   }
 
   prepareChannel(channel: Channel): Channel {
-    // Führe hier Validierungen, Bereinigungen oder andere Vorbereitungen durch
-    // Z. B.:
-    // channel.name = channel.name.trim(); // Beispiel für Bereinigung
+
     const autor = this.authService.getCurrent();
     channel.author_uid = autor!.uid;
     return channel;
-  }
-
-
-  addChannelToParams(channel_id: string): void {
-    const queryParams: Params = { channel: channel_id };
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams,
-      queryParamsHandling: 'merge'
-    });
   }
 }

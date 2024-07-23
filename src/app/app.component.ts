@@ -25,13 +25,6 @@ export class AppComponent implements OnInit, OnDestroy {
   userSub = new Subscription();
 
 
-  // ###############################################
-  // This parameter (if set to true) suppresses both the animation and the authentication
-  // and redirects automatically to the home component.
-  TESTING: boolean = true;
-  // ###############################################
-
-
   /**
    * The constructor declares a Router instance
    * @param router - Router instance
@@ -45,17 +38,10 @@ export class AppComponent implements OnInit, OnDestroy {
    * This function creates an authentication service subscription for user authentication.
    */
   ngOnInit(): void {
-    if(this.TESTING) {
-      this.introService.awaitingAppInit = false;
-      this.introService.afterAnimation = true;
-      this.introService.afterAnimationPlusTimeout = true;
-    }
-    if (!this.TESTING) {
-      const url = new URL(window.location.href);
-      if (!url.search.includes('mode')) { this.router.navigate(['/auth/logIn']) }
-      this.userSub = this.subUser();
-      this.awaitMax();
-    }
+    // const url = new URL(window.location.href);
+    // if (!url.search.includes('mode')) { this.router.navigate(['/auth/logIn']) }
+    this.userSub = this.subUser();
+    this.awaitMax();
   }
 
 
@@ -85,8 +71,8 @@ export class AppComponent implements OnInit, OnDestroy {
   /**
    * This function automatically aborts the visual display of the authentication process after a timeout duration.
    * 
-   * That simply means that the intro animation will start and the user can access the login form and other
-   * authentication components. The authentication process itself will not be affected since it is handled via
+   * That simply means that the intro animation will start and the user can access the "auth" route.
+   * The authentication process itself will not be affected since it is handled via
    * subscriptions which continue in the runtime environment.
    */
   awaitMax(): void {

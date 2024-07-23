@@ -1,24 +1,22 @@
 <div class="userCard">
     <div class="head">
         <p>Profil</p>
-        <div class="close-btn" (click)="closeDialog()">
-            <a (click)="closeDialog()">
-                <img src="/assets/img/icons/close.svg" />
-            </a>
-        </div>
+        <a (click)="closeDialog()">
+            <img src="/assets/img/icons/close.svg" />
+        </a>
     </div>
     <div class="profileImg defaultPic">
         <img class="#" src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}" />
     </div>
-    <div class="imgedit" (click)="openEditAvatar()">
-        <img src="/assets/img/icons/edit.svg" >
+    <div class="imgedit">
+        <img src="/assets/img/icons/edit.svg" (click)="openEditAvatar()" >
     </div>
     <div class="userName">
         <div class="nameAndEdit">
-            <h1>{{ mainUser.name || '...'}}</h1>
-            <p class="edit" (click)="openEditProfile(mainUser)">Bearbeiten</p>
+            <p class="name">{{ mainUser.name || '...'}}</p>
+            <p class="edit" (click)="openEditProfile(mainUser)"><span>Bearbeiten</span><img src="/assets/img/icons/edit.svg" ></p>
         </div>
-        <div class="online">
+        <div class="online-status">
             <div class="onlinedot"
                 [ngClass]="{'online': activityService.getUserState(mainUser).state == 'active'}" 
                 [ngClass]="{'idle': activityService.getUserState(mainUser).state == 'idle'}"

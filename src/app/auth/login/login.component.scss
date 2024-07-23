@@ -1,5 +1,12 @@
 @import "../auth.component.scss";
 
+@media screen and (max-width: 1024px),
+screen and (max-height: 800px) {
+    .content-wrapper {
+        position: relative;
+    }
+}
+
 .google-btn {
     display: flex;
     justify-content: center;
@@ -65,11 +72,45 @@
         right: -18px;
     }
 
+    @mixin display-row() {
+        left: 0;
+        right: 0;
+        top: auto;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        bottom: -40px;
+        margin-bottom: 3px;
+        p {
+            margin-bottom: 0;
+        }
+        a {
+            width: 140px;
+            height: 28px;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+    }
+
+    @media screen and (max-width: 1440px),
+    screen and (max-height: 920px) {
+        right: 64px;
+        top: 48px;
+        @media screen and (max-width: 768px) {
+            @include display-row();
+        }
+    }
+
+    @media screen and (max-height: 800px) {
+        @include display-row();
+    }
+
     @media screen and (max-width: 1024px) {
         left: 0;
         right: 0;
         top: auto;
-        bottom: 80px;
+        bottom: -80px;
         align-items: center;
         gap: 0;
         a {
@@ -78,8 +119,15 @@
     }
 
     @media screen and (max-width: 408px) {
-        p, a {
+        gap: 8px;
+        p,
+        a {
             font-size: 17px;
+        }
+        a {
+            width: 132px;
+            padding-left: 2px;
+            padding-right: 2px;
         }
     }
 }

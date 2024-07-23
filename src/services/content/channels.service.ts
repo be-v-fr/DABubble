@@ -1,4 +1,5 @@
 import { Injectable, inject, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 import { Firestore, collection, doc, onSnapshot, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
@@ -8,7 +9,6 @@ import { User } from '../../models/user.class';
 import { Post } from '../../models/post.class';
 import { Thread } from '../../models/thread.class';
 import { Reaction } from '../../models/reaction.class';
-import { UsersService } from '../users.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,7 @@ export class ChannelsService implements OnDestroy {
   channels: Channel[] = [];
   unsubChannels;
   firestore: Firestore = inject(Firestore);
+  router = inject(Router);
 
   constructor() {
     this.unsubChannels = this.subChannels();
@@ -42,8 +43,8 @@ export class ChannelsService implements OnDestroy {
     return this.channels.slice();
   }
 
-  getChannel(id: string): Channel {
-    return this.channels.find(c => c.channel_id === id)!;
+  async getChannel(id: string): Promise<Channel |undefined> {
+    return this.channels.find(c => c.channel_id === id);
   }
 
   async addChannel(channel: Channel): Promise<string> {
@@ -54,9 +55,8 @@ export class ChannelsService implements OnDestroy {
   }
 
   async addMemberToChannel(user: User, channelId: string) {
-    const channel = this.getChannel(channelId);
+    const channel = await this.getChannel(channelId);
     if (channel) {
-      // Check if user is already a member
       const userExists = channel.members.some(member => member.uid === user.uid);
       if (!userExists) {
         channel.members.push(user);
@@ -254,5 +254,11 @@ export class ChannelsService implements OnDestroy {
   async addUserToChannel(user: User, channel: Channel) {
     channel.members.push(user);
     await this.updateChannelInStorage(channel);
+  }
+
+  addChannelToRoute(parent: 'main-chat' | 'direct-message', channel_id: string): void {
+    this.router.navigate([`/${parent}`, channel_id], {
+      queryParamsHandling: 'merge'
+    });
   }
 }

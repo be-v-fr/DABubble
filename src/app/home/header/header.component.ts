@@ -50,7 +50,6 @@ export class HeaderComponent {
         });
 
         this.dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog "LogOutCard" was Closed.', result); // remove later
             if (result == 'logout') {
                 const user = new User(this.mainUser);
                 user.lastActivity = -1;

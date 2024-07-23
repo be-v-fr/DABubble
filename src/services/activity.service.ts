@@ -35,7 +35,7 @@ export class ActivityService implements OnDestroy {
 
   subAuth(): Subscription {
     return this.authService.user$.subscribe((user: any) => {
-      console.log('user$ (auth) triggered');
+      // console.log('user$ (auth) triggered');
       if (user) { this.setUserStates() }
       this.setLastActivityOnAuth(user);
     });
@@ -45,7 +45,7 @@ export class ActivityService implements OnDestroy {
     return this.usersService.users$.subscribe(() => {
       this.syncCurrentUser();
       this.setUserStates();
-      console.log('users$ triggered');
+      // console.log('users$ triggered');
     });
   }
 
@@ -78,7 +78,7 @@ export class ActivityService implements OnDestroy {
       this.currentUser.lastActivity = Date.now();
       this.usersService.updateUser(this.currentUser);
       this.activitySettingAllowed = false;
-      console.log('activity set');
+      // console.log('activity set');
     }
   }
 
@@ -86,11 +86,11 @@ export class ActivityService implements OnDestroy {
     if (user && this.currentUser.lastActivity == -1) {
       this.currentUser.lastActivity = Date.now();
       this.usersService.updateUser(this.currentUser);
-      console.log('auth activity set: active');
+      // console.log('auth activity set: active');
     } else if (!user && this.currentUser.lastActivity > 0) {
       this.currentUser.lastActivity = -1;
       this.usersService.updateUser(this.currentUser);
-      console.log('auth activity set: logged out');      
+      // console.log('auth activity set: logged out');
     }
   }
 
@@ -98,18 +98,18 @@ export class ActivityService implements OnDestroy {
     const uid = this.authService.getCurrentUid();
     if (uid) {
       const user = this.usersService.getUserByUid(uid);
-      if (user) {this.currentUser = user}
+      if (user) { this.currentUser = user }
     }
   }
 
   setUserStates(): void {
     this.userStates = [];
-    this.usersService.users.forEach(u => this.userStates.push(this.getUserState(u)));
+    this.usersService.getAllUsers().forEach(u => this.userStates.push(this.getUserState(u)));
   }
 
   getUserState(user: User): UserState {
     let state: 'active' | 'idle' | 'loggedOut' = 'idle';
-    if (user.lastActivity == -1) { state = 'loggedOut' }
+    if (user.lastActivity === -1) { state = 'loggedOut' }
     else if (Date.now() - user.lastActivity < this.idleDuration) { state = 'active' }
     return {
       uid: user.uid,
@@ -118,10 +118,10 @@ export class ActivityService implements OnDestroy {
   }
 
   getActiveUsers(): User[] {
-    return this.usersService.users.filter(user => this.getUserState(user).state === 'active');
+    return this.usersService.getAllUsers().filter(user => this.getUserState(user).state === 'active');
   }
 
   getAllUsers(): User[] {
-    return this.usersService.users;
+    return this.usersService.getAllUsers();
   }
 }

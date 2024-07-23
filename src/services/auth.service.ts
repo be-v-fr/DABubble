@@ -14,7 +14,6 @@ import { Observable, from, merge, BehaviorSubject, map } from "rxjs";
 import { UsersService } from "./users.service";
 import { User } from "../models/user.class";
 
-
 /**
  * This injectable handles Firebase user authentication.
  * Aside from plain authentication and registration, it can only display the user name.
@@ -30,7 +29,6 @@ export class AuthService {
   guestUser$: BehaviorSubject<User | null>;
   user$: Observable<any>;
 
-
   constructor() {
     if (this.currentUserIsGuest()) { this.logInAsGuest() }
     this.guestUser$ = new BehaviorSubject<User | null>(this.getCurrentGuest());
@@ -38,7 +36,6 @@ export class AuthService {
       map(user => user ? user : null)
     );
   }
-
 
   /**
    * Register user
@@ -56,7 +53,6 @@ export class AuthService {
     return from(promise);
   }
 
-
   /**
    * Log in user (with password and email)
    * @param email user email
@@ -72,7 +68,6 @@ export class AuthService {
     return from(promise);
   }
 
-
   logInWithGoogle(): Observable<void> {
     const promise = signInWithPopup(
       this.firebaseAuth,
@@ -80,7 +75,6 @@ export class AuthService {
     ).then(() => { });
     return from(promise);
   }
-
 
   logInAsGuest(): Observable<void> {
     const promise = new Promise(async () => {
@@ -92,13 +86,11 @@ export class AuthService {
     return from(promise);
   }
 
-
   async handleMissingGuestLogIn() {
     const uid = localStorage.getItem('GUEST_uid');
     const guest = new User({ uid: uid, name: 'Gast' });
     await this.usersService.setGuestUser(guest);
   }
-
 
   currentUserIsGuest(): boolean {
     const state = localStorage.getItem('GUEST_logIn');
@@ -122,7 +114,6 @@ export class AuthService {
     return from(promise);
   }
 
-
   resetPassword(oobCode: string, password: string): Observable<void> {
     const promise = confirmPasswordReset(
       this.firebaseAuth,
@@ -131,7 +122,6 @@ export class AuthService {
     ).then(() => { });
     return from(promise);
   }
-
 
   /**
    * Log out
@@ -146,24 +136,21 @@ export class AuthService {
     return from(promise);
   }
 
-
   getCurrent() {
     const guestLogIn = localStorage.getItem('GUEST_logIn');
     if (guestLogIn) { return this.getCurrentGuest() }
     else { return this.firebaseAuth.currentUser };
   }
 
-
   getCurrentGuest(): User | null {
     const guestLogIn = localStorage.getItem('GUEST_logIn');
     const guestUid = localStorage.getItem('GUEST_uid');
     if (guestLogIn == 'true' && guestUid) {
-      const userData = this.usersService.users.find(u => u.uid == guestUid);
+      const userData = this.usersService.getUserByUid(guestUid);
       if (userData) { return new User(userData) }
     }
     return null;
   }
-
 
   /**
    * Get Firebase user ID ("uid") of active user

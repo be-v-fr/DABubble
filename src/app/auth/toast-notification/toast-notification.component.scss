@@ -21,6 +21,19 @@
         font-weight: inherit;
         color: inherit;
     }
+    @media screen and (max-width: 1024px) {
+        padding: 20px 30px;
+        gap: 10px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 22px;
+    }
+    @media screen and (max-width: 408px) {
+        gap: 8px;
+        bottom: 10px;
+        right: 10px;
+        font-size: 20px;
+    }
 }
 
 @keyframes slide-in-from-right {

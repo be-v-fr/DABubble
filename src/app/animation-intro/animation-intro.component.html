@@ -20,7 +20,7 @@
 } @else {
     <div class="outer-wrapper-auth">
         <div class="logo-wrapper" [ngClass]="{'logo-animate': animate && !after, 'paused': pause}"
-            [@translateLogoWrapperResponsive]="{ value: animationState, params: { translateY: translateY } }">
+            [@translateLogoWrapperResponsive]="{ value: animationState, params: { translateX: translateX, translateY: translateY } }">
             <div class="logo-container">
                 <div class="logo-text-container">
                     <img src="assets/img/logo_name_only.svg" alt="DABubble">
@@ -29,7 +29,7 @@
         </div>
         <div class="blinder" [ngClass]="{'paused': pause}"></div>
         <div class="logo-wrapper" [ngClass]="{'logo-animate': animate && !after, 'paused': pause}"
-            [@translateLogoWrapperResponsive]="{ value: animationState, params: { translateY: translateY } }">
+            [@translateLogoWrapperResponsive]="{ value: animationState, params: { translateX: translateX, translateY: translateY } }">
             <div class="logo-container">
                 <div class="logo-img-container">
                     <img src="assets/img/logo.svg" alt="DABubble">

@@ -41,21 +41,53 @@
       }
 
       .hoverImgContainer {
+        position: relative;
         gap: 20px;
         display: flex;
         align-items: center;
         cursor: pointer;
         padding: 4px 20px;
         border-radius: 35px;
+
+        img {
+          border-radius: 50%;
+        }
+
+
+
         &:hover {
           background-color: $violet-bright;
         }
       }
 
-      span {
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 32.74px;
+      .onlinedot {
+        position: absolute;
+        content: '';
+        bottom: 6px;
+        left: 57px;
+        width: 17px;
+        height: 17px;
+        box-sizing: border-box;
+        background-color: $onlinedot-online;
+        border: 2px solid $onlinedot-border;
+        border-radius: 50%;
+
+        &.online {
+          background-color: $onlinedot-online;
+        }
+
+        &.idle {
+          background-color: #c8c82e;
+        }
+
+        &.offline {
+          background-color: $onlinedot-offline;
+        }
+
+        @media screen and (max-width: 768px) {
+          width: 14px;
+          height: 14px;
+        }
       }
     }
 
@@ -72,6 +104,7 @@
           display: flex;
           align-items: flex-end;
           gap: 20px;
+
           span:hover {
             color: rgb(68, 77, 242);
             cursor: pointer;
@@ -83,6 +116,7 @@
             img {
               width: 100px;
               height: 100px;
+              border-radius: 50%;
             }
           }
 
@@ -120,34 +154,38 @@
     }
   }
 }
-.mobile-wrapper{
+
+.mobile-wrapper {
   display: contents;
 }
 
 @media screen and (max-width: 768px) {
-// .direct-m-container{
-//   height: 90%;
-// }
-.mobile-wrapper{
-  position: absolute;
-  left: 0;
-  right:0;
-  height: 90vh;
-  display: block;
-  .direct-m-container{
-    border-radius: 0;
-    .direct-m-header{
+
+  // .direct-m-container{
+  //   height: 90%;
+  // }
+  .mobile-wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 90vh;
+    display: block;
+
+    .direct-m-container {
       border-radius: 0;
+
+      .direct-m-header {
+        border-radius: 0;
+      }
     }
+
+
   }
- 
-       
-}
 
 
   #mobile-direct-m-mem p {
-  display: block;
-}
+    display: block;
+  }
 
 
 

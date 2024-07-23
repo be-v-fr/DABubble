@@ -39,9 +39,9 @@ export class EditMainUserProfileCardComponent {
         if (this.userData.email !== this.mainUser.email) {
             console.log('Update email necessary', this.mainUser);
         }
-        console.log('mainUser: ', this.mainUser);
         this.mainUser.name = this.userData.name;
         this.mainUser.email = this.userData.email;
+        console.log('mainUser: ', this.mainUser);
         await this.usersService.updateUser(this.mainUser);
         this.closeDialog();
     }
