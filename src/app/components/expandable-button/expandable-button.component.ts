@@ -59,7 +59,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.authSub = this.authService.user$.subscribe((user) => {
+    this.authSub = this.authService.user$.subscribe(() => {
       const uid = this.authService.getCurrentUid();
       if (uid) {
         this.userSub = this.userService.users$.subscribe((users) => {
