@@ -28,6 +28,6 @@ export class User {
     }
 
     isInactive(): boolean {
-        return Date.now() - this.lastActivity > 86400000;
+        return this.lastActivity != -1 && Date.now() - this.lastActivity > 86400000;
     }
 }
