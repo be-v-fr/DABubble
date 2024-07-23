@@ -1,6 +1,7 @@
 @import "../auth.component.scss";
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1024px),
+screen and (max-height: 800px) {
     .content-wrapper {
         position: relative;
     }
@@ -71,21 +72,13 @@
         right: -18px;
     }
 
-    @media screen and (max-width: 1024px) {
+    @mixin display-row() {
         left: 0;
         right: 0;
         top: auto;
-        bottom: -80px;
-        align-items: center;
-        gap: 0;
-        a {
-            right: 0;
-        }
-    }
-
-    @media screen and (max-width: 768px), screen and (max-height: 800px) {
         flex-direction: row;
         justify-content: center;
+        align-items: center;
         gap: 20px;
         bottom: -40px;
         margin-bottom: 3px;
@@ -97,6 +90,31 @@
             height: 28px;
             padding-left: 4px;
             padding-right: 4px;
+        }
+    }
+
+    @media screen and (max-width: 1440px),
+    screen and (max-height: 920px) {
+        right: 64px;
+        top: 48px;
+        @media screen and (max-width: 768px) {
+            @include display-row();
+        }
+    }
+
+    @media screen and (max-height: 800px) {
+        @include display-row();
+    }
+
+    @media screen and (max-width: 1024px) {
+        left: 0;
+        right: 0;
+        top: auto;
+        bottom: -80px;
+        align-items: center;
+        gap: 0;
+        a {
+            right: 0;
         }
     }
 
