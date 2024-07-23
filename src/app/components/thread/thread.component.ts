@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MessageItemComponent } from "../message-item/message-item.component";
 import { MessageBoxComponent } from "../message-box/message-box.component";
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
@@ -20,6 +20,7 @@ import { ChannelsService } from '../../../services/content/channels.service';
 export class ThreadComponent implements OnInit, OnDestroy {
     @Input() post: Post | undefined;
     @Input() channelData: { id: string, name: string } | undefined;
+    @Output() closeTh = new EventEmitter<boolean>();
 
     currUid: string | null = null;
 
@@ -85,6 +86,9 @@ export class ThreadComponent implements OnInit, OnDestroy {
         this.dialog.open(UserProfileCardComponent);
     }
 
+    onClose() {
+        this.closeTh.emit(false);
+    }
 
     ngOnDestroy(): void {
         this.authSub.unsubscribe();

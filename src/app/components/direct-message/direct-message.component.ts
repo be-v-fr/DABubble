@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -8,8 +8,8 @@ import { UserProfileCardComponent } from '../../user-profile-card/user-profile-c
 import { ChannelsService } from '../../../services/content/channels.service';
 import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
-import { UsersService } from '../../../services/users.service';
-import { AuthService } from '../../../services/auth.service';
+import { ActivityService } from '../../../services/activity.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-direct-message',
@@ -18,42 +18,75 @@ import { AuthService } from '../../../services/auth.service';
   styleUrls: ['./direct-message.component.scss'],
   imports: [CommonModule, MessageBoxComponent, PickerComponent],
 })
-export class DirectMessageComponent implements OnInit {
+export class DirectMessageComponent implements OnInit, OnDestroy {
+  private subscriptions: Subscription = new Subscription();
+
   channelId?: string;
-  channel?: Channel;
+  channel?: Promise<Channel | undefined>;
   currUser?: User;
-  user?: User;
+  recipient?: User;
+
+  online = true;
+  emojiPicker = false;
 
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private channelService: ChannelsService,
-    private authService: AuthService,
-    private userService: UsersService) { }
+    public activityService: ActivityService
+  ) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.channelId = params.get('id') ?? undefined;
-      if (this.channelId) {
-        this.initChannel(this.channelId);
-      }
-    });
+    this.subscriptions.add(
+      this.route.paramMap.subscribe(params => {
+        this.channelId = params.get('id') ?? undefined;
+        if (this.channelId) {
+          this.initChannel(this.channelId);
+        }
+      })
+    );
+
+    this.subscriptions.add(
+      this.channelService.channels$.subscribe(() => {
+        if (this.channelId) {
+          this.initChannel(this.channelId);
+        }
+      })
+    );
   }
 
-  online = true;
-  emojiPicker = false;
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 
   openUserProfile(): void {
     this.dialog.open(UserProfileCardComponent);
   }
 
-  initChannel(channelId: string): void {
+  async initChannel(channelId: string): Promise<void> {
+    if (!channelId) {
+      console.error('Channel ID is not defined');
+      return;
+    }
+
     this.channel = this.channelService.getChannel(channelId);
-    // Weitere Logik zur Initialisierung des Kanals
+    if (this.channel) {
+      await this.initRecipient(this.channel);
+    } else {
+      console.error('Channel not found');
+    }
   }
 
-  initUser(channel: Channel) {
-    const currUserId = this.authService.getCurrentUid();
-    this.user = channel.members.find(u => u.uid === currUserId);
+  async initRecipient(channelPromise: Promise<Channel | undefined>): Promise<void> {
+    try {
+      const channel = await channelPromise;
+      if (channel && channel.members.length > 1) {
+        this.recipient = channel.members[1];
+      } else {
+        console.error('Recipient not found in channel members');
+      }
+    } catch (error) {
+      console.error('Error initializing recipient:', error);
+    }
   }
 }

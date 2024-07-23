@@ -43,8 +43,8 @@ export class ChannelsService implements OnDestroy {
     return this.channels.slice();
   }
 
-  getChannel(id: string): Channel {
-    return this.channels.find(c => c.channel_id === id)!;
+  async getChannel(id: string): Promise<Channel |undefined> {
+    return this.channels.find(c => c.channel_id === id);
   }
 
   async addChannel(channel: Channel): Promise<string> {
@@ -55,7 +55,7 @@ export class ChannelsService implements OnDestroy {
   }
 
   async addMemberToChannel(user: User, channelId: string) {
-    const channel = this.getChannel(channelId);
+    const channel = await this.getChannel(channelId);
     if (channel) {
       const userExists = channel.members.some(member => member.uid === user.uid);
       if (!userExists) {

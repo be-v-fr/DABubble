@@ -59,8 +59,10 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userSub = this.userService.users$.subscribe((users) => {
-      this.users = users;
-      this.currentUser = users.find(u => u.uid === this.authService.getCurrent()?.uid);
+      let uid = this.authService.getCurrent()!.uid;
+      
+      this.users = users.filter(u => u.uid !== uid);
+      this.currentUser = users.find(u => u.uid === uid);
     });
 
     this.channelsSub = combineLatest([this.userService.users$, this.channelsService.channels$])
