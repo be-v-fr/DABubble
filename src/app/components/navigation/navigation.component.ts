@@ -20,6 +20,7 @@ export class NavigationComponent {
 
 
   closeNavigation() {
+    console.log('Close navigation triggered');
     if (window.innerWidth <= 768) {
       this.isVisible = false;
     }

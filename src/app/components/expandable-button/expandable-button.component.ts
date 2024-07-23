@@ -43,13 +43,13 @@ export class ExpandableButtonComponent {
     this.isMenuExpanded = !this.isMenuExpanded;
   }
 
-   @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    if (window.innerWidth <= 768) {
-      this.isMenuExpanded = false;
-      this.userClick.emit();
-    }
-  }
+  //  @HostListener('window:resize', ['$event'])
+  // onResize(event: Event) {
+  //   if (window.innerWidth <= 768) {
+  //     this.isMenuExpanded = false;
+  //     this.userClick.emit();
+  //   }
+  // }
 
   onAddChannelClick(): void {
     const dialogRef = this.dialog.open(AddChannelComponent);
