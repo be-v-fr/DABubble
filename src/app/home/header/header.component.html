@@ -1,11 +1,11 @@
 <div class="header-wrapper">
-    <app-animation-intro [pause]="introService.awaitingAppInit" (then)="introService.onAnimationComplete()" *ngIf="!introService.afterAnimationPlusTimeout" />
+    <!-- <app-animation-intro [pause]="introService.awaitingAppInit" (then)="introService.onAnimationComplete()" *ngIf="!introService.afterAnimationPlusTimeout" />
     <a href="" (click)="$event.preventDefault()" class="logo-wrapper" [ngClass]="{'transparent': !introService.afterAnimation}">
         <img src="/assets/img/logo_name.svg" alt="DABubble" class="logo">
-    </a>
-    <!-- <a href="" (click)="$event.preventDefault()" class="logo-wrapper">
-        <img src="/assets/img/logo_name.svg" alt="DABubble" class="logo">
     </a> -->
+    <a href="/main-chat/" class="logo-wrapper">
+        <img src="/assets/img/logo_name.svg" alt="DABubble" class="logo">
+    </a>
     <div class="searchbar-wrapper">
         <div class="searchbar-box">
             <input id="searchbar" type="text" placeholder="Code learning durchsuchen">
