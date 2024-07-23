@@ -39,6 +39,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   currentUid: string | undefined;
   currentChannel = new Channel();
   currPost: Post | undefined;
+  openTh = false;
   emojiPicker = false;
   activeUsers: User[] = [];
   currentDate: number = Date.now();
@@ -70,6 +71,11 @@ export class MainChatComponent implements OnInit, OnDestroy {
         this.setChannel(this.currentChannel.channel_id);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.authSub.unsubscribe();
+    this.channelSub.unsubscribe();
   }
 
   initChannel(channel_id: string): void {
@@ -120,6 +126,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
       const post = this.currentChannel.posts.find(post => post.thread.thread_id === threadId);
       if (post) {
         this.currPost = post;
+        this.openTh = true;
       } else {
         console.error(`Thread with ID ${threadId} not found.`);
         this.currPost = undefined;
@@ -129,8 +136,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    this.authSub.unsubscribe();
-    this.channelSub.unsubscribe();
+  closeThread(event: any) {
+    this.openTh = event;
   }
 }
