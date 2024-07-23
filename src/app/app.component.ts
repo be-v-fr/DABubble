@@ -25,13 +25,6 @@ export class AppComponent implements OnInit, OnDestroy {
   userSub = new Subscription();
 
 
-  // ###############################################
-  // This parameter (if set to true) suppresses both the animation and the authentication
-  // and redirects automatically to the home component.
-  TESTING: boolean = true;
-  // ###############################################
-
-
   /**
    * The constructor declares a Router instance
    * @param router - Router instance
@@ -45,17 +38,10 @@ export class AppComponent implements OnInit, OnDestroy {
    * This function creates an authentication service subscription for user authentication.
    */
   ngOnInit(): void {
-    if(this.TESTING) {
-      this.introService.awaitingAppInit = false;
-      this.introService.afterAnimation = true;
-      this.introService.afterAnimationPlusTimeout = true;
-    }
-    if (!this.TESTING) {
-      const url = new URL(window.location.href);
-      if (!url.search.includes('mode')) { this.router.navigate(['/auth/logIn']) }
-      this.userSub = this.subUser();
-      this.awaitMax();
-    }
+    // const url = new URL(window.location.href);
+    // if (!url.search.includes('mode')) { this.router.navigate(['/auth/logIn']) }
+    this.userSub = this.subUser();
+    this.awaitMax();
   }
 
 

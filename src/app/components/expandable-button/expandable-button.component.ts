@@ -67,6 +67,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
       .subscribe(([users, channels]) => {
         this.currentUser = users.find(u => u.uid === this.authService.getCurrent()?.uid);
         this.userChannels = channels.filter(c => c.members.some(member => member.uid === this.currentUser?.uid) && c.isPmChannel === false);
+        // console.log(this.userChannels);
       });
   }
 

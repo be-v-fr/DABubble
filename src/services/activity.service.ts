@@ -35,7 +35,7 @@ export class ActivityService implements OnDestroy {
 
   subAuth(): Subscription {
     return this.authService.user$.subscribe((user: any) => {
-      console.log('user$ (auth) triggered');
+      // console.log('user$ (auth) triggered');
       if (user) { this.setUserStates() }
       this.setLastActivityOnAuth(user);
     });
@@ -45,7 +45,7 @@ export class ActivityService implements OnDestroy {
     return this.usersService.users$.subscribe(() => {
       this.syncCurrentUser();
       this.setUserStates();
-      console.log('users$ triggered');
+      // console.log('users$ triggered');
     });
   }
 
@@ -78,7 +78,7 @@ export class ActivityService implements OnDestroy {
       this.currentUser.lastActivity = Date.now();
       this.usersService.updateUser(this.currentUser);
       this.activitySettingAllowed = false;
-      console.log('activity set');
+      // console.log('activity set');
     }
   }
 
@@ -86,11 +86,11 @@ export class ActivityService implements OnDestroy {
     if (user && this.currentUser.lastActivity == -1) {
       this.currentUser.lastActivity = Date.now();
       this.usersService.updateUser(this.currentUser);
-      console.log('auth activity set: active');
+      // console.log('auth activity set: active');
     } else if (!user && this.currentUser.lastActivity > 0) {
       this.currentUser.lastActivity = -1;
       this.usersService.updateUser(this.currentUser);
-      console.log('auth activity set: logged out');
+      // console.log('auth activity set: logged out');
     }
   }
 

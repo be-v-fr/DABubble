@@ -51,7 +51,7 @@ export class HomeComponent {
 
     subAuth(): Subscription {
         return this.authService.user$.subscribe((user) => {
-            if (user && !(this.currentUser.uid.length > 0)) {
+            if (user) {
                 this.syncUsers();
                 this.usersSub.unsubscribe();
                 this.usersSub = this.subUsers();
@@ -76,6 +76,7 @@ export class HomeComponent {
             const user = this.usersService.getUserByUid(uid);
             if (user) {
                 this.currentUser = user;
+                console.log('valid user in home:', user);
             }
         }
     }

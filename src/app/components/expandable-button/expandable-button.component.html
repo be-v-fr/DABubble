@@ -18,7 +18,7 @@
             <ul>
                 @for (channel of userChannels; track channel) {<li>
                     <a [routerLink]="['/main-chat', channel.channel_id]">
-                        <span>#</span> {{channel.name}}
+                        <span>#</span> {{channel.name}} {{channel.channel_id}}
                     </a>
                 </li>}
             </ul>
