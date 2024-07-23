@@ -32,7 +32,7 @@
                     <p>E-Mail-Adresse</p>
                 </div>
                 <div class="inputField">
-                    <input [(ngModel)]="userData.email" type="email" name="email" #email="ngModel" placeholder="{{ mainUser.email || 'vorname.name&#64;beispiel.de' }}" pattern="[a-zA-Z0-9\.%_\+\-]{1,}[@][a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,}" value="{{ mainUser.email }}" required/>
+                    <input [(ngModel)]="userData.email" type="email" name="email" #email="ngModel" placeholder="{{ mainUser.email || 'vorname.name&#64;beispiel.de' }}" pattern="[a-zA-Z0-9\.%_\+\-]{1,}[@][a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,}" value="{{ mainUser.email }}" [required]="mainUser.email.length > 0"/>
                 </div>
                 @if((email.touched || editMainUser.submitted) && !email.valid) {
                     <p class="error-msg">Diese E-Mail-Adresse ist leider ungültig.</p>
