@@ -146,7 +146,7 @@ export class AuthService {
     const guestLogIn = localStorage.getItem('GUEST_logIn');
     const guestUid = localStorage.getItem('GUEST_uid');
     if (guestLogIn == 'true' && guestUid) {
-      const userData = this.usersService.users.find(u => u.uid == guestUid);
+      const userData = this.usersService.getUserByUid(guestUid);
       if (userData) { return new User(userData) }
     }
     return null;

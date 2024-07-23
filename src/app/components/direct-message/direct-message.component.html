@@ -1,39 +1,32 @@
 <div class="mobile-wrapper">
-<div class="direct-m-container">
-  <div class="direct-m-header">
-    <div class="header-img-container">
+  <div class="direct-m-container">
+    <div class="direct-m-header">
+      <div class="header-img-container">
         <div class="hoverImgContainer" (click)="openUserProfile()">
-      <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar" />
-      <span
-        [ngStyle]="
+          <img [src]=" channel!.members[1].avatarSrc " [alt]=" channel!.members[1].name" />
+          <span [ngStyle]="
           online ? { background: '#92c83e' } : { background: '#686868' }
-        "
-        class="on-off-line-sign"
-      ></span>
-    
-    <span>Noah Braun</span>
+        " class="on-off-line-sign"></span>
+
+          <span>{{ channel!.members[1].name }}</span>
         </div>
-</div>
-  </div>
-  <div class="direct-m-content">
-    <div class="direct-m-mem" id="mobile-direct-m-mem">
-      <div class="direct-m-mem-header">
-        <div class="member-img-container">
-          <img src="../../../assets/img/avatar/avatar_03.svg" alt="Avatar" />
-        </div>
-        <span (click)="openUserProfile()">Noah Braun</span>
       </div>
-      <p>
-        Diese Unterhaltung findet nur zwischen <span>&#64;Sofia Müller</span> und
-        dir statt.
-      </p>
     </div>
-    <app-message-box />
+    <div class="direct-m-content">
+      <div class="direct-m-mem" id="mobile-direct-m-mem">
+        <div class="direct-m-mem-header">
+          <div class="member-img-container">
+            <img [src]=" channel!.members[1].avatarSrc " [alt]=" channel!.members[1].name" />
+          </div>
+          <span (click)="openUserProfile()">{{ channel!.members[1].name }}</span>
+        </div>
+        <p>
+          Diese Unterhaltung findet nur zwischen <span>&#64;{{ channel!.members[1].name }}r</span> und
+          dir statt.
+        </p>
+      </div>
+      <app-message-box />
+    </div>
+    <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="emojiPicker"></emoji-mart>
   </div>
-  <emoji-mart
-    title="Pick your emoji…"
-    emoji="point_up"
-    *ngIf="emojiPicker"
-  ></emoji-mart>
-</div>
 </div>

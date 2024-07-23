@@ -90,7 +90,7 @@ export class ActivityService implements OnDestroy {
     } else if (!user && this.currentUser.lastActivity > 0) {
       this.currentUser.lastActivity = -1;
       this.usersService.updateUser(this.currentUser);
-      console.log('auth activity set: logged out');      
+      console.log('auth activity set: logged out');
     }
   }
 
@@ -98,13 +98,13 @@ export class ActivityService implements OnDestroy {
     const uid = this.authService.getCurrentUid();
     if (uid) {
       const user = this.usersService.getUserByUid(uid);
-      if (user) {this.currentUser = user}
+      if (user) { this.currentUser = user }
     }
   }
 
   setUserStates(): void {
     this.userStates = [];
-    this.usersService.users.forEach(u => this.userStates.push(this.getUserState(u)));
+    this.usersService.getAllUsers().forEach(u => this.userStates.push(this.getUserState(u)));
   }
 
   getUserState(user: User): UserState {
@@ -118,10 +118,10 @@ export class ActivityService implements OnDestroy {
   }
 
   getActiveUsers(): User[] {
-    return this.usersService.users.filter(user => this.getUserState(user).state === 'active');
+    return this.usersService.getAllUsers().filter(user => this.getUserState(user).state === 'active');
   }
 
   getAllUsers(): User[] {
-    return this.usersService.users;
+    return this.usersService.getAllUsers();
   }
 }
