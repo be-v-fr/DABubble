@@ -17,7 +17,7 @@
         <div *ngIf="showBtn()" class="channel-menu">
             <ul>
                 @for (channel of userChannels; track channel) {<li>
-                    <a routerLink="/main-chat" [queryParams]="{channel: channel.channel_id}">
+                    <a [routerLink]="['/main-chat', channel.channel_id]">
                         <span>#</span> {{channel.name}}
                     </a>
                 </li>}
