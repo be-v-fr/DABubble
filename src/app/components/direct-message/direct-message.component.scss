@@ -41,6 +41,7 @@
       }
 
       .hoverImgContainer {
+        position: relative;
         gap: 20px;
         display: flex;
         align-items: center;
@@ -52,15 +53,41 @@
           border-radius: 50%;
         }
 
+
+
         &:hover {
           background-color: $violet-bright;
         }
       }
 
-      span {
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 32.74px;
+      .onlinedot {
+        position: absolute;
+        content: '';
+        bottom: 6px;
+        left: 57px;
+        width: 17px;
+        height: 17px;
+        box-sizing: border-box;
+        background-color: $onlinedot-online;
+        border: 2px solid $onlinedot-border;
+        border-radius: 50%;
+
+        &.online {
+          background-color: $onlinedot-online;
+        }
+
+        &.idle {
+          background-color: #c8c82e;
+        }
+
+        &.offline {
+          background-color: $onlinedot-offline;
+        }
+
+        @media screen and (max-width: 768px) {
+          width: 14px;
+          height: 14px;
+        }
       }
     }
 

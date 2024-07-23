@@ -109,7 +109,7 @@ export class ActivityService implements OnDestroy {
 
   getUserState(user: User): UserState {
     let state: 'active' | 'idle' | 'loggedOut' = 'idle';
-    if (user.lastActivity == -1) { state = 'loggedOut' }
+    if (user.lastActivity === -1) { state = 'loggedOut' }
     else if (Date.now() - user.lastActivity < this.idleDuration) { state = 'active' }
     return {
       uid: user.uid,

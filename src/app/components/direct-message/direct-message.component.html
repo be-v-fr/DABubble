@@ -3,12 +3,10 @@
     <div class="direct-m-header">
       <div class="header-img-container">
         <div class="hoverImgContainer" (click)="openUserProfile()">
-          <img [src]=" channel!.members[1].avatarSrc " [alt]=" channel!.members[1].name" />
-          <span [ngStyle]="
-          online ? { background: '#92c83e' } : { background: '#686868' }
-        " class="on-off-line-sign"></span>
+          <img [src]="recipient?.avatarSrc" [alt]="recipient?.name" />
+          <span class="onlinedot"></span>
 
-          <span>{{ channel!.members[1].name }}</span>
+          <span>{{ recipient?.name }}</span>
         </div>
       </div>
     </div>
@@ -16,12 +14,12 @@
       <div class="direct-m-mem" id="mobile-direct-m-mem">
         <div class="direct-m-mem-header">
           <div class="member-img-container">
-            <img [src]=" channel!.members[1].avatarSrc " [alt]=" channel!.members[1].name" />
+            <img [src]="recipient?.avatarSrc" [alt]=" recipient?.name" />
           </div>
-          <span (click)="openUserProfile()">{{ channel!.members[1].name }}</span>
+          <span (click)="openUserProfile()">{{ recipient?.name }}</span>
         </div>
         <p>
-          Diese Unterhaltung findet nur zwischen <span>&#64;{{ channel!.members[1].name }}r</span> und
+          Diese Unterhaltung findet nur zwischen <span>&#64;{{ recipient?.name }}r</span> und
           dir statt.
         </p>
       </div>
