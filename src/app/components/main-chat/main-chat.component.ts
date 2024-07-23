@@ -58,9 +58,10 @@ export class MainChatComponent implements OnInit, OnDestroy {
       this.currentUid = this.authService.getCurrentUid();
     });
 
-    this.route.queryParams.subscribe(params => {
-      if (params['channel']) {
-        this.initChannel(params['channel']);
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.initChannel(id);
       }
     });
 

@@ -40,7 +40,7 @@ export class AddChannelComponent {
       const preparedChannel = this.prepareChannel(this.channel);
 
       await this.channelsService.addChannel(preparedChannel).then(res => {
-        this.addChannelToParams(res);
+        this.channelsService.addChannelToRoute('main-chat', res);
       });
 
       this.dialogRef.close();
@@ -52,15 +52,5 @@ export class AddChannelComponent {
     const autor = this.authService.getCurrent();
     channel.author_uid = autor!.uid;
     return channel;
-  }
-
-
-  addChannelToParams(channel_id: string): void {
-    const queryParams: Params = { channel: channel_id };
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams,
-      queryParamsHandling: 'merge'
-    });
   }
 }

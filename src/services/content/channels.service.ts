@@ -1,4 +1,5 @@
 import { Injectable, inject, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 import { Firestore, collection, doc, onSnapshot, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
@@ -17,6 +18,7 @@ export class ChannelsService implements OnDestroy {
   channels: Channel[] = [];
   unsubChannels;
   firestore: Firestore = inject(Firestore);
+  router = inject(Router);
 
   constructor() {
     this.unsubChannels = this.subChannels();
@@ -252,5 +254,11 @@ export class ChannelsService implements OnDestroy {
   async addUserToChannel(user: User, channel: Channel) {
     channel.members.push(user);
     await this.updateChannelInStorage(channel);
+  }
+
+  addChannelToRoute(parent: 'main-chat' | 'direct-message', channel_id: string): void {
+    this.router.navigate([`/${parent}`, channel_id], {
+      queryParamsHandling: 'merge'
+    });
   }
 }

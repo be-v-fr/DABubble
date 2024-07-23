@@ -92,17 +92,11 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
       const preparedChannel = this.prepareChannel(this.newChannel, user);
       await this.channelsService.addChannel(preparedChannel).then(res => {
         console.log(res);
-        this.addChannelToParams(res);
+        this.channelsService.addChannelToRoute('direct-message', res);
       });
     } else {
-      this.addChannelToParams(channelExist.channel_id);
+      this.channelsService.addChannelToRoute('direct-message', channelExist.channel_id);
     }
-  }
-
-  addChannelToParams(channel_id: string): void {
-    this.router.navigate(['/direct-message', channel_id], {
-      queryParamsHandling: 'merge'
-    });
   }
 
   prepareChannel(channel: Channel, user: User): Channel {
