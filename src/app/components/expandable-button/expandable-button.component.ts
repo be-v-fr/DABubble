@@ -24,6 +24,7 @@ import { AuthService } from '../../../services/auth.service';
   styleUrls: ['./expandable-button.component.scss'],
 })
 export class ExpandableButtonComponent implements OnInit, OnDestroy {
+  private authSub = new Subscription();
   private userSub!: Subscription;
   private channelsSub = new Subscription();
 
@@ -58,13 +59,17 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userSub = this.userService.users$.subscribe((users) => {
+    this.authSub = this.authService.user$.subscribe((user) => {
       const uid = this.authService.getCurrentUid();
       if (uid) {
-        this.users = users.filter(u => u.uid !== uid);
-        this.currentUser = users.find(u => u.uid === uid);
+        this.userSub = this.userService.users$.subscribe((users) => {
+          this.users = users.filter(u => u.uid !== uid);
+          this.currentUser = users.find(u => u.uid === uid);
+        });
       }
     });
+
+
 
     this.channelsSub = combineLatest([this.userService.users$, this.channelsService.channels$])
       .subscribe(([users, channels]) => {
@@ -75,6 +80,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.authSub.unsubscribe();
     this.userSub.unsubscribe();
     this.channelsSub.unsubscribe();
   }
