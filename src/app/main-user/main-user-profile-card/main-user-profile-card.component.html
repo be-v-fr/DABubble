@@ -1,11 +1,9 @@
 <div class="userCard">
     <div class="head">
         <p>Profil</p>
-        <div class="close-btn" (click)="closeDialog()">
-            <a (click)="closeDialog()">
-                <img src="/assets/img/icons/close.svg" />
-            </a>
-        </div>
+        <a (click)="closeDialog()">
+            <img src="/assets/img/icons/close.svg" />
+        </a>
     </div>
     <div class="profileImg defaultPic">
         <img class="#" src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}" />

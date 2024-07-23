@@ -1,143 +1,102 @@
 @import "../../../styles.scss";
 
-.inputContainer {
-    display: flex;
-    margin-top: 370px;
-    margin-left: 40px;
-    flex-direction: column;
-    width: 420px;
-    height: 194px;
-}
-
-.nameContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    .userName {
-        display: flex;
-        gap: 20px;
-        .mailIcon {
-            width: 25px;
-            height: 20px;
-        }
-        .userIcon {
-            width: 25px;
-            height: 25px;
-        }
-        p {
-            font-weight: 700;
-            font-size: 20px;
-        }
-    }
-}
-
-.emailContainer {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    margin-top: 16px;
-    .email {
-        display: flex;
-        gap: 20px;
-        .mailIcon {
-            width: 25px;
-            height: 20px;
-        }
-            p {
-            font-weight: 700;
-            font-size: 20px;
-        }
-    }
-}
-
 .userCard {
     position: fixed;
-    right: 35px;
-    top: 95px;
+    right: 20px;
+    top: 110px;
     width: 500px;
     height: 705px;
     background-color: white;
     border-radius: 30px;
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-}
-
-.head {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 420px;
-    height: 40px;
-    margin-left: 40px;
-    position: absolute;
-    top: 40px;
-    align-items: baseline;
-    p {
-        font-weight: 700;
-        font-size: 24px;
-    }
-    a {
-        width: 40px;
-        height: 40px;
-        border-radius: 40px;
+    .head {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 420px;
+        height: 40px;
+        margin-left: 40px;
+        position: absolute;
+        top: 40px;
+        align-items: baseline;
+        p {
+            font-weight: 700;
+            font-size: 24px;
+        }
+        a {
+            width: 40px;
+            height: 40px;
+            border-radius: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+                cursor: pointer;
+            }
+            &:hover {
+                background-color: $violet-bright;
+            }
+        }
+    }
+    .profileImg {
+        position: absolute;
+        left: 150px;
+        top: 125px;
         img {
-            cursor: pointer;
+            width: 200px;
+            height: 200px;
+            border-radius: 100%;
         }
-        &:hover {
-            background-color: $violet-bright;
+    }
+    .inputContainer {
+        display: flex;
+        margin-top: 370px;
+        margin-left: 40px;
+        flex-direction: column;
+        width: 420px;
+        height: 194px;
+        .nameContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            .userName {
+                display: flex;
+                gap: 20px;
+                .mailIcon {
+                    width: 25px;
+                    height: 20px;
+                }
+                .userIcon {
+                    width: 25px;
+                    height: 25px;
+                }
+                p {
+                    font-weight: 700;
+                    font-size: 20px;
+                }
+            }
+        }
+        .emailContainer {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            margin-top: 16px;
+            .email {
+                display: flex;
+                gap: 20px;
+                .mailIcon {
+                    width: 25px;
+                    height: 20px;
+                }
+                    p {
+                    font-weight: 700;
+                    font-size: 20px;
+                }
+            }
         }
     }
-}
 
-
-.close-thread-btn {
-    color: rgb(0, 0, 0, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 8px;
-    cursor: pointer;
-  
-    &:hover {
-      color: $purple-blue-bright;
-      background-color: $violet-bright;
-      border-radius: 20px;
-    }
-  }
-
-.profileImg {
-    position: absolute;
-    left: 150px;
-    top: 125px;
-    
-    img:nth-child(1){
-        width: 200px;
-        height: 200px;
-        border-radius: 100%;
-    }
-   
-  
-}
-
-.editIcon{
-    position: absolute;
-    top: 310px;
-    left: 330px;
-    border-radius: 100%;
-    padding: 8px;
-    cursor: pointer;
-    img{
-        width: 24px;
-        height: 24px;
-    }
-    &:hover{
-        background-color: #eceefe;
-       
-    }
-    
 }
 
 .inputField {
@@ -151,14 +110,6 @@
             border-color: $magenta;
         }
     }
-
-}
-
-.submit-btns{
-    display: flex;
-    justify-content: center;
-    gap: 32px;
-    margin-top: 45px;
 }
 
 .error-msg {
@@ -177,4 +128,194 @@
         }
     }
 }
+
+.submit-btns{
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 45px;
+}
+
+
+
+
+
+
+// #####################################################################################################
+// #####################################################################################################
+// #####################################################################################################
+
+
+
+@media screen and (max-width: 768px) {
+    .userCard {
+        position: fixed;
+        padding: 45px 20px;
+        right: auto;
+        top: 50%;
+        width: min(500px, 100vw - 32px);
+        height: fit-content;
+        border-radius: 30px;
+        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        transform: translate(-50%, -50%);
+        p {
+            margin-block-end: 0;
+        }
+        .head {
+            position: relative;
+            margin-left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 40px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            p {
+                font-weight: 700;
+                font-size: 24px;
+            }
+            a {
+                width: 40px;
+                height: 40px;
+                border-radius: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img {
+                    cursor: pointer;
+                }
+                &:hover {
+                    background-color: $violet-bright;
+                }
+            }
+        }
+        .profileImg {
+            position: relative;
+            margin-top: 0px;
+            top: 0px;
+            left: 50%;
+            &.defaultPic {
+                width: 150px;
+                height: 150px;
+                border-radius: 100%;
+                background-image: url(/assets/img/avatar/empty_avatar.svg);
+                background-size: cover;
+                transform: translateX(-50%);
+            }
+            img {
+                width: 150px;
+                height: 150px;
+                border-radius: 100%;
+            }
+        }
+        .inputContainer {
+            display: flex;
+            margin-top: 0px;
+            margin-left: 0px;
+            flex-direction: column;
+            width: 100%;
+            height: fit-content;
+            .nameContainer {
+                display: flex;
+                flex-direction: column;
+                gap: 7px;
+                .userName {
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                    .icon {
+                        width: 30px;
+                        height: 30px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    p {
+                        font-weight: 700;
+                        font-size: 20px;
+                    }
+                }
+            }
+            .emailContainer {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                gap: 7px;
+                margin-top: 15px;
+                .email {
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                    .icon {
+                        width: 30px;
+                        height: 30px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    p {
+                        font-weight: 700;
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+    
+    }
+    
+    .inputField {
+        input {
+            width: 100%;
+            height: 52px;
+            border: 1px solid $purple-light;
+            border-radius: 30px;
+            padding-left: 20px;
+            &:focus:invalid, &:not(:focus:placeholder-shown):invalid {
+                border-color: $magenta;
+            }
+        }
+    }
+    
+    .error-msg {
+        position: absolute;
+        top: calc(100% + 3px);
+        left: 0;
+        color: $magenta;
+        font-size: 14px;
+        animation: fade-in 250ms ease-out;
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    }
+    
+    .submit-btns{
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        margin-top: 30px;
+        @media screen and (max-width: 408px) {
+            gap: 14px;
+            .form-btn-secondary, .form-btn-primary {
+                padding-left: 20px;
+                padding-right: 20px;
+                font-size: 16px;
+            }
+        }
+        }
+    
+}
+
+
+
+
 

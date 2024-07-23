@@ -240,39 +240,22 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
                     background-color: $violet-bright;
                 }
             }
-            .close-btn {
-                padding: 8px;
-                width: 40px;
-                height: 40px;
-                color: rgb(0, 0, 0, 1);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                cursor: pointer;
-                &:hover {
-                    background-color: $violet-bright;
-                    border-radius: 99px;
-                    a img {
-                        content: url("/assets/img/icons/close_hover.svg");
-                    }
-                }
-            }
         }
         .profileImg {
             position: relative;
             top: 0px;
             left: 50%;
-            img {
-                width: 200px;
-                height: 200px;
-                border-radius: 100%;
-            }
             &.defaultPic {
                 transform: translateX(-50%);
                 width: 200px;
                 height: 200px;
+                border-radius: 100%;
                 background-image: url(/assets/img/avatar/empty_avatar.svg);
                 background-size: cover;
+            }
+            img {
+                width: 200px;
+                height: 200px;
                 border-radius: 100%;
             }
         }
