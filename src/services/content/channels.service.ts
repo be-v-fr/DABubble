@@ -35,6 +35,7 @@ export class ChannelsService implements OnDestroy {
         channels.push(new Channel(element.data()));
       });
       this.channels = channels;
+      // console.log(channels);
       this.channels$.next(channels);
     });
   }

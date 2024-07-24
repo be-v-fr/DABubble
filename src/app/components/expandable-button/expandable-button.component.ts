@@ -59,30 +59,39 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.authSub = this.authService.user$.subscribe(() => {
-      const uid = this.authService.getCurrentUid();
-      if (uid) {
-        this.userSub = this.userService.users$.subscribe((users) => {
-          this.users = users.filter(u => u.uid !== uid);
-          this.currentUser = users.find(u => u.uid === uid);
-        });
-      }
-    });
-
-
-
-    this.channelsSub = combineLatest([this.userService.users$, this.channelsService.channels$])
-      .subscribe(([users, channels]) => {
-        this.currentUser = users.find(u => u.uid === this.authService.getCurrent()?.uid);
-        this.userChannels = channels.filter(c => c.members.some(member => member.uid === this.currentUser?.uid) && c.isPmChannel === false);
-        // console.log(this.userChannels);
-      });
+    this.authSub = this.subAuth();
   }
 
   ngOnDestroy(): void {
     this.authSub.unsubscribe();
     this.userSub.unsubscribe();
     this.channelsSub.unsubscribe();
+  }
+
+  subAuth(): Subscription {
+    return this.authService.user$.subscribe(() => {
+      const uid = this.authService.getCurrentUid();
+      if (uid) {
+        this.userSub = this.subUsers(uid)
+        this.channelsSub = this.subChannels();
+      }
+    });
+  }
+
+  subUsers(uid: string): Subscription {
+    return this.userService.users$.subscribe((users) => {
+      this.users = users.filter(u => u.uid !== uid);
+      this.currentUser = users.find(u => u.uid === uid);
+      this.updateUserChannels(this.channelsService.channels);
+    });
+  }
+
+  subChannels(): Subscription {
+    return this.channelsService.channels$.subscribe((channels) => this.updateUserChannels(channels));
+  }
+
+  updateUserChannels(channels: Channel[]) {
+    this.userChannels = channels.filter(c => !c.isPmChannel && c.members.some(m => m.uid === this.currentUser?.uid));
   }
 
   toggleMenu() {

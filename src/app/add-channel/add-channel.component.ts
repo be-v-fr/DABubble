@@ -45,9 +45,7 @@ export class AddChannelComponent {
   }
 
   prepareChannel(channel: Channel): Channel {
-
     const author = this.authService.getCurrent();
-    console.log(author);
     channel.author_uid = author!.uid;
     return channel;
   }
