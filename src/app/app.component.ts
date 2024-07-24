@@ -39,8 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     const url = new URL(window.location.href);
-    if (url.search.slice(5).includes('auth')) {this.router.navigate(['/auth/logIn']) }
-    // if (!url.search.includes('mode')) {this.router.navigate(['/auth/logIn']) }
+    if (url.href.slice(-5).includes('auth')) {this.router.navigate(['/auth/logIn']) }
+    // if (!url.href.includes('mode')) {this.router.navigate(['/auth/logIn']) }
     this.userSub = this.subUser();
     this.awaitMax();
   }
