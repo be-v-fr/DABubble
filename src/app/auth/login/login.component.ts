@@ -72,6 +72,7 @@ export class LoginComponent implements OnDestroy {
   onError(err: Error) {
     this.setAuthError(err.toString());
     this.loading = false;
+    this.showToast = false;
   }
 
 
@@ -234,6 +235,7 @@ export class LoginComponent implements OnDestroy {
    * This function redirects the user.
    */
   redirect() {
+    console.log('redirect!');
     let route = '';
     switch (this.redirectTo) {
       case 'home': break;

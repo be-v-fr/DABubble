@@ -44,4 +44,4 @@
         <a routerLink="/auth/signUp" class="link-purple-border">Konto erstellen</a>
     </div>
 </div>
-<app-toast-notification [message]="'login'" [showing]="showToast" (then)="afterToast()" />
+<app-toast-notification [message]="'login'" [showing]="showToast" (then)="afterToast()" *ngIf="showToast" />
