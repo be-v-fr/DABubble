@@ -1,5 +1,5 @@
 <div class="mobile-wrapper">
-  <div class="direct-m-container">
+  <section class="direct-m-container">
     <div class="direct-m-header">
       <div class="header-img-container">
         <div class="hoverImgContainer" (click)="openUserProfile()">
@@ -11,6 +11,17 @@
       </div>
     </div>
     <div class="direct-m-content">
+      @if(channel && channel.posts.length > 0 && channel.isPmChannel) {
+      <div class="direct-m-items">
+        @for (post of channel.posts; track post.post_id; let i = $index) {
+        <div class="direct-m-item">
+          <app-time-separator [timestamp]="post.date" />
+          <app-message-item [post]="post" [hideEmojiPicker]="emojiPicker"
+            (showEmojiPicker)="handleEmojiStateChange($event)" [messageSender]="isCurrentUserAuthor()" />
+        </div>
+        }
+      </div>
+      }@else {
       <div class="direct-m-mem" id="mobile-direct-m-mem">
         <div class="direct-m-mem-header">
           <div class="member-img-container">
@@ -23,8 +34,9 @@
           dir statt.
         </p>
       </div>
-      <app-message-box />
+      }
+      <app-message-box (sent)="onCreatePost($event)" />
     </div>
     <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="emojiPicker"></emoji-mart>
-  </div>
+  </section>
 </div>
