@@ -5,7 +5,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 // import { ExpandableButtonComponent } from '../components/expandable-button/expandable-button.component';
 import { ChannelsService } from '../../services/content/channels.service';
 import { Channel } from '../../models/channel.class';
-import { ActivatedRoute, Router, Params } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -22,8 +21,6 @@ export class AddChannelComponent {
     public dialogRef: MatDialogRef<AddChannelComponent>,
     private authService: AuthService,
     private channelsService: ChannelsService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
   ) { }
 
   onCancel() {
@@ -48,9 +45,8 @@ export class AddChannelComponent {
   }
 
   prepareChannel(channel: Channel): Channel {
-
-    const autor = this.authService.getCurrent();
-    channel.author_uid = autor!.uid;
+    const author = this.authService.getCurrent();
+    channel.author_uid = author!.uid;
     return channel;
   }
 }

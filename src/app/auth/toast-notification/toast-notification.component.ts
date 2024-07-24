@@ -36,8 +36,10 @@ export class ToastNotificationComponent {
 
   onShow() {
     setTimeout(() => {
-      this._showing = false;
-      this.then.emit();
+      if (this._showing) {
+        this._showing = false;
+        this.then.emit();
+      }
     }, 1300);
   }
 }

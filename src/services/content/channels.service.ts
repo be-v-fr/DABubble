@@ -253,6 +253,7 @@ export class ChannelsService implements OnDestroy {
 
   async addUserToChannel(user: User, channel: Channel) {
     channel.members.push(user);
+    console.log('added user', user.uid, 'to', channel);
     await this.updateChannelInStorage(channel);
   }
 

@@ -80,6 +80,7 @@ export class UsersService implements OnDestroy {
     try {
       const response = await addDoc(collection(this.firestore, 'users'), user.toJson());
       localStorage.setItem('GUEST_uid', response.id);
+      user.uid = response.id;
       await this.channelsService.initUserChannels(user);
     } catch (err) {
       console.error('Error adding guest user:', err);

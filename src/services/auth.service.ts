@@ -28,6 +28,7 @@ export class AuthService {
   firebaseUser$ = user(this.firebaseAuth);
   guestUser$: BehaviorSubject<User | null>;
   user$: Observable<any>;
+  private authAsGuest: boolean = false;
 
   constructor() {
     if (this.currentUserIsGuest()) { this.logInAsGuest() }
@@ -82,6 +83,7 @@ export class AuthService {
       localStorage.setItem('GUEST_logIn', 'true');
       if (!this.getCurrentGuest()) { await this.handleMissingGuestLogIn() }
       this.guestUser$.next(this.getCurrentGuest());
+      this.authAsGuest = true;
     }).then(() => { })
     return from(promise);
   }
@@ -131,14 +133,14 @@ export class AuthService {
     if (localStorage.getItem('GUEST_logIn') == 'true') {
       localStorage.setItem('GUEST_logIn', 'false');
       this.guestUser$.next(null);
+      this.authAsGuest = false;
     }
     const promise = signOut(this.firebaseAuth);
     return from(promise);
   }
 
   getCurrent() {
-    const guestLogIn = localStorage.getItem('GUEST_logIn');
-    if (guestLogIn) { return this.getCurrentGuest() }
+    if (this.authAsGuest) { return this.getCurrentGuest() }
     else { return this.firebaseAuth.currentUser };
   }
 
@@ -157,9 +159,8 @@ export class AuthService {
    * @returns user ID (actual uid or undefined in case there is no log in)
    */
   getCurrentUid(): string | undefined {
-    const guestLogIn = localStorage.getItem('GUEST_logIn');
     const guestUid = localStorage.getItem('GUEST_uid');
-    if (guestLogIn == 'true' && guestUid) { return guestUid }
+    if (guestUid && this.authAsGuest) { return guestUid }
     else {
       const current = this.firebaseAuth.currentUser;
       return current ? current.uid : undefined;
