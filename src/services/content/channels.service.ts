@@ -35,7 +35,6 @@ export class ChannelsService implements OnDestroy {
         channels.push(new Channel(element.data()));
       });
       this.channels = channels;
-      // console.log(channels);
       this.channels$.next(channels);
     });
   }
@@ -254,6 +253,7 @@ export class ChannelsService implements OnDestroy {
 
   async addUserToChannel(user: User, channel: Channel) {
     channel.members.push(user);
+    console.log('added user', user.uid, 'to', channel);
     await this.updateChannelInStorage(channel);
   }
 
