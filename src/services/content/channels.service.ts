@@ -93,6 +93,25 @@ export class ChannelsService implements OnDestroy {
     }
   }
 
+  async addPostToPmChannel(channel_id: string, uid: string, message: string) {
+    const newPost = new Post({
+      post_id: uuidv4(),
+      channel_id: channel_id,
+      message: message,
+      user_id: uid,
+      date: Date.now(),
+      reactions: []
+    });
+    const channel = this.channels.find(c => c.channel_id === channel_id);
+    if (channel) {
+      channel.posts.push(newPost);
+      await this.updateChannelInStorage(channel);
+      this.channels$.next(this.channels.slice());
+    } else {
+      console.error(`Channel with ID ${channel_id} not found`);
+    }
+  }
+
   async addPostToThread(channel_id: string, thread_id: string, uid: string, message: string) {
     const newPost = new Post({
       post_id: uuidv4(),
