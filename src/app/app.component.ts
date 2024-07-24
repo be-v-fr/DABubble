@@ -38,8 +38,9 @@ export class AppComponent implements OnInit, OnDestroy {
    * This function creates an authentication service subscription for user authentication.
    */
   ngOnInit(): void {
-    // const url = new URL(window.location.href);
-    // if (!url.search.includes('mode')) { this.router.navigate(['/auth/logIn']) }
+    const url = new URL(window.location.href);
+    if (url.search.slice(5).includes('auth')) {this.router.navigate(['/auth/logIn']) }
+    // if (!url.search.includes('mode')) {this.router.navigate(['/auth/logIn']) }
     this.userSub = this.subUser();
     this.awaitMax();
   }
