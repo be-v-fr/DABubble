@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { ToastNotificationComponent } from '../toast-notification/toast-notifica
 import { AnimationIntroComponent } from '../../animation-intro/animation-intro.component';
 import { UsersService } from '../../../services/users.service';
 import { User } from '../../../models/user.class';
+import { Subscription } from 'rxjs';
 
 
 /**
@@ -20,7 +21,7 @@ import { User } from '../../../models/user.class';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   private authService = inject(AuthService);
   private usersService = inject(UsersService);
   private router = inject(Router)
@@ -34,6 +35,12 @@ export class LoginComponent {
   showToast: boolean = false;
   loading: boolean = false;
   redirectTo: 'home' | 'avatar' = 'home';
+  private guestSub = new Subscription();
+
+
+  ngOnDestroy(): void {
+    this.guestSub.unsubscribe();
+  }
 
 
   /**
@@ -134,7 +141,13 @@ export class LoginComponent {
   logInAsGuest() {
     this.loading = true;
     this.showToast = true;
-    this.authService.logInAsGuest().subscribe({
+    this.authService.logInAsGuest();
+    this.guestSub = this.subGuest();
+  }
+
+
+  subGuest(): Subscription {
+    return this.authService.guestUser$.subscribe({
       next: () => this.onGuestLogIn()
     });
   }
