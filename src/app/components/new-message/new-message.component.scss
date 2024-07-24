@@ -53,3 +53,16 @@
         }
     }
 }
+
+@media screen and (max-width: 768px) {
+    #mobile-message-container{
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    .new-message-header{
+        border-radius: unset;
+
+    }
+}
+}
