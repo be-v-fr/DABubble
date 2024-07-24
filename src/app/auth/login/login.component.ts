@@ -235,7 +235,6 @@ export class LoginComponent implements OnDestroy {
    * This function redirects the user.
    */
   redirect() {
-    console.log('redirect!');
     let route = '';
     switch (this.redirectTo) {
       case 'home': break;
