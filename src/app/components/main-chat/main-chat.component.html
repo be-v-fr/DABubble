@@ -25,8 +25,8 @@
             <div class="message-item-container">
                 <app-time-separator [timestamp]="post.date" />
                 <app-message-item [post]="post" [hideEmojiPicker]="emojiPicker"
-                    (showEmojiPicker)="handleEmojiStateChange($event)" [messageSender]="isCurrentUserAuthor()"
-                    (threadId)="handleThread($event)" />
+                    (showEmojiPicker)="handleEmojiStateChange($event)" [messageSender]="isCurrentUserAuthor(i)"
+                    [postUid]="getPostUid(i)" (threadId)="handleThread($event)" />
             </div>
             }
             } @else {

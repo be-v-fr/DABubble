@@ -13,6 +13,7 @@ import { AuthService } from '../../../services/auth.service';
 import { ClickStopPropagationDirective } from '../../shared/click-stop-propagation.directive';
 import { ChannelsService } from '../../../services/content/channels.service';
 import { Reaction } from '../../../models/reaction.class';
+import { HomeComponent } from '../../home/home.component';
 
 @Component({
   selector: 'app-message-item',
@@ -21,7 +22,8 @@ import { Reaction } from '../../../models/reaction.class';
     CommonModule,
     TimeSeparatorComponent,
     PickerComponent,
-    ClickStopPropagationDirective
+    ClickStopPropagationDirective,
+    HomeComponent
   ],
   templateUrl: './message-item.component.html',
   styleUrls: ['./message-item.component.scss'] // fix styleUrl to styleUrls
@@ -33,6 +35,7 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
   @Input() messageSender?: boolean;
   @Input() isMainPostThread = false;
   @Input() hideEmojiPicker = false;
+  @Input() postUid: string = "";
   @Output() showEmojiPicker = new EventEmitter<boolean>();
   @Output() threadId = new EventEmitter<string>();
 
@@ -40,6 +43,9 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
   emojiPicker = false;
   groupedEmojis: { [key: string]: { count: number, users: string[] } } = {};
   currentUser: User | undefined;
+  postUser: User = new User;
+  home = new HomeComponent;
+  users = this.home.users;
 
   private authSub = new Subscription();
 
@@ -76,6 +82,9 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
       const uid = this.authService.getCurrentUid();
       if (uid) {
         this.currentUser = this.usersService.getUserByUid(uid);
+        if(this.postUid) {
+            this.postUser = this.usersService.getUserByUid(this.postUid) || new User;
+        }
       }
     });
   }

@@ -94,9 +94,14 @@ export class MainChatComponent implements OnInit, OnDestroy {
     }
   }
 
-  isCurrentUserAuthor(): boolean {
-    const firstPost = this.currentChannel.posts[0];
+  isCurrentUserAuthor(index: number): boolean {
+    const firstPost = this.currentChannel.posts[index];
     return this.currentUid === firstPost.user_id;
+  }
+
+  getPostUid(index: number) {
+    const currentPost = this.currentChannel.posts[index];
+    return currentPost.user_id;
   }
 
   handleEmojiStateChange(newState: boolean): void {
