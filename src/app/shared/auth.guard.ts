@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
 import { Router } from '@angular/router';
 
@@ -10,6 +9,6 @@ export const authGuard: CanActivateFn = (route, state) => {
     router.navigate(['/auth/resetPw'], { queryParams: { oobCode } });
     return false;
   }
-  router.navigate(['/main-chat/#']);
+  router.navigate(['/new']);
   return false;
 };
