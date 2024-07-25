@@ -25,6 +25,8 @@
                 <p class="status-text online">Aktiv</p>
             } @else if (activityService.getUserState(mainUser).state == 'idle') {
                 <p class="status-text idle">Abwesend</p>
+            } @else {
+                <p class="status-text offline">Offline ({{activityService.getUserState(mainUser).state}})</p>
             }
         </div>
     </div>

@@ -247,21 +247,21 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
             left: 50%;
             &.defaultPic {
                 transform: translateX(-50%);
-                width: 200px;
-                height: 200px;
+                width: 150px;
+                height: 150px;
                 border-radius: 100%;
                 background-image: url(/assets/img/avatar/empty_avatar.svg);
                 background-size: cover;
             }
             img {
-                width: 200px;
-                height: 200px;
+                width: 150px;
+                height: 150px;
                 border-radius: 100%;
             }
         }
         .imgedit {
             position: absolute;
-            top: 261px;
+            top: 211px;
             right: 20px;
             img {
                 cursor: pointer;

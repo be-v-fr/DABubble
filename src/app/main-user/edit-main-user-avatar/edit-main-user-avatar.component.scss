@@ -1,15 +1,57 @@
 @import '../../../styles.scss';
 
+@mixin scrollbarH() {
+    &::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+        background-color: $violet-bright;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        height: 5px;
+        border: none;
+        background-clip: padding-box;
+        border-radius: 3px;
+        background-color: $purple-light;
+        box-shadow:
+            inset -1px -1px 0px rgba(0, 0, 0, 0.05),
+            inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+    }
+
+    &::-webkit-scrollbar-button {
+        width: 0;
+        height: 0;
+        display: none;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background-color: transparent;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}
 
 .content-wrapper {
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    right: 20px;
+    top: 110px;
+    width: 606px;
+    // width: min(500px, 100vw - 32px);
+    // height: fit-content;
+    border-radius: 30px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+    background-color: white;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    // justify-content: center;
     align-items: center;
+    // transform: translate(-50%, -50%);
     .content-main {
-        width: 606px;
+        width: 100%;
         padding: 56px;
+        // padding: 45px 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -148,3 +190,200 @@ span, p {
     justify-content: flex-end;
 }
 
+
+
+
+
+
+
+
+
+// #####################################################################################################
+// #####################################################################################################
+// #####################################################################################################
+
+
+@media screen and (max-width: 768px) {
+    .content-wrapper {
+        position: fixed;
+        right: 0;
+        left: 50%;
+        top: 50%;
+        // width: 606px;
+        width: min(500px, 100vw - 32px);
+        height: fit-content;
+        border-radius: 30px;
+        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: translate(-50%, -50%);
+        p {
+            margin-block-end: 0;
+        }
+        .content-main {
+            width: 100%;
+            padding: 45px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0px 2px 10px 0px #00000014;
+            h1 {
+                position: relative;
+                margin-block-end: 0;
+                width: 100%;
+                color: $purple-blue-active;
+                font-family: "Nunito", sans-serif;
+                font-size: clamp(26px, 8.125vw, 46px);
+                font-weight: 700;
+                text-align: center;
+            }
+        }
+    }
+    
+    span, p {
+        font-size: 20px;
+        @media screen and (max-width: 408px) {
+            font-size: 16px;
+        }
+    }
+    
+    .avatar-container {
+        border-radius: 100%;
+        transition: transform 150ms ease;
+        img {
+            border: 4px solid transparent;
+            border-radius: 99px;
+            width: 50px;
+            height: 50px;
+        }
+        &:hover {
+            cursor: pointer;
+            img {
+                border: 4px solid #e6e6e6;
+            }
+        }
+        &.defaultPic {
+            width: 50px;
+            height: 50px;
+            background-image: url(/assets/img/avatar/empty_avatar.svg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            img {
+                border: 4px solid #fff;
+            }
+            &:hover img {
+                border: 4px solid #e6e6e6;
+            }
+            &.btn_active img {
+                border: 4px solid $onlinedot-online;
+            }
+        }
+        &.defaultPic200 {
+            width: 100px;
+            height: 100px;
+            background-image: url(/assets/img/avatar/empty_avatar.svg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            img {
+                border: 4px solid #fff;
+                border-radius: 199px;
+                width: 100px;
+                height: 100px;
+            }
+            &:hover img {
+                border: 4px solid #e6e6e6;
+            }
+            &.btn_active img {
+                border: 4px solid $onlinedot-online;
+            }
+        }
+        &.btn_active img {
+            border: 4px solid $onlinedot-online;
+        }
+    }
+    
+    
+    .currentAvatar-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        .current {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+    
+    .avatar-picker{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        // flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        gap: 15px;
+        // cursor: pointer;
+        @include scrollbarH();
+        @media screen and (max-width: 446px) {
+            overflow-x: scroll;
+        }
+    }
+    
+    .upload-avatar-container {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 0px;
+        position: relative;
+        span {
+            min-width: 100%;
+        }
+        .error-msg {
+            position: absolute;
+            top: calc(100% + 3px);
+            left: 0;
+            color: $magenta;
+            font-size: 14px;
+            animation: fade-in 250ms ease-out;
+            @keyframes fade-in {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+        }
+        @media screen and (max-width: 408px) {
+            .form-btn-secondary, .form-btn-primary {
+                padding-left: 18px;
+                padding-right: 18px;
+                font-size: 16px;
+            }
+        }
+    }
+    
+    .submit-btns {
+        margin-top: 15px;
+        display: flex;
+        gap: 30px;
+        width: 100%;
+        justify-content: flex-end;
+        @media screen and (max-width: 408px) {
+            gap: 14px;
+            .form-btn-secondary, .form-btn-primary {
+                padding-left: 18px;
+                padding-right: 18px;
+                font-size: 16px;
+            }
+        }
+    }
+}
