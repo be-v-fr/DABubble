@@ -246,14 +246,9 @@ export class ChannelsService implements OnDestroy {
   }
 
   async initTeamChannel(user: User) {
-    const teamChannel: Channel | null = this.getTeamChannel();
+    const teamChannel: Channel | undefined = this.channels.find(c => c.author_uid === '');
     if (teamChannel) { await this.addMemberToChannel(user, teamChannel.channel_id) }
     else { await this.storeChannel(new Channel(this.getTeamChannelData(user))) }
-  }
-
-  getTeamChannel(): Channel | null {
-    const teamChannel: Channel | undefined = this.channels.find(c => c.author_uid === '');
-    return teamChannel ? teamChannel : null;
   }
 
   getTeamChannelData(user: User): any {
