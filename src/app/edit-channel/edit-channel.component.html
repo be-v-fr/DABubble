@@ -50,6 +50,6 @@
     </div>
   </div>
   <div class="addChannelBtn">
-    <button type="submit" class="form-btn-primary" (click)="closeChannel()">Channel verlassen</button>
+    <button type="submit" class="form-btn-primary" (click)="leaveChannel()" [disabled]="data.author_uid === ''">Channel verlassen</button>
   </div>
 </div>

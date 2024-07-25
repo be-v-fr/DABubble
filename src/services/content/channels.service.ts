@@ -43,7 +43,7 @@ export class ChannelsService implements OnDestroy {
     return this.channels.slice();
   }
 
-  async getChannel(id: string): Promise<Channel |undefined> {
+  async getChannel(id: string): Promise<Channel | undefined> {
     return this.channels.find(c => c.channel_id === id);
   }
 
@@ -66,6 +66,15 @@ export class ChannelsService implements OnDestroy {
       }
     } else {
       console.error(`Channel with ID ${channelId} not found`);
+    }
+  }
+
+  async removeChannelMember(user: User, channelId: string) {
+    let channel = await this.getChannel(channelId);
+    if (channel) {
+      channel.members = channel.members.filter(m => m.uid != user.uid);
+      console.log('member', user.name, 'removed from channel. remaining members:', channel.members);
+      await this.updateChannel(channel);
     }
   }
 

@@ -5,6 +5,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Channel } from '../../models/channel.class';
 import { ChannelsService } from '../../services/content/channels.service';
 import { AuthService } from '../../services/auth.service';
+import { User } from '../../models/user.class';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-channel',
@@ -25,8 +27,9 @@ export class EditChannelComponent {
   constructor(
     private dialogRef: MatDialogRef<EditChannelComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Channel,
-    private channelService: ChannelsService,
-    private authService: AuthService
+    private channelsService: ChannelsService,
+    private authService: AuthService,
+    private router: Router
   ) {
     this.channelName = data.name;
     this.channelDescription = data.description;
@@ -62,18 +65,28 @@ export class EditChannelComponent {
   async saveNameChanges() {
     this.data.name = this.channelName;
 
-    await this.channelService.updateChannel(this.data);
+    await this.channelsService.updateChannel(this.data);
     this.editName = false;
   }
 
   async saveDescriptionChanges() {
     this.data.description = this.channelDescription;
 
-    await this.channelService.updateChannel(this.data);
+    await this.channelsService.updateChannel(this.data);
     this.editDescriptionMode = false;
   }
 
   closeChannel() {
+    this.dialogRef.close();
+  }
+
+  async leaveChannel() {
+    const currentUserData = this.authService.getCurrent();
+    if(currentUserData) {
+      const currentUser = new User(currentUserData);
+      await this.channelsService.removeChannelMember(currentUser, this.data.channel_id);
+      this.router.navigate(['new']);
+    }
     this.dialogRef.close();
   }
 }
