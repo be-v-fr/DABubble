@@ -34,4 +34,8 @@ export class AddMembersAfterAddChannelComponent {
   autofocus() {
     setTimeout(() => this.specificPeopleInput.nativeElement.focus(), 40);
   }
+
+  close() {
+    this.dialogRef.close();
+}
 }

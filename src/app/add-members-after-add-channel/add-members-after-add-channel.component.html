@@ -1,5 +1,7 @@
 <form class="container" [ngClass]="{ 'expanded': selection === 'specificPeople' }"
   (ngSubmit)="onSubmit(addMemberChannelForm)" #addMemberChannelForm="ngForm">
+  <div class="fingerbar" (click)="close()">&nbsp;</div>
+
   <div class="headlineAndCloseBtn">
     <span>Leute hinzufügen</span>
     <button class="close-thread-btn">
