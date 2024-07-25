@@ -11,12 +11,14 @@
         <span>Channel name</span>
         <span *ngIf="!editName"># {{ data.name }}</span>
       </div>
+      @if(userIsAuthor) {
       <div *ngIf="!editName">
         <button (click)="toggleEditName()">Bearbeiten</button>
       </div>
       <div *ngIf="editName">
         <button type="button" (click)="saveNameChanges()">Speichern</button>
       </div>
+      }
     </div>
     <div class="editChannelName">
       <input *ngIf="editName" ngModel type="text" [(ngModel)]="channelName" placeholder="# &nbsp; Entwicklerteam" />
@@ -29,12 +31,14 @@
         <span *ngIf="!editDescriptionMode">{{ data.description }}</span>
         <span class="line"></span>
       </div>
+      @if(userIsAuthor) {
       <div class="description" *ngIf="!editDescriptionMode">
         <button (click)="toggleEditDescriptionMode()">Bearbeiten</button>
       </div>
       <div *ngIf="editDescriptionMode">
         <button (click)="saveDescriptionChanges()">Speichern</button>
       </div>
+      }
     </div>
     <div></div>
     <div class="editChannelName">
@@ -42,7 +46,7 @@
     </div>
     <div class="createdBy">
       <span>Erstellt von</span>
-      <span>Noah Braun</span>
+      <span>{{ channelAuthorName }}</span>
     </div>
   </div>
   <div class="addChannelBtn">
