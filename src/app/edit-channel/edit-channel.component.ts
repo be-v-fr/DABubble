@@ -40,7 +40,7 @@ export class EditChannelComponent {
   getAuthorName(): string {
     if (!this.isTeamChannel()) {
       const author = this.data.members.find(m => m.uid === this.data.author_uid);
-      return author ? author.name : 'Unbekannter Nutzer';
+      return author ? author.name : 'Unbekannter Autor';
     } else {
       return 'DABubble';
     }

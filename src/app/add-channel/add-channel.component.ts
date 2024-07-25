@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-// import { ExpandableButtonComponent } from '../components/expandable-button/expandable-button.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ChannelsService } from '../../services/content/channels.service';
 import { Channel } from '../../models/channel.class';
 import { AuthService } from '../../services/auth.service';
+import { AddMembersAfterAddChannelComponent } from '../add-members-after-add-channel/add-members-after-add-channel.component';
 
 @Component({
   selector: 'app-add-channel',
@@ -18,6 +18,7 @@ export class AddChannelComponent {
   channel = new Channel();
 
   constructor(
+    private dialog: MatDialog,
     public dialogRef: MatDialogRef<AddChannelComponent>,
     private authService: AuthService,
     private channelsService: ChannelsService,
@@ -32,14 +33,12 @@ export class AddChannelComponent {
    * @param form - add channel form
    */
   async onSubmit(form: NgForm) {
-    console.log('submit!');
     if (form.submitted && form.valid) {
       const preparedChannel = this.prepareChannel(this.channel);
-
       await this.channelsService.addChannel(preparedChannel).then(res => {
-        this.channelsService.addChannelToRoute('main-chat', res);
+        preparedChannel.channel_id = res;
+        this.dialog.open(AddMembersAfterAddChannelComponent, { data: preparedChannel });
       });
-
       this.dialogRef.close();
     }
   }
