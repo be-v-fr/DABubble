@@ -247,7 +247,7 @@ export class ChannelsService implements OnDestroy {
 
   async initTeamChannel(user: User) {
     const teamChannel: Channel | undefined = this.getTeamChannel();
-    if (teamChannel) { await this.addUserToChannel(user, teamChannel) }
+    if (teamChannel) { await this.addMemberToChannel(user, teamChannel.channel_id) }
     else { await this.storeChannel(new Channel(this.getTeamChannelData(user))) }
   }
 
@@ -268,12 +268,6 @@ export class ChannelsService implements OnDestroy {
       date: Date.now(),
       isPmChannel: false
     };
-  }
-
-  async addUserToChannel(user: User, channel: Channel) {
-    channel.members.push(user);
-    console.log('added user', user.uid, 'to', channel);
-    await this.updateChannelInStorage(channel);
   }
 
   addChannelToRoute(parent: 'main-chat' | 'direct-message', channel_id: string): void {
