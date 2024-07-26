@@ -1,0 +1,23 @@
+@import '../../../styles.scss';
+
+.content {
+    max-width: 800px;
+    min-height: 210px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.warning-msg {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.btns-container {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 24px;
+}

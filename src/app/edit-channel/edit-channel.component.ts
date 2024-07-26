@@ -1,17 +1,24 @@
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Channel } from '../../models/channel.class';
 import { ChannelsService } from '../../services/content/channels.service';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.class';
 import { Router } from '@angular/router';
+import { DeleteChannelComponent } from './delete-channel/delete-channel.component';
 
 @Component({
   selector: 'app-edit-channel',
   standalone: true,
   imports: [FormsModule, CommonModule],
+  providers: [
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    }
+  ],
   templateUrl: './edit-channel.component.html',
   styleUrls: ['./edit-channel.component.scss'],
 })
@@ -26,6 +33,7 @@ export class EditChannelComponent {
   channelAuthorName: string = '';
 
   constructor(
+    private dialog: MatDialog,
     private dialogRef: MatDialogRef<EditChannelComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Channel,
     private channelsService: ChannelsService,
@@ -84,6 +92,10 @@ export class EditChannelComponent {
 
   closeChannel() {
     this.dialogRef.close();
+  }
+
+  onDeleteChannelSubmit() {
+    this.dialog.open(DeleteChannelComponent);
   }
 
   async leaveChannel() {

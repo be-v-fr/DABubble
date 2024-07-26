@@ -60,7 +60,12 @@
     </div>
   </div>
   <div class="addChannelBtn">
+    @if(data.members.length > 1) {
     <button type="submit" class="form-btn-primary" (click)="leaveChannel()" [disabled]="data.name === 'Team'">Channel
       verlassen</button>
+    } @else {
+      <button type="submit" class="form-btn-primary-warning" (click)="onDeleteChannelSubmit()" [disabled]="data.name === 'Team'">Channel
+        löschen</button>
+    }
   </div>
 </div>
