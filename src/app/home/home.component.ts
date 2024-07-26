@@ -76,7 +76,6 @@ export class HomeComponent {
             const user = this.usersService.getUserByUid(uid);
             if (user) {
                 this.currentUser = user;
-                console.log('valid user in home:', user);
             }
         }
     }

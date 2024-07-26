@@ -55,10 +55,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.authSub = this.authService.user$.subscribe(() => {
-      this.currentUid = this.authService.getCurrentUid();
-      console.log('current uid in main chat:', this.currentUid);
-    });
+    this.authSub = this.authService.user$.subscribe(() => this.currentUid = this.authService.getCurrentUid());
 
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');

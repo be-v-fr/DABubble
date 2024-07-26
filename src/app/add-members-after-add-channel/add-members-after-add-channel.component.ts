@@ -25,9 +25,7 @@ export class AddMembersAfterAddChannelComponent {
   constructor(
     private dialogRef: MatDialogRef<AddMembersAfterAddChannelComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Channel,
-  ) {
-    console.log('all users:', this.usersService.users);
-  }
+  ) {}
 
   redirectToChannel() {
     this.channelsService.addChannelToRoute('main-chat', this.data.channel_id);
