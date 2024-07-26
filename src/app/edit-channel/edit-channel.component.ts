@@ -95,7 +95,7 @@ export class EditChannelComponent {
   }
 
   onDeleteChannelSubmit() {
-    const dialogRef = this.dialog.open(DeleteChannelComponent);
+    this.dialog.open(DeleteChannelComponent);
   }
 
   async leaveChannel() {
