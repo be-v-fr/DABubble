@@ -21,6 +21,7 @@ export class EditChannelComponent {
   editDescriptionMode: boolean = false;
   editName: boolean = false;
   channelName: string = '';
+  nameAvailable: boolean = true;
   channelDescription: string = '';
   channelAuthorName: string = '';
 
@@ -62,6 +63,12 @@ export class EditChannelComponent {
     this.editName = !this.editName;
   }
 
+  checkNameAvailability() {
+    if (this.channelName === this.data.name) {this.nameAvailable = true}
+    else {this.nameAvailable = this.channelsService.isChannelNameAvailable(this.channelName)}
+    console.log('checked availability:', this.nameAvailable);
+  }
+
   async saveNameChanges() {
     this.data.name = this.channelName;
 
@@ -82,7 +89,7 @@ export class EditChannelComponent {
 
   async leaveChannel() {
     const currentUserData = this.authService.getCurrent();
-    if(currentUserData) {
+    if (currentUserData) {
       const currentUser = new User(currentUserData);
       await this.channelsService.removeChannelMember(currentUser, this.data.channel_id);
       this.router.navigate(['new']);

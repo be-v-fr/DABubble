@@ -54,6 +54,14 @@ export class ChannelsService implements OnDestroy {
     return channel.channel_id;
   }
 
+  isChannelNameAvailable(name: string): boolean {
+    let isAvailable: boolean = true;
+    this.channels.forEach(c => {
+      if (c.name === name) { isAvailable = false }
+    });
+    return isAvailable;
+  }
+
   async addMemberToChannel(user: User, channelId: string) {
     const channel = await this.getChannel(channelId);
     if (channel) {

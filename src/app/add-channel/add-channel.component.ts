@@ -16,6 +16,7 @@ import { AddMembersAfterAddChannelComponent } from '../add-members-after-add-cha
 })
 export class AddChannelComponent {
   channel = new Channel();
+  nameAvailable: boolean = true;
 
   constructor(
     private dialog: MatDialog,
@@ -26,6 +27,10 @@ export class AddChannelComponent {
 
   onCancel() {
     this.dialogRef.close();
+  }
+
+  checkNameAvailability() {
+    this.nameAvailable = this.channelsService.isChannelNameAvailable(this.channel.name);
   }
 
   /**

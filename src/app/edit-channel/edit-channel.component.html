@@ -13,15 +13,19 @@
       </div>
       @if(userIsAuthor) {
       <div *ngIf="!editName">
-        <button (click)="toggleEditName()">Bearbeiten</button>
+        <button type="button" (click)="toggleEditName()">Bearbeiten</button>
       </div>
       <div *ngIf="editName">
-        <button type="button" (click)="saveNameChanges()">Speichern</button>
+        <button type="button" (click)="saveNameChanges()" [disabled]="channelName.length == 0 || !nameAvailable">Speichern</button>
       </div>
       }
     </div>
     <div class="editChannelName">
-      <input *ngIf="editName" ngModel type="text" [(ngModel)]="channelName" placeholder="# &nbsp; Entwicklerteam" />
+      <input *ngIf="editName" ngModel type="text" [(ngModel)]="channelName" placeholder="# &nbsp; Channel-Name" (keydown)="nameAvailable = true" (change)="checkNameAvailability()"/>
+      @if(!nameAvailable)
+      {<p class="error-msg">
+        Dieser Channel-Name ist nicht mehr verfügbar.
+      </p>}
     </div>
   </div>
   <div class="explain" [ngClass]="{ 'no-border': editDescriptionMode }">
@@ -33,10 +37,10 @@
       </div>
       @if(userIsAuthor) {
       <div class="description" *ngIf="!editDescriptionMode">
-        <button (click)="toggleEditDescriptionMode()">Bearbeiten</button>
+        <button type="button" (click)="toggleEditDescriptionMode()">Bearbeiten</button>
       </div>
       <div *ngIf="editDescriptionMode">
-        <button (click)="saveDescriptionChanges()">Speichern</button>
+        <button type="button" (click)="saveDescriptionChanges()">Speichern</button>
       </div>
       }
     </div>

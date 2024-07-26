@@ -49,9 +49,13 @@
     font-weight: 600px;
     color: rgba(83, 90, 241, 1);
     cursor: pointer;
-    &:hover {
+    &:hover:enabled {
       color: $purple-blue-bright !important;
       font-weight: 650 !important;
+    }
+    &:disabled {
+      cursor: not-allowed;
+      color: $grey;
     }
   }
 }
@@ -151,6 +155,7 @@
 }
 .editChannelName {
   margin-left: -20px;
+  position: relative;
   span {
     font-weight: 400;
     font-size: 18px;

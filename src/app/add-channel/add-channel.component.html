@@ -15,16 +15,20 @@
   <div class="channelName">
     <span>Channel-Name</span>
     <input type="text" placeholder="# &nbsp; z.B. Kooperationsprojekte" [(ngModel)]="channel.name" name="name"
-      #name="ngModel" required />
+      #name="ngModel" required (keydown)="nameAvailable = true" (change)="checkNameAvailability()" />
+    @if(!nameAvailable)
+    {<p class="error-msg">
+      Dieser Channel-Name ist nicht mehr verfügbar.
+    </p>}
   </div>
   <div class="explain">
     <div>
       <span>Beschreibung</span><span> (optional)</span>
     </div>
     <input type="text" placeholder="Dein Text hier" [(ngModel)]="channel.description" name="description"
-    #description="ngModel" />
+      #description="ngModel" />
   </div>
   <div class="addChannelBtn">
-    <button type="submit" class="form-btn-primary" [disabled]="!name.valid">Erstellen</button>
+    <button type="submit" class="form-btn-primary" [disabled]="!name.valid || !nameAvailable">Erstellen</button>
   </div>
 </form>
