@@ -48,7 +48,7 @@ export class EditChannelComponent {
   }
 
   isTeamChannel(): boolean {
-    return this.data.author_uid === '';
+    return this.data.name === 'Team';
   }
 
   toggleEditMode() {
@@ -66,7 +66,6 @@ export class EditChannelComponent {
   checkNameAvailability() {
     if (this.channelName === this.data.name) {this.nameAvailable = true}
     else {this.nameAvailable = this.channelsService.isChannelNameAvailable(this.channelName)}
-    console.log('checked availability:', this.nameAvailable);
   }
 
   async saveNameChanges() {

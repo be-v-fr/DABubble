@@ -137,8 +137,12 @@
 .createdBy {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   margin-top: 30px;
-  gap: 20px;
+  gap: 10px;
+  span {
+    margin-top: 10px;
+  }
   span:nth-child(1) {
     font-weight: 700;
     font-size: 18px;
@@ -147,6 +151,10 @@
     font-weight: 400;
     font-size: 24px;
     color: rgba(83, 90, 241, 1);
+  }
+  .logo {
+    height: 32px;
+    margin-left: 1%;
   }
 }
 .addChannelBtn {

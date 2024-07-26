@@ -16,12 +16,14 @@
         <button type="button" (click)="toggleEditName()">Bearbeiten</button>
       </div>
       <div *ngIf="editName">
-        <button type="button" (click)="saveNameChanges()" [disabled]="channelName.length == 0 || !nameAvailable">Speichern</button>
+        <button type="button" (click)="saveNameChanges()"
+          [disabled]="channelName.length == 0 || !nameAvailable">Speichern</button>
       </div>
       }
     </div>
     <div class="editChannelName">
-      <input *ngIf="editName" ngModel type="text" [(ngModel)]="channelName" placeholder="# &nbsp; Channel-Name" (keydown)="nameAvailable = true" (change)="checkNameAvailability()"/>
+      <input *ngIf="editName" ngModel type="text" [(ngModel)]="channelName" placeholder="# &nbsp; Channel-Name"
+        (keydown)="nameAvailable = true" (change)="checkNameAvailability()" />
       @if(!nameAvailable)
       {<p class="error-msg">
         Dieser Channel-Name ist nicht mehr verfügbar.
@@ -50,10 +52,15 @@
     </div>
     <div class="createdBy">
       <span>Erstellt von</span>
+      @if(data.name === 'Team') {
+      <img src="/assets/img/logo_name.svg" alt="DABubble" class="logo">
+      } @else {
       <span>{{ channelAuthorName }}</span>
+      }
     </div>
   </div>
   <div class="addChannelBtn">
-    <button type="submit" class="form-btn-primary" (click)="leaveChannel()" [disabled]="data.author_uid === ''">Channel verlassen</button>
+    <button type="submit" class="form-btn-primary" (click)="leaveChannel()" [disabled]="data.name === 'Team'">Channel
+      verlassen</button>
   </div>
 </div>
