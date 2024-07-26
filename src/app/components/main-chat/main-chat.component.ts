@@ -17,6 +17,7 @@ import { TimeService } from '../../../services/time.service';
 import { User } from '../../../models/user.class';
 import { MemberListComponent } from '../../member-list/member-list.component';
 import { ActivityService } from '../../../services/activity.service';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-main-chat',
@@ -47,6 +48,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private authService: AuthService,
+    private usersService: UsersService,
     private channelsService: ChannelsService,
     private activityService: ActivityService,
     public timeService: TimeService,
@@ -99,6 +101,10 @@ export class MainChatComponent implements OnInit, OnDestroy {
   getPostUid(index: number) {
     const currentPost = this.currentChannel.posts[index];
     return currentPost.user_id;
+  }
+
+  getUserFromMembers(uid: string) {
+    return this.usersService.getUserByUid(uid) || new User;
   }
 
   handleEmojiStateChange(newState: boolean): void {

@@ -2,17 +2,19 @@
     <section class="main-section">
         <div class="main-header">
             <button class="channel-btn" (click)="onEditChannel()">
-                # {{ currentChannel.name }}
+                <span class="channel-btn-name"># {{ currentChannel.name }}</span>
                 <span class="material-icons-outlined icon">keyboard_arrow_down</span>
             </button>
             <div class="main-header-members">
                 <button class="members-btn" (click)="openMemberList()">
                     <div class="m-images-container">
-                        @for (member of activeUsers; track $index) {
-                        <img src="{{member.avatarSrc}}" alt="Avatar">
+                        @for (member of currentChannel.members; track $index) {
+                            @if ($index < 3) {
+                                <img src="{{getUserFromMembers(member.uid).avatarSrc}}" alt="Avatar">
+                            }
                         }
                     </div>
-                    <span>{{activeUsers.length}}</span>
+                    <span>{{currentChannel.members.length}}</span>
                 </button>
                 <button class="add-members-btn">
                     <span class="material-icons-outlined icon">person_add_alt</span>
