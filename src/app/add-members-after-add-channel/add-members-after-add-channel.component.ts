@@ -3,6 +3,8 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Channel } from '../../models/channel.class';
 import { ChannelsService } from '../../services/content/channels.service';
+import { User } from '../../models/user.class';
+import { UsersService } from '../../services/users.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -15,20 +17,30 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class AddMembersAfterAddChannelComponent {
   selection: 'allMembers' | 'specificPeople' | null = null;
   specificPeople: string = '';
+  specificPeopleSelected: User[] = [];
   @ViewChild('specificPeopleInput', { read: ElementRef }) specificPeopleInput!: ElementRef<HTMLInputElement>;
   private channelsService = inject(ChannelsService);
+  private usersService = inject(UsersService);
 
   constructor(
     private dialogRef: MatDialogRef<AddMembersAfterAddChannelComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Channel,
-  ) { }
+  ) {
+    console.log('all users:', this.usersService.users);
+  }
 
   redirectToChannel() {
     this.channelsService.addChannelToRoute('main-chat', this.data.channel_id);
   }
 
-  onSubmit(form: NgForm) {
-    console.log(this.selection);
+  async onSubmit(form: NgForm) {
+    if(this.selection === 'allMembers') {
+      this.data.members = this.usersService.users;
+      await this.channelsService.updateChannel(this.data)
+        .then(() => this.redirectToChannel());
+    } else {
+      console.log(this.specificPeople);
+    }
   }
 
   autofocus() {
@@ -36,6 +48,7 @@ export class AddMembersAfterAddChannelComponent {
   }
 
   close() {
+    this.redirectToChannel();
     this.dialogRef.close();
-}
+  }
 }

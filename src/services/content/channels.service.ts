@@ -70,10 +70,9 @@ export class ChannelsService implements OnDestroy {
   }
 
   async removeChannelMember(user: User, channelId: string) {
-    let channel = await this.getChannel(channelId);
+    const channel = await this.getChannel(channelId);
     if (channel) {
       channel.members = channel.members.filter(m => m.uid != user.uid);
-      console.log('member', user.name, 'removed from channel. remaining members:', channel.members);
       await this.updateChannel(channel);
     }
   }
