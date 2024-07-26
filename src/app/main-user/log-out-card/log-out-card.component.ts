@@ -44,6 +44,7 @@ export class LogOutCardComponent {
   
     logMeOut() {
         this.dialogRef.close('logout');
+        this.router.navigate(['/auth/logIn']); // remove later
     }
   
     openImpress() {
