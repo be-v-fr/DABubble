@@ -140,6 +140,19 @@ a {
     }
 }
 
+.form-btn-primary-warning {
+    @extend .form-btn-primary;
+    background-color: #ed1e3d;
+
+    &:hover {
+        background-color: $magenta;
+    }
+
+    &:active {
+        background-color: #e52a46;
+    }
+}
+
 .form-btn-secondary {
     @extend .form-btn;
     color: $purple-blue;
@@ -173,6 +186,7 @@ a {
 
     &:hover {
         background-color: $violet-bright;
+
         img {
             filter: invert(32%) sepia(31%) saturate(5534%) hue-rotate(229deg) brightness(97%) contrast(95%);
         }
@@ -217,7 +231,7 @@ a {
     &:hover {
         border: 1px solid #adb0d9;
     }
-    
+
     @media screen and (max-width: 1024px) {
         height: 39px;
     }
@@ -233,6 +247,7 @@ a {
 
 .d-640 {
     display: none;
+
     @media screen and (max-width: 640px) {
         display: initial;
     }
@@ -245,14 +260,17 @@ a {
     color: $magenta;
     font-size: 14px;
     animation: fade-in 250ms ease-out;
+
     @keyframes fade-in {
         from {
             opacity: 0;
         }
+
         to {
             opacity: 1;
         }
     }
+
     @media screen and (max-height: 800px),
     screen and (max-width: 1024px) {
         font-size: 13px;

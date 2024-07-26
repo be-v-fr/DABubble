@@ -86,6 +86,10 @@ export class EditChannelComponent {
     this.dialogRef.close();
   }
 
+  onDeleteChannelSubmit() {
+    
+  }
+
   async leaveChannel() {
     const currentUserData = this.authService.getCurrent();
     if (currentUserData) {
