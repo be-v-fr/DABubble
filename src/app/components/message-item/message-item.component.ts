@@ -68,7 +68,7 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private async updateGroupedEmojis(): Promise<void> {
-    if (this.post.reactions && this.post.reactions.length > 0) {
+    if (this.post.reactions) {
       this.groupedEmojis = await this.getGroupedEmojis(this.post.reactions);
     }
   }
@@ -78,8 +78,8 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
       const uid = this.authService.getCurrentUid();
       if (uid) {
         this.currentUser = this.usersService.getUserByUid(uid);
-        if(this.postUid) {
-            this.postUser = this.usersService.getUserByUid(this.postUid) || new User;
+        if (this.postUid) {
+          this.postUser = this.usersService.getUserByUid(this.postUid) || new User;
         }
       }
     });
