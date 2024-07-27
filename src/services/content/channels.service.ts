@@ -16,16 +16,16 @@ import { Reaction } from '../../models/reaction.class';
 export class ChannelsService implements OnDestroy {
   channels$: Subject<Channel[]> = new Subject<Channel[]>();
   channels: Channel[] = [];
-  unsubChannels;
+  unSubChannels;
   firestore: Firestore = inject(Firestore);
   router = inject(Router);
 
   constructor() {
-    this.unsubChannels = this.subChannels();
+    this.unSubChannels = this.subChannels();
   }
 
   ngOnDestroy() {
-    this.unsubChannels();
+    this.unSubChannels();
   }
 
   subChannels() {
@@ -131,6 +131,7 @@ export class ChannelsService implements OnDestroy {
   async addPostToThread(channel_id: string, thread_id: string, uid: string, message: string) {
     const newPost = new Post({
       post_id: uuidv4(),
+      channel_id: channel_id,
       message: message,
       user_id: uid,
       thread: new Thread(),
@@ -168,7 +169,7 @@ export class ChannelsService implements OnDestroy {
         return;
       }
 
-      const post = channel.posts.find(p => p.post_id === postId);
+      const post = this.findPost(channel, postId);
       if (!post) {
         console.error(`Post with ID ${postId} not found in channel ${channelId}`);
         return;
@@ -178,7 +179,7 @@ export class ChannelsService implements OnDestroy {
 
       await this.updateChannelInStorage(channel);
 
-      this.channels$.next(this.channels.slice());
+      this.channels$.next([...this.channels]);
     } catch (error) {
       console.error('An error occurred while adding reaction to post:', error);
     }
@@ -192,7 +193,7 @@ export class ChannelsService implements OnDestroy {
         return;
       }
 
-      const post = channel.posts.find(p => p.post_id === postId);
+      const post = this.findPost(channel, postId);
       if (!post) {
         console.error(`Post with ID ${postId} not found in channel ${channelId}`);
         return;
@@ -212,6 +213,11 @@ export class ChannelsService implements OnDestroy {
     } catch (error) {
       console.error('An error occurred while deleting reaction from post:', error);
     }
+  }
+
+  private findPost(channel: Channel, postId: string): Post | undefined {
+    return channel.posts.find(p => p.post_id === postId)
+      || channel.posts.flatMap(p => p.thread?.posts || []).find(tp => tp.post_id === postId);
   }
 
   async updateChannel(channel: Channel) {

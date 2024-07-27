@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, Output, OnDestroy, Inject, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnDestroy, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { TimeSeparatorComponent } from '../time-separator/time-separator.component';
-import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
 import { UserProfileCardComponent } from '../../user-profile-card/user-profile-card.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,21 +9,16 @@ import { User } from '../../../models/user.class';
 import { TimeService } from '../../../services/time.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
-import { ClickStopPropagationDirective } from '../../shared/click-stop-propagation.directive';
 import { ChannelsService } from '../../../services/content/channels.service';
 import { Reaction } from '../../../models/reaction.class';
+import { ReactionService } from '../../../services/content/reaction.service';
 
 @Component({
   selector: 'app-message-item',
   standalone: true,
-  imports: [
-    CommonModule,
-    TimeSeparatorComponent,
-    PickerComponent,
-    ClickStopPropagationDirective,
-  ],
+  imports: [CommonModule, TimeSeparatorComponent],
   templateUrl: './message-item.component.html',
-  styleUrls: ['./message-item.component.scss'] // fix styleUrl to styleUrls
+  styleUrls: ['./message-item.component.scss']
 })
 export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
 
@@ -32,16 +26,13 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
   @Input() lastReply = this.post?.thread.posts[this.post.thread.posts.length - 1]?.date ?? null;
   @Input() messageSender?: boolean;
   @Input() isMainPostThread = false;
-  @Input() hideEmojiPicker = false;
   @Input() postUid: string = "";
-  @Output() showEmojiPicker = new EventEmitter<boolean>();
   @Output() threadId = new EventEmitter<string>();
 
   author: User | undefined;
-  emojiPicker = false;
   groupedEmojis: { [key: string]: { count: number, users: string[] } } = {};
   currentUser: User | undefined;
-  postUser: User = new User;
+  postUser: User = new User();
 
   private authSub = new Subscription();
 
@@ -50,6 +41,7 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
     private authService: AuthService,
     private usersService: UsersService,
     private channelsService: ChannelsService,
+    private reactionsService: ReactionService,
     public timeService: TimeService
   ) { }
 
@@ -79,7 +71,7 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
       if (uid) {
         this.currentUser = this.usersService.getUserByUid(uid);
         if (this.postUid) {
-          this.postUser = this.usersService.getUserByUid(this.postUid) || new User;
+          this.postUser = this.usersService.getUserByUid(this.postUid) || new User();
         }
       }
     });
@@ -102,8 +94,8 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onShowEmojiPicker() {
-    this.emojiPicker = !this.emojiPicker;
-    this.showEmojiPicker.emit(this.emojiPicker);
+    this.reactionsService.currentPost = this.post;
+    this.reactionsService.toggleReactionsPicker();
   }
 
   async onHandleReaction(emoji: any) {
@@ -122,26 +114,6 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       await this.channelsService.deleteReactionFromPost(this.post.channel_id, this.post.post_id, this.currentUser.uid, emoji);
     }
-
-    this.emojiPicker = false;
-  }
-
-  async onAddReaction(event: { emoji: { native: string } }) {
-    if (!this.currentUser) {
-      console.error('Current user is not defined');
-      return;
-    }
-
-    const existingReaction = this.post.reactions.find(r => r.emoji === event.emoji.native && r.user.uid === this.currentUser?.uid);
-    if (!existingReaction) {
-      try {
-        await this.channelsService.addReactionToPost(this.post.channel_id, this.post.post_id, this.currentUser, event.emoji.native);
-      } catch (error) {
-        console.error('Error adding reaction to post:', error);
-      }
-    }
-
-    this.emojiPicker = false;
   }
 
   async getGroupedEmojis(reactions: Reaction[]): Promise<{ [key: string]: { count: number, users: string[] } }> {

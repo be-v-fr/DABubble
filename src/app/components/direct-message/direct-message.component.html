@@ -16,8 +16,7 @@
         @for (post of channel.posts; track post.post_id; let i = $index) {
         <div class="direct-m-item">
           <app-time-separator [timestamp]="post.date" />
-          <app-message-item [post]="post" [hideEmojiPicker]="emojiPicker"
-            (showEmojiPicker)="handleEmojiStateChange($event)" [messageSender]="isCurrentUserAuthor()" />
+          <app-message-item [postUid]="currUser!.uid" [post]="post" [messageSender]="isCurrentUserAuthor()" />
         </div>
         }
       </div>

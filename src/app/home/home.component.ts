@@ -13,6 +13,9 @@ import { User } from '../../models/user.class';
 import { ActivityService } from '../../services/activity.service';
 import { Subscription } from 'rxjs';
 import { MainChatComponent } from '../components/main-chat/main-chat.component';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { ClickStopPropagationDirective } from '../shared/click-stop-propagation.directive';
+import { ReactionService } from '../../services/content/reaction.service';
 
 @Component({
     selector: 'app-home',
@@ -25,23 +28,33 @@ import { MainChatComponent } from '../components/main-chat/main-chat.component';
         HeaderComponent,
         NavigationComponent,
         MainChatComponent,
-        ThreadComponent
+        ThreadComponent,
+        PickerComponent,
+        ClickStopPropagationDirective,
     ]
 })
 export class HomeComponent {
     private authService = inject(AuthService);
     private usersService = inject(UsersService);
     public activityService = inject(ActivityService);
+    public reactionsPicker = inject(ReactionService);
 
     private authSub = new Subscription();
     private usersSub = new Subscription();
     public currentUser = new User();
     public users: User[] = [];
     public showNav = true;
+    public reactionsPickerVisible = false;
+
+    constructor(public reactionsService: ReactionService) { }
+
 
     ngOnInit(): void {
         this.syncCurrentUser();
         this.authSub = this.subAuth();
+        this.reactionsService.reactionsPicker$.subscribe((rp) => {
+            this.reactionsPickerVisible = rp;
+        })
     }
 
     ngOnDestroy(): void {
@@ -82,5 +95,13 @@ export class HomeComponent {
 
     onShowNavigation() {
         this.showNav = !this.showNav;
+    }
+
+    async onAddReaction(event: { emoji: { native: string } }) {
+        this.reactionsService.addReaction(event, this.currentUser);
+    }
+
+    closeReactionsPicker() {
+        this.reactionsService.toggleReactionsPicker();
     }
 }

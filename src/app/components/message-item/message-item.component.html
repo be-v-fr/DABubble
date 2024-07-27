@@ -41,14 +41,9 @@
                     <span>{{ groupedEmojis[emoji].count }}</span>
                 </div>
             </div>
-
             <button class="add-emoji-btn" (click)="onShowEmojiPicker()">
                 <span class="material-icons-outlined icon">add_reaction</span>
             </button>
         </div>
     </div>
-</div>
-<div class="emoji-container" *ngIf="emojiPicker" (click)="onShowEmojiPicker()">
-    <emoji-mart title="Pick your emoji…" appClickStopPropagation (emojiClick)="onAddReaction($event)"
-        emoji="point_up"></emoji-mart>
 </div>

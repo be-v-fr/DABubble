@@ -107,10 +107,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
     return this.usersService.getUserByUid(uid) || new User;
   }
 
-  handleEmojiStateChange(newState: boolean): void {
-    this.emojiPicker = newState;
-  }
-
   onCreatePost(message: string): void {
     if (!this.currentUid || !this.currentChannel.channel_id) {
       console.error('User ID or channel ID is not set.');

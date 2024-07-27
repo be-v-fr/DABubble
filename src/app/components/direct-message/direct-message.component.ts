@@ -117,8 +117,4 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     const firstPost = this.channel!.posts[0];
     return this.currUser?.uid === firstPost.user_id;
   }
-
-  handleEmojiStateChange(newState: boolean): void {
-    this.emojiPicker = newState;
-  }
 }

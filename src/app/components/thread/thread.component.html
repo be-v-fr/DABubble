@@ -2,7 +2,7 @@
     <div class="thread-header">
         <div class="thread-title">
             Thread
-            <span># Entwicklerteam</span>
+            <span># {{ channelData?.name }}</span>
         </div>
         <button class="close-thread-btn" (click)="onClose()">
             <span class="material-icons-outlined">close</span>
@@ -10,17 +10,15 @@
     </div>
     <div class="thread-content">
         <div class="thread-message">
-            <app-message-item [postUid]="post?.user_id!" [post]="post!" [isMainPostThread]="true" [hideEmojiPicker]="emojiPicker"
-                [messageSender]="true" [hideEmojiPicker]="emojiPicker" (showEmojiPicker)="handleStateChange($event)" />
+            <app-message-item [postUid]="post?.user_id!" [post]="post!" [isMainPostThread]="true"
+                [messageSender]="true" />
             <div class="antworten-separator">{{ post?.thread?.posts?.length }} Antworten</div>
         </div>
         @for (thPost of post?.thread?.posts; track $index) {
         <div class="thread-antworten">
-            <app-message-item [postUid]="thPost.user_id" [post]="thPost" [hideEmojiPicker]="emojiPicker"
-                (showEmojiPicker)="handleStateChange($event)" [messageSender]="false" />
+            <app-message-item [postUid]="thPost.user_id" [post]="thPost" [messageSender]="false" />
         </div>
         }
     </div>
     <app-message-box [replying]="true" (sent)="onCreatePost($event)" />
-    <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="emojiPicker"></emoji-mart>
 </div>

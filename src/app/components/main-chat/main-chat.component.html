@@ -9,10 +9,9 @@
                 <button class="members-btn" (click)="openMemberList()">
                     <div class="m-images-container">
                         @for (member of currentChannel.members; track $index) {
-                            @if ($index < 3) {
-                                <img src="{{getUserFromMembers(member.uid).avatarSrc}}" alt="Avatar">
+                        @if ($index < 3) { <img src="{{getUserFromMembers(member.uid).avatarSrc}}" alt="Avatar">
                             }
-                        }
+                            }
                     </div>
                     <span>{{currentChannel.members.length}}</span>
                 </button>
@@ -26,9 +25,8 @@
             @for (post of currentChannel.posts; track post.post_id; let i = $index) {
             <div class="message-item-container">
                 <app-time-separator [timestamp]="post.date" />
-                <app-message-item [post]="post" [hideEmojiPicker]="emojiPicker"
-                    (showEmojiPicker)="handleEmojiStateChange($event)" [messageSender]="isCurrentUserAuthor(i)"
-                    [postUid]="getPostUid(i)" (threadId)="handleThread($event)" />
+                <app-message-item [post]="post" [messageSender]="isCurrentUserAuthor(i)" [postUid]="getPostUid(i)"
+                    (threadId)="handleThread($event)" />
             </div>
             }
             } @else {
