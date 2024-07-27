@@ -10,13 +10,13 @@
     </div>
     <div class="thread-content">
         <div class="thread-message">
-            <app-message-item [post]="post!" [isMainPostThread]="true" [hideEmojiPicker]="emojiPicker"
+            <app-message-item [postUid]="post?.user_id!" [post]="post!" [isMainPostThread]="true" [hideEmojiPicker]="emojiPicker"
                 [messageSender]="true" [hideEmojiPicker]="emojiPicker" (showEmojiPicker)="handleStateChange($event)" />
             <div class="antworten-separator">{{ post?.thread?.posts?.length }} Antworten</div>
         </div>
         @for (thPost of post?.thread?.posts; track $index) {
         <div class="thread-antworten">
-            <app-message-item [post]="thPost" [hideEmojiPicker]="emojiPicker"
+            <app-message-item [postUid]="thPost.user_id" [post]="thPost" [hideEmojiPicker]="emojiPicker"
                 (showEmojiPicker)="handleStateChange($event)" [messageSender]="false" />
         </div>
         }
