@@ -5,6 +5,7 @@ import { User } from '../../models/user.class';
 import { AddMembersComponent } from '../add-members/add-members.component';
 import { UserProfileCardComponent } from '../user-profile-card/user-profile-card.component';
 import { Channel } from '../../models/channel.class';
+import { ActivityService } from '../../services/activity.service';
 
 @Component({
   selector: 'app-member-list',
@@ -14,15 +15,16 @@ import { Channel } from '../../models/channel.class';
   styleUrls: ['./member-list.component.scss']
 })
 export class MemberListComponent {
-  activeUsers: User[];
+  channelMembers: User[];
   channel: Channel;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { activeUsers: User[], channel: Channel },
+    @Inject(MAT_DIALOG_DATA) public data: { channelMembers: User[], channel: Channel },
     private dialog: MatDialog,
+    public activityService: ActivityService,
     private dialogRef: MatDialogRef<any>
   ) {
-    this.activeUsers = data.activeUsers;
+    this.channelMembers = data.channelMembers;
     this.channel = data.channel;
   }
 
@@ -33,7 +35,7 @@ export class MemberListComponent {
 
     dialogRef.afterClosed().subscribe((newUsers: User[]) => {
       if (newUsers && newUsers.length > 0) {
-        this.activeUsers.push(...newUsers);
+        this.channelMembers.push(...newUsers);
       }
     });
   }

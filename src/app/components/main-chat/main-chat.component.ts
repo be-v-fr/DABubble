@@ -124,7 +124,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   openMemberList(): void {
     this.dialog.open(MemberListComponent, {
-      data: { activeUsers: this.activeUsers, channel: this.currentChannel }
+      data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
     });
   }
 

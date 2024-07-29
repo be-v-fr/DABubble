@@ -1,140 +1,128 @@
 @import "../../styles.scss";
 
 .memberCard {
-  width: 415px;
-  height: 411px;
-}
-
-
-.headlineAndCloseBtn {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 335px;
-  height: 40px;
-  justify-content: space-between;
-  margin-left: 40px;
-  margin-top: 40px;
-  gap: 180px;
-  align-items: center;
-  div {
+    position: fixed;
+    padding: 40px;
+    width: 415px;
+    height: 411px;
+    border-radius: 30px;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    span:nth-child(1) {
-      font-weight: 700;
-      font-size: 24px;
-      height: 33px;
-      align-items: center;
-      display: flex;
-    }
-    span:nth-child(2) {
-      color: rgba(121, 126, 243, 1);
-      font-size: 18px;
-      font-weight: 400;
-      width: 166px;
-      height: 25px;
-      word-spacing: 15px;
-    }
-  }
-}
-
-.close-thread-btn {
-  color: rgb(0, 0, 0, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 8px;
-
-  &:hover {
-    color: $purple-blue-bright;
-    background-color: $violet-bright;
-    border-radius: 20px;
-  }
-}
-
-.usersMenu {
-  width: 335px;
-  height: 271px;
-  margin-left: 16px;
-  margin-top: 20px;
-  gap: 15px;
-  display: flex;
-  flex-direction: column;
-}
-.message-img-container {
-  width: 366px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  position: relative;
-  button{
-  display: flex;
     gap: 15px;
-    align-items: center;
-    padding: 12px 20px;
-
-    // width: 274px;
-    // height: 56px;
-    &:hover {
-      color: #535af1;
-      background-color: #eceefe;
-      border-radius: 100px;
-      cursor: pointer;
+    .headline-close-btn {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .title-box {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .close-thread-btn {
+            height: 40px;
+            width: 40px;
+            border-radius: 99px;
+            display: grid;
+            place-items: center;
+            &:hover {
+                color: $purple-blue-bright;
+                background-color: $violet-bright;
+            }
+        }
     }
-  }
-  img {
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-    object-fit: cover;
-  }
-  .online {
-    border: 2px solid white;
-    border-radius: 100%;
-    width: 14px;
-    height: 14px;
-    background-color: #92c83e;
-    position: absolute;
-    left: 56px;
-    top: 40px;
-  }
-  span {
-    font-size: 18px;
-    font-weight: 400;
-  }
- 
+    .member-list-container {
+        position: relative;
+        height: calc(100% - 40px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 15px;
+        .members-list-box {
+            @include scrollbar();
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex-grow: 1;
+            .member-btn-container {
+                display: flex;
+                flex-direction: column;
+                gap: 13px;
+                .member-btn {
+                    position: relative;
+                    padding: 4px 20px;
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    &:hover {
+                        color: $purple-blue-bright;
+                        background-color: $violet-bright;
+                        border-radius: 100px;
+                        cursor: pointer;
+                    }
+                    img {
+                        height: 50px;
+                        width: 50px;
+                        border-radius: 99px;
+                    }
+                    .member-name {
+                        font-size: 18px;
+                        font-weight: 400;
+                    }
+                    .onlinedot {
+                        position: absolute;
+                        content: '';
+                        bottom: 4px;
+                        left: 58px;
+                        width: 14px;
+                        height: 14px;
+                        box-sizing: border-box;
+                        background-color: $onlinedot-online;
+                        border: 2px solid $onlinedot-border;
+                        border-radius: 50%;
+                        &.online {
+                            background-color: $onlinedot-online;
+                        }
+                        &.idle {
+                            background-color: #c8c82e;
+                        }
+                        &.offline {
+                            background-color: $onlinedot-offline;
+                        }
+                        @media screen and (max-width: 768px) {
+                            width: 14px;
+                            height: 14px;
+                        }
+                    }
+                }
+            }
+        }
+        .add-member-btn {
+            padding: 12px 29px;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            .icon {
+                height: 32px;
+                width: 32px;
+                background-color: $violet-bright;
+                border-radius: 99px;
+                display: grid;
+                place-items: center;
+            }
+            .add-member-text {
+                font-size: 18px;
+                font-weight: 400;
+            }
+            &:hover {
+                color: #535af1;
+                background-color: #eceefe;
+            }
+        }
+    }
 }
 
-.addMemberBtn {
-  width: 366px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  left: 20px;
-  button {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    // width: 274px;
-    // height: 56px;
-    padding: 12px 20px;
-    &:hover {
-      color: #535af1;
-      background-color: #eceefe;
-      border-radius: 100px;
-    }
-  }
-  .addMemberText {
-    font-size: 18px;
-    font-weight: 400;
-  }
 
-  img {
-    width: 32px;
-    height: 32px;
-   
-  }
-}
+
