@@ -20,8 +20,21 @@
     </div>
     <div [ngClass]="{'hide': selection != 'specificPeople'}" class="additional-input">
       <label for="specificPeopleInput"></label>
-      <input type="text" id="specificPeopleInput" #specificPeopleInput="ngModel" name="specificPeopleInput" [(ngModel)]="specificPeople"
-        placeholder="Name eingeben"/>
+      <div class="selectedUserInput" *ngIf="selectedUser">
+        <img [src]="selectedUser.avatarSrc" alt="Avatar" />
+        <span>{{ selectedUser.name }}</span>
+        <button (click)="clearSelection()">x</button>
+      </div>
+      <input type="text" id="specificPeopleInput" #specificPeopleInput="ngModel" name="specificPeopleInput"
+        (input)="onSearch()" [(ngModel)]="specificPeopleSearch" placeholder="Name eingeben" />
+    </div>
+    <div *ngIf="showUserList" class="userListCard">
+      <div *ngFor="let user of filteredUsers" (click)="selectUser(user)" class="userListDetail">
+        <img [src]="user.avatarSrc" alt="Avatar" />
+        <div class="user-info">
+          <span class="user-name">{{ user.name }}</span>
+        </div>
+      </div>
     </div>
     <div>
       <button type="submit" [disabled]="!selection" class="form-btn-primary">Erstellen</button>
