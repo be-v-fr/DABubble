@@ -19,7 +19,6 @@ export class AddMembersAfterAddChannelComponent {
   specificPeopleSearch: string = '';
   filteredUsers: User[] = [];
   showUserList: boolean = false;
-  selectedUser: User | null = null;
   specificPeopleSelected: User[] = [];
   @ViewChild('specificPeopleInput', { read: ElementRef }) specificPeopleInput!: ElementRef<HTMLInputElement>;
   private channelsService = inject(ChannelsService);
@@ -32,6 +31,7 @@ export class AddMembersAfterAddChannelComponent {
 
   redirectToChannel() {
     this.channelsService.addChannelToRoute('main-chat', this.data.channel_id);
+    this.dialogRef.close();
   }
 
   onSearch(): void {
@@ -48,25 +48,28 @@ export class AddMembersAfterAddChannelComponent {
   }
 
   selectUser(user: User): void {
-    this.selectedUser = user;
+    this.specificPeopleSelected.push(user);
     this.showUserList = false;
     this.specificPeopleSearch = '';
     this.autofocus();
   }
 
-  clearSelection(): void {
-    this.selectedUser = null;
-    this.specificPeopleSearch = '';
+  clearSelection(user: User): void {
+    const index = this.specificPeopleSelected.indexOf(user);
+    this.specificPeopleSelected.splice(index);
+  }
+
+  onInputBackspace(): void {
+    if (this.specificPeopleInput.nativeElement.value.length === 0) {
+      this.specificPeopleSelected.pop();
+    }
   }
 
   async onSubmit(form: NgForm) {
-    if (this.selection === 'allMembers') {
-      this.data.members = this.usersService.users;
-      await this.channelsService.updateChannel(this.data)
-        .then(() => this.redirectToChannel());
-    } else {
-      console.log(this.specificPeopleSelected);
-    }
+    this.specificPeopleSearch = '';
+    this.data.members = (this.selection === 'allMembers' ? this.usersService.users : this.specificPeopleSelected);
+    await this.channelsService.updateChannel(this.data)
+      .then(() => this.redirectToChannel());
   }
 
   autofocus() {

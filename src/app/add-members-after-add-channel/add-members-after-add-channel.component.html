@@ -20,13 +20,15 @@
     </div>
     <div [ngClass]="{'hide': selection != 'specificPeople'}" class="additional-input">
       <label for="specificPeopleInput"></label>
-      <div class="selectedUserInput" *ngIf="selectedUser">
-        <img [src]="selectedUser.avatarSrc" alt="Avatar" />
-        <span>{{ selectedUser.name }}</span>
-        <button (click)="clearSelection()">x</button>
+      @for(user of specificPeopleSelected; track user) {
+      <div class="selectedUserInput">
+        <img [src]="user.avatarSrc" alt="Avatar" />
+        <span>{{ user.name }}</span>
+        <button (click)="clearSelection(user)">x</button>
       </div>
+      }
       <input type="text" id="specificPeopleInput" #specificPeopleInput="ngModel" name="specificPeopleInput"
-        (input)="onSearch()" [(ngModel)]="specificPeopleSearch" placeholder="Name eingeben" />
+        (input)="onSearch()" (keydown.backspace)="onInputBackspace()" [(ngModel)]="specificPeopleSearch" placeholder="Name eingeben" />
     </div>
     <div *ngIf="showUserList" class="userListCard">
       <div *ngFor="let user of filteredUsers" (click)="selectUser(user)" class="userListDetail">
