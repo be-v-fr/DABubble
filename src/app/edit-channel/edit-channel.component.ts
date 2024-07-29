@@ -8,17 +8,12 @@ import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.class';
 import { Router } from '@angular/router';
 import { DeleteChannelComponent } from './delete-channel/delete-channel.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-channel',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  providers: [
-    {
-      provide: MatDialogRef,
-      useValue: {}
-    }
-  ],
   templateUrl: './edit-channel.component.html',
   styleUrls: ['./edit-channel.component.scss'],
 })
@@ -72,8 +67,8 @@ export class EditChannelComponent {
   }
 
   checkNameAvailability() {
-    if (this.channelName === this.data.name) {this.nameAvailable = true}
-    else {this.nameAvailable = this.channelsService.isChannelNameAvailable(this.channelName)}
+    if (this.channelName === this.data.name) { this.nameAvailable = true }
+    else { this.nameAvailable = this.channelsService.isChannelNameAvailable(this.channelName) }
   }
 
   async saveNameChanges() {
@@ -95,7 +90,12 @@ export class EditChannelComponent {
   }
 
   onDeleteChannelSubmit() {
-    this.dialog.open(DeleteChannelComponent);
+    this.dialog.open(DeleteChannelComponent, {
+      data: { 
+        channel_id: this.data.channel_id,
+        editChannelDialogRef: this.dialogRef
+      }      
+    });
   }
 
   async leaveChannel() {
