@@ -72,12 +72,30 @@
   color: white;
   background-color: #444df2;
 }
-.additional-input {
+.additional-input-border {
   width: 630px;
   height: 55px;
   border: 1px solid rgba(68, 77, 242, 1);
   border-radius: 30px;
- 
+  overflow-y: visible;
+  justify-content: center;
+  align-items: flex-start !important;
+  .additional-input-wrapper {
+    width: calc(100% - 30px);
+    height: 70px;
+    align-items: flex-start !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    @include scrollbar();
+    .additional-input {
+      width: 100%;
+      height: 55px;
+      gap: 10px;
+      input {
+        font-size: 18px;
+      }
+    }
+  }
 }
 
 .container .inputContainer .hide {
