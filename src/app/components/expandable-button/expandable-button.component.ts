@@ -37,7 +37,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
   isOpen = true;
   online = true;
   users?: User[];
-
+  isRotated = false;
   title = input.required<string>();
   icon = input.required<string>();
   showBtn = input.required<boolean>();
@@ -96,6 +96,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
 
   toggleMenu() {
     this.isMenuExpanded = !this.isMenuExpanded;
+    this.isRotated = !this.isRotated;
   }
 
   //  @HostListener('window:resize', ['$event'])
@@ -132,4 +133,6 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
     channel.isPmChannel = true;
     return channel;
   }
+
+  
 }

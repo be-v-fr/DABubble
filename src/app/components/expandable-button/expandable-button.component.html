@@ -1,7 +1,7 @@
 <div class="exp-btn-container">
     <div class="btn-container">
         <button (click)="toggleMenu()">
-            <span class="material-icons-outlined icon">arrow_drop_down</span>
+            <span class="material-icons-outlined icon" [class.rotated]="isRotated">arrow_drop_down</span>
             <!-- <span class="material-icons-outlined icon">arrow_right</span> -->
             <div class="channel-title">
                 <span class="material-icons-outlined icon">{{ icon() }}</span>

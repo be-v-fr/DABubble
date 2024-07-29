@@ -184,6 +184,11 @@
   .new-message-icon {
     display: none;
   }
+
+  .rotated {
+    transform: rotate(-90deg);
+}
+
 }
 
 @media screen and (max-width: 768px) {
