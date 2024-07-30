@@ -16,23 +16,22 @@ import { AddMembersInputComponent } from './add-members-input/add-members-input.
   imports: [CommonModule, FormsModule, AddMembersInputComponent],
 })
 export class AddMembersComponent {
-  selectedUser: User | null = null;
+  selectedUsers: User[] = [];
   channel: Channel;
 
   constructor(
     private dialogRef: MatDialogRef<AddMembersComponent>,
     private usersService: UsersService,
-    private channelService: ChannelsService,
+    private channelsService: ChannelsService,
     @Inject(MAT_DIALOG_DATA) public data: { channel: Channel }
   ) {
     this.channel = data.channel;
   }
 
-  addUserToMembers() {
-    if (this.selectedUser) {
-      this.channelService.addMemberToChannel(this.selectedUser, this.channel.channel_id);
-      this.dialogRef.close([this.selectedUser]);
-    }
+  async addUsersToMembers() {
+    this.channel.members = this.channel.members.concat(this.selectedUsers);
+    await this.channelsService.updateChannel(this.channel)
+      .then(() => this.closeCard());
   }
 
   closeCard() {

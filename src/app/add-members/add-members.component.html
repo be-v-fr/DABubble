@@ -14,7 +14,7 @@
   <div class="inputContainer">
     <app-add-members-input />
     <div class="submit-btn-container">
-      <button type="submit" [disabled]="!selectedUser" (click)="addUserToMembers()" class="form-btn-primary">
+      <button type="submit" [disabled]="selectedUsers.length === 0" (click)="addUsersToMembers()" class="form-btn-primary">
         Hinzufügen
       </button>
     </div>
