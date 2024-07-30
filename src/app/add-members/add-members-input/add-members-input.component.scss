@@ -66,16 +66,16 @@
 
         cursor: pointer;
 
-        &:hover {
-            color: $purple-blue-bright;
-            background-color: $violet-bright;
-            border-radius: 30px;
-        }
-
         span {
             font-size: 18px;
             font-weight: 400;
         }
+    }
+
+    .user-list-detail-custom-hover {
+        color: $purple-blue-bright;
+        background-color: $violet-bright;
+        border-radius: 30px;
     }
 }
 

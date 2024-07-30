@@ -16,6 +16,7 @@ export class AddMembersInputComponent implements OnInit {
   @Input() channel?: Channel;
   usersSearch: string = '';
   filteredUsers: User[] = [];
+  currentFilterSelection: number | null = null;
   showUserList: boolean = false;
   @Input() selectedUsers: User[] = [];
   @Output() selectedUsersChange = new EventEmitter<User[]>();
@@ -43,17 +44,19 @@ export class AddMembersInputComponent implements OnInit {
 
   meetsFilterConditions(user: User, term: string) {
     return user.name.toLowerCase().includes(term) &&
-    !this.selectedUsers.includes(user) &&
-    !this.channel?.members.includes(user);
+      !this.selectedUsers.includes(user) &&
+      !this.channel?.members.includes(user);
   }
 
   openUserList(): void {
     this.setUserListPosition();
+    this.currentFilterSelection = 0;
     this.showUserList = true;
   }
 
   @HostListener('document:click', ['$event'])
   closeUserList() {
+    this.currentFilterSelection = null;
     this.showUserList = false;
   }
 
@@ -79,6 +82,29 @@ export class AddMembersInputComponent implements OnInit {
     if (this.specificPeopleInput.nativeElement.value.length === 0) {
       this.selectedUsers.pop();
     }
+  }
+
+  selectByArrowKey(e: Event) {
+    e.preventDefault();
+    const keyEv = e as KeyboardEvent;
+    if (this.currentFilterSelection != null) {
+      const length = this.filteredUsers.length;
+      keyEv.key === 'ArrowUp' ? this.currentFilterSelection-- : this.currentFilterSelection++;
+      this.currentFilterSelection += length;
+      this.currentFilterSelection %= length;
+    }
+  }
+
+  handleEnterKey(e: Event) {
+    if(this.showUserList && this.currentFilterSelection != null) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.selectUser(this.filteredUsers[this.currentFilterSelection]);
+    }
+  }
+
+  handleUserHover(filterIndex: number) {
+    this.currentFilterSelection = filterIndex;
   }
 
   autofocus() {
