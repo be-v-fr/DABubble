@@ -1,4 +1,4 @@
-import { Component, inject, Inject, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, inject, Inject, ViewChild, ElementRef, Input, OnInit, HostListener } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Channel } from '../../../models/channel.class';
@@ -24,6 +24,10 @@ export class AddMembersInputComponent implements OnInit {
   userListLeft: number = 0;
   userListTop: number = 0;
 
+  constructor(private eRef: ElementRef) {
+
+  }
+
   ngOnInit(): void {
     this.autofocus();
   }
@@ -34,12 +38,21 @@ export class AddMembersInputComponent implements OnInit {
       this.filteredUsers = this.usersService
         .getAllUsers()
         .filter((u: User) => u.name.toLowerCase().includes(term));
-      this.setUserListPosition();
-      this.showUserList = true;
+      this.openUserList();
     } else {
       this.filteredUsers = [];
-      this.showUserList = false;
+      this.closeUserList();
     }
+  }
+
+  openUserList(): void {
+    this.setUserListPosition();
+    this.showUserList = true;
+  }
+
+  @HostListener('document:click', ['$event'])
+  closeUserList() {
+    this.showUserList = false;
   }
 
   setUserListPosition(): void {
