@@ -1,7 +1,6 @@
 <form class="container" [ngClass]="{ 'expanded': selection === 'specificPeople' }"
   (ngSubmit)="onSubmit(addMemberChannelForm)" #addMemberChannelForm="ngForm">
   <div class="fingerbar" (click)="close()">&nbsp;</div>
-
   <div class="headlineAndCloseBtn">
     <span>Leute hinzufügen</span>
     <button class="close-thread-btn">
@@ -18,31 +17,7 @@
         (change)="autofocus()" />
       <label for="contactChoice2">Bestimmte Leute hinzufügen</label>
     </div>
-    <div class="additional-input-border" [ngClass]="{'hide': selection != 'specificPeople'}">
-      <div class="additional-input-wrapper">
-        <div class="additional-input">
-          <label for="specificPeopleInput"></label>
-          @for(user of specificPeopleSelected; track user) {
-          <div class="selectedUserInput">
-            <img [src]="user.avatarSrc" alt="Avatar" />
-            <span>{{ user.name }}</span>
-            <button (click)="clearSelection(user)">x</button>
-          </div>
-          }
-          <input type="text" id="specificPeopleInput" #specificPeopleInput="ngModel" name="specificPeopleInput"
-            autocomplete="off" (input)="onSearch()" (keydown.backspace)="onInputBackspace()"
-            [(ngModel)]="specificPeopleSearch" placeholder="Name eingeben" />
-        </div>
-      </div>
-    </div>
-    <div *ngIf="showUserList" class="userListCard">
-      <div *ngFor="let user of filteredUsers" (click)="selectUser(user)" class="userListDetail">
-        <img [src]="user.avatarSrc" alt="Avatar" />
-        <div class="user-info">
-          <span class="user-name">{{ user.name }}</span>
-        </div>
-      </div>
-    </div>
+    <app-add-members-input *ngIf="selection === 'specificPeople'" />
     <div>
       <button type="submit" [disabled]="!selection" class="form-btn-primary">Erstellen</button>
     </div>

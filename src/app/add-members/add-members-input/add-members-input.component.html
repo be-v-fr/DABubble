@@ -1,0 +1,25 @@
+<form class="additional-input-border" #addMembersInputForm="ngForm">
+    <div class="additional-input-wrapper">
+        <div class="additional-input">
+            <label for="specificPeopleInput"></label>
+            @for(user of specificPeopleSelected; track user) {
+            <div class="selectedUserInput">
+                <img [src]="user.avatarSrc" alt="Avatar" />
+                <span>{{ user.name }}</span>
+                <button (click)="clearSelection(user)">x</button>
+            </div>
+            }
+            <input type="text" id="specificPeopleInput" #specificPeopleInput="ngModel" name="specificPeopleInput"
+                autocomplete="off" (input)="onSearch()" (keydown.backspace)="onInputBackspace()"
+                [(ngModel)]="specificPeopleSearch" placeholder="Name eingeben" />
+        </div>
+    </div>
+    <div class="userListCard" [ngClass]="{'hide': !showUserList}" [ngStyle]="{'left.px': userListLeft, 'top.px': userListTop}">
+        <div *ngFor="let user of filteredUsers" (click)="selectUser(user)" class="userListDetail">
+            <img [src]="user.avatarSrc" alt="Avatar" />
+            <div class="user-info">
+                <span class="user-name">{{ user.name }}</span>
+            </div>
+        </div>
+    </div>
+</form>
