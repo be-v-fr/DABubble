@@ -13,8 +13,7 @@
       <label for="contactChoice1">Alle Mitglieder von <span>OfficeTeam</span> hinzufügen</label>
     </div>
     <div>
-      <input type="radio" id="contactChoice2" name="contactChoice2" value="specificPeople" [(ngModel)]="selection"
-        (change)="autofocus()" />
+      <input type="radio" id="contactChoice2" name="contactChoice2" value="specificPeople" [(ngModel)]="selection" />
       <label for="contactChoice2">Bestimmte Leute hinzufügen</label>
     </div>
     <app-add-members-input *ngIf="selection === 'specificPeople'" />

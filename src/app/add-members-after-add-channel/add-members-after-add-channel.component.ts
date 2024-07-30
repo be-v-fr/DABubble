@@ -37,10 +37,6 @@ export class AddMembersAfterAddChannelComponent {
       .then(() => this.redirectToChannel());
   }
 
-  autofocus() {
-
-  }
-
   close() {
     this.redirectToChannel();
     this.dialogRef.close();

@@ -1,4 +1,4 @@
-import { Component, inject, Inject, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, inject, Inject, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Channel } from '../../../models/channel.class';
@@ -13,7 +13,7 @@ import { UsersService } from '../../../services/users.service';
   templateUrl: './add-members-input.component.html',
   styleUrl: './add-members-input.component.scss'
 })
-export class AddMembersInputComponent {
+export class AddMembersInputComponent implements OnInit{
   specificPeopleSearch: string = '';
   filteredUsers: User[] = [];
   showUserList: boolean = false;
@@ -23,6 +23,10 @@ export class AddMembersInputComponent {
   private usersService = inject(UsersService);
   userListLeft: number = 0;
   userListTop: number = 0;
+
+  ngOnInit(): void {
+    this.autofocus();
+  }
 
   onSearch(): void {
     if (this.specificPeopleSearch.length > 0) {
