@@ -12,43 +12,11 @@
   </div>
 
   <div class="inputContainer">
-    <div class="additionalInputContainer">
-      <label for="specificPeople"></label>
-      <div class="selectedUserInput" *ngIf="selectedUser">
-        <img [src]="selectedUser.avatarSrc" alt="Avatar" />
-        <span>{{ selectedUser.name }}</span>
-        <button (click)="clearSelection()">x</button>
-      </div>
-      <input
-        *ngIf="!selectedUser"
-        type="text"
-        id="specificPeopleInput"
-        placeholder="Name eingeben"
-        (input)="onSearch()"
-        [(ngModel)]="selection"
-      />
-    </div>
-    <div>
-      <button
-        type="submit"
-        [disabled]="!selection"
-        (click)="addUserToMembers()"
-        class="form-btn-primary"
-      >
+    <app-add-members-input />
+    <div class="submit-btn-container">
+      <button type="submit" [disabled]="!selectedUser" (click)="addUserToMembers()" class="form-btn-primary">
         Hinzufügen
       </button>
-    </div>
-  </div>
-</div>
-<div *ngIf="showUserList" class="userListCard">
-  <div
-    *ngFor="let user of filteredUsers"
-    (click)="selectUser(user)"
-    class="userListDetail"
-  >
-    <img [src]="user.avatarSrc" alt="Avatar" />
-    <div class="user-info">
-      <span class="user-name">{{ user.name }}</span>
     </div>
   </div>
 </div>

@@ -13,7 +13,7 @@ import { UsersService } from '../../../services/users.service';
   templateUrl: './add-members-input.component.html',
   styleUrl: './add-members-input.component.scss'
 })
-export class AddMembersInputComponent implements OnInit{
+export class AddMembersInputComponent implements OnInit {
   specificPeopleSearch: string = '';
   filteredUsers: User[] = [];
   showUserList: boolean = false;
@@ -67,6 +67,6 @@ export class AddMembersInputComponent implements OnInit{
   }
 
   autofocus() {
-    setTimeout(() => this.specificPeopleInput.nativeElement.focus(), 40);
+    setTimeout(() => this.specificPeopleInput.nativeElement.focus(), 200);
   }
 }

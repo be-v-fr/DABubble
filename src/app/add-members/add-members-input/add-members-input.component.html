@@ -1,6 +1,6 @@
-<form class="additional-input-border" #addMembersInputForm="ngForm">
-    <div class="additional-input-wrapper">
-        <div class="additional-input">
+<form class="input-border" #addMembersInputForm="ngForm">
+    <div class="input-wrapper">
+        <div class="input-container">
             <label for="specificPeopleInput"></label>
             @for(user of specificPeopleSelected; track user) {
             <div class="selectedUserInput">
@@ -14,7 +14,8 @@
                 [(ngModel)]="specificPeopleSearch" placeholder="Name eingeben" />
         </div>
     </div>
-    <div class="userListCard" [ngClass]="{'hide': !showUserList}" [ngStyle]="{'left.px': userListLeft, 'top.px': userListTop}">
+    <div class="userListCard" [ngClass]="{'hide': !showUserList}"
+        [ngStyle]="{'left.px': userListLeft, 'top.px': userListTop}">
         <div *ngFor="let user of filteredUsers" (click)="selectUser(user)" class="userListDetail">
             <img [src]="user.avatarSrc" alt="Avatar" />
             <div class="user-info">
