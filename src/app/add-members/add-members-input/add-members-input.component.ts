@@ -85,9 +85,10 @@ export class AddMembersInputComponent implements OnInit {
   }
 
   selectByArrowKey(e: Event) {
-    e.preventDefault();
-    const keyEv = e as KeyboardEvent;
-    if (this.currentFilterSelection != null) {
+    if (this.showUserList && this.currentFilterSelection != null) {
+      e.preventDefault();
+      e.stopPropagation();
+      const keyEv = e as KeyboardEvent;
       const length = this.filteredUsers.length;
       keyEv.key === 'ArrowUp' ? this.currentFilterSelection-- : this.currentFilterSelection++;
       this.currentFilterSelection += length;
