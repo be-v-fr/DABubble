@@ -33,12 +33,18 @@ export class AddMembersInputComponent implements OnInit {
       const term = this.usersSearch.toLowerCase();
       this.filteredUsers = this.usersService
         .getAllUsers()
-        .filter((u: User) => u.name.toLowerCase().includes(term));
-      this.openUserList();
+        .filter((u: User) => this.meetsFilterConditions(u, term));
+      this.filteredUsers.length > 0 ? this.openUserList() : this.closeUserList();
     } else {
       this.filteredUsers = [];
       this.closeUserList();
     }
+  }
+
+  meetsFilterConditions(user: User, term: string) {
+    return user.name.toLowerCase().includes(term) &&
+    !this.selectedUsers.includes(user) &&
+    !this.channel?.members.includes(user);
   }
 
   openUserList(): void {
