@@ -16,7 +16,7 @@
       <input type="radio" id="contactChoice2" name="contactChoice2" value="specificPeople" [(ngModel)]="selection" />
       <label for="contactChoice2">Bestimmte Leute hinzufügen</label>
     </div>
-    <app-add-members-input *ngIf="selection === 'specificPeople'" [(selectedUsers)]="specificPeopleSelected" />
+    <app-add-members-input *ngIf="selection === 'specificPeople'" [(selectedUsers)]="specificPeopleSelected" [channel]="data" />
     <div>
       <button type="submit" [disabled]="!selection" class="form-btn-primary">Erstellen</button>
     </div>

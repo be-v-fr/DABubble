@@ -1,8 +1,7 @@
-import { Component, inject, Inject, ViewChild, ElementRef, Input, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, inject, ViewChild, ElementRef, Input, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Channel } from '../../../models/channel.class';
-import { ChannelsService } from '../../../services/content/channels.service';
 import { User } from '../../../models/user.class';
 import { UsersService } from '../../../services/users.service';
 
@@ -14,20 +13,16 @@ import { UsersService } from '../../../services/users.service';
   styleUrl: './add-members-input.component.scss'
 })
 export class AddMembersInputComponent implements OnInit {
+  @Input() channel?: Channel;
   usersSearch: string = '';
   filteredUsers: User[] = [];
   showUserList: boolean = false;
   @Input() selectedUsers: User[] = [];
   @Output() selectedUsersChange = new EventEmitter<User[]>();
   @ViewChild('specificPeopleInput', { read: ElementRef }) specificPeopleInput!: ElementRef<HTMLInputElement>;
-  private channelsService = inject(ChannelsService);
   private usersService = inject(UsersService);
   userListLeft: number = 0;
   userListTop: number = 0;
-
-  constructor(private eRef: ElementRef) {
-
-  }
 
   ngOnInit(): void {
     this.autofocus();

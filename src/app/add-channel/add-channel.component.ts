@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -14,9 +14,10 @@ import { AddMembersAfterAddChannelComponent } from '../add-members-after-add-cha
   templateUrl: './add-channel.component.html',
   styleUrl: './add-channel.component.scss'
 })
-export class AddChannelComponent {
+export class AddChannelComponent implements OnInit {
   channel = new Channel();
   nameAvailable: boolean = true;
+  @ViewChild('name', { read: ElementRef }) nameInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     private dialog: MatDialog,
@@ -24,6 +25,10 @@ export class AddChannelComponent {
     private authService: AuthService,
     private channelsService: ChannelsService,
   ) { }
+
+  ngOnInit(): void {
+    this.autofocusName();
+  }
 
   onCancel() {
     this.dialogRef.close();
@@ -52,5 +57,9 @@ export class AddChannelComponent {
     const author = this.authService.getCurrent();
     channel.author_uid = author!.uid;
     return channel;
+  }
+
+  autofocusName() {
+    setTimeout(() => this.nameInput.nativeElement.focus(), 200);
   }
 }
