@@ -42,7 +42,7 @@ export class AddMembersInputComponent implements OnInit {
     }
   }
 
-  meetsFilterConditions(user: User, term: string) {
+  meetsFilterConditions(user: User, term: string): boolean {
     return user.name.toLowerCase().includes(term) &&
       !this.selectedUsers.includes(user) &&
       !this.channel?.members.includes(user);
@@ -79,11 +79,17 @@ export class AddMembersInputComponent implements OnInit {
   }
 
   onInputBackspace(): void {
-    if (this.specificPeopleInput.nativeElement.value.length === 0) {
-      this.selectedUsers.pop();
-    }
+    if (this.specificPeopleInput.nativeElement.value.length === 0) {this.selectedUsers.pop()}
   }
 
+
+  /**
+   * This function handles arrow up and down keyboard events. If the user list is showing,
+   * users can be selected using the up and down arrows (without blurring the input field).
+   * The current selection of the filtered users list works in a circular manner,
+   * i.e. it jumps between the first and last user, hence the modulo calculation.
+   * @param e keyboard event
+   */
   selectByArrowKey(e: Event) {
     if (this.showUserList && this.currentFilterSelection != null) {
       e.preventDefault();
@@ -108,6 +114,9 @@ export class AddMembersInputComponent implements OnInit {
     this.currentFilterSelection = filterIndex;
   }
 
+  /**
+   * This function focuses the user selection input field after a short timeout.
+   */
   autofocus() {
     setTimeout(() => this.specificPeopleInput.nativeElement.focus(), 200);
   }
