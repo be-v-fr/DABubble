@@ -1,4 +1,4 @@
-import { Component, inject, Inject, ViewChild, ElementRef, Input, OnInit, HostListener } from '@angular/core';
+import { Component, inject, Inject, ViewChild, ElementRef, Input, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Channel } from '../../../models/channel.class';
@@ -14,10 +14,11 @@ import { UsersService } from '../../../services/users.service';
   styleUrl: './add-members-input.component.scss'
 })
 export class AddMembersInputComponent implements OnInit {
-  specificPeopleSearch: string = '';
+  usersSearch: string = '';
   filteredUsers: User[] = [];
   showUserList: boolean = false;
-  specificPeopleSelected: User[] = [];
+  @Input() selectedUsers: User[] = [];
+  @Output() selectedUsersChange = new EventEmitter<User[]>();
   @ViewChild('specificPeopleInput', { read: ElementRef }) specificPeopleInput!: ElementRef<HTMLInputElement>;
   private channelsService = inject(ChannelsService);
   private usersService = inject(UsersService);
@@ -33,8 +34,8 @@ export class AddMembersInputComponent implements OnInit {
   }
 
   onSearch(): void {
-    if (this.specificPeopleSearch.length > 0) {
-      const term = this.specificPeopleSearch.toLowerCase();
+    if (this.usersSearch.length > 0) {
+      const term = this.usersSearch.toLowerCase();
       this.filteredUsers = this.usersService
         .getAllUsers()
         .filter((u: User) => u.name.toLowerCase().includes(term));
@@ -62,20 +63,20 @@ export class AddMembersInputComponent implements OnInit {
   }
 
   selectUser(user: User): void {
-    this.specificPeopleSelected.push(user);
+    this.selectedUsers.push(user);
     this.showUserList = false;
-    this.specificPeopleSearch = '';
+    this.usersSearch = '';
     this.autofocus();
   }
 
   clearSelection(user: User): void {
-    const index = this.specificPeopleSelected.indexOf(user);
-    this.specificPeopleSelected.splice(index);
+    const index = this.selectedUsers.indexOf(user);
+    this.selectedUsers.splice(index);
   }
 
   onInputBackspace(): void {
     if (this.specificPeopleInput.nativeElement.value.length === 0) {
-      this.specificPeopleSelected.pop();
+      this.selectedUsers.pop();
     }
   }
 

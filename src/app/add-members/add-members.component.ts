@@ -35,6 +35,6 @@ export class AddMembersComponent {
   }
 
   closeCard() {
-    this.dialogRef.close();
+    this.dialogRef.close(this.selectedUsers);
   }
 }

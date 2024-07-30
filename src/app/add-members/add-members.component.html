@@ -12,7 +12,7 @@
   </div>
 
   <div class="inputContainer">
-    <app-add-members-input />
+    <app-add-members-input [(selectedUsers)]="selectedUsers" />
     <div class="submit-btn-container">
       <button type="submit" [disabled]="selectedUsers.length === 0" (click)="addUsersToMembers()" class="form-btn-primary">
         Hinzufügen
