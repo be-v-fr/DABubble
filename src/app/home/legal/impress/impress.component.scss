@@ -5,6 +5,7 @@
     height: 100%;
     font-family: 'Nunito';
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     .content-main {
@@ -47,13 +48,47 @@
             }
         }
     }
+    .logo {
+        position: absolute;
+        left: 50px;
+        top: 25px;
+        width: 242px;
+        height: 70px;
+        cursor: pointer;
+    }
 }
 
-// .logo {
-//     position: absolute;
-//     left: 50px;
-//     top: 25px;
-//     width: 242px;
-//     height: 70px;
-//     cursor: pointer;
-// }
+@media screen and (max-width: 768px) {
+    .content-wrapper {
+        gap: 20px;
+        .content-main {
+            max-width: 676px;
+            width: calc(100% - 20px);
+        }
+        .logo {
+            position: relative;
+            left: 0;
+            top: 0;
+            // transform: translateX(-50%);
+        }
+    }
+}
+
+@media screen and (max-width: 408px) {
+    .content-wrapper {
+        .content-main {
+            padding: 32px 20px;
+            .content-section {
+                h1 {
+                    font-size: 36px;
+                }
+                h2 {
+                    font-size: 28px;
+                }
+            }
+        }
+        .logo {
+            height: 56px;
+        }
+    }
+}
