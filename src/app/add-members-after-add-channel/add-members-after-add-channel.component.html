@@ -1,7 +1,6 @@
 <form class="container" [ngClass]="{ 'expanded': selection === 'specificPeople' }"
   (ngSubmit)="onSubmit(addMemberChannelForm)" #addMemberChannelForm="ngForm">
   <div class="fingerbar" (click)="close()">&nbsp;</div>
-
   <div class="headlineAndCloseBtn">
     <span>Leute hinzufügen</span>
     <button class="close-thread-btn">
@@ -14,15 +13,10 @@
       <label for="contactChoice1">Alle Mitglieder von <span>OfficeTeam</span> hinzufügen</label>
     </div>
     <div>
-      <input type="radio" id="contactChoice2" name="contactChoice2" value="specificPeople" [(ngModel)]="selection"
-        (change)="autofocus()" />
+      <input type="radio" id="contactChoice2" name="contactChoice2" value="specificPeople" [(ngModel)]="selection" />
       <label for="contactChoice2">Bestimmte Leute hinzufügen</label>
     </div>
-    <div [ngClass]="{'hide': selection != 'specificPeople'}" class="additional-input">
-      <label for="specificPeopleInput"></label>
-      <input type="text" id="specificPeopleInput" #specificPeopleInput="ngModel" name="specificPeopleInput" [(ngModel)]="specificPeople"
-        placeholder="Name eingeben"/>
-    </div>
+    <app-add-members-input *ngIf="selection === 'specificPeople'" [(selectedUsers)]="specificPeopleSelected" [channel]="data" />
     <div>
       <button type="submit" [disabled]="!selection" class="form-btn-primary">Erstellen</button>
     </div>

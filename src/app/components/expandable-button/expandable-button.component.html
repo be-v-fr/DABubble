@@ -1,7 +1,7 @@
 <div class="exp-btn-container">
     <div class="btn-container">
         <button (click)="toggleMenu()">
-            <span class="material-icons-outlined icon">arrow_drop_down</span>
+            <span class="material-icons-outlined icon" [class.rotated]="isRotated">arrow_drop_down</span>
             <!-- <span class="material-icons-outlined icon">arrow_right</span> -->
             <div class="channel-title">
                 <span class="material-icons-outlined icon">{{ icon() }}</span>
@@ -17,8 +17,10 @@
         <div *ngIf="showBtn()" class="channel-menu">
             <ul>
                 @for (channel of userChannels; track channel) {<li>
-                    <a [routerLink]="['/main-chat', channel.channel_id]">
-                        <span>#</span> {{channel.name}}
+                    <a class="list-item-content" [routerLink]="['/main-chat', channel.channel_id]">
+                        <p class="list-item-text">
+                            <span>#</span> {{channel.name}}
+                        </p>
                     </a>
                 </li>}
             </ul>
@@ -40,12 +42,12 @@
                         <span>{{ user.name }}</span>
                     </a>
                 </li>
-            }        
-            
-            <a routerLink="/new" >
-                <div class="new-message-icon">
-                    <img src="../../../assets/img/icons/new_message.svg">
-                </div>
+                }
+
+                <a routerLink="/new">
+                    <div class="new-message-icon">
+                        <img src="../../../assets/img/icons/new_message.svg">
+                    </div>
                 </a>
             </ul>
         </div>

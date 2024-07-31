@@ -18,6 +18,7 @@ import { User } from '../../../models/user.class';
 import { MemberListComponent } from '../../member-list/member-list.component';
 import { ActivityService } from '../../../services/activity.service';
 import { UsersService } from '../../../services/users.service';
+import { AddMembersComponent } from '../../add-members/add-members.component';
 
 @Component({
   selector: 'app-main-chat',
@@ -124,7 +125,13 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   openMemberList(): void {
     this.dialog.open(MemberListComponent, {
-      data: { activeUsers: this.activeUsers, channel: this.currentChannel }
+      data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
+    });
+  }
+
+  openAddMembers(): void {
+    this.dialog.open(AddMembersComponent, {
+      data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
     });
   }
 

@@ -21,7 +21,7 @@
         gap: 12px;
         padding: 5px 10px;
 
-       
+
 
         .channel-title {
           display: flex;
@@ -70,25 +70,38 @@
           @include scrollbar();
 
           li {
-            padding: 4px 20px;
-            border-radius: 30px;
+            width: 100%;
 
-            a {
+            .list-item-content {
+              width: 100%;
               text-decoration: none;
-              font-size: 18px;
-              font-weight: 700;
-              line-height: 24.55px;
-              color: inherit;
+              display: flex;
+              color: black;
 
-              span {
-                font-size: 24px;
+              .list-item-text {
+                padding: 4px 20px;
+                margin: 0;
+                border-radius: 30px;
+                line-height: 24.55px;
+                font-size: 18px;
+                font-weight: 700;
+                color: inherit;
+
+                span {
+                  font-size: 24px;
+                }
+              }
+
+              &:hover {
+                .list-item-text {
+                  color: $purple-blue-bright;
+                  background-color: $violet-bright;
+                }
               }
             }
-
-            &:hover {
-              color: $purple-blue-bright;
-              background-color: $violet-bright;
-            }
+          }
+          &:hover {
+            cursor: unset;
           }
         }
 
@@ -184,6 +197,11 @@
   .new-message-icon {
     display: none;
   }
+
+  .rotated {
+    transform: rotate(-90deg);
+  }
+
 }
 
 @media screen and (max-width: 768px) {

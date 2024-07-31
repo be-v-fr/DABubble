@@ -1,70 +1,40 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { User } from '../../models/user.class';
-import { ActivityService } from '../../services/activity.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { UsersService } from '../../services/users.service';
+import { User } from '../../models/user.class';
 import { ChannelsService } from '../../services/content/channels.service';
 import { Channel } from '../../models/channel.class';
+import { AddMembersInputComponent } from './add-members-input/add-members-input.component';
 
 @Component({
   selector: 'app-add-members',
   standalone: true,
   templateUrl: './add-members.component.html',
   styleUrls: ['./add-members.component.scss'],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AddMembersInputComponent],
 })
-export class AddMembersComponent implements OnInit {
-  selection: string | null = null;
-  filteredUsers: User[] = [];
-  selectedUser: User | null = null;
-  showUserList: boolean = false;
+export class AddMembersComponent {
+  selectedUsers: User[] = [];
   channel: Channel;
 
   constructor(
-    private activityService: ActivityService,
     private dialogRef: MatDialogRef<AddMembersComponent>,
-    private channelService: ChannelsService,
+    private usersService: UsersService,
+    private channelsService: ChannelsService,
     @Inject(MAT_DIALOG_DATA) public data: { channel: Channel }
   ) {
     this.channel = data.channel;
   }
 
-  ngOnInit(): void {
-    this.filteredUsers = this.activityService.getAllUsers();
-  }
-
-  onSearch(): void {
-    const term = this.selection?.toLowerCase() || '';
-    if (term) {
-      this.filteredUsers = this.activityService
-        .getAllUsers()
-        .filter((user) => user.name.toLowerCase().includes(term));
-      this.showUserList = true;
-    } else {
-      this.filteredUsers = [];
-      this.showUserList = false;
-    }
-  }
-
-  selectUser(user: User): void {
-    this.selectedUser = user;
-    this.showUserList = false;
-  }
-
-  clearSelection(): void {
-    this.selectedUser = null;
-    this.selection = '';
-  }
-
-  addUserToMembers() {
-    if (this.selectedUser) {
-      this.channelService.addMemberToChannel(this.selectedUser, this.channel.channel_id);
-      this.dialogRef.close([this.selectedUser]);
-    }
+  async addUsersToMembers() {
+    this.channel.members = this.channel.members.concat(this.selectedUsers);
+    await this.channelsService.updateChannel(this.channel)
+      .then(() => this.closeCard());
   }
 
   closeCard() {
-    this.dialogRef.close();
+    this.dialogRef.close(this.selectedUsers);
   }
 }

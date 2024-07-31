@@ -1,26 +1,32 @@
 <div class="memberCard">
-  <div class="headlineAndCloseBtn">
-    <div>
-      <span>Mitglieder</span>
+    <div class="headline-close-btn">
+        <div class="title-box">
+            <span>Mitglieder</span>
+        </div>
+        <button class="close-thread-btn">
+            <span class="material-icons-outlined" (click)="closeCard()">close</span>
+        </button>
     </div>
-    <button class="close-thread-btn">
-      <span class="material-icons-outlined" (click)="closeCard()">close</span>
-    </button>
-  </div>
-  <div class="usersMenu">
-    <div *ngFor="let user of activeUsers" class="message-img-container">
-      <button (click)="openUserProfile()">
-        <img [src]="user.avatarSrc" alt="{{user.name}}" />
-        <span>{{ user.name }}</span>
-        <span class="online"></span>
-      </button>
-    </div>
+    <div class="member-list-container">
+        <div class="members-list-box">
+            <div *ngFor="let user of channelMembers" class="member-btn-container">
+                <button class="member-btn" (click)="openUserProfile()">
+                    <img [src]="user.avatarSrc" alt="{{user.name}}" />
+                    <span class="member-name">{{ user.name }}</span>
+                    <div class="onlinedot"
+                        [ngClass]="{'online': activityService.getUserState(user).state == 'active'}" 
+                        [ngClass]="{'idle': activityService.getUserState(user).state == 'idle'}"
+                        [ngClass]="{'offline': activityService.getUserState(user).state == 'loggedOut'}"
+                    ></div>
+                </button>
+            </div>
+        </div>
 
-    <div class="addMemberBtn">
-      <button (click)="addMember()">
-        <span class="material-icons-outlined icon">person_add_alt</span>
-        <span class="addMemberText">Mitglieder hinzufügen</span>
-      </button>
+        <div>
+            <button class="add-member-btn" (click)="addMember()">
+                <span class="material-icons-outlined icon">person_add_alt</span>
+                <span class="add-member-text">Mitglieder hinzufügen</span>
+            </button>
+        </div>
     </div>
-  </div>
 </div>

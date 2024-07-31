@@ -11,10 +11,12 @@
   // position: absolute;
   // box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
   transition: height 0.3s ease-in-out;
+
   &.expanded {
     min-height: 354px;
   }
 }
+
 .headlineAndCloseBtn {
   display: flex;
   flex-direction: row;
@@ -24,11 +26,13 @@
   justify-content: space-between;
   margin-left: 40px;
   margin-top: 40px;
+
   span {
     font-weight: 700;
     font-size: 24px;
   }
 }
+
 .close-thread-btn {
   color: rgb(0, 0, 0, 1);
   display: flex;
@@ -42,81 +46,83 @@
     border-radius: 20px;
   }
 }
+
 .inputContainer {
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin-left: 40px;
   margin-top: 20px;
+
   div {
     display: flex;
     align-items: center;
     gap: 20px;
+
     label {
       font-weight: 400;
       font-size: 18px;
-      span{
+
+      span {
         color: rgba(121, 126, 243, 1);
       }
     }
   }
 }
+
 .form-btn-primary .disabled {
   background-color: #686868;
 }
+
 .form-btn-primary {
   margin-top: 10px;
   margin-left: 505px;
 }
+
 .form-btn-primary .active {
   color: white;
   background-color: #444df2;
-}
-.additional-input {
-  width: 630px;
-  height: 55px;
-  border: 1px solid rgba(68, 77, 242, 1);
-  border-radius: 30px;
- 
 }
 
 .container .inputContainer .hide {
   display: none;
 }
 
-@media screen and (max-width: 768px){
-  .container{
+app-add-members-input {
+  width: 630px;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
     position: fixed;
-        top: auto;
-        left: 0px;
-        right: 0px;
-        bottom: 0px;
-        width: 100%;
-        height: 320px;
-        border-radius: 30px 30px 0px 0px;
-        box-shadow: 0px -3px 10px 0px rgba(0, 0, 0, 0.2);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 25px;
-        animation: slideUp 0.15s ease-out 0.05s forwards;
-        overflow: hidden;
+    top: auto;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 320px;
+    border-radius: 30px 30px 0px 0px;
+    box-shadow: 0px -3px 10px 0px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    animation: slideUp 0.15s ease-out 0.05s forwards;
+    overflow: hidden;
 
-        .fingerbar {
-          position: relative;
-          top: 40px;
-          width: 62px;
-          height: 6px;
-          border-radius: 99px;
-          background-color: $purple-light;
-          display: flex;
-          cursor: pointer;
-      }
-      .inputContainer{
-        margin-top: unset;
-      }
-        
+    .fingerbar {
+      position: relative;
+      top: 40px;
+      width: 62px;
+      height: 6px;
+      border-radius: 99px;
+      background-color: $purple-light;
+      display: flex;
+      cursor: pointer;
+    }
+
+    .inputContainer {
+      margin-top: unset;
+    }
   }
-
- 
 }
