@@ -5,6 +5,7 @@ import { User } from '../../models/user.class';
 import { AddMembersComponent } from '../add-members/add-members.component';
 import { UserProfileCardComponent } from '../user-profile-card/user-profile-card.component';
 import { Channel } from '../../models/channel.class';
+import { ChannelsService } from '../../services/content/channels.service';
 import { ActivityService } from '../../services/activity.service';
 
 @Component({
@@ -21,6 +22,7 @@ export class MemberListComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { channelMembers: User[], channel: Channel },
     private dialog: MatDialog,
+    private channelsService: ChannelsService,
     public activityService: ActivityService,
     private dialogRef: MatDialogRef<any>
   ) {
@@ -36,8 +38,15 @@ export class MemberListComponent {
     dialogRef.afterClosed().subscribe((newUsers: User[]) => {
       if (newUsers && newUsers.length > 0) {
         this.channelMembers.push(...newUsers);
-      }
+      } else {this.checkMembersIndependently()}
     });
+  }
+
+  async checkMembersIndependently(): Promise<void> {
+    const channelFromService = await this.channelsService.getChannel(this.channel.channel_id);
+    if(channelFromService && channelFromService.members.length != this.channelMembers.length) {
+      this.channelMembers = channelFromService.members;
+    }
   }
 
   openUserProfile(): void {

@@ -21,7 +21,6 @@ export class AddMembersComponent {
 
   constructor(
     private dialogRef: MatDialogRef<AddMembersComponent>,
-    private usersService: UsersService,
     private channelsService: ChannelsService,
     @Inject(MAT_DIALOG_DATA) public data: { channel: Channel }
   ) {

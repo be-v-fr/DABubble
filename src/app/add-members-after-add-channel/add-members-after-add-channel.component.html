@@ -1,5 +1,5 @@
 <form class="container" [ngClass]="{ 'expanded': selection === 'specificPeople' }"
-  (ngSubmit)="onSubmit(addMemberChannelForm)" #addMemberChannelForm="ngForm">
+  (ngSubmit)="onSubmit()" #addMemberChannelForm="ngForm">
   <div class="fingerbar" (click)="close()">&nbsp;</div>
   <div class="headlineAndCloseBtn">
     <span>Leute hinzufügen</span>
@@ -16,9 +16,9 @@
       <input type="radio" id="contactChoice2" name="contactChoice2" value="specificPeople" [(ngModel)]="selection" />
       <label for="contactChoice2">Bestimmte Leute hinzufügen</label>
     </div>
-    <app-add-members-input *ngIf="selection === 'specificPeople'" [(selectedUsers)]="specificPeopleSelected" [channel]="data" />
+    <app-add-members-input *ngIf="selection === 'specificPeople'" [(selectedUsers)]="specificPeopleSelected" [channel]="data" (submit)="submitBtn.click()" />
     <div>
-      <button type="submit" [disabled]="!selection" class="form-btn-primary">Erstellen</button>
+      <button #submitBtn type="submit" [disabled]="!selection" class="form-btn-primary">Erstellen</button>
     </div>
   </div>
 </form>

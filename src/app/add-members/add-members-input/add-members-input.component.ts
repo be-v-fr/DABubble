@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
 import { UsersService } from '../../../services/users.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-add-members-input',
@@ -20,11 +21,19 @@ export class AddMembersInputComponent implements OnInit {
   showUserList: boolean = false;
   @Input() selectedUsers: User[] = [];
   @Output() selectedUsersChange = new EventEmitter<User[]>();
+  @Output() submit = new EventEmitter<void>();
   @ViewChild('specificPeopleInput', { read: ElementRef }) specificPeopleInput!: ElementRef<HTMLInputElement>;
   private usersService = inject(UsersService);
+  private authService = inject(AuthService);
+  currentUser: User | null = null;
 
   ngOnInit(): void {
-    this.autofocus();
+    const uid = this.authService.getCurrentUid();
+    if (uid) {
+      const user = this.usersService.getUserByUid(uid);
+      if (user) { this.currentUser = user }
+      this.autofocus();
+    }
   }
 
   onSearch(): void {
@@ -42,6 +51,7 @@ export class AddMembersInputComponent implements OnInit {
 
   meetsFilterConditions(user: User, term: string): boolean {
     return user.name.toLowerCase().includes(term) &&
+      user.uid != this.currentUser?.uid &&
       !this.selectedUsers.includes(user) &&
       !this.channel.members.includes(user);
   }
@@ -70,7 +80,7 @@ export class AddMembersInputComponent implements OnInit {
   }
 
   onInputBackspace(): void {
-    if (this.specificPeopleInput.nativeElement.value.length === 0) {this.selectedUsers.pop()}
+    if (this.specificPeopleInput.nativeElement.value.length === 0) { this.selectedUsers.pop() }
   }
 
 
@@ -94,11 +104,11 @@ export class AddMembersInputComponent implements OnInit {
   }
 
   handleEnterKey(e: Event) {
-    if(this.showUserList && this.currentFilterSelection != null) {
+    if (this.showUserList && this.currentFilterSelection != null) {
       e.preventDefault();
       e.stopPropagation();
       this.selectUser(this.filteredUsers[this.currentFilterSelection]);
-    }
+    } else {this.submit.emit()}
   }
 
   handleUserHover(filterIndex: number) {

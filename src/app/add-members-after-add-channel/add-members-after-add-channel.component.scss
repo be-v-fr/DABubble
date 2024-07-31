@@ -4,12 +4,9 @@
   width: 710px;
   min-height: 279px;
   background-color: white;
-  // border-radius: 30px;
-  // transform: translate(-50%, -50%);
-  // left: 50%;
-  // top: 50%;
-  // position: absolute;
-  // box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+  transform: translate(-50%, -50%);
+  position: fixed;
   transition: height 0.3s ease-in-out;
 
   &.expanded {
