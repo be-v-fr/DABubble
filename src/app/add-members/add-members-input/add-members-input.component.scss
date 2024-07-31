@@ -5,10 +5,12 @@
     height: 55px;
     border: 1px solid rgba(68, 77, 242, 1);
     border-radius: 30px;
+    padding-left: 4px;
     overflow-y: visible;
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    transform: translate(0, 0);
 
     .input-wrapper {
         width: calc(100% - 30px);
@@ -17,11 +19,12 @@
         align-items: flex-start;
         overflow-x: auto;
         overflow-y: hidden;
+        cursor: default !important;
         @include scrollbar();
 
         .input-container {
             width: 100%;
-            height: 55px;
+            height: 54px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -38,13 +41,19 @@
 
 .userListCard {
     display: flex;
-    width: 295px;
-    min-height: 171px;
+    width: 335px;
+    max-height: 392px;
+    overflow-y: auto;
+    @include scrollbar();
+    padding: 20px;
     background-color: white;
     position: fixed;
+    left: 20px;
+    top: 40px;
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
     border-radius: 0px 20px 20px 20px;
     flex-direction: column;
+    gap: 15px;
     border: 1px solid rgba(173, 176, 217, 1);
 
     img {
@@ -56,12 +65,10 @@
 
     .userListDetail {
         display: flex;
-        width: 247px;
+        width: 100%;
         height: 58px;
         gap: 15px;
         align-items: center;
-        margin-left: 0;
-        margin-top: 24px;
         padding: 8px 10px;
 
         cursor: pointer;
@@ -77,6 +84,18 @@
         background-color: $violet-bright;
         border-radius: 30px;
     }
+
+    @media screen and (max-height: 920px) {
+        max-height: 318px;
+    }
+
+    @media screen and (max-height: 800px) {
+        max-height: 244px;
+    }
+
+    @media screen and (max-height: 640px) {
+        max-height: 170px;
+    }
 }
 
 .hide {
@@ -85,15 +104,16 @@
 
 .selectedUserInput {
     display: flex;
+    justify-content: center;
     align-items: center;
+    cursor: default;
     border-radius: 35px;
-    padding: 5px;
     width: 206px;
     height: 40px;
     background-color: rgba(236, 238, 254, 1);
     padding: 4px 20px;
     gap: 15px;
-    margin-top: -7.5px;
+    margin-top: -1px;
 
     img {
         width: 34px;
@@ -107,10 +127,20 @@
     }
 
     button {
-        background: none;
+        background-color: rgba(236, 238, 254, 1);
         border: none;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         cursor: pointer;
         color: black;
         font-size: 18px;
+        border-radius: 16px;
+        @include transition($duration: 75ms);
+        &:hover {
+            filter: brightness(0.97);
+        }
     }
 }

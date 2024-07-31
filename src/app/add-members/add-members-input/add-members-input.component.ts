@@ -13,7 +13,7 @@ import { UsersService } from '../../../services/users.service';
   styleUrl: './add-members-input.component.scss'
 })
 export class AddMembersInputComponent implements OnInit {
-  @Input() channel?: Channel;
+  @Input() channel!: Channel;
   usersSearch: string = '';
   filteredUsers: User[] = [];
   currentFilterSelection: number | null = null;
@@ -22,8 +22,6 @@ export class AddMembersInputComponent implements OnInit {
   @Output() selectedUsersChange = new EventEmitter<User[]>();
   @ViewChild('specificPeopleInput', { read: ElementRef }) specificPeopleInput!: ElementRef<HTMLInputElement>;
   private usersService = inject(UsersService);
-  userListLeft: number = 0;
-  userListTop: number = 0;
 
   ngOnInit(): void {
     this.autofocus();
@@ -45,11 +43,10 @@ export class AddMembersInputComponent implements OnInit {
   meetsFilterConditions(user: User, term: string): boolean {
     return user.name.toLowerCase().includes(term) &&
       !this.selectedUsers.includes(user) &&
-      !this.channel?.members.includes(user);
+      !this.channel.members.includes(user);
   }
 
   openUserList(): void {
-    this.setUserListPosition();
     this.currentFilterSelection = 0;
     this.showUserList = true;
   }
@@ -58,12 +55,6 @@ export class AddMembersInputComponent implements OnInit {
   closeUserList() {
     this.currentFilterSelection = null;
     this.showUserList = false;
-  }
-
-  setUserListPosition(): void {
-    const inputPosition = this.specificPeopleInput.nativeElement.getBoundingClientRect();
-    this.userListLeft = inputPosition.left;
-    this.userListTop = inputPosition.bottom;
   }
 
   selectUser(user: User): void {
@@ -75,7 +66,7 @@ export class AddMembersInputComponent implements OnInit {
 
   clearSelection(user: User): void {
     const index = this.selectedUsers.indexOf(user);
-    this.selectedUsers.splice(index);
+    this.selectedUsers.splice(index, 1);
   }
 
   onInputBackspace(): void {

@@ -7,6 +7,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    border-radius: 30px;
+    background-color: white;
 }
 
 .warning-msg {
