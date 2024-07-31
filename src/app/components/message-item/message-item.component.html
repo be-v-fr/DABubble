@@ -23,7 +23,7 @@
         </div>
         @if(post.thread.posts.length > 0) {
         <div class="message-answers">
-            <button>{{ post.thread.posts.length }} Antworten</button>
+            <button (click)="onOpenNewThread()">{{ post.thread.posts.length }} Antworten</button>
             <span *ngIf="lastReply">Letzte Antwort {{timeService.toRelativeDateWithClock(lastReply)}}</span>
         </div>
         }
