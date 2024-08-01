@@ -40,6 +40,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   currentUid: string | undefined;
   currentChannel = new Channel();
+  currentChannelAuthorName?: string;
   currPost: Post | undefined;
   openTh = false;
   emojiPicker = false;
@@ -90,6 +91,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
     const channel = this.channelsService.channels.find(c => c.channel_id === channel_id);
     if (channel) {
       this.currentChannel = channel;
+      this.currentChannelAuthorName = this.usersService.getUserByUid(this.currentChannel.author_uid)?.name;
       this.activeUsers = this.activityService.getActiveUsers();
     }
   }

@@ -36,8 +36,15 @@
                     {{ currentChannel.name }}
                 </h3>
                 <p>
-                    Du hast diesen Channel {{ timeService.getRelativeDay(0) }} erstellt. Das ist der Anfang des Channels
-                    <span># {{ currentChannel.name }}.</span>
+                    @if(currentChannelAuthorName && currentChannel.author_uid != currentUid) {
+                    <span>{{currentChannelAuthorName}} hat diesen Channel</span>
+                    } @else if(currentChannelAuthorName) {
+                    <span>Du hast diesen Channel</span>
+                    } @else {
+                    <span>Dieser Channel wurde</span>
+                    }
+                    {{ timeService.toRelativeDate(currentChannel.date) }} erstellt. Das ist der Anfang des Channels
+                    <span class="channel-name"># {{ currentChannel.name }}.</span>
                 </p>
             </div>
             }

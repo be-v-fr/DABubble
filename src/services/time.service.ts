@@ -32,7 +32,7 @@ export class TimeService {
     const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const msInDay = 86400000;
     const diffInMs = midnight.getTime() - date.getTime();
-    const diffInDays = Math.floor(diffInMs / msInDay);
+    const diffInDays = Math.floor(diffInMs / msInDay) + 1;
     return this.getRelativeDay(diffInDays);
   }
 
