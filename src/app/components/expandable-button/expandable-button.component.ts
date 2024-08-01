@@ -80,9 +80,11 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
 
   subUsers(uid: string): Subscription {
     return this.userService.users$.subscribe((users) => {
-      this.users = users.filter(u => u.uid !== uid);   //  && u.name !== 'Gast'
       this.currentUser = users.find(u => u.uid === uid);
-      this.updateUserChannels(this.channelsService.channels);
+      if (this.currentUser) {
+        this.users = [this.currentUser].concat(users.filter(u => u.uid !== uid));   //  && u.name !== 'Gast'
+        this.updateUserChannels(this.channelsService.channels);
+      }
     });
   }
 
@@ -134,5 +136,5 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
     return channel;
   }
 
-  
+
 }
