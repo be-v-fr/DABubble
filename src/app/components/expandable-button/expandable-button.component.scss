@@ -46,12 +46,14 @@
             display: flex;
             .channel-menu {
                 height: 100%;
+                width: 100%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 gap: 25px;
                 margin-left: 40px;
                 ul {
+                    width: 100%;
                     list-style-type: none;
                     display: flex;
                     flex-direction: column;
@@ -113,11 +115,9 @@
 
             .messages-menu {
                 height: 100%;
+                width: 100%;
                 overflow-y: auto;
                 display: flex;
-                // &::-webkit-scrollbar {
-                //     display: none;
-                // }
                 @include scrollbar();
                 ul {
                     height: 100%;
@@ -152,7 +152,6 @@
                                     left: 35px;
                                     width: 14px;
                                     height: 14px;
-                                    // background-color: $onlinedot-online;
                                     border: 2px solid white;
                                     border-radius: 100%;
                                 }
@@ -197,7 +196,7 @@
     display: block !important;
     position: absolute;
     right: 16px;
-    // top: 815px;
+    bottom: 16px;
   }
 
 }
