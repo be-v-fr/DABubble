@@ -32,7 +32,7 @@
             <ul>
                 @for (user of users; track $index; let first = $first) {
                 <li>
-                    <a [routerLink]="['/direct-message', user.uid]" (click)="onUserClick(user)">
+                    <a [routerLink]="['/direct-message']" (click)="onUserClick(user)">
                         <div class="message-img-container">
                             <img src="{{user.avatarSrc}}" alt="{{user.name}}">
                             <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"

@@ -47,9 +47,9 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.add(
       this.route.paramMap.subscribe(params => {
-        this.channelId = params.get('id') ?? undefined;
-        if (this.channelId) {
-          this.initChannel(this.channelId);
+        const id = params.get('id') ?? undefined;
+        if (id) {
+          this.initChannel(id);
         }
       })
     );
