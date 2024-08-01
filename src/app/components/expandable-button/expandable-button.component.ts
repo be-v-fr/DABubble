@@ -116,7 +116,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
   }
 
   async onUserClick(user: User): Promise<void> {
-    const channelExist: Channel | undefined = this.directMessageChannelExists(user);
+    const channelExist: Channel | undefined = this.requestDirectMessageChannel(user);
     if (channelExist) {
       this.channelsService.addChannelToRoute('direct-message', channelExist.channel_id);
     } else {
@@ -134,7 +134,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
    * @param user - user clicked in menu
    * @returns the requested channel, if it exists, OR undefined
    */
-  directMessageChannelExists(user: User): Channel | undefined {
+  requestDirectMessageChannel(user: User): Channel | undefined {
     return this.channelsService.getAllChannels().find(c =>
       c.isPmChannel === true &&
       c.members.some(m => m.uid === this.currentUser?.uid) &&
