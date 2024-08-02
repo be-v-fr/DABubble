@@ -19,6 +19,7 @@ import { MemberListComponent } from '../../member-list/member-list.component';
 import { ActivityService } from '../../../services/activity.service';
 import { UsersService } from '../../../services/users.service';
 import { AddMembersComponent } from '../../add-members/add-members.component';
+import { ForbiddenChannelFeedbackComponent } from './forbidden-channel-feedback/forbidden-channel-feedback.component';
 
 @Component({
   selector: 'app-main-chat',
@@ -31,7 +32,8 @@ import { AddMembersComponent } from '../../add-members/add-members.component';
     MessageItemComponent,
     MessageBoxComponent,
     TimeSeparatorComponent,
-    ThreadComponent
+    ThreadComponent,
+    ForbiddenChannelFeedbackComponent
   ]
 })
 export class MainChatComponent implements OnInit, OnDestroy {
@@ -46,6 +48,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   emojiPicker = false;
   activeUsers: User[] = [];
   currentDate: number = Date.now();
+  onInvalidOrForbiddenRoute: boolean = false;
 
   constructor(
     private dialog: MatDialog,
@@ -89,11 +92,12 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   setChannel(channel_id: string): void {
     const channel = this.channelsService.channels.find(c => c.channel_id === channel_id);
-    if (channel) {
+    if (channel && this.currentUid && channel.members.some(m => m.uid === this.currentUid)) {
+      this.onInvalidOrForbiddenRoute = false;
       this.currentChannel = channel;
       this.currentChannelAuthorName = this.usersService.getUserByUid(this.currentChannel.author_uid)?.name;
       this.activeUsers = this.activityService.getActiveUsers();
-    }
+    } else {this.onInvalidOrForbiddenRoute = true};
   }
 
   isCurrentUserAuthor(index: number): boolean {

@@ -1,4 +1,5 @@
 <div class="main-container">
+    @if(!onInvalidOrForbiddenRoute) {
     <section class="main-section">
         <div class="main-header">
             <button class="channel-btn" (click)="onEditChannel()">
@@ -53,4 +54,9 @@
     </section>
     <app-thread class="thread" *ngIf="openTh" (closeTh)="closeThread($event)" [post]="currPost"
         [channelData]="{ id: this.currentChannel.channel_id, name: this.currentChannel.name }" />
+    } @else {
+    <section class="main-section">
+        <app-forbidden-channel-feedback />
+    </section>
+    }
 </div>

@@ -1,4 +1,5 @@
 <div class="mobile-wrapper">
+  @if(!onInvalidOrForbiddenRoute) {
   <section class="direct-m-container">
     <div class="direct-m-header">
       <div class="header-img-container">
@@ -11,12 +12,12 @@
       </div>
     </div>
     <div class="direct-m-content">
-      @if(channel && channel.posts.length > 0 && channel.isPmChannel) {
+      @if(currUser && channel && channel.posts.length > 0 && channel.isPmChannel) {
       <div class="direct-m-items">
         @for (post of channel.posts; track post.post_id; let i = $index) {
         <div class="direct-m-item">
           <app-time-separator [timestamp]="post.date" />
-          <app-message-item [postUid]="currUser!.uid" [post]="post" [messageSender]="isCurrentUserAuthor()" />
+          <app-message-item [postUid]="currUser.uid" [post]="post" [messageSender]="isCurrentUserAuthor()" />
         </div>
         }
       </div>
@@ -28,7 +29,7 @@
           </div>
           <span (click)="openUserProfile()">{{ recipient?.name }}</span>
         </div>
-        @if(currUser!.uid === recipient!.uid) {<p>
+        @if(currUser?.uid === recipient?.uid) {<p>
           <b>Dieser Raum ist nur für dich da.</b>
           Mache dir Notizen, liste deine To-dos auf oder bewahre Links und Dateien griffbereit auf.
           Du kannst hier auch gerne Dinge mit dir selbst besprechen.
@@ -43,4 +44,9 @@
     </div>
     <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="emojiPicker"></emoji-mart>
   </section>
+  } @else {
+  <section class="direct-m-container">
+    <app-forbidden-channel-feedback />
+  </section>
+  }
 </div>
