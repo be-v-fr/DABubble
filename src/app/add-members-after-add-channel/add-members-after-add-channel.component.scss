@@ -110,6 +110,18 @@ app-add-members-input {
     animation: slideUp 0.15s ease-out 0.05s forwards;
     overflow: hidden;
 
+    .headlineAndCloseBtn{
+      margin-left: inherit;
+      width: 100%;
+      span{
+        margin-left: 40px;
+      }
+    }
+
+    .close-thread-btn{
+      padding: 0px 40px;
+    }
+
     .fingerbar {
       position: relative;
       top: 40px;
