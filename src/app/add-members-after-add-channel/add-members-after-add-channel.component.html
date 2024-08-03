@@ -17,8 +17,9 @@
       <label for="contactChoice2">Bestimmte Leute hinzufügen</label>
     </div>
     <app-add-members-input *ngIf="selection === 'specificPeople'" [(selectedUsers)]="specificPeopleSelected" [channel]="data" (submit)="submitBtn.click()" />
-    <div>
-      <button #submitBtn type="submit" [disabled]="!selection" class="form-btn-primary">Erstellen</button>
-    </div>
+   
+  </div>
+  <div class="submitBtn">
+    <button #submitBtn type="submit" [disabled]="!selection" class="form-btn-primary">Erstellen</button>
   </div>
 </form>
