@@ -18,10 +18,19 @@
     height: 100%;
     font-family: 'Nunito';
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    .logo {
+        position: absolute;
+        left: 50px;
+        top: 25px;
+        width: 242px;
+        height: 70px;
+        cursor: pointer;
+    }
     .content-main {
-        max-height: 80vh;
+        max-height: min(calc(100% - 190px), 80vh);
         width: 676px;
         padding: 56px;
         display: flex;
@@ -38,63 +47,133 @@
                 background-color: $violet-bright;
             }
         }
-        .content-scrollbox{
+        h1, h2, h3 {
+            margin-top: 36px;
+            color: $purple-blue;
+            font-family: 'Nunito';
+            font-weight: 700;
+        }
+        h1 {
+            margin-top: 0;
+            font-size: 46px;
+        }
+        .content-scrollbox {
             padding-right: 16px;
             overflow-y: scroll;
+            h2 {
+                font-size: 36px;
+            }
+            h3 {
+                margin-left: 20px;
+                font-size: 27px;
+                &.black {
+                    color: #000;
+                }
+            }
+            p, ul {
+                margin-top: 18px;
+                margin-bottom: 18px;
+                margin-left: 20px;
+                font-family: 'Nunito';
+                font-size: 20px;
+                font-weight: 400;
+            }
+            .color {
+                color: $purple-blue;
+                font-weight: 700;
+            }
+            .email {
+                span {
+                    margin-left: -5px;
+                }
+            }
         }
     }
 }
 
 
 
-h1, h2, h3 {
-    margin-top: 36px;
-    color: $purple-blue;
-    font-family: 'Nunito';
-    font-weight: 700;
-}
-h1 {
-    font-size: 46px;
-}
-h2 {
-    font-size: 36px;
-}
-h3 {
-    margin-left: 20px;
-    font-size: 27px;
-}
-.black {
-    color: #000;
-}
-p, ul {
-    margin-top: 18px;
-    margin-bottom: 18px;
-    margin-left: 20px;
-    font-family: 'Nunito';
-    font-size: 20px;
-    font-weight: 400;
-}
 
-.color {
-    color: $purple-blue;
-    font-weight: 700;
-}
 
-.email {
-    span {
-        margin-left: -5px;
-    }
-}
 
-// .logo {
-//     position: absolute;
-//     left: 50px;
-//     top: 25px;
-//     width: 242px;
-//     height: 70px;
-//     cursor: pointer;
-// }
 
 .hide {
     display: none;
+}
+
+
+@media screen and (max-width: 768px) {
+    .content-wrapper {
+        gap: 20px;
+        .logo {
+            position: relative;
+            left: 0;
+            top: 0;
+            // transform: translateX(-50%);
+        }
+        .content-main {
+            max-width: 676px;
+            width: calc(100% - 20px);
+            h1 {
+                margin-top: 0;
+                // margin-bottom: 0;
+            }
+            .content-scrollbox {
+                padding-right: 0px;
+                h2 {
+                    &:first-child {
+                        margin-top: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 408px) {
+    .content-wrapper {
+        .content-main {
+            padding: 32px 20px;
+            h1 {
+                margin-top: 0;
+                margin-bottom: 0;
+                font-size: 32px;
+            }
+            .content-scrollbox {
+                width: 100%;
+                padding-right: 0px;
+                overflow-y: scroll;
+                h2 {
+                    font-size: 25px;
+                }
+                h3 {
+                    margin-left: 20px;
+                    font-size: 20px;
+                    &.black {
+                        color: #000;
+                    }
+                }
+                p, ul {
+                    margin-top: 18px;
+                    margin-bottom: 18px;
+                    margin-left: 20px;
+                    font-family: 'Nunito';
+                    font-size: 14px;
+                    font-weight: 400;
+                }
+                .color {
+                    color: $purple-blue;
+                    font-weight: 700;
+                }
+                .email {
+                    span {
+                        margin-left: -5px;
+                    }
+                }
+            }
+        }
+        .logo {
+            height: 56px;
+        }
+    }
 }

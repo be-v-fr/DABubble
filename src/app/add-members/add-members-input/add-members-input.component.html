@@ -1,12 +1,11 @@
 <form class="input-border" #addMembersInputForm="ngForm">
     <div class="input-wrapper">
         <div class="input-container">
-            <label for="specificPeopleInput"></label>
             @for(user of selectedUsers; track user) {
             <div class="selectedUserInput">
                 <img [src]="user.avatarSrc" alt="Avatar" />
                 <span>{{ user.name }}</span>
-                <button (click)="clearSelection(user)">x</button>
+                <button class="material-icons-outlined" (click)="clearSelection(user)">close</button>
             </div>
             }
             <input type="text" id="specificPeopleInput" #specificPeopleInput="ngModel" name="specificPeopleInput"
@@ -16,8 +15,7 @@
                 [(ngModel)]="usersSearch" placeholder="Name eingeben" />
         </div>
     </div>
-    <div class="userListCard" [ngClass]="{'hide': !showUserList}"
-        [ngStyle]="{'left.px': userListLeft, 'top.px': userListTop}">
+    <div class="userListCard" [ngClass]="{'hide': !showUserList}">
         @for(user of filteredUsers; track user; let i = $index) {
         <div (click)="selectUser(user)" class="userListDetail" (mousedown)="handleUserHover(i)"
             (mouseenter)="handleUserHover(i)"

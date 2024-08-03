@@ -80,9 +80,11 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
 
   subUsers(uid: string): Subscription {
     return this.userService.users$.subscribe((users) => {
-      this.users = users.filter(u => u.uid !== uid);   //  && u.name !== 'Gast'
       this.currentUser = users.find(u => u.uid === uid);
-      this.updateUserChannels(this.channelsService.channels);
+      if (this.currentUser) {
+        this.users = [this.currentUser].concat(users.filter(u => u.uid !== uid));   //  && u.name !== 'Gast'
+        this.updateUserChannels(this.channelsService.channels);
+      }
     });
   }
 
@@ -114,17 +116,31 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
   }
 
   async onUserClick(user: User): Promise<void> {
-    const channelExist = this.channelsService.getAllChannels().find(c => c.author_uid === this.currentUser?.uid && c.members.some(member => member.uid === user.uid) && c.isPmChannel === true);
-
-    if (!channelExist) {
-      const preparedChannel = this.prepareChannel(this.newChannel, user);
-      await this.channelsService.addChannel(preparedChannel).then(res => {
-        console.log(res);
-        this.channelsService.addChannelToRoute('direct-message', res);
-      });
-    } else {
+    const channelExist: Channel | undefined = this.requestDirectMessageChannel(user);
+    if (channelExist) {
       this.channelsService.addChannelToRoute('direct-message', channelExist.channel_id);
+    } else {
+      const preparedChannel = this.prepareChannel(this.newChannel, user);
+      await this.channelsService.addChannel(preparedChannel)
+        .then(res => this.channelsService.addChannelToRoute('direct-message', res));
     }
+  }
+
+  /**
+   * This function checks whether the requested channel already exists. It checks
+   * - if the channel is a private channel
+   * - if the channel includes both the current user and the selected user
+   * - if the selected user is different from the current user OR if the channel only includes the current user
+   * @param user - user clicked in menu
+   * @returns the requested channel, if it exists, OR undefined
+   */
+  requestDirectMessageChannel(user: User): Channel | undefined {
+    return this.channelsService.getAllChannels().find(c =>
+      c.isPmChannel === true &&
+      c.members.some(m => m.uid === this.currentUser?.uid) &&
+      c.members.some(m => m.uid === user.uid) &&
+      (user.uid != this.currentUser?.uid || !c.members.some(m => m.uid != user.uid))
+    );
   }
 
   prepareChannel(channel: Channel, user: User): Channel {
@@ -133,6 +149,4 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
     channel.isPmChannel = true;
     return channel;
   }
-
-  
 }

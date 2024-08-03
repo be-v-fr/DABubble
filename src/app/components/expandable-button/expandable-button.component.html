@@ -2,7 +2,6 @@
     <div class="btn-container">
         <button (click)="toggleMenu()">
             <span class="material-icons-outlined icon" [class.rotated]="isRotated">arrow_drop_down</span>
-            <!-- <span class="material-icons-outlined icon">arrow_right</span> -->
             <div class="channel-title">
                 <span class="material-icons-outlined icon">{{ icon() }}</span>
                 {{ title() }}
@@ -31,15 +30,15 @@
         </div>
         <div *ngIf="!showBtn()" class="messages-menu">
             <ul>
-                @for (user of users; track $index) {
+                @for (user of users; track $index; let first = $first) {
                 <li>
-                    <a [routerLink]="['/direct-message', user.uid]" (click)="onUserClick(user)">
+                    <a [routerLink]="['/direct-message']" (click)="onUserClick(user)">
                         <div class="message-img-container">
                             <img src="{{user.avatarSrc}}" alt="{{user.name}}">
                             <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
                                 class="on-off-line-sign"></span>
                         </div>
-                        <span>{{ user.name }}</span>
+                        <span>{{ user.name }} @if(first) {(Du)}</span>
                     </a>
                 </li>
                 }

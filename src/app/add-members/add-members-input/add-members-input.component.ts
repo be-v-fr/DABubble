@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
 import { UsersService } from '../../../services/users.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-add-members-input',
@@ -13,20 +14,26 @@ import { UsersService } from '../../../services/users.service';
   styleUrl: './add-members-input.component.scss'
 })
 export class AddMembersInputComponent implements OnInit {
-  @Input() channel?: Channel;
+  @Input() channel!: Channel;
   usersSearch: string = '';
   filteredUsers: User[] = [];
   currentFilterSelection: number | null = null;
   showUserList: boolean = false;
   @Input() selectedUsers: User[] = [];
   @Output() selectedUsersChange = new EventEmitter<User[]>();
+  @Output() submit = new EventEmitter<void>();
   @ViewChild('specificPeopleInput', { read: ElementRef }) specificPeopleInput!: ElementRef<HTMLInputElement>;
   private usersService = inject(UsersService);
-  userListLeft: number = 0;
-  userListTop: number = 0;
+  private authService = inject(AuthService);
+  currentUser: User | null = null;
 
   ngOnInit(): void {
-    this.autofocus();
+    const uid = this.authService.getCurrentUid();
+    if (uid) {
+      const user = this.usersService.getUserByUid(uid);
+      if (user) { this.currentUser = user }
+      this.autofocus();
+    }
   }
 
   onSearch(): void {
@@ -44,12 +51,12 @@ export class AddMembersInputComponent implements OnInit {
 
   meetsFilterConditions(user: User, term: string): boolean {
     return user.name.toLowerCase().includes(term) &&
+      user.uid != this.currentUser?.uid &&
       !this.selectedUsers.includes(user) &&
-      !this.channel?.members.includes(user);
+      !this.channel.members.includes(user);
   }
 
   openUserList(): void {
-    this.setUserListPosition();
     this.currentFilterSelection = 0;
     this.showUserList = true;
   }
@@ -58,12 +65,6 @@ export class AddMembersInputComponent implements OnInit {
   closeUserList() {
     this.currentFilterSelection = null;
     this.showUserList = false;
-  }
-
-  setUserListPosition(): void {
-    const inputPosition = this.specificPeopleInput.nativeElement.getBoundingClientRect();
-    this.userListLeft = inputPosition.left;
-    this.userListTop = inputPosition.bottom;
   }
 
   selectUser(user: User): void {
@@ -75,11 +76,11 @@ export class AddMembersInputComponent implements OnInit {
 
   clearSelection(user: User): void {
     const index = this.selectedUsers.indexOf(user);
-    this.selectedUsers.splice(index);
+    this.selectedUsers.splice(index, 1);
   }
 
   onInputBackspace(): void {
-    if (this.specificPeopleInput.nativeElement.value.length === 0) {this.selectedUsers.pop()}
+    if (this.specificPeopleInput.nativeElement.value.length === 0) { this.selectedUsers.pop() }
   }
 
 
@@ -103,11 +104,11 @@ export class AddMembersInputComponent implements OnInit {
   }
 
   handleEnterKey(e: Event) {
-    if(this.showUserList && this.currentFilterSelection != null) {
+    if (this.showUserList && this.currentFilterSelection != null) {
       e.preventDefault();
       e.stopPropagation();
       this.selectUser(this.filteredUsers[this.currentFilterSelection]);
-    }
+    } else {this.submit.emit()}
   }
 
   handleUserHover(filterIndex: number) {

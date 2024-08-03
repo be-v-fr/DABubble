@@ -15,10 +15,19 @@ export class MessageBoxComponent {
   }
   @Input() replying: boolean = false;
   @Input() channelName?: string;
+  @Input() recipient?: string;
   @Output() sent = new EventEmitter<string>();
 
   getPlaceholder() {
-    return this.replying ? 'Antworten...' : `Nachricht an # ${this.channelName}`;
+    if(this.replying) {
+      return 'Antworten...';
+    } else if(this.channelName) {
+      return `Nachricht an # ${this.channelName}`;
+    } else if(this.recipient) {
+      return `Nachricht an @${this.recipient}`;
+    } else {
+      return 'Neue Nachricht';
+    }
   }
 
   /**

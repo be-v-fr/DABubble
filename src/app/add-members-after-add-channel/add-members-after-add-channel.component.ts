@@ -1,5 +1,5 @@
 import { Component, inject, Inject } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Channel } from '../../models/channel.class';
 import { ChannelsService } from '../../services/content/channels.service';
@@ -31,8 +31,9 @@ export class AddMembersAfterAddChannelComponent {
     this.dialogRef.close();
   }
 
-  async onSubmit(form: NgForm) {
-    this.data.members = (this.selection === 'allMembers' ? this.usersService.users : this.specificPeopleSelected);
+  async onSubmit() {
+    if(this.selection === 'allMembers') {this.data.members = this.usersService.users}
+    else {this.data.members = this.data.members.concat(this.specificPeopleSelected)}
     await this.channelsService.updateChannel(this.data)
       .then(() => this.redirectToChannel());
   }
