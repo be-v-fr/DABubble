@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { LogOutCardComponent } from '../../main-user/log-out-card/log-out-card.component';
 import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -35,6 +35,7 @@ export class HeaderComponent {
     @Input() mainUser: User = new User;
     @Input() users: User[] = [];
     searchInput: string = '';
+    @ViewChild('searchbar', { read: ElementRef }) searchbar!: ElementRef<HTMLInputElement>;
 
     constructor(
         public dialogRef: MatDialogRef<LogOutCardComponent>, 
@@ -56,7 +57,7 @@ export class HeaderComponent {
     }
 
     autofocusSearch(): void {
-        // implement autofocus function here
+        setTimeout(() => this.searchbar.nativeElement.focus(), 20);
     }
 
     openUserLogoutCard(): void {
