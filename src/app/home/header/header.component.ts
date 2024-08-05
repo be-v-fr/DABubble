@@ -9,6 +9,7 @@ import { ActivityService } from '../../../services/activity.service';
 import { User } from '../../../models/user.class';
 import { AnimationIntroComponent } from '../../animation-intro/animation-intro.component';
 import { AnimationIntroService } from '../../animation-intro/service/animation-intro.service';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -18,7 +19,8 @@ import { AnimationIntroService } from '../../animation-intro/service/animation-i
         CommonModule,
         LogOutCardComponent,
         MatDialogModule,
-        AnimationIntroComponent
+        AnimationIntroComponent,
+        FormsModule
     ],
     providers: [
         {
@@ -31,6 +33,8 @@ import { AnimationIntroService } from '../../animation-intro/service/animation-i
 })
 export class HeaderComponent {
     @Input() mainUser: User = new User;
+    @Input() users: User[] = [];
+    searchInput: string = '';
 
     constructor(
         public dialogRef: MatDialogRef<LogOutCardComponent>, 
@@ -41,6 +45,19 @@ export class HeaderComponent {
         public activityService: ActivityService,
         public introService: AnimationIntroService
     ) {}
+
+    onCloseSearchClick(): void {
+        this.clearSearch();
+        this.autofocusSearch();
+    }
+
+    clearSearch(): void {
+        this.searchInput = '';
+    }
+
+    autofocusSearch(): void {
+        // implement autofocus function here
+    }
 
     openUserLogoutCard(): void {
         this.dialogRef = this.dialog.open(LogOutCardComponent, {

@@ -53,6 +53,7 @@ app-animation-intro {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: relative;
         input {
             width: 100%;
             font-size: 24px;
@@ -64,6 +65,37 @@ app-animation-intro {
             display: flex;
             justify-content: center;
             align-items: center;
+            font-size: 35px;
+            color: $grey;
+            margin-right: -4px;
+        }
+        .search-results {
+            position: absolute;
+            z-index: 10;
+            list-style-type: none;
+            width: calc(100% - 70px);
+            font-size: 21px;
+            top: calc(100% - 16px);
+            left: 45px;
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+            background: white;
+            border-radius: 0px 20px 20px 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            li {
+                height: 58px;
+                display: flex;
+                align-items: center;
+                border-radius: 30px;
+                padding: 8px 10px;
+                cursor: pointer;
+                &:hover {
+                    color: $purple-blue-bright;
+                    background-color: $violet-bright;
+                }
+            }
         }
     }
     @media screen and (max-width: 1024px) {

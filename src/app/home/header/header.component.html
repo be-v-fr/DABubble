@@ -6,14 +6,20 @@
     <a href="" class="logo-wrapper">
         <img src="/assets/img/logo_name.svg" alt="DABubble" class="logo">
     </a>
-    <div class="searchbar-wrapper">
+    <form class="searchbar-wrapper" #searchForm="ngForm">
         <div class="searchbar-box">
-            <input id="searchbar" type="text" placeholder="Code learning durchsuchen">
-            <div class="searchbar-icon">
-                <img src="/assets/img/icons/search.svg">
-            </div>
+            <input #searchbar name="searchbar" [(ngModel)]="searchInput" type="text" placeholder="Devspace durchsuchen" autocomplete="off">
+            @if(searchInput.length > 0) {
+                <button type="button" class="searchbar-icon material-icons-outlined" (click)="onCloseSearchClick()">close</button>
+                <ul class="search-results">
+                    <li>search result 1</li>
+                    <li>search result 2</li>
+                </ul>
+            } @else {
+                <button type="button" class="searchbar-icon material-icons-outlined" (click)="autofocusSearch()">search</button>
+            }
         </div>
-    </div>
+    </form>
     <div class="userprofile-wrapper" (click)="openUserLogoutCard()">
         <span class="userprofile-name">{{ mainUser.name || '...' }}</span>
         <div class="userprofile-image-box">
