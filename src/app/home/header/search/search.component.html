@@ -35,7 +35,10 @@
                 </p>
                 <ul class="search-results-list">
                     @for(user of searchResultsUsers; track user) {
-                    <li>&#0064;{{ user.name }}</li>
+                    <li>
+                        <img [src]="user.avatarSrc" alt="Avatar" />
+                        {{ user.name }}
+                    </li>
                     }
                 </ul>
             </div>

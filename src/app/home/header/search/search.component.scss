@@ -93,6 +93,15 @@
                     text-overflow: ellipsis;
                     cursor: pointer;
 
+                    img {
+                        margin-left: -5px;
+                        margin-right: 15px;
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 100%;
+                        object-fit: cover;
+                    }
+
                     &:hover {
                         color: $purple-blue-bright;
                         background-color: $violet-bright;
