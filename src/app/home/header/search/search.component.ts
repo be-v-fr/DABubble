@@ -7,73 +7,79 @@ import { FormsModule } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-search',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './search.component.html',
-  styleUrl: './search.component.scss'
+    selector: 'app-search',
+    standalone: true,
+    imports: [CommonModule, FormsModule],
+    templateUrl: './search.component.html',
+    styleUrl: './search.component.scss'
 })
 export class SearchComponent {
-  @Input() mainUser: User = new User;
-  @Input() users: User[] = [];
-  @Input() userChannels: Channel[] = [];
-  searchInput: string = '';
-  searchResultsChannels: Channel[] = [];
-  searchResultsUsers: User[] = [];
-  searchResultsPosts: Post[] = [];
-  @ViewChild('searchbar', { read: ElementRef }) searchbar!: ElementRef<HTMLInputElement>;
+    @Input() mainUser: User = new User;
+    @Input() users: User[] = [];
+    @Input() userChannels: Channel[] = [];
+    searchInput: string = '';
+    searchResultsChannels: Channel[] = [];
+    searchResultsUsers: User[] = [];
+    searchResultsPosts: Post[] = [];
+    @ViewChild('searchbar', { read: ElementRef }) searchbar!: ElementRef<HTMLInputElement>;
+    public extended: 'channels' | 'users' | 'posts' | null = null;
 
-  search(): void {
-    if (this.searchInput.length > 0) {
-        const term: string = this.searchInput.toLowerCase();
-        this.searchChannels(term);
-        this.searchUsers(term);
-        this.searchPosts(term);
-    } else {
-        this.clearSearch();
+    search(): void {
+        if (this.searchInput.length > 0) {
+            const term: string = this.searchInput.toLowerCase();
+            this.searchChannels(term);
+            this.searchUsers(term);
+            this.searchPosts(term);
+        } else {
+            this.clearSearch();
+        }
     }
-}
 
-searchChannels(term: string): void {
-    this.searchResultsChannels = this.userChannels.filter(c => {
-        return !c.isPmChannel && (
-            c.name.toLowerCase().includes(term) ||
-            c.description.toLowerCase().includes(term)
-        );
-    });
-}
+    searchChannels(term: string): void {
+        this.searchResultsChannels = this.userChannels.filter(c => {
+            return !c.isPmChannel && (
+                c.name.toLowerCase().includes(term) ||
+                c.description.toLowerCase().includes(term)
+            );
+        });
+    }
 
-searchUsers(term: string): void {
-    this.searchResultsUsers = this.users.filter(u => {
-        return u.uid != this.mainUser.uid && u.name.toLowerCase().includes(term);
-    });
-}
+    searchUsers(term: string): void {
+        this.searchResultsUsers = this.users.filter(u => {
+            return u.uid != this.mainUser.uid && u.name.toLowerCase().includes(term);
+        });
+    }
 
-searchPosts(term: string): void {
-    this.searchResultsPosts = [];
-    this.userChannels.forEach(c => {
-        this.searchResultsPosts = this.searchResultsPosts.concat(this.filterSinglePostsArray(c.posts, term));
-        // search threads
-    });
-}
+    searchPosts(term: string): void {
+        this.searchResultsPosts = [];
+        this.userChannels.forEach(c => {
+            this.searchResultsPosts = this.searchResultsPosts.concat(this.filterSinglePostsArray(c.posts, term));
+            // search threads
+        });
+    }
 
-filterSinglePostsArray(posts: Post[], term: string): Post[] {
-    return posts.filter(p => p.message.toLowerCase().includes(term));
-} 
+    filterSinglePostsArray(posts: Post[], term: string): Post[] {
+        return posts.filter(p => p.message.toLowerCase().includes(term));
+    }
 
-onCloseSearchClick(): void {
-    this.clearSearch();
-    this.autofocusSearch();
-}
+    onCloseSearchClick(): void {
+        this.clearSearch();
+        this.autofocusSearch();
+    }
 
-clearSearch(): void {
-    this.searchInput = '';
-    this.searchResultsChannels = [];
-    this.searchResultsUsers = [];
-    this.searchResultsPosts = [];
-}
+    clearSearch(): void {
+        this.searchInput = '';
+        this.searchResultsChannels = [];
+        this.searchResultsUsers = [];
+        this.searchResultsPosts = [];
+        this.extended = null;
+    }
 
-autofocusSearch(): void {
-    setTimeout(() => this.searchbar.nativeElement.focus(), 20);
-}
+    autofocusSearch(): void {
+        setTimeout(() => this.searchbar.nativeElement.focus(), 20);
+    }
+
+    toggleListExtension(list: 'channels' | 'users' | 'posts'): void {
+        this.extended = (this.extended === list ? null : list);
+    }
 }

@@ -5,37 +5,42 @@
         @if(searchInput.length > 0) {
         <button type="button" class="searchbar-icon material-icons-outlined"
             (click)="onCloseSearchClick()">close</button>
-        <div class="search-results-container"
+        <div class="search-results-container" (click)="autofocusSearch()"
             *ngIf="searchResultsChannels.length + searchResultsUsers.length + searchResultsPosts.length > 0">
-
-            <div class="search-results-list-container" *ngIf="searchResultsChannels.length > 0">
-                <p class="search-results-title first-title">
+            <div class="search-results-list-container" *ngIf="searchResultsChannels.length > 0"
+                [ngClass]="{'extended': extended === 'channels', 'collapsed': extended && extended != 'channels'}">
+                <p class="search-results-title first-title" (click)="toggleListExtension('channels')">
+                    <span class="material-icons-outlined arrow-icon">arrow_drop_down</span>
                     <span class="material-icons-outlined">workspaces</span>
                     Channels
                 </p>
-                <ul class="search-results-list" [ngClass]="{'height-default': true}">
+                <ul class="search-results-list">
                     @for(channel of searchResultsChannels; track channel) {
                     <li># {{ channel.name }}</li>
                     }
                 </ul>
             </div>
-            <div class="search-results-list-container" *ngIf="searchResultsUsers.length > 0">
-                <p class="search-results-title">
+            <div class="search-results-list-container" *ngIf="searchResultsUsers.length > 0"
+                [ngClass]="{'extended': extended === 'users', 'collapsed': extended && extended != 'users'}">
+                <p class="search-results-title" (click)="toggleListExtension('users')">
+                    <span class="material-icons-outlined arrow-icon">arrow_drop_down</span>
                     <span class="material-icons-outlined">account_circle</span>
                     Nutzer
                 </p>
-                <ul class="search-results-list" [ngClass]="{'height-default': true}">
+                <ul class="search-results-list">
                     @for(user of searchResultsUsers; track user) {
                     <li>&#0064;{{ user.name }}</li>
                     }
                 </ul>
             </div>
-            <div class="search-results-list-container" *ngIf="searchResultsPosts.length > 0">
-                <p class="search-results-title">
+            <div class="search-results-list-container" *ngIf="searchResultsPosts.length > 0"
+                [ngClass]="{'extended': extended === 'posts', 'collapsed': extended && extended != 'posts'}">
+                <p class="search-results-title" (click)="toggleListExtension('posts')">
+                    <span class="material-icons-outlined arrow-icon">arrow_drop_down</span>
                     <span class="material-icons-outlined">insert_comment</span>
                     Posts
                 </p>
-                <ul class="search-results-list" [ngClass]="{'height-default': true}">
+                <ul class="search-results-list">
                     @for(post of searchResultsPosts; track post) {
                     <li>{{ post.message }}</li>
                     }
