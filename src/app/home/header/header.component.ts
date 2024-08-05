@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { LogOutCardComponent } from '../../main-user/log-out-card/log-out-card.component';
 import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -10,10 +10,8 @@ import { User } from '../../../models/user.class';
 import { AnimationIntroComponent } from '../../animation-intro/animation-intro.component';
 import { AnimationIntroService } from '../../animation-intro/service/animation-intro.service';
 import { FormsModule } from '@angular/forms';
-import { ChannelsService } from '../../../services/content/channels.service';
 import { Channel } from '../../../models/channel.class';
 import { Post } from '../../../models/post.class';
-import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -35,12 +33,11 @@ import { Subscription } from 'rxjs';
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent {
     @Input() mainUser: User = new User;
     @Input() users: User[] = [];
+    @Input() userChannels: Channel[] = [];
     searchInput: string = '';
-    private channelsSub: Subscription = new Subscription();
-    userChannels: Channel[] = [];
     searchResultsChannels: Channel[] = [];
     searchResultsUsers: User[] = [];
     searchResultsPosts: Post[] = [];
@@ -53,46 +50,34 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private usersService: UsersService,
         public activityService: ActivityService,
-        private channelsService: ChannelsService,
         public introService: AnimationIntroService
     ) { }
 
-    ngOnInit(): void {
-        this.setUserChannels(this.channelsService.channels);
-        this.channelsSub = this.subChannels();
-    }
-
-    ngOnDestroy(): void {
-        this.channelsSub.unsubscribe();
-    }
-
-    subChannels(): Subscription {
-        return this.channelsService.channels$.subscribe((channels: Channel[]) => this.setUserChannels(channels));
-    }
-
-    setUserChannels(allChannels: Channel[]): void {
-        this.userChannels = allChannels.filter(c => c.members.some(m => m.uid === this.mainUser.uid));
-    }
-
     search(): void {
         if (this.searchInput.length > 0) {
-            this.searchChannels();
-            this.searchUsers();
-            this.searchPosts();
+            const term: string = this.searchInput.toLowerCase();
+            this.searchChannels(term);
+            this.searchUsers(term);
+            this.searchPosts(term);
         } else {
             this.clearSearch();
         }
     }
 
-    searchChannels(): void {
+    searchChannels(term: string): void {
+        this.searchResultsChannels = this.userChannels.filter(c => {
+            return !c.isPmChannel && (
+                c.name.toLowerCase().includes(term) ||
+                c.description.toLowerCase().includes(term)
+            );
+        });
+    }
+
+    searchUsers(term: string): void {
 
     }
 
-    searchUsers(): void {
-
-    }
-
-    searchPosts(): void {
+    searchPosts(term: string): void {
 
     }
 
