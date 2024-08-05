@@ -39,6 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     @Input() mainUser: User = new User;
     @Input() users: User[] = [];
     searchInput: string = '';
+    private channelsSub: Subscription = new Subscription();
     userChannels: Channel[] = [];
     searchResultsChannels: Channel[] = [];
     searchResultsUsers: User[] = [];
@@ -53,7 +54,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private usersService: UsersService,
         public activityService: ActivityService,
         private channelsService: ChannelsService,
-        private channelsSub: Subscription,
         public introService: AnimationIntroService
     ) { }
 
