@@ -13,18 +13,18 @@
             @if(searchInput.length > 0) {
             <button type="button" class="searchbar-icon material-icons-outlined"
                 (click)="onCloseSearchClick()">close</button>
-            <div class="search-results-container">
-                <ul class="search-results" [ngClass]="{'height-default': true}">
+            <div class="search-results-container" *ngIf="searchResultsChannels.length + searchResultsUsers.length + searchResultsPosts.length > 0">
+                <ul class="search-results" *ngIf="searchResultsChannels.length > 0" [ngClass]="{'height-default': true}">
                     @for(channel of searchResultsChannels; track channel) {
                     <li># {{ channel.name }}</li>
                     }
                 </ul>
-                <ul class="search-results" [ngClass]="{'height-default': true}">
+                <ul class="search-results" *ngIf="searchResultsUsers.length > 0" [ngClass]="{'height-default': true}">
                     @for(user of searchResultsUsers; track user) {
                     <li>&#0064;{{ user.name }}</li>
                     }
                 </ul>
-                <ul class="search-results" [ngClass]="{'height-default': true}">
+                <ul class="search-results" *ngIf="searchResultsPosts.length > 0" [ngClass]="{'height-default': true}">
                     @for(post of searchResultsPosts; track post) {
                     <li>{{ post.message }}</li>
                     }
