@@ -69,12 +69,10 @@ app-animation-intro {
             color: $grey;
             margin-right: -4px;
         }
-        .search-results {
+        .search-results-container {
             position: absolute;
             z-index: 10;
-            list-style-type: none;
             width: calc(100% - 70px);
-            font-size: 21px;
             top: calc(100% - 16px);
             left: 45px;
             box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
@@ -84,17 +82,38 @@ app-animation-intro {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            li {
-                height: 58px;
+            .search-results {
+                width: 100%;
+                list-style-type: none;
+                font-size: 21px;
                 display: flex;
-                align-items: center;
-                border-radius: 30px;
-                padding: 8px 10px;
-                cursor: pointer;
-                &:hover {
-                    color: $purple-blue-bright;
-                    background-color: $violet-bright;
+                flex-direction: column;
+                gap: 15px;
+                padding: 0;
+                overflow-y: auto;
+                @include scrollbar();
+                li {
+                    height: 58px;
+                    min-height: 58px;
+                    display: flex;
+                    align-items: center;
+                    border-radius: 30px;
+                    padding: 8px 10px;
+                    cursor: pointer;
+                    &:hover {
+                        color: $purple-blue-bright;
+                        background-color: $violet-bright;
+                    }
                 }
+            }
+            .height-default {
+                max-height: 204px;
+            }
+            .height-extended {
+                height: 500px;
+            }
+            .height-collapsed {
+                height: 20px;
             }
         }
     }

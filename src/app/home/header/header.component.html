@@ -8,22 +8,31 @@
     </a>
     <form class="searchbar-wrapper" #searchForm="ngForm">
         <div class="searchbar-box">
-            <input #searchbar name="searchbar" [(ngModel)]="searchInput" type="text" placeholder="Devspace durchsuchen" autocomplete="off" (keyup)="search()">
+            <input #searchbar name="searchbar" [(ngModel)]="searchInput" type="text" placeholder="Devspace durchsuchen"
+                autocomplete="off" (keyup)="search()">
             @if(searchInput.length > 0) {
-                <button type="button" class="searchbar-icon material-icons-outlined" (click)="onCloseSearchClick()">close</button>
-                <ul class="search-results">
+            <button type="button" class="searchbar-icon material-icons-outlined"
+                (click)="onCloseSearchClick()">close</button>
+            <div class="search-results-container">
+                <ul class="search-results" [ngClass]="{'height-default': true}">
                     @for(channel of searchResultsChannels; track channel) {
-                        <li># {{ channel.name }}</li>
-                    }
-                    @for(user of searchResultsUsers; track user) {
-                        <li>&#0064;{{ user.name }}</li>
-                    }
-                    @for(post of searchResultsPosts; track post) {
-                        <li>{{ post.message }}</li>
+                    <li># {{ channel.name }}</li>
                     }
                 </ul>
+                <ul class="search-results" [ngClass]="{'height-default': true}">
+                    @for(user of searchResultsUsers; track user) {
+                    <li>&#0064;{{ user.name }}</li>
+                    }
+                </ul>
+                <ul class="search-results" [ngClass]="{'height-default': true}">
+                    @for(post of searchResultsPosts; track post) {
+                    <li>{{ post.message }}</li>
+                    }
+                </ul>
+            </div>
             } @else {
-                <button type="button" class="searchbar-icon material-icons-outlined" (click)="autofocusSearch()">search</button>
+            <button type="button" class="searchbar-icon material-icons-outlined"
+                (click)="autofocusSearch()">search</button>
             }
         </div>
     </form>
@@ -31,11 +40,9 @@
         <span class="userprofile-name">{{ mainUser.name || '...' }}</span>
         <div class="userprofile-image-box">
             <img src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}">
-            <div class="onlinedot" 
-                [ngClass]="{'online': activityService.getUserState(mainUser).state == 'active'}" 
+            <div class="onlinedot" [ngClass]="{'online': activityService.getUserState(mainUser).state == 'active'}"
                 [ngClass]="{'idle': activityService.getUserState(mainUser).state == 'idle'}"
-                [ngClass]="{'offline': activityService.getUserState(mainUser).state == 'loggedOut'}"
-            ></div>
+                [ngClass]="{'offline': activityService.getUserState(mainUser).state == 'loggedOut'}"></div>
         </div>
         <div class="userprofile-menu-box">
             <img src="/assets/img/icons/dropdown_arrow.svg">
