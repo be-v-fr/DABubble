@@ -55,9 +55,15 @@ export class SearchComponent {
     searchPosts(term: string): void {
         this.searchResultsPosts = [];
         this.userChannels.forEach(c => {
-            this.searchResultsPosts = this.searchResultsPosts.concat(this.filterSinglePostsArray(c.posts, term));
-            // search threads
+            const posts: Post[] = c.posts;
+            const postsWithThread: Post[] = posts.filter(p => p.thread.posts.length > 0);
+            this.filterPostsToResults(posts, term);
+            postsWithThread.forEach(p => this.filterPostsToResults(p.thread.posts, term));
         });
+    }
+
+    filterPostsToResults(posts: Post[], term: string): void {
+        this.searchResultsPosts = this.searchResultsPosts.concat(this.filterSinglePostsArray(posts, term));
     }
 
     filterSinglePostsArray(posts: Post[], term: string): Post[] {
