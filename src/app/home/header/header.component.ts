@@ -74,12 +74,22 @@ export class HeaderComponent {
     }
 
     searchUsers(term: string): void {
-
+        this.searchResultsUsers = this.users.filter(u => {
+            return u.uid != this.mainUser.uid && u.name.toLowerCase().includes(term);
+        });
     }
 
     searchPosts(term: string): void {
-
+        this.searchResultsPosts = [];
+        this.userChannels.forEach(c => {
+            this.searchResultsPosts = this.searchResultsPosts.concat(this.filterSinglePostsArray(c.posts, term));
+            // search threads
+        });
     }
+
+    filterSinglePostsArray(posts: Post[], term: string): Post[] {
+        return posts.filter(p => p.message.toLowerCase().includes(term));
+    } 
 
     onCloseSearchClick(): void {
         this.clearSearch();

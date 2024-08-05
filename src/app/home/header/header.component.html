@@ -15,6 +15,12 @@
                     @for(channel of searchResultsChannels; track channel) {
                         <li># {{ channel.name }}</li>
                     }
+                    @for(user of searchResultsUsers; track user) {
+                        <li>&#0064;{{ user.name }}</li>
+                    }
+                    @for(post of searchResultsPosts; track post) {
+                        <li>{{ post.message }}</li>
+                    }
                 </ul>
             } @else {
                 <button type="button" class="searchbar-icon material-icons-outlined" (click)="autofocusSearch()">search</button>
