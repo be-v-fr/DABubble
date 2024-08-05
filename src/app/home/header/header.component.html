@@ -8,7 +8,7 @@
     </a>
     <form class="searchbar-wrapper" #searchForm="ngForm">
         <div class="searchbar-box">
-            <input #searchbar name="searchbar" [(ngModel)]="searchInput" type="text" placeholder="Devspace durchsuchen" autocomplete="off">
+            <input #searchbar name="searchbar" [(ngModel)]="searchInput" type="text" placeholder="Devspace durchsuchen" autocomplete="off" (keydown)="search()">
             @if(searchInput.length > 0) {
                 <button type="button" class="searchbar-icon material-icons-outlined" (click)="onCloseSearchClick()">close</button>
                 <ul class="search-results">
