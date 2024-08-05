@@ -48,7 +48,8 @@ export class SearchComponent {
 
     searchUsers(term: string): void {
         this.searchResultsUsers = this.users.filter(u => {
-            return u.uid != this.mainUser.uid && u.name.toLowerCase().includes(term);
+            return u.uid != this.mainUser.uid &&
+                (u.name.toLowerCase().includes(term) || u.email.toLowerCase().includes(term));
         });
     }
 
