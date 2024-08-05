@@ -51,6 +51,11 @@ export class ThreadComponent implements OnInit, OnDestroy {
     });
   }
 
+  isCurrentUserAuthor(id: string): boolean {
+    // const firstPost = this.threadPosts.thread[index];
+    return this.currUid === id;
+  }
+
   onCreatePost(message: string) {
     if (!this.currUid) {
       console.error('Current user ID is not set.');

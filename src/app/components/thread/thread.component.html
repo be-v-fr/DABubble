@@ -11,13 +11,13 @@
     <div class="thread-content">
         <div class="thread-message">
             <app-message-item [postUid]="post?.user_id!" [post]="post!" [isMainPostThread]="true"
-                [messageSender]="true" />
+                [messageSender]="isCurrentUserAuthor(post?.user_id!)" />
             <div class="antworten-separator">{{ threadPosts?.length }} Antworten</div>
         </div>
         @for (thPost of this.channelsService.getChannelThreadPosts(this.channelData!.id, this.post?.post_id!); track
         $index) {
         <div class="thread-antworten">
-            <app-message-item [postUid]="thPost.user_id" [post]="thPost" [messageSender]="false" />
+            <app-message-item [postUid]="thPost.user_id" [post]="thPost" [messageSender]="isCurrentUserAuthor(thPost.user_id)" />
         </div>
         }
     </div>
