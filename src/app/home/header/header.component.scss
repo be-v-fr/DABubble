@@ -42,33 +42,8 @@ app-animation-intro {
     }
 }
 
-.searchbar-wrapper {
+app-search {
     width: 100%;
-    .searchbar-box {
-        padding-left: 45px;
-        padding-right: 45px;
-        height: 70px;
-        background-color: #fff;
-        border-radius: 35px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        input {
-            width: 100%;
-            font-size: 24px;
-            &::placeholder {
-                color: $grey;
-            }
-        }
-        .searchbar-icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-    @media screen and (max-width: 1024px) {
-        display: none;
-    }
 }
 
 .userprofile-wrapper {

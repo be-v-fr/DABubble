@@ -3,7 +3,7 @@
     <img class="close" *ngIf="showNav" src="assets/img/icons/show_menu.svg" alt="">
     <img class="open" *ngIf="!showNav" src="assets/img/icons/show_menu.svg" alt="">
 </button>
-<app-header [mainUser]="currentUser"></app-header>
+<app-header [mainUser]="currentUser" [users]="users" [userChannels]="userChannels"></app-header>
 <div class="main-container">
     <app-navigation [ngClass]="{ 'expanded ': showNav}"></app-navigation>
     <div class="main-content">

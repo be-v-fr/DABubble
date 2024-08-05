@@ -6,23 +6,14 @@
     <a href="" class="logo-wrapper">
         <img src="/assets/img/logo_name.svg" alt="DABubble" class="logo">
     </a>
-    <div class="searchbar-wrapper">
-        <div class="searchbar-box">
-            <input id="searchbar" type="text" placeholder="Code learning durchsuchen">
-            <div class="searchbar-icon">
-                <img src="/assets/img/icons/search.svg">
-            </div>
-        </div>
-    </div>
+   <app-search [mainUser]="mainUser" [users]="users" [userChannels]="userChannels" />
     <div class="userprofile-wrapper" (click)="openUserLogoutCard()">
         <span class="userprofile-name">{{ mainUser.name || '...' }}</span>
         <div class="userprofile-image-box">
             <img src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}">
-            <div class="onlinedot" 
-                [ngClass]="{'online': activityService.getUserState(mainUser).state == 'active'}" 
+            <div class="onlinedot" [ngClass]="{'online': activityService.getUserState(mainUser).state == 'active'}"
                 [ngClass]="{'idle': activityService.getUserState(mainUser).state == 'idle'}"
-                [ngClass]="{'offline': activityService.getUserState(mainUser).state == 'loggedOut'}"
-            ></div>
+                [ngClass]="{'offline': activityService.getUserState(mainUser).state == 'loggedOut'}"></div>
         </div>
         <div class="userprofile-menu-box">
             <img src="/assets/img/icons/dropdown_arrow.svg">

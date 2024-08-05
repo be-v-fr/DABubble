@@ -39,8 +39,7 @@ export class AddMembersInputComponent implements OnInit {
   onSearch(): void {
     if (this.usersSearch.length > 0) {
       const term = this.usersSearch.toLowerCase();
-      this.filteredUsers = this.usersService
-        .getAllUsers()
+      this.filteredUsers = this.usersService.users
         .filter((u: User) => this.meetsFilterConditions(u, term));
       this.filteredUsers.length > 0 ? this.openUserList() : this.closeUserList();
     } else {
@@ -52,8 +51,8 @@ export class AddMembersInputComponent implements OnInit {
   meetsFilterConditions(user: User, term: string): boolean {
     return user.name.toLowerCase().includes(term) &&
       user.uid != this.currentUser?.uid &&
-      !this.selectedUsers.includes(user) &&
-      !this.channel.members.includes(user);
+      !this.selectedUsers.some(u => u.uid === user.uid) &&
+      !this.channel.members.some(u => u.uid === user.uid);
   }
 
   openUserList(): void {

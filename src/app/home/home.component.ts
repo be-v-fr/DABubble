@@ -16,6 +16,8 @@ import { MainChatComponent } from '../components/main-chat/main-chat.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { ClickStopPropagationDirective } from '../shared/click-stop-propagation.directive';
 import { ReactionService } from '../../services/content/reaction.service';
+import { ChannelsService } from '../../services/content/channels.service';
+import { Channel } from '../../models/channel.class';
 
 @Component({
     selector: 'app-home',
@@ -36,13 +38,16 @@ import { ReactionService } from '../../services/content/reaction.service';
 export class HomeComponent {
     private authService = inject(AuthService);
     private usersService = inject(UsersService);
+    private channelsService = inject(ChannelsService);
     public activityService = inject(ActivityService);
     public reactionsPicker = inject(ReactionService);
 
     private authSub = new Subscription();
     private usersSub = new Subscription();
+    private channelsSub = new Subscription();
     public currentUser = new User();
     public users: User[] = [];
+    public userChannels: Channel[] = [];
     public showNav = true;
     public reactionsPickerVisible = false;
 
@@ -60,13 +65,15 @@ export class HomeComponent {
     ngOnDestroy(): void {
         this.authSub.unsubscribe();
         this.usersSub.unsubscribe();
+        this.channelsSub.unsubscribe();
     }
 
     subAuth(): Subscription {
         return this.authService.user$.subscribe((user) => {
             if (user) {
+                this.syncCurrentUser();
                 this.syncUsers();
-                this.usersSub.unsubscribe();
+                this.setUserChannels(this.channelsService.channels);
                 this.usersSub = this.subUsers();
             }
         });
@@ -76,7 +83,17 @@ export class HomeComponent {
         return this.usersService.users$.subscribe(() => {
             this.syncCurrentUser();
             this.syncUsers();
+            this.setUserChannels(this.channelsService.channels);
+            this.channelsSub = this.subChannels();
         });
+    }
+
+    subChannels(): Subscription {
+        return this.channelsService.channels$.subscribe((channels: Channel[]) => this.setUserChannels(channels));
+    }
+
+    setUserChannels(allChannels: Channel[]): void {
+        this.userChannels = allChannels.filter(c => c.members.some(m => m.uid === this.currentUser.uid));
     }
 
     syncUsers(): void {
