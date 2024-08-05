@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { Channel } from '../../../../models/channel.class';
 import { User } from '../../../../models/user.class';
 import { Post } from '../../../../models/post.class';
@@ -21,6 +21,7 @@ export class SearchComponent {
     searchResultsChannels: Channel[] = [];
     searchResultsUsers: User[] = [];
     searchResultsPosts: Post[] = [];
+    hidingResults: boolean = false;
     @ViewChild('searchbar', { read: ElementRef }) searchbar!: ElementRef<HTMLInputElement>;
     public extended: 'channels' | 'users' | 'posts' | null = null;
 
@@ -30,6 +31,7 @@ export class SearchComponent {
             this.searchChannels(term);
             this.searchUsers(term);
             this.searchPosts(term);
+            this.hidingResults = false;
         } else {
             this.clearSearch();
         }
@@ -62,8 +64,19 @@ export class SearchComponent {
         return posts.filter(p => p.message.toLowerCase().includes(term));
     }
 
+    onSearchClick(): void {
+        this.hidingResults = false;
+        this.autofocusSearch();
+    }
+
     onCloseSearchClick(): void {
         this.clearSearch();
+        this.autofocusSearch();
+    }
+
+    onResultsClick(e: Event): void {
+        e.preventDefault();
+        e.stopPropagation();
         this.autofocusSearch();
     }
 
@@ -73,6 +86,11 @@ export class SearchComponent {
         this.searchResultsUsers = [];
         this.searchResultsPosts = [];
         this.extended = null;
+    }
+
+    @HostListener('document:click', ['$event'])
+    hideResults(): void {
+        this.hidingResults = true;
     }
 
     autofocusSearch(): void {

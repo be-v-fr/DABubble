@@ -2,11 +2,17 @@
     <div class="searchbar-box">
         <input #searchbar name="searchbar" [(ngModel)]="searchInput" type="text" placeholder="Devspace durchsuchen"
             autocomplete="off" (keyup)="search()">
-        @if(searchInput.length > 0) {
+        @if(searchInput.length > 0 && !hidingResults) {
         <button type="button" class="searchbar-icon material-icons-outlined"
             (click)="onCloseSearchClick()">close</button>
-        <div class="search-results-container" (click)="autofocusSearch()"
-            *ngIf="searchResultsChannels.length + searchResultsUsers.length + searchResultsPosts.length > 0">
+        } @else {
+        <button type="button" class="searchbar-icon material-icons-outlined" (click)="onSearchClick()">search</button>
+        }
+        @if(
+        searchInput.length > 0 && !hidingResults &&
+        searchResultsChannels.length + searchResultsUsers.length + searchResultsPosts.length > 0
+        ) {
+        <div class="search-results-container" (click)="onResultsClick($event)">
             <div class="search-results-list-container" *ngIf="searchResultsChannels.length > 0"
                 [ngClass]="{'extended': extended === 'channels', 'collapsed': extended && extended != 'channels'}">
                 <p class="search-results-title first-title" (click)="toggleListExtension('channels')">
@@ -47,8 +53,6 @@
                 </ul>
             </div>
         </div>
-        } @else {
-        <button type="button" class="searchbar-icon material-icons-outlined" (click)="autofocusSearch()">search</button>
         }
     </div>
 </form>
