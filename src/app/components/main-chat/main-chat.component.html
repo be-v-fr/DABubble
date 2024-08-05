@@ -52,7 +52,7 @@
         </div>
         <app-message-box [channelName]="currentChannel.name" (sent)="onCreatePost($event)" />
     </section>
-    <app-thread class="thread" *ngIf="openTh" (closeTh)="closeThread($event)" [post]="currPost"
+    <app-thread class="thread" *ngIf="openTh" (closeTh)="closeThread($event)" [post]="currPost!"
         [channelData]="{ id: this.currentChannel.channel_id, name: this.currentChannel.name }" />
     } @else {
     <section class="main-section">

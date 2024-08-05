@@ -47,6 +47,13 @@ export class ChannelsService implements OnDestroy {
     return this.channels.find(c => c.channel_id === id);
   }
 
+  async getChannelThreadPosts(id: string, post_id: string): Promise<Post[] | undefined> {
+    const channel = this.channels.find(c => c.channel_id === id);
+    const post = channel?.posts.find(p => p.post_id === post_id);
+    return post?.thread.posts;
+  }
+
+
   async addChannel(channel: Channel): Promise<string> {
     await this.storeChannel(channel);
     this.channels.push(channel);
@@ -176,7 +183,6 @@ export class ChannelsService implements OnDestroy {
       }
 
       post.reactions.push(newReaction);
-
       await this.updateChannelInStorage(channel);
 
       this.channels$.next([...this.channels]);

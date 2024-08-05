@@ -68,6 +68,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
       const id = params.get('id');
       if (id) {
         this.initChannel(id);
+        this.closeThread(false);
       }
     });
 
@@ -97,7 +98,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
       this.currentChannel = channel;
       this.currentChannelAuthorName = this.usersService.getUserByUid(this.currentChannel.author_uid)?.name;
       this.activeUsers = this.activityService.getActiveUsers();
-    } else {this.onInvalidOrForbiddenRoute = true};
+    } else { this.onInvalidOrForbiddenRoute = true };
   }
 
   isCurrentUserAuthor(index: number): boolean {

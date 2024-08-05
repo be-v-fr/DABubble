@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MessageItemComponent } from "../message-item/message-item.component";
 import { MessageBoxComponent } from "../message-box/message-box.component";
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
@@ -22,6 +22,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
   @Input() channelData: { id: string, name: string } | undefined;
   @Output() closeTh = new EventEmitter<boolean>();
 
+  threadPosts: Post[] | undefined;
   currUid: string | null = null;
   reactionPicker = false;
 
@@ -33,8 +34,9 @@ export class ThreadComponent implements OnInit, OnDestroy {
     private dialog: MatDialog
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.authSub = this.subAuth();
+    this.threadPosts = await this.channelsService.getChannelThreadPosts(this.channelData!.id, this.post?.post_id!);
   }
 
   ngOnDestroy(): void {
