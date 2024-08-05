@@ -16,36 +16,36 @@
             <div class="search-results-container"
                 *ngIf="searchResultsChannels.length + searchResultsUsers.length + searchResultsPosts.length > 0">
 
-                <div class="search-results-list-container">
+                <div class="search-results-list-container" *ngIf="searchResultsChannels.length > 0">
                     <p class="search-results-title first-title">
                         <span class="material-icons-outlined">workspaces</span>
                         Channels
                     </p>
-                    <ul class="search-results-list" *ngIf="searchResultsChannels.length > 0"
+                    <ul class="search-results-list"
                         [ngClass]="{'height-default': true}">
                         @for(channel of searchResultsChannels; track channel) {
                         <li># {{ channel.name }}</li>
                         }
                     </ul>
                 </div>
-                <div class="search-results-list-container">
+                <div class="search-results-list-container" *ngIf="searchResultsUsers.length > 0">
                     <p class="search-results-title">
                         <span class="material-icons-outlined">account_circle</span>  
                         Nutzer
                     </p>
-                    <ul class="search-results-list" *ngIf="searchResultsUsers.length > 0"
+                    <ul class="search-results-list"
                         [ngClass]="{'height-default': true}">
                         @for(user of searchResultsUsers; track user) {
                         <li>&#0064;{{ user.name }}</li>
                         }
                     </ul>
                 </div>
-                <div class="search-results-list-container">
+                <div class="search-results-list-container" *ngIf="searchResultsPosts.length > 0">
                     <p class="search-results-title">
                         <span class="material-icons-outlined">insert_comment</span>
                         Posts
                     </p>
-                    <ul class="search-results-list" *ngIf="searchResultsPosts.length > 0"
+                    <ul class="search-results-list"
                         [ngClass]="{'height-default': true}">
                         @for(post of searchResultsPosts; track post) {
                         <li>{{ post.message }}</li>
