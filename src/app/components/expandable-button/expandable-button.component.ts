@@ -51,11 +51,11 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
     private userService: UsersService,
     private channelsService: ChannelsService,
   ) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd && window.innerWidth <= 768) {
-        this.isMenuExpanded = false;
-      }
-    });
+    // this.router.events.subscribe(event => {
+    //   if (event instanceof NavigationEnd && window.innerWidth <= 768) {
+    //     this.isMenuExpanded = false;
+    //   }
+    // });
   }
 
   ngOnInit(): void {
