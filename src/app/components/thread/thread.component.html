@@ -14,7 +14,8 @@
                 [messageSender]="true" />
             <div class="antworten-separator">{{ threadPosts?.length }} Antworten</div>
         </div>
-        @for (thPost of threadPosts; track $index) {
+        @for (thPost of this.channelsService.getChannelThreadPosts(this.channelData!.id, this.post?.post_id!); track
+        $index) {
         <div class="thread-antworten">
             <app-message-item [postUid]="thPost.user_id" [post]="thPost" [messageSender]="false" />
         </div>

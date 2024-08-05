@@ -47,7 +47,7 @@ export class ChannelsService implements OnDestroy {
     return this.channels.find(c => c.channel_id === id);
   }
 
-  async getChannelThreadPosts(id: string, post_id: string): Promise<Post[] | undefined> {
+  getChannelThreadPosts(id: string, post_id: string): Post[] | undefined {
     const channel = this.channels.find(c => c.channel_id === id);
     const post = channel?.posts.find(p => p.post_id === post_id);
     return post?.thread.posts;

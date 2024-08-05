@@ -30,13 +30,12 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private channelsService: ChannelsService,
+    public channelsService: ChannelsService,
     private dialog: MatDialog
   ) { }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.authSub = this.subAuth();
-    this.threadPosts = await this.channelsService.getChannelThreadPosts(this.channelData!.id, this.post?.post_id!);
   }
 
   ngOnDestroy(): void {
