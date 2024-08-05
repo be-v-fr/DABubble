@@ -128,11 +128,12 @@
                     gap: 25px;
                     padding: 25px;
                     li {
-                        padding: 4px 20px;
                         border-radius: 35px;
+                        padding: 0;
                         a {
                             display: flex;
                             align-items: center;
+                            padding: 4px 20px;
                             gap: 15px;
                             text-decoration: none;
                             font-size: 18px;
