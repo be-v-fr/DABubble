@@ -18,6 +18,7 @@ import { ActivityService } from '../../services/activity.service';
 export class MemberListComponent {
   channelMembers: User[];
   channel: Channel;
+  memberListVisible = true;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { channelMembers: User[], channel: Channel },
@@ -31,6 +32,7 @@ export class MemberListComponent {
   }
 
   addMember(): void {
+    this.dialogRef.close();
     const dialogRef = this.dialog.open(AddMembersComponent, {
       data: { channel: this.channel }
     });
@@ -39,6 +41,7 @@ export class MemberListComponent {
       if (newUsers && newUsers.length > 0) {
         this.channelMembers.push(...newUsers);
       } else {this.checkMembersIndependently()}
+      
     });
   }
 
