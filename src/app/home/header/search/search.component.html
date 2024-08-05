@@ -6,7 +6,7 @@
         <button type="button" class="searchbar-icon material-icons-outlined"
             (click)="onCloseSearchClick()">close</button>
         } @else {
-        <button type="button" class="searchbar-icon material-icons-outlined" (click)="onSearchClick()">search</button>
+        <button type="button" class="searchbar-icon material-icons-outlined" (click)="onSearchClick($event)">search</button>
         }
         @if(
         searchInput.length > 0 && !hidingResults &&

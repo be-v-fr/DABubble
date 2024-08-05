@@ -64,7 +64,9 @@ export class SearchComponent {
         return posts.filter(p => p.message.toLowerCase().includes(term));
     }
 
-    onSearchClick(): void {
+    onSearchClick(e: Event): void {
+        e.stopPropagation();
+        e.preventDefault();
         this.hidingResults = false;
         this.autofocusSearch();
     }
