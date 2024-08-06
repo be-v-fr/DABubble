@@ -91,6 +91,7 @@
                     border-radius: 30px;
                     padding: 8px 10px;
                     text-overflow: ellipsis;
+                    white-space: nowrap;
                     cursor: pointer;
 
                     img {
@@ -105,6 +106,36 @@
                     &:hover {
                         color: $purple-blue-bright;
                         background-color: $violet-bright;
+                    }
+                }
+
+                .search-results-post {
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
+                    gap: 0;
+                    .top-line {
+                        display: flex;
+                        gap: 12px;
+                        .date {
+                            font-size: 16px;
+                            color: $grey;
+                        }
+                        .channel-name {
+                            font-size: 16px;
+                            color: $purple-blue-bright;
+                        }
+                    }
+                    .bottom-line {
+                        width: 100%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    &:hover {
+                        .top-line .date {
+                            color: $purple-blue-bright;
+                        }
                     }
                 }
             }

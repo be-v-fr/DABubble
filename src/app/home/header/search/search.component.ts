@@ -1,9 +1,12 @@
-import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, Input, ViewChild } from '@angular/core';
 import { Channel } from '../../../../models/channel.class';
+import { ChannelsService } from '../../../../services/content/channels.service';
 import { User } from '../../../../models/user.class';
+import { UsersService } from '../../../../services/users.service';
 import { Post } from '../../../../models/post.class';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TimeService } from '../../../../services/time.service';
 
 
 @Component({
@@ -22,9 +25,14 @@ export class SearchComponent {
     searchResultsUsers: User[] = [];
     searchResultsPosts: Post[] = [];
     searchResultsPostsDisplay: string[] = [];
+    searchResultsPostAuthors: string[] = [];
+    searchResultsPostChannels: string[] = [];
     hidingResults: boolean = false;
     @ViewChild('searchbar', { read: ElementRef }) searchbar!: ElementRef<HTMLInputElement>;
     public extended: 'channels' | 'users' | 'posts' | null = null;
+    private channelsService = inject(ChannelsService);
+    private usersService = inject(UsersService);
+    public timeService = inject(TimeService);
 
     search(): void {
         if (this.searchInput.length > 0) {
@@ -63,6 +71,7 @@ export class SearchComponent {
             postsWithThread.forEach(p => this.filterPostsToResults(p.thread.posts, term));
         });
         this.setResultsPostsDisplay(term);
+        this.setResultsPostInfo();
     }
 
     filterPostsToResults(posts: Post[], term: string): void {
@@ -120,6 +129,17 @@ export class SearchComponent {
         if (prependEllipsis) { message = '...' + message; }
         if (appendEllipsis) { message = message + '...'; }
         return message;
+    }
+
+    setResultsPostInfo(): void {
+        this.searchResultsPostAuthors = [];
+        this.searchResultsPostChannels = [];
+        this.searchResultsPosts.forEach(p => {
+            const author: User | undefined = this.usersService.getUserByUid(p.user_id);
+            const channel: Channel | undefined = this.channelsService.channels.find(c => c.channel_id === p.channel_id);
+            author ? this.searchResultsPostAuthors.push(author.name) : this.searchResultsPostAuthors.push('Unbekannter Nutzer');
+            channel ? this.searchResultsPostChannels.push(channel.name) : this.searchResultsPostChannels.push('');
+        })
     }
 
     onSearchClick(e: Event): void {
