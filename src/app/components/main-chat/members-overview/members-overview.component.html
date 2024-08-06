@@ -1,0 +1,9 @@
+<button class="members-btn" (click)="openMemberList()">
+    <div class="m-images-container">
+        @for (member of channel.members; track $index) {
+        @if ($index < 3) { <img src="{{member.avatarSrc}}" alt="Avatar">
+            }
+            }
+    </div>
+    <span>{{channel.members.length}}</span>
+</button>

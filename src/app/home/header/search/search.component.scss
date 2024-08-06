@@ -72,7 +72,7 @@
 
             .search-results-list {
                 width: 100%;
-                max-height: 194px;
+                max-height: 218px;
                 list-style-type: none;
                 font-size: 21px;
                 display: flex;
@@ -107,6 +107,10 @@
                         color: $purple-blue-bright;
                         background-color: $violet-bright;
                     }
+                }
+
+                .search-results-channel {
+                    justify-content: space-between;
                 }
 
                 .search-results-post {
@@ -151,7 +155,7 @@
                 transform: rotate(0deg);
             }
             .search-results-list {
-                max-height: 800px;
+                max-height: 654px;
             }
         }
 

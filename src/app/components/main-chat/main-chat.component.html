@@ -7,15 +7,7 @@
                 <span class="material-icons-outlined icon">keyboard_arrow_down</span>
             </button>
             <div class="main-header-members">
-                <button class="members-btn" (click)="openMemberList()">
-                    <div class="m-images-container">
-                        @for (member of currentChannel.members; track $index) {
-                        @if ($index < 3) { <img src="{{getUserFromMembers(member.uid).avatarSrc}}" alt="Avatar">
-                            }
-                            }
-                    </div>
-                    <span>{{currentChannel.members.length}}</span>
-                </button>
+                <app-members-overview [channel]="currentChannel" />
                 <button class="add-members-btn" (click)="openAddMembers()">
                     <span class="material-icons-outlined icon">person_add_alt</span>
                 </button>

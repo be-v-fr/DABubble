@@ -20,6 +20,7 @@ import { ActivityService } from '../../../services/activity.service';
 import { UsersService } from '../../../services/users.service';
 import { AddMembersComponent } from '../../add-members/add-members.component';
 import { ForbiddenChannelFeedbackComponent } from './forbidden-channel-feedback/forbidden-channel-feedback.component';
+import { MembersOverviewComponent } from './members-overview/members-overview.component';
 
 @Component({
   selector: 'app-main-chat',
@@ -33,7 +34,8 @@ import { ForbiddenChannelFeedbackComponent } from './forbidden-channel-feedback/
     MessageBoxComponent,
     TimeSeparatorComponent,
     ThreadComponent,
-    ForbiddenChannelFeedbackComponent
+    ForbiddenChannelFeedbackComponent,
+    MembersOverviewComponent
   ]
 })
 export class MainChatComponent implements OnInit, OnDestroy {
@@ -111,10 +113,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
     return currentPost.user_id;
   }
 
-  getUserFromMembers(uid: string) {
-    return this.usersService.getUserByUid(uid) || new User;
-  }
-
   onCreatePost(message: string): void {
     if (!this.currentUid || !this.currentChannel.channel_id) {
       console.error('User ID or channel ID is not set.');
@@ -128,12 +126,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   onEditChannel(): void {
     this.dialog.open(EditChannelComponent, { data: this.currentChannel });
-  }
-
-  openMemberList(): void {
-    this.dialog.open(MemberListComponent, {
-      data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
-    });
   }
 
   openAddMembers(): void {

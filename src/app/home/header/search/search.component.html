@@ -23,7 +23,10 @@
                 </p>
                 <ul class="search-results-list">
                     @for(channel of searchResultsChannels; track channel) {
-                    <li [routerLink]="['/main-chat', channel.channel_id]" (click)="clearSearch()"># {{ channel.name }}</li>
+                    <li class="search-results-channel" [routerLink]="['/main-chat', channel.channel_id]" (click)="clearSearch()">
+                        <span># {{ channel.name }}</span>
+                        <app-members-overview [channel]="channel" />
+                    </li>
                     }
                 </ul>
             </div>
