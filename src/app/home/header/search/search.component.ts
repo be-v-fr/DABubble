@@ -7,12 +7,13 @@ import { Post } from '../../../../models/post.class';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TimeService } from '../../../../services/time.service';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
     selector: 'app-search',
     standalone: true,
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, RouterLink],
     templateUrl: './search.component.html',
     styleUrl: './search.component.scss'
 })
