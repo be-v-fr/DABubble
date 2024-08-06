@@ -39,7 +39,7 @@
                 </p>
                 <ul class="search-results-list">
                     @for(user of searchResultsUsers; track user) {
-                    <li>
+                    <li (click)="openUserProfile(user)">
                         <img [src]="user.avatarSrc" alt="Avatar" />
                         {{ user.name }}
                     </li>

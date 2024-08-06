@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { TimeService } from '../../../../services/time.service';
 import { RouterLink } from '@angular/router';
 import { MembersOverviewComponent } from '../../../components/main-chat/members-overview/members-overview.component';
+import { UserProfileCardComponent } from '../../../user-profile-card/user-profile-card.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -35,6 +37,8 @@ export class SearchComponent {
     private channelsService = inject(ChannelsService);
     private usersService = inject(UsersService);
     public timeService = inject(TimeService);
+
+    constructor(private dialog: MatDialog) { }
 
     search(): void {
         if (this.searchInput.length > 0) {
@@ -181,5 +185,10 @@ export class SearchComponent {
 
     toggleListExtension(list: 'channels' | 'users' | 'posts'): void {
         this.extended = (this.extended === list ? null : list);
+    }
+
+    openUserProfile(user: User): void {
+        this.dialog.open(UserProfileCardComponent, { data: user });
+        this.hideResults();
     }
 }
