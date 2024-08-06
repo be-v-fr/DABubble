@@ -10,7 +10,7 @@
     <div class="member-list-container">
         <div class="members-list-box">
             <div *ngFor="let user of channelMembers" class="member-btn-container">
-                <button class="member-btn" (click)="openUserProfile()">
+                <button class="member-btn" (click)="openUserProfile(user)">
                     <img [src]="user.avatarSrc" alt="{{user.name}}" />
                     <span class="member-name">{{ user.name }}</span>
                     <div class="onlinedot"

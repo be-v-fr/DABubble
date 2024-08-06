@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
+import { User } from '../../models/user.class';
 
 @Component({
   selector: 'app-user-profile-card',
@@ -11,7 +12,13 @@ import { RouterLink } from '@angular/router';
   styleUrl: './user-profile-card.component.scss'
 })
 export class UserProfileCardComponent {
-  constructor(private dialogRef: MatDialogRef<UserProfileCardComponent>) { }
+  constructor(
+    private dialogRef: MatDialogRef<UserProfileCardComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { user: User }
+  ) {
+    console.log(data);
+   }
+  
   closeCard(){
     this.dialogRef.close();
   }
