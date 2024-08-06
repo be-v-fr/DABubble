@@ -8,8 +8,18 @@
   border-radius: 30px 0px 30px 30px;
   position: fixed;
   top: 220px;
-  right: 100px;
+  right: 20px;
+  transform-origin: top right;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
 }
+
+.container.show {
+  transform: scale(1);
+  opacity: 1;
+}
+
 
 .submit-btn-container {
   width: 100%;

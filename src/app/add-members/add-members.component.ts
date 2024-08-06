@@ -18,6 +18,7 @@ import { AddMembersInputComponent } from './add-members-input/add-members-input.
 export class AddMembersComponent {
   selectedUsers: User[] = [];
   channel: Channel;
+  isOpen = false;
 
   constructor(
     private dialogRef: MatDialogRef<AddMembersComponent>,
@@ -26,6 +27,13 @@ export class AddMembersComponent {
   ) {
     this.channel = data.channel;
   }
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.isOpen = true;
+    }, 0);
+  }
+
 
   async addUsersToMembers() {
     this.channel.members = this.channel.members.concat(this.selectedUsers);
