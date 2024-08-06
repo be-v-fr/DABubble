@@ -81,6 +81,7 @@
                 padding: 12px 20px 12px;
                 overflow-y: auto;
                 @include scrollbar();
+                @include transition(150ms);
 
                 li {
                     width: 100%;
@@ -164,7 +165,8 @@
                 transform: rotate(180deg);
             }
             .search-results-list {
-                display: none;
+                max-height: 0px;
+                padding: 0 20px;
             }
         }
     }
