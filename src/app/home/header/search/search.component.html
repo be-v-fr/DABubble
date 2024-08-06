@@ -50,8 +50,8 @@
                     Posts
                 </p>
                 <ul class="search-results-list">
-                    @for(post of searchResultsPosts; track post) {
-                    <li>{{ post.message }}</li>
+                    @for(post of searchResultsPosts; track post; let i = $index) {
+                    <li>{{ searchResultsPostsDisplay[i] }}</li>
                     }
                 </ul>
             </div>

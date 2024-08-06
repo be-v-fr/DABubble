@@ -21,6 +21,7 @@ export class SearchComponent {
     searchResultsChannels: Channel[] = [];
     searchResultsUsers: User[] = [];
     searchResultsPosts: Post[] = [];
+    searchResultsPostsDisplay: string[] = [];
     hidingResults: boolean = false;
     @ViewChild('searchbar', { read: ElementRef }) searchbar!: ElementRef<HTMLInputElement>;
     public extended: 'channels' | 'users' | 'posts' | null = null;
@@ -61,6 +62,7 @@ export class SearchComponent {
             this.filterPostsToResults(posts, term);
             postsWithThread.forEach(p => this.filterPostsToResults(p.thread.posts, term));
         });
+        this.setResultsPostsDisplay(term);
     }
 
     filterPostsToResults(posts: Post[], term: string): void {
@@ -69,6 +71,55 @@ export class SearchComponent {
 
     filterSinglePostsArray(posts: Post[], term: string): Post[] {
         return posts.filter(p => p.message.toLowerCase().includes(term));
+    }
+
+    setResultsPostsDisplay(term: string): void {
+        this.searchResultsPostsDisplay = [];
+        this.searchResultsPosts.forEach(p => {
+            const displayedMessage = this.getResultsSinglePostDisplay(p.message, term);
+            this.searchResultsPostsDisplay.push(displayedMessage);
+        });
+    }
+
+    getResultsSinglePostDisplay(message: string, term: string): string {
+        const termIndex = message.toLowerCase().indexOf(term.toLowerCase());
+        let { start, prependEllipsis } = this.adjustPostDisplayStart(message, termIndex);
+        let { end, appendEllipsis } = this.adjustPostDisplayEnd(message, termIndex, term);
+        let displayedMessage = message.slice(start, end);
+        if (displayedMessage.length > 50) {
+            displayedMessage = displayedMessage.slice(0, 50);
+            appendEllipsis = true;
+        }
+        displayedMessage = this.addEllipsis(displayedMessage, prependEllipsis, appendEllipsis);
+        return displayedMessage;
+    }
+
+    adjustPostDisplayStart(message: string, termIndex: number): { start: number, prependEllipsis: boolean } {
+        let start = Math.max(0, termIndex - 24);
+        let prependEllipsis = false;
+        if (start > 0) {
+            const firstSpace = message.slice(start).search(/[ \.,!?]/);
+            if (firstSpace !== -1) { start += firstSpace + 1; }
+            prependEllipsis = true;
+        }
+        return { start, prependEllipsis };
+    }
+
+    adjustPostDisplayEnd(message: string, termIndex: number, term: string): { end: number, appendEllipsis: boolean } {
+        let end = Math.min(message.length, termIndex + term.length + 24);
+        let appendEllipsis = false;
+        if (end < message.length) {
+            const lastSpace = message.slice(0, end).lastIndexOf(' ');
+            if (lastSpace !== -1) { end = lastSpace; }
+            appendEllipsis = true;
+        }
+        return { end, appendEllipsis };
+    }
+
+    addEllipsis(message: string, prependEllipsis: boolean, appendEllipsis: boolean): string {
+        if (prependEllipsis) { message = '...' + message; }
+        if (appendEllipsis) { message = message + '...'; }
+        return message;
     }
 
     onSearchClick(e: Event): void {
