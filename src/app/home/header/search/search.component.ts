@@ -95,8 +95,8 @@ export class SearchComponent {
         let { start, prependEllipsis } = this.adjustPostDisplayStart(message, termIndex);
         let { end, appendEllipsis } = this.adjustPostDisplayEnd(message, termIndex, term);
         let displayedMessage = message.slice(start, end);
-        if (displayedMessage.length > 50) {
-            displayedMessage = displayedMessage.slice(0, 50);
+        if (displayedMessage.length > 80) {
+            displayedMessage = displayedMessage.slice(0, 80);
             appendEllipsis = true;
         }
         displayedMessage = this.addEllipsis(displayedMessage, prependEllipsis, appendEllipsis);
@@ -104,7 +104,7 @@ export class SearchComponent {
     }
 
     adjustPostDisplayStart(message: string, termIndex: number): { start: number, prependEllipsis: boolean } {
-        let start = Math.max(0, termIndex - 24);
+        let start = Math.max(0, termIndex - 32);
         let prependEllipsis = false;
         if (start > 0) {
             const firstSpace = message.slice(start).search(/[ \.,!?]/);
@@ -115,7 +115,7 @@ export class SearchComponent {
     }
 
     adjustPostDisplayEnd(message: string, termIndex: number, term: string): { end: number, appendEllipsis: boolean } {
-        let end = Math.min(message.length, termIndex + term.length + 24);
+        let end = Math.min(message.length, termIndex + term.length + 32);
         let appendEllipsis = false;
         if (end < message.length) {
             const lastSpace = message.slice(0, end).lastIndexOf(' ');
