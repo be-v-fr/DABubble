@@ -143,8 +143,8 @@ export class SearchComponent {
         this.searchResultsPosts.forEach(p => {
             const author: User | undefined = this.usersService.getUserByUid(p.user_id);
             const channel: Channel | undefined = this.channelsService.channels.find(c => c.channel_id === p.channel_id);
-            author ? this.searchResultsPostAuthors.push(author.name) : this.searchResultsPostAuthors.push('Unbekannter Nutzer');
-            channel ? this.searchResultsPostChannels.push(channel.name) : this.searchResultsPostChannels.push('');
+            this.searchResultsPostAuthors.push(author ? author.name : 'Unbekannter Nutzer');
+            this.searchResultsPostChannels.push(channel ? channel.name : '');
         })
     }
 
