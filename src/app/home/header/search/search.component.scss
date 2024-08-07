@@ -124,6 +124,7 @@
                         display: flex;
                         gap: 12px;
                         overflow: hidden;
+                        font-size: 20px;
                         .date {
                             font-size: 16px;
                             color: $grey;
@@ -138,6 +139,7 @@
                     }
                     .bottom-line {
                         width: 100%;
+                        font-size: 18px;
                         overflow: hidden;
                         text-overflow: ellipsis;
                         white-space: nowrap;
