@@ -1,13 +1,12 @@
 import { Component, ElementRef, HostListener, inject, Input, ViewChild } from '@angular/core';
 import { Channel } from '../../../../models/channel.class';
-import { ChannelsService } from '../../../../services/content/channels.service';
 import { User } from '../../../../models/user.class';
 import { UsersService } from '../../../../services/users.service';
 import { Post } from '../../../../models/post.class';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TimeService } from '../../../../services/time.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MembersOverviewComponent } from '../../../components/main-chat/members-overview/members-overview.component';
 import { UserProfileCardComponent } from '../../../user-profile-card/user-profile-card.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -30,15 +29,17 @@ export class SearchComponent {
     searchResultsPosts: Post[] = [];
     searchResultsPostsDisplay: string[] = [];
     searchResultsPostAuthors: string[] = [];
-    searchResultsPostChannels: string[] = [];
+    postChannelIndices: number[] = [];
     hidingResults: boolean = false;
     @ViewChild('searchbar', { read: ElementRef }) searchbar!: ElementRef<HTMLInputElement>;
     public extended: 'channels' | 'users' | 'posts' | null = null;
-    private channelsService = inject(ChannelsService);
     private usersService = inject(UsersService);
     public timeService = inject(TimeService);
 
-    constructor(private dialog: MatDialog) { }
+    constructor(
+        private dialog: MatDialog,
+        private router: Router    
+    ) { }
 
     search(): void {
         if (this.searchInput.length > 0) {
@@ -139,12 +140,12 @@ export class SearchComponent {
 
     setResultsPostInfo(): void {
         this.searchResultsPostAuthors = [];
-        this.searchResultsPostChannels = [];
+        this.postChannelIndices = [];
         this.searchResultsPosts.forEach(p => {
             const author: User | undefined = this.usersService.getUserByUid(p.user_id);
-            const channel: Channel | undefined = this.channelsService.channels.find(c => c.channel_id === p.channel_id);
+            const channel: Channel | undefined = this.userChannels.find(c => c.channel_id === p.channel_id);
             this.searchResultsPostAuthors.push(author ? author.name : 'Unbekannter Nutzer');
-            this.searchResultsPostChannels.push(channel ? channel.name : '');
+            this.postChannelIndices.push(channel ? this.userChannels.indexOf(channel) : -1);
         })
     }
 

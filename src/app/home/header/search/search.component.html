@@ -23,7 +23,8 @@
                 </p>
                 <ul class="search-results-list">
                     @for(channel of searchResultsChannels; track channel) {
-                    <li class="search-results-channel" [routerLink]="['/main-chat', channel.channel_id]" (click)="clearSearch()">
+                    <li class="search-results-channel" [routerLink]="['/main-chat', channel.channel_id]"
+                        (click)="clearSearch()">
                         <span># {{ channel.name }}</span>
                         <app-members-overview [channel]="channel" />
                     </li>
@@ -55,7 +56,9 @@
                 </p>
                 <ul class="search-results-list">
                     @for(post of searchResultsPosts; track post; let i = $index) {
-                    <li class="search-results-post" *ngIf="searchResultsPostChannels[i].length > 0">
+                    <li class="search-results-post" *ngIf="postChannelIndices[i] != -1" (click)="clearSearch()"
+                        [routerLink]="[userChannels[postChannelIndices[i]].isPmChannel ? '/direct-message' : '/main-chat', post.channel_id]"
+                        [queryParams]="{post: post.post_id}">
                         <div class="top-line">
                             <span>
                                 <b>{{ searchResultsPostAuthors[i] }}</b>
@@ -63,8 +66,8 @@
                             <span class="date">
                                 {{timeService.toRelativeDateWithClock(post.date)}}
                             </span>
-                            <span class="channel-name">
-                                # {{searchResultsPostChannels[i]}}
+                            <span class="channel-name" *ngIf="!userChannels[postChannelIndices[i]].isPmChannel">
+                                # {{userChannels[postChannelIndices[i]].name}}
                             </span>
                         </div>
                         <span class="bottom-line">
