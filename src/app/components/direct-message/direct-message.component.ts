@@ -14,6 +14,7 @@ import { TimeSeparatorComponent } from '../time-separator/time-separator.compone
 import { MessageItemComponent } from '../message-item/message-item.component';
 import { ForbiddenChannelFeedbackComponent } from '../main-chat/forbidden-channel-feedback/forbidden-channel-feedback.component';
 import { AuthService } from '../../../services/auth.service';
+import { TimeService } from '../../../services/time.service';
 
 @Component({
   selector: 'app-direct-message',
@@ -51,6 +52,7 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     private channelService: ChannelsService,
     public activityService: ActivityService,
     private authService: AuthService,
+    public timeService: TimeService
   ) { }
 
   ngOnInit(): void {

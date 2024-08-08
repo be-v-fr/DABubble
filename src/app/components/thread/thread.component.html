@@ -10,14 +10,22 @@
     </div>
     <div class="thread-content">
         <div class="thread-message">
+            <app-time-separator [timestamp]="post.date" *ngIf="post" />
             <app-message-item [postUid]="post?.user_id!" [post]="post!" [isMainPostThread]="true"
                 [messageSender]="isCurrentUserAuthor(post?.user_id!)" />
             <div class="antworten-separator">{{ threadPosts?.length }} Antworten</div>
         </div>
         @for (thPost of this.channelsService.getChannelThreadPosts(this.channelData!.id, this.post?.post_id!); track
-        $index) {
+        thPost; let i = $index) {
         <div class="thread-antworten">
-            <app-message-item [id]="thPost.post_id" [postUid]="thPost.user_id" [post]="thPost" [messageSender]="isCurrentUserAuthor(thPost.user_id)" />
+            @if(
+            (i == 0 && post && timeService.getDifferenceInDays(thPost.date) != timeService.getDifferenceInDays(post.date)) ||
+            (i > 0 && threadPosts && timeService.getDifferenceInDays(thPost.date) != timeService.getDifferenceInDays(threadPosts[i - 1].date))
+            ) {
+            <app-time-separator [timestamp]="thPost.date" />
+            }
+            <app-message-item [id]="thPost.post_id" [postUid]="thPost.user_id" [post]="thPost"
+                [messageSender]="isCurrentUserAuthor(thPost.user_id)" />
         </div>
         }
     </div>

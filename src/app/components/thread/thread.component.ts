@@ -10,13 +10,15 @@ import { AuthService } from '../../../services/auth.service';
 import { Post } from '../../../models/post.class';
 import { ChannelsService } from '../../../services/content/channels.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TimeSeparatorComponent } from '../time-separator/time-separator.component';
+import { TimeService } from '../../../services/time.service';
 
 @Component({
   selector: 'app-thread',
   standalone: true,
   templateUrl: './thread.component.html',
   styleUrls: ['./thread.component.scss'],
-  imports: [CommonModule, MessageItemComponent, MessageBoxComponent, PickerComponent]
+  imports: [CommonModule, MessageItemComponent, MessageBoxComponent, PickerComponent, TimeSeparatorComponent]
 })
 export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() post: Post | undefined;
@@ -35,6 +37,7 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private authService: AuthService,
     public channelsService: ChannelsService,
+    public timeService: TimeService,
     private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
