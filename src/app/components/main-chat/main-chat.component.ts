@@ -105,7 +105,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
       this.currentChannelAuthorName = this.usersService.getUserByUid(this.currentChannel.author_uid)?.name;
       this.activeUsers = this.activityService.getActiveUsers();
       this.scrollSub = this.route.queryParams.subscribe(params => {
-        this.goToPost(params['post']);
+        setTimeout(() => this.goToPost(params['post']), 20);
       });
     } else { this.onInvalidOrForbiddenRoute = true };
   }
@@ -121,9 +121,9 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   handlePostAndThreadScrolling(elements: QueryList<ElementRef>, postId: string) {
     const postRef = elements.find(el => el.nativeElement.id === postId);
-    if(postRef) {
+    if (postRef) {
       this.autoscrollToPost(postRef);
-    } else if(this.channelsService.isPostInThread(this.currentChannel, postId)) {
+    } else if (this.channelsService.isPostInThread(this.currentChannel, postId)) {
       this.openThreadAndAutoscrollToFirstPost(elements, postId);
     }
   }
@@ -142,7 +142,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
     if (thread_id.length > 0) {
       const firstPost: Post | undefined = this.currentChannel.posts.find(p => p.thread.thread_id === thread_id);
       const firstPostRef = elements.find(el => el.nativeElement.id === firstPost?.post_id);
-      firstPostRef?.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      firstPostRef?.nativeElement.scrollIntoView();
       this.handleThread(thread_id);
     }
   }

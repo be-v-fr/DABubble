@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, QueryList, SimpleChanges, ViewChildren, AfterViewInit } from '@angular/core';
 import { MessageItemComponent } from "../message-item/message-item.component";
 import { MessageBoxComponent } from "../message-box/message-box.component";
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { Post } from '../../../models/post.class';
 import { ChannelsService } from '../../../services/content/channels.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-thread',
@@ -17,29 +18,41 @@ import { ChannelsService } from '../../../services/content/channels.service';
   styleUrls: ['./thread.component.scss'],
   imports: [CommonModule, MessageItemComponent, MessageBoxComponent, PickerComponent]
 })
-export class ThreadComponent implements OnInit, OnDestroy {
+export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() post: Post | undefined;
   @Input() channelData: { id: string, name: string } | undefined;
   @Output() closeTh = new EventEmitter<boolean>();
+  @ViewChildren(MessageItemComponent, { read: ElementRef }) messageItems!: QueryList<ElementRef>;
 
   threadPosts: Post[] | undefined;
   currUid: string | null = null;
   reactionPicker = false;
 
   private authSub = new Subscription();
+  private scrollSub!: Subscription;
+  private postsSub!: Subscription;
 
   constructor(
     private authService: AuthService,
     public channelsService: ChannelsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
     this.authSub = this.subAuth();
   }
 
+  ngAfterViewInit(): void {
+    this.scrollSub = this.route.queryParams.subscribe(params => {
+      this.goToPost(params['post']);
+    });
+  }
+
   ngOnDestroy(): void {
     this.authSub.unsubscribe();
+    this.scrollSub.unsubscribe();
   }
 
   subAuth(): Subscription {
@@ -49,6 +62,28 @@ export class ThreadComponent implements OnInit, OnDestroy {
         this.currUid = uid;
       }
     });
+  }
+
+  goToPost(postId: string | undefined) {
+    console.log('thread trying to scroll to post', postId);
+    if (postId && postId.length > 0) {
+      this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
+        this.autoscrollToPost(elements, postId);
+      });
+      this.messageItems.notifyOnChanges();
+    }
+  }
+
+  autoscrollToPost(elements: QueryList<ElementRef>, postId: string) {
+    const postRef = elements.find(el => el.nativeElement.id === postId);
+    if(postRef) {
+      this.postsSub.unsubscribe();
+      postRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      this.router.navigate([], {
+        queryParams: { 'post': null },
+        queryParamsHandling: 'merge'
+      });
+    }
   }
 
   isCurrentUserAuthor(id: string): boolean {

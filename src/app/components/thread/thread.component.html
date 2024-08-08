@@ -17,7 +17,7 @@
         @for (thPost of this.channelsService.getChannelThreadPosts(this.channelData!.id, this.post?.post_id!); track
         $index) {
         <div class="thread-antworten">
-            <app-message-item [postUid]="thPost.user_id" [post]="thPost" [messageSender]="isCurrentUserAuthor(thPost.user_id)" />
+            <app-message-item [id]="thPost.post_id" [postUid]="thPost.user_id" [post]="thPost" [messageSender]="isCurrentUserAuthor(thPost.user_id)" />
         </div>
         }
     </div>
