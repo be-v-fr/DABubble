@@ -54,7 +54,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
   currentDate: number = Date.now();
   onInvalidOrForbiddenRoute: boolean = false;
   @ViewChildren('messageItem', { read: ElementRef }) messageItems!: QueryList<ElementRef>;
-  autoscrollComplete: boolean = false;
 
   constructor(
     private dialog: MatDialog,
@@ -106,15 +105,14 @@ export class MainChatComponent implements OnInit, OnDestroy {
       this.currentChannelAuthorName = this.usersService.getUserByUid(this.currentChannel.author_uid)?.name;
       this.activeUsers = this.activityService.getActiveUsers();
       this.scrollSub = this.route.queryParams.subscribe(params => {
-        if (!this.autoscrollComplete) { this.goToPost(params['post']) }
+        this.goToPost(params['post']);
       });
     } else { this.onInvalidOrForbiddenRoute = true };
   }
 
   goToPost(postId: string | undefined) {
-    if (postId) {
+    if (postId && postId.length > 0) {
       this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
-        console.log('subPosts triggered')
         this.handlePostAndThreadScrolling(elements, postId);
       });
       this.messageItems.notifyOnChanges();
@@ -123,8 +121,11 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   handlePostAndThreadScrolling(elements: QueryList<ElementRef>, postId: string) {
     const postRef = elements.find(el => el.nativeElement.id === postId);
-    postRef ? this.autoscrollToPost(postRef) : this.openThreadAndAutoscrollToFirstPost(elements, postId);
-    this.autoscrollComplete = true;
+    if(postRef) {
+      this.autoscrollToPost(postRef);
+    } else if(this.channelsService.isPostInThread(this.currentChannel, postId)) {
+      this.openThreadAndAutoscrollToFirstPost(elements, postId);
+    }
   }
 
   autoscrollToPost(postRef: ElementRef<any>) {

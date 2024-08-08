@@ -43,6 +43,19 @@ export class ChannelsService implements OnDestroy {
     return this.channels.slice();
   }
 
+  getAllThreadsReplies(channel: Channel): Post[] {
+    let replies: Post[] = [];
+    channel.posts.forEach(p => replies.push(...p.thread.posts));
+    return replies;
+  }
+
+  isPostInThread(channel: Channel, postId: string): boolean {
+    if(this.getAllThreadsReplies(channel).find(r => r.post_id === postId)) {
+      return true;
+    }
+    return false;
+  }
+
   async getChannel(id: string): Promise<Channel | undefined> {
     return this.channels.find(c => c.channel_id === id);
   }
