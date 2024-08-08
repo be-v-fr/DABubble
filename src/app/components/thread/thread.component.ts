@@ -68,7 +68,6 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   goToPost(postId: string | undefined) {
-    console.log('thread trying to scroll to post', postId);
     if (postId && postId.length > 0) {
       this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
         this.autoscrollToPost(elements, postId);
