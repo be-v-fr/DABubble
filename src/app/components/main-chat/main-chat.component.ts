@@ -106,7 +106,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
       this.currentChannelAuthorName = this.usersService.getUserByUid(this.currentChannel.author_uid)?.name;
       this.activeUsers = this.activityService.getActiveUsers();
       this.scrollSub = this.route.queryParams.subscribe(params => {
-        if(!this.autoscrollComplete) {this.goToPost(params['post'])}
+        if (!this.autoscrollComplete) { this.goToPost(params['post']) }
       });
     } else { this.onInvalidOrForbiddenRoute = true };
   }
@@ -123,27 +123,26 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   handlePostAndThreadScrolling(elements: QueryList<ElementRef>, postId: string) {
     const postRef = elements.find(el => el.nativeElement.id === postId);
-    if (postRef) {
-      this.autoscrollComplete = true;
-      this.postsSub.unsubscribe(); // unsubscribe not working
-      postRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
-      this.router.navigate([], {
-        queryParams: {'post': null},
-        queryParamsHandling: 'merge'
-      });
-    } else {
-      const { postInThread, thread_id } = this.channelsService.getPostInThread(this.currentChannel, postId);
-      if (thread_id.length > 0) {
-        console.log('thread found in channel data');
-        const firstPost: Post | undefined = this.currentChannel.posts.find(p => p.thread.thread_id === thread_id);
-        if (firstPost) {
-          const firstPostRef = elements.find(el => el.nativeElement.id === firstPost.post_id);
-          if (firstPostRef) {
-            firstPostRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
-            this.handleThread(thread_id);
-          }
-        }
-      }
+    postRef ? this.autoscrollToPost(postRef) : this.openThreadAndAutoscrollToFirstPost(elements, postId);
+    this.autoscrollComplete = true;
+  }
+
+  autoscrollToPost(postRef: ElementRef<any>) {
+    this.postsSub.unsubscribe();
+    postRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    this.router.navigate([], {
+      queryParams: { 'post': null },
+      queryParamsHandling: 'merge'
+    });
+  }
+
+  openThreadAndAutoscrollToFirstPost(elements: QueryList<ElementRef>, postId: string) {
+    const { postInThread, thread_id } = this.channelsService.getPostInThread(this.currentChannel, postId);
+    if (thread_id.length > 0) {
+      const firstPost: Post | undefined = this.currentChannel.posts.find(p => p.thread.thread_id === thread_id);
+      const firstPostRef = elements.find(el => el.nativeElement.id === firstPost?.post_id);
+      firstPostRef?.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      this.handleThread(thread_id);
     }
   }
 
