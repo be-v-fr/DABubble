@@ -53,7 +53,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   activeUsers: User[] = [];
   currentDate: number = Date.now();
   onInvalidOrForbiddenRoute: boolean = false;
-  @ViewChildren('messageItem', { read: ElementRef }) messageItems!: QueryList<ElementRef>;
+  @ViewChildren(MessageItemComponent, { read: ElementRef }) messageItems!: QueryList<ElementRef>;
 
   constructor(
     private dialog: MatDialog,
