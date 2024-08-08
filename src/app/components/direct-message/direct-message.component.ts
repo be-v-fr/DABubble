@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { MessageBoxComponent } from '../message-box/message-box.component';
 import { UserProfileCardComponent } from '../../user-profile-card/user-profile-card.component';
@@ -31,6 +31,8 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class DirectMessageComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
+  private scrollSub!: Subscription;
+  private postsSub!: Subscription;
 
   channelId?: string;
   channel?: Channel; // Directly use Channel type
@@ -40,13 +42,15 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
   online: boolean = true;
   emojiPicker: boolean = false;
   onInvalidOrForbiddenRoute: boolean = false;
+  @ViewChildren(MessageItemComponent, { read: ElementRef }) messageItems!: QueryList<ElementRef>;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private channelService: ChannelsService,
     public activityService: ActivityService,
-    private authService: AuthService
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -88,6 +92,7 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+    this.scrollSub.unsubscribe();
   }
 
   openUserProfile(): void {
@@ -105,12 +110,36 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
       if (channel) {
         this.channel = channel;
         this.initUsers(channel);
+        this.scrollSub = this.route.queryParams.subscribe(params => {
+          setTimeout(() => this.goToPost(params['post']), 20);
+        });
       } else {
         this.onInvalidOrForbiddenRoute = true;
         console.error('Channel not found');
       }
     } catch (error) {
       console.error('Error fetching channel:', error);
+    }
+  }
+
+  goToPost(postId: string | undefined) {
+    if (postId && postId.length > 0) {
+      this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
+        this.autoscrollToPost(elements, postId);
+      });
+      this.messageItems.notifyOnChanges();
+    }
+  }
+
+  autoscrollToPost(elements: QueryList<ElementRef>, postId: string) {
+    const postRef = elements.find(el => el.nativeElement.id === postId);
+    if(postRef) {
+      this.postsSub.unsubscribe();
+      postRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      this.router.navigate([], {
+        queryParams: { 'post': null },
+        queryParamsHandling: 'merge'
+      });
     }
   }
 
