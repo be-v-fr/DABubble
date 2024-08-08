@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
@@ -41,6 +41,8 @@ import { MembersOverviewComponent } from './members-overview/members-overview.co
 export class MainChatComponent implements OnInit, OnDestroy {
   private authSub!: Subscription;
   private channelSub!: Subscription;
+  private scrollSub!: Subscription;
+  private postsSub!: Subscription;
 
   currentUid: string | undefined;
   currentChannel = new Channel();
@@ -51,6 +53,8 @@ export class MainChatComponent implements OnInit, OnDestroy {
   activeUsers: User[] = [];
   currentDate: number = Date.now();
   onInvalidOrForbiddenRoute: boolean = false;
+  @ViewChildren('messageItem', { read: ElementRef }) messageItems!: QueryList<ElementRef>;
+  autoscrollComplete: boolean = false;
 
   constructor(
     private dialog: MatDialog,
@@ -84,6 +88,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.authSub.unsubscribe();
     this.channelSub.unsubscribe();
+    this.scrollSub.unsubscribe();
   }
 
   initChannel(channel_id: string): void {
@@ -100,7 +105,46 @@ export class MainChatComponent implements OnInit, OnDestroy {
       this.currentChannel = channel;
       this.currentChannelAuthorName = this.usersService.getUserByUid(this.currentChannel.author_uid)?.name;
       this.activeUsers = this.activityService.getActiveUsers();
+      this.scrollSub = this.route.queryParams.subscribe(params => {
+        if(!this.autoscrollComplete) {this.goToPost(params['post'])}
+      });
     } else { this.onInvalidOrForbiddenRoute = true };
+  }
+
+  goToPost(postId: string | undefined) {
+    if (postId) {
+      this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
+        console.log('subPosts triggered')
+        this.handlePostAndThreadScrolling(elements, postId);
+      });
+      this.messageItems.notifyOnChanges();
+    }
+  }
+
+  handlePostAndThreadScrolling(elements: QueryList<ElementRef>, postId: string) {
+    const postRef = elements.find(el => el.nativeElement.id === postId);
+    if (postRef) {
+      this.autoscrollComplete = true;
+      this.postsSub.unsubscribe(); // unsubscribe not working
+      postRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      this.router.navigate([], {
+        queryParams: {'post': null},
+        queryParamsHandling: 'merge'
+      });
+    } else {
+      const { postInThread, thread_id } = this.channelsService.getPostInThread(this.currentChannel, postId);
+      if (thread_id.length > 0) {
+        console.log('thread found in channel data');
+        const firstPost: Post | undefined = this.currentChannel.posts.find(p => p.thread.thread_id === thread_id);
+        if (firstPost) {
+          const firstPostRef = elements.find(el => el.nativeElement.id === firstPost.post_id);
+          if (firstPostRef) {
+            firstPostRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
+            this.handleThread(thread_id);
+          }
+        }
+      }
+    }
   }
 
   isCurrentUserAuthor(index: number): boolean {
