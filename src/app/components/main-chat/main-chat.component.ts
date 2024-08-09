@@ -48,6 +48,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   currentChannel = new Channel();
   currentChannelAuthorName?: string;
   currPost: Post | undefined;
+  savedPostsLength: number | null = null;
   openTh = false;
   emojiPicker = false;
   activeUsers: User[] = [];
@@ -107,6 +108,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
       this.scrollSub = this.route.queryParams.subscribe(params => {
         setTimeout(() => this.goToPost(params['post']), 20);
       });
+      this.handlePostsLength();
     } else { this.onInvalidOrForbiddenRoute = true };
   }
 
@@ -120,6 +122,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
   handlePostAndThreadScrolling(elements: QueryList<ElementRef>, postId: string) {
+    console.log('handle scrolling');
     const postRef = elements.find(el => el.nativeElement.id === postId);
     if (postRef) {
       this.autoscrollToPost(postRef);
@@ -145,6 +148,16 @@ export class MainChatComponent implements OnInit, OnDestroy {
       firstPostRef?.nativeElement.scrollIntoView();
       this.handleThread(thread_id);
     }
+  }
+
+  handlePostsLength(): void {
+    const currentLength = this.currentChannel.posts.length;
+    if (this.savedPostsLength && this.savedPostsLength < currentLength) {
+      const lastPost: Post = this.currentChannel.posts[currentLength - 1];
+      console.log('going to last post', lastPost);
+      this.goToPost(lastPost.post_id);
+    }
+    this.savedPostsLength = currentLength;
   }
 
   isCurrentUserAuthor(index: number): boolean {
