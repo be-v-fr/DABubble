@@ -15,6 +15,7 @@ import { MessageItemComponent } from '../message-item/message-item.component';
 import { ForbiddenChannelFeedbackComponent } from '../main-chat/forbidden-channel-feedback/forbidden-channel-feedback.component';
 import { AuthService } from '../../../services/auth.service';
 import { TimeService } from '../../../services/time.service';
+import { Post } from '../../../models/post.class';
 
 @Component({
   selector: 'app-direct-message',
@@ -37,6 +38,7 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
 
   channelId?: string;
   channel?: Channel; // Directly use Channel type
+  savedPostsLength: number | null = null;
   currUser?: User;
   recipient?: User;
 
@@ -70,6 +72,7 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
       this.channelService.channels$.subscribe(() => {
         if (this.channelId) {
           this.initChannel(this.channelId);
+          this.handlePostsLength();
         }
       })
     );
@@ -117,7 +120,6 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
         });
       } else {
         this.onInvalidOrForbiddenRoute = true;
-        console.error('Channel not found');
       }
     } catch (error) {
       console.error('Error fetching channel:', error);
@@ -135,13 +137,24 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
 
   autoscrollToPost(elements: QueryList<ElementRef>, postId: string) {
     const postRef = elements.find(el => el.nativeElement.id === postId);
-    if(postRef) {
+    if (postRef) {
       this.postsSub.unsubscribe();
       postRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
       this.router.navigate([], {
         queryParams: { 'post': null },
         queryParamsHandling: 'merge'
       });
+    }
+  }
+
+  handlePostsLength(): void {
+    if (this.channel) {
+      const currentLength = this.channel.posts.length;
+      if (!this.savedPostsLength || (this.savedPostsLength && this.savedPostsLength < currentLength)) {
+        const lastPost: Post = this.channel.posts[currentLength - 1];
+        this.goToPost(lastPost.post_id);
+      }
+      this.savedPostsLength = currentLength;
     }
   }
 
