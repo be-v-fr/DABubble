@@ -151,7 +151,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   handlePostsLength(): void {
     const currentLength = this.currentChannel.posts.length;
-    if (this.savedPostsLength && this.savedPostsLength < currentLength) {
+    if (!this.savedPostsLength || (this.savedPostsLength && this.savedPostsLength < currentLength)) {
       const lastPost: Post = this.currentChannel.posts[currentLength - 1];
       this.goToPost(lastPost.post_id);
     }
