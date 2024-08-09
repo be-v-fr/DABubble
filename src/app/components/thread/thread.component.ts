@@ -56,6 +56,7 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.authSub.unsubscribe();
+    this.channelsSub.unsubscribe();
     this.scrollSub.unsubscribe();
     this.postsSub.unsubscribe();
   }
