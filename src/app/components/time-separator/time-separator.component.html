@@ -1,4 +1,4 @@
-<div class="time-separator-container">
+<div class="time-separator-container" *ngIf="!hide">
     <div class="separator"></div>
     <div class="time">{{timeService.toDate(timestamp())}}</div>
     <div class="separator"></div>

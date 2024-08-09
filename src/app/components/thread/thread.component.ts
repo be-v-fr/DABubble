@@ -26,11 +26,11 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
   @Output() closeTh = new EventEmitter<boolean>();
   @ViewChildren(MessageItemComponent, { read: ElementRef }) messageItems!: QueryList<ElementRef>;
 
-  threadPosts: Post[] | undefined;
   currUid: string | null = null;
   reactionPicker = false;
 
   private authSub = new Subscription();
+  private channelsSub = new Subscription();
   private scrollSub!: Subscription;
   private postsSub!: Subscription;
 
@@ -45,6 +45,7 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.authSub = this.subAuth();
+    this.channelsSub = this.subChannels();
   }
 
   ngAfterViewInit(): void {
@@ -56,30 +57,33 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     this.authSub.unsubscribe();
     this.scrollSub.unsubscribe();
+    this.postsSub.unsubscribe();
   }
 
   subAuth(): Subscription {
     return this.authService.user$.subscribe(() => {
       const uid = this.authService.getCurrentUid();
-      if (uid) {
-        this.currUid = uid;
-      }
+      if (uid) { this.currUid = uid }
     });
   }
 
+  subChannels(): Subscription {
+    return this.channelsService.channels$.subscribe(() => {
+      const threadPosts = this.getPosts();
+      if (this.post && threadPosts) {this.post.thread.posts = threadPosts}
+    })
+  }
+
   goToPost(postId: string | undefined) {
-    if (postId && postId.length > 0) {
-      this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
-        this.autoscrollToPost(elements, postId);
-      });
-      this.messageItems.notifyOnChanges();
-    }
+    this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
+      (postId && postId.length > 0) ? this.autoscrollToPost(elements, postId) : this.autoscrollToLastPost(elements);
+    });
+    this.messageItems.notifyOnChanges();
   }
 
   autoscrollToPost(elements: QueryList<ElementRef>, postId: string) {
     const postRef = elements.find(el => el.nativeElement.id === postId);
-    if(postRef) {
-      this.postsSub.unsubscribe();
+    if (postRef) {
       postRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
       this.router.navigate([], {
         queryParams: { 'post': null },
@@ -88,9 +92,20 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  autoscrollToLastPost(elements: QueryList<ElementRef>) {
+    if (this.post) {
+      const lastPost: Post = this.post.thread.posts[this.post.thread.posts.length - 1];
+      this.autoscrollToPost(elements, this.post.thread.posts[this.post.thread.posts.length - 1].post_id);
+    }
+  }
+
   isCurrentUserAuthor(id: string): boolean {
-    // const firstPost = this.threadPosts.thread[index];
+    // const firstPost = this.post.thread.posts.thread[index];
     return this.currUid === id;
+  }
+
+  getPosts(): Post[] | undefined {
+    return this.channelsService.getChannelThreadPosts(this.channelData!.id, this.post?.post_id!);
   }
 
   onCreatePost(message: string) {

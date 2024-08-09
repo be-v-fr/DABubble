@@ -41,6 +41,12 @@ export class TimeService {
     return diffInDays;    
   }
 
+  isOnSameDay(timestamp_1: number, timestamp_2: number) {
+    const date_1 = new Date(timestamp_1).toISOString().split('T')[0];
+    const date_2 = new Date(timestamp_2).toISOString().split('T')[0];
+    return date_1 === date_2;
+  }
+
   getRelativeDay(diffInDays: number): string {
     switch(diffInDays) {
       case 0: return 'heute';
