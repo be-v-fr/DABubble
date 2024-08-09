@@ -122,7 +122,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
   handlePostAndThreadScrolling(elements: QueryList<ElementRef>, postId: string) {
-    console.log('handle scrolling');
     const postRef = elements.find(el => el.nativeElement.id === postId);
     if (postRef) {
       this.autoscrollToPost(postRef);
@@ -154,7 +153,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
     const currentLength = this.currentChannel.posts.length;
     if (this.savedPostsLength && this.savedPostsLength < currentLength) {
       const lastPost: Post = this.currentChannel.posts[currentLength - 1];
-      console.log('going to last post', lastPost);
       this.goToPost(lastPost.post_id);
     }
     this.savedPostsLength = currentLength;
