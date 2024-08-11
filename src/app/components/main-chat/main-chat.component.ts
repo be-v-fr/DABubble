@@ -173,17 +173,11 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
   openAddMembers(): void {
-    
-    if (this.openTh) {
-        console.log('Ein Thread ist geöffnet.'); 
+        if (this.openTh) {
                const dialogRef = this.dialog.open(AddMembersComponent, {
             data: { channelMembers: this.currentChannel.members, channel: this.currentChannel, isThreadOpen: this.openTh },
         });
-        console.log('Dialog opened with panelClass:', this.openTh ? 'shifted-dialog' : ''); 
-        
-
-    } else {
-        console.log('Kein Thread geöffnet.'); 
+            } else {
                 const dialogRef = this.dialog.open(AddMembersComponent, {
             data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
         });
