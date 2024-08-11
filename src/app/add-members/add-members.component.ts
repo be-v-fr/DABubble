@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UsersService } from '../../services/users.service';
@@ -16,6 +16,7 @@ import { AddMembersInputComponent } from './add-members-input/add-members-input.
   imports: [CommonModule, FormsModule, AddMembersInputComponent],
 })
 export class AddMembersComponent {
+  @Input() isThreadOpen: boolean = false; 
   selectedUsers: User[] = [];
   channel: Channel;
   isOpen = false;
@@ -23,9 +24,10 @@ export class AddMembersComponent {
   constructor(
     private dialogRef: MatDialogRef<AddMembersComponent>,
     private channelsService: ChannelsService,
-    @Inject(MAT_DIALOG_DATA) public data: { channel: Channel }
+    @Inject(MAT_DIALOG_DATA) public data: { channel: Channel; isThreadOpen: boolean  }
   ) {
     this.channel = data.channel;
+    this.isThreadOpen = data.isThreadOpen;
   }
 
   ngOnInit(): void {

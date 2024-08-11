@@ -18,7 +18,7 @@
             @for (post of currentChannel.posts; track post.post_id; let i = $index) {
             <div class="message-item-container">
                 <app-time-separator [timestamp]="post.date"
-                    *ngIf="i == 0 || !timeService.isOnSameDay(post.date, currentChannel.posts[i - 1].date)" />
+                    *ngIf="i == 0 || timeService.getDifferenceInDays(post.date) != timeService.getDifferenceInDays(currentChannel.posts[i - 1].date)" />
                 <app-message-item [id]="post.post_id" [post]="post" [messageSender]="isCurrentUserAuthor(i)"
                     [postUid]="getPostUid(i)" (threadId)="handleThread($event)" />
             </div>

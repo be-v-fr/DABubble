@@ -1,3 +1,4 @@
+<div>
 <div class="memberCard" *ngIf="memberListVisible">
     <div class="headline-close-btn">
         <div class="title-box">
@@ -13,11 +14,9 @@
                 <button class="member-btn" (click)="openUserProfile(user)">
                     <img [src]="user.avatarSrc" alt="{{user.name}}" />
                     <span class="member-name">{{ user.name }}</span>
-                    <div class="onlinedot"
-                        [ngClass]="{'online': activityService.getUserState(user).state == 'active'}" 
+                    <div class="onlinedot" [ngClass]="{'online': activityService.getUserState(user).state == 'active'}"
                         [ngClass]="{'idle': activityService.getUserState(user).state == 'idle'}"
-                        [ngClass]="{'offline': activityService.getUserState(user).state == 'loggedOut'}"
-                    ></div>
+                        [ngClass]="{'offline': activityService.getUserState(user).state == 'loggedOut'}"></div>
                 </button>
             </div>
         </div>

@@ -48,7 +48,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
   currentChannel = new Channel();
   currentChannelAuthorName?: string;
   currPost: Post | undefined;
-  savedPostsLength: number | null = null;
   openTh = false;
   emojiPicker = false;
   activeUsers: User[] = [];
@@ -108,7 +107,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
       this.scrollSub = this.route.queryParams.subscribe(params => {
         setTimeout(() => this.goToPost(params['post']), 20);
       });
-      this.handlePostsLength();
     } else { this.onInvalidOrForbiddenRoute = true };
   }
 
@@ -149,15 +147,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
     }
   }
 
-  handlePostsLength(): void {
-    const currentLength = this.currentChannel.posts.length;
-    if (!this.savedPostsLength || (this.savedPostsLength && this.savedPostsLength < currentLength)) {
-      const lastPost: Post = this.currentChannel.posts[currentLength - 1];
-      this.goToPost(lastPost.post_id);
-    }
-    this.savedPostsLength = currentLength;
-  }
-
   isCurrentUserAuthor(index: number): boolean {
     const firstPost = this.currentChannel.posts[index];
     return this.currentUid === firstPost.user_id;
@@ -184,10 +173,22 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
   openAddMembers(): void {
-    this.dialog.open(AddMembersComponent, {
-      data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
-    });
-  }
+    
+    if (this.openTh) {
+        console.log('Ein Thread ist geöffnet.'); 
+               const dialogRef = this.dialog.open(AddMembersComponent, {
+            data: { channelMembers: this.currentChannel.members, channel: this.currentChannel, isThreadOpen: this.openTh },
+        });
+        console.log('Dialog opened with panelClass:', this.openTh ? 'shifted-dialog' : ''); 
+        
+
+    } else {
+        console.log('Kein Thread geöffnet.'); 
+                const dialogRef = this.dialog.open(AddMembersComponent, {
+            data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
+        });
+    }
+}
 
   handleThread(threadId: string): void {
     if (this.currentChannel && this.currentChannel.posts) {
