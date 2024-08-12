@@ -127,12 +127,10 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
   }
 
   goToPost(postId: string | undefined) {
-    if (postId && postId.length > 0) {
-      this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
-        this.autoscrollToPost(elements, postId);
-      });
-      this.messageItems.notifyOnChanges();
-    }
+    this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
+      (postId && postId.length > 0) ? this.autoscrollToPost(elements, postId) : this.autoscrollToLastPost(elements);
+    });
+    this.messageItems.notifyOnChanges();
   }
 
   autoscrollToPost(elements: QueryList<ElementRef>, postId: string) {
@@ -145,6 +143,12 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
         queryParamsHandling: 'merge'
       });
     }
+  }
+
+  autoscrollToLastPost(elements: QueryList<ElementRef>) {
+    const array = elements.toArray();
+    const postRef = array.pop();
+    if (postRef) { postRef.nativeElement.scrollIntoView({}); }
   }
 
   handlePostsLength(): void {

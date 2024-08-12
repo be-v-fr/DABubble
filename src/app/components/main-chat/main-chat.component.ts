@@ -111,12 +111,10 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
   goToPost(postId: string | undefined) {
-    if (postId && postId.length > 0) {
-      this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
-        this.handlePostAndThreadScrolling(elements, postId);
-      });
-      this.messageItems.notifyOnChanges();
-    }
+    this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
+      (postId && postId.length > 0) ? this.handlePostAndThreadScrolling(elements, postId) : this.autoscrollToLastPost(elements);
+    });
+    this.messageItems.notifyOnChanges();
   }
 
   handlePostAndThreadScrolling(elements: QueryList<ElementRef>, postId: string) {
@@ -135,6 +133,12 @@ export class MainChatComponent implements OnInit, OnDestroy {
       queryParams: { 'post': null },
       queryParamsHandling: 'merge'
     });
+  }
+
+  autoscrollToLastPost(elements: QueryList<ElementRef>) {
+    const array = elements.toArray();
+    const postRef = array.pop();
+    if (postRef) { postRef.nativeElement.scrollIntoView({}); }
   }
 
   openThreadAndAutoscrollToFirstPost(elements: QueryList<ElementRef>, postId: string) {
@@ -173,16 +177,16 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
   openAddMembers(): void {
-        if (this.openTh) {
-               const dialogRef = this.dialog.open(AddMembersComponent, {
-            data: { channelMembers: this.currentChannel.members, channel: this.currentChannel, isThreadOpen: this.openTh },
-        });
-            } else {
-                const dialogRef = this.dialog.open(AddMembersComponent, {
-            data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
-        });
+    if (this.openTh) {
+      const dialogRef = this.dialog.open(AddMembersComponent, {
+        data: { channelMembers: this.currentChannel.members, channel: this.currentChannel, isThreadOpen: this.openTh },
+      });
+    } else {
+      const dialogRef = this.dialog.open(AddMembersComponent, {
+        data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
+      });
     }
-}
+  }
 
   handleThread(threadId: string): void {
     if (this.currentChannel && this.currentChannel.posts) {
