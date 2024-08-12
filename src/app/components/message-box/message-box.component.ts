@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { FormsModule, NgForm, NgModel } from '@angular/forms';
 import { Post } from '../../../models/post.class';
 
 @Component({
@@ -9,7 +9,7 @@ import { Post } from '../../../models/post.class';
   templateUrl: './message-box.component.html',
   styleUrl: './message-box.component.scss'
 })
-export class MessageBoxComponent {
+export class MessageBoxComponent implements AfterViewInit {
   data = {
     message: ''
   }
@@ -17,6 +17,15 @@ export class MessageBoxComponent {
   @Input() channelName?: string;
   @Input() recipient?: string;
   @Output() sent = new EventEmitter<string>();
+  @ViewChild('messageBox') messageBoxInput!: ElementRef<HTMLInputElement>;
+
+  ngAfterViewInit(): void {
+    this.autofocus();
+  }
+
+  autofocus() {
+    setTimeout(() => this.messageBoxInput.nativeElement.focus(), 200);
+  }
 
   getPlaceholder() {
     if(this.replying) {

@@ -1,6 +1,6 @@
 <form class="message-box-container" (ngSubmit)="onSubmit(messageForm)" #messageForm="ngForm">
     <input [placeholder]="getPlaceholder()" [(ngModel)]="data.message" name="messageBox"
-    #messageBox="ngModel" required>
+    #messageBox required>
     <div class="message-box-footer">
         <!-- TO DO: Implement actions -->
         <div class="message-box-actions">
