@@ -16,7 +16,7 @@
     <div class="message-content">
         <div class="user-name-container">
             <div class="user-name" (click)="openUserProfile(post.user_id)">{{postUser.name}}</div>
-            <span>{{timeService.toClock(post.date)}} Uhr</span>
+            <span>{{ timeService.toClock(post.date) }} Uhr</span>
         </div>
         <div class="message">
             <div class="message-text">{{ post.message }}</div>
