@@ -1,34 +1,40 @@
 @import '../../styles.scss';
 
 button.nav-button {
+    z-index: 1;
     position: absolute;
-    top: 600px;
+    padding: 23px 14px;
+    top: 50%;
+    width: 60px;
+    height: fit-content;
+    border-radius: 0 30px 30px 0;
+    background-color: white;
+    box-shadow: 4px 4px 7px 0px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 24px;
-    max-width: 347px;
-    padding: 23px 14px;
-    border-radius: 0 0 30px 30px;
-    background-color: white;
-    z-index: 1;
-    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
-    transform: rotate(-90deg);
+    transform: translateY(-30%);
     transition: left 0.3s ease;
-
+    .inner-button {
+        height: fit-content;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 10px;
+        span {
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 24px;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+        }
+    }
     .close {
-        transform: rotate(90deg);
+        transform: rotate(180deg);
     }
-
-    .open {
-        transform: rotate(-90deg);
-    }
-
     &:hover {
         color: $purple-blue-bright;
-
         img {
             content: url('/assets/img/icons/show_menu_hover.svg');
         }
@@ -37,14 +43,18 @@ button.nav-button {
 
 .main-container {
     position: relative;
-    padding: 22px;
+    padding: 0 20px 25px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 22px;
+    gap: 0px;
     height: 100%;
     width: 100%;
-    max-height: calc(100% - 150px);
+    max-height: calc(100% - 115px);
+    transition: transform 0.3s;
+    &.expanded {
+        gap: 20px;
+    }
 
     app-navigation,
     app-thread {

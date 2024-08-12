@@ -1,15 +1,21 @@
-import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, Input, ViewChild } from '@angular/core';
 import { Channel } from '../../../../models/channel.class';
 import { User } from '../../../../models/user.class';
+import { UsersService } from '../../../../services/users.service';
 import { Post } from '../../../../models/post.class';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TimeService } from '../../../../services/time.service';
+import { Router, RouterLink } from '@angular/router';
+import { MembersOverviewComponent } from '../../../components/main-chat/members-overview/members-overview.component';
+import { UserProfileCardComponent } from '../../../user-profile-card/user-profile-card.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
     selector: 'app-search',
     standalone: true,
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, RouterLink, MembersOverviewComponent],
     templateUrl: './search.component.html',
     styleUrl: './search.component.scss'
 })
@@ -21,9 +27,19 @@ export class SearchComponent {
     searchResultsChannels: Channel[] = [];
     searchResultsUsers: User[] = [];
     searchResultsPosts: Post[] = [];
+    searchResultsPostsDisplay: string[] = [];
+    searchResultsPostAuthors: string[] = [];
+    postChannelIndices: number[] = [];
     hidingResults: boolean = false;
     @ViewChild('searchbar', { read: ElementRef }) searchbar!: ElementRef<HTMLInputElement>;
     public extended: 'channels' | 'users' | 'posts' | null = null;
+    private usersService = inject(UsersService);
+    public timeService = inject(TimeService);
+
+    constructor(
+        private dialog: MatDialog,
+        private router: Router    
+    ) { }
 
     search(): void {
         if (this.searchInput.length > 0) {
@@ -61,6 +77,8 @@ export class SearchComponent {
             this.filterPostsToResults(posts, term);
             postsWithThread.forEach(p => this.filterPostsToResults(p.thread.posts, term));
         });
+        this.setResultsPostsDisplay(term);
+        this.setResultsPostInfo();
     }
 
     filterPostsToResults(posts: Post[], term: string): void {
@@ -69,6 +87,66 @@ export class SearchComponent {
 
     filterSinglePostsArray(posts: Post[], term: string): Post[] {
         return posts.filter(p => p.message.toLowerCase().includes(term));
+    }
+
+    setResultsPostsDisplay(term: string): void {
+        this.searchResultsPostsDisplay = [];
+        this.searchResultsPosts.forEach(p => {
+            const displayedMessage = this.getResultsSinglePostDisplay(p.message, term);
+            this.searchResultsPostsDisplay.push(displayedMessage);
+        });
+    }
+
+    getResultsSinglePostDisplay(message: string, term: string): string {
+        const termIndex = message.toLowerCase().indexOf(term.toLowerCase());
+        let { start, prependEllipsis } = this.adjustPostDisplayStart(message, termIndex);
+        let { end, appendEllipsis } = this.adjustPostDisplayEnd(message, termIndex, term);
+        let displayedMessage = message.slice(start, end);
+        if (displayedMessage.length > 80) {
+            displayedMessage = displayedMessage.slice(0, 80);
+            appendEllipsis = true;
+        }
+        displayedMessage = this.addEllipsis(displayedMessage, prependEllipsis, appendEllipsis);
+        return displayedMessage;
+    }
+
+    adjustPostDisplayStart(message: string, termIndex: number): { start: number, prependEllipsis: boolean } {
+        let start = Math.max(0, termIndex - 32);
+        let prependEllipsis = false;
+        if (start > 0) {
+            const firstSpace = message.slice(start).search(/[ \.,!?]/);
+            if (firstSpace !== -1) { start += firstSpace + 1; }
+            prependEllipsis = true;
+        }
+        return { start, prependEllipsis };
+    }
+
+    adjustPostDisplayEnd(message: string, termIndex: number, term: string): { end: number, appendEllipsis: boolean } {
+        let end = Math.min(message.length, termIndex + term.length + 32);
+        let appendEllipsis = false;
+        if (end < message.length) {
+            const lastSpace = message.slice(0, end).lastIndexOf(' ');
+            if (lastSpace !== -1) { end = lastSpace; }
+            appendEllipsis = true;
+        }
+        return { end, appendEllipsis };
+    }
+
+    addEllipsis(message: string, prependEllipsis: boolean, appendEllipsis: boolean): string {
+        if (prependEllipsis) { message = '...' + message; }
+        if (appendEllipsis) { message = message + '...'; }
+        return message;
+    }
+
+    setResultsPostInfo(): void {
+        this.searchResultsPostAuthors = [];
+        this.postChannelIndices = [];
+        this.searchResultsPosts.forEach(p => {
+            const author: User | undefined = this.usersService.getUserByUid(p.user_id);
+            const channel: Channel | undefined = this.userChannels.find(c => c.channel_id === p.channel_id);
+            this.searchResultsPostAuthors.push(author ? author.name : 'Unbekannter Nutzer');
+            this.postChannelIndices.push(channel ? this.userChannels.indexOf(channel) : -1);
+        })
     }
 
     onSearchClick(e: Event): void {
@@ -108,5 +186,10 @@ export class SearchComponent {
 
     toggleListExtension(list: 'channels' | 'users' | 'posts'): void {
         this.extended = (this.extended === list ? null : list);
+    }
+
+    openUserProfile(user: User): void {
+        this.dialog.open(UserProfileCardComponent, { data: user });
+        this.hideResults();
     }
 }

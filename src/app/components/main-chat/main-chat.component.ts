@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
@@ -20,6 +20,7 @@ import { ActivityService } from '../../../services/activity.service';
 import { UsersService } from '../../../services/users.service';
 import { AddMembersComponent } from '../../add-members/add-members.component';
 import { ForbiddenChannelFeedbackComponent } from './forbidden-channel-feedback/forbidden-channel-feedback.component';
+import { MembersOverviewComponent } from './members-overview/members-overview.component';
 
 @Component({
   selector: 'app-main-chat',
@@ -33,12 +34,15 @@ import { ForbiddenChannelFeedbackComponent } from './forbidden-channel-feedback/
     MessageBoxComponent,
     TimeSeparatorComponent,
     ThreadComponent,
-    ForbiddenChannelFeedbackComponent
+    ForbiddenChannelFeedbackComponent,
+    MembersOverviewComponent
   ]
 })
 export class MainChatComponent implements OnInit, OnDestroy {
   private authSub!: Subscription;
   private channelSub!: Subscription;
+  private scrollSub!: Subscription;
+  private postsSub!: Subscription;
 
   currentUid: string | undefined;
   currentChannel = new Channel();
@@ -49,6 +53,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   activeUsers: User[] = [];
   currentDate: number = Date.now();
   onInvalidOrForbiddenRoute: boolean = false;
+  @ViewChildren(MessageItemComponent, { read: ElementRef }) messageItems!: QueryList<ElementRef>;
 
   constructor(
     private dialog: MatDialog,
@@ -82,6 +87,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.authSub.unsubscribe();
     this.channelSub.unsubscribe();
+    this.scrollSub.unsubscribe();
   }
 
   initChannel(channel_id: string): void {
@@ -98,7 +104,47 @@ export class MainChatComponent implements OnInit, OnDestroy {
       this.currentChannel = channel;
       this.currentChannelAuthorName = this.usersService.getUserByUid(this.currentChannel.author_uid)?.name;
       this.activeUsers = this.activityService.getActiveUsers();
+      this.scrollSub = this.route.queryParams.subscribe(params => {
+        setTimeout(() => this.goToPost(params['post']), 20);
+      });
     } else { this.onInvalidOrForbiddenRoute = true };
+  }
+
+  goToPost(postId: string | undefined) {
+    if (postId && postId.length > 0) {
+      this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
+        this.handlePostAndThreadScrolling(elements, postId);
+      });
+      this.messageItems.notifyOnChanges();
+    }
+  }
+
+  handlePostAndThreadScrolling(elements: QueryList<ElementRef>, postId: string) {
+    const postRef = elements.find(el => el.nativeElement.id === postId);
+    if (postRef) {
+      this.autoscrollToPost(postRef);
+    } else if (this.channelsService.isPostInThread(this.currentChannel, postId)) {
+      this.openThreadAndAutoscrollToFirstPost(elements, postId);
+    }
+  }
+
+  autoscrollToPost(postRef: ElementRef<any>) {
+    this.postsSub.unsubscribe();
+    postRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    this.router.navigate([], {
+      queryParams: { 'post': null },
+      queryParamsHandling: 'merge'
+    });
+  }
+
+  openThreadAndAutoscrollToFirstPost(elements: QueryList<ElementRef>, postId: string) {
+    const { postInThread, thread_id } = this.channelsService.getPostInThread(this.currentChannel, postId);
+    if (thread_id.length > 0) {
+      const firstPost: Post | undefined = this.currentChannel.posts.find(p => p.thread.thread_id === thread_id);
+      const firstPostRef = elements.find(el => el.nativeElement.id === firstPost?.post_id);
+      firstPostRef?.nativeElement.scrollIntoView();
+      this.handleThread(thread_id);
+    }
   }
 
   isCurrentUserAuthor(index: number): boolean {
@@ -109,10 +155,6 @@ export class MainChatComponent implements OnInit, OnDestroy {
   getPostUid(index: number) {
     const currentPost = this.currentChannel.posts[index];
     return currentPost.user_id;
-  }
-
-  getUserFromMembers(uid: string) {
-    return this.usersService.getUserByUid(uid) || new User;
   }
 
   onCreatePost(message: string): void {
@@ -130,17 +172,17 @@ export class MainChatComponent implements OnInit, OnDestroy {
     this.dialog.open(EditChannelComponent, { data: this.currentChannel });
   }
 
-  openMemberList(): void {
-    this.dialog.open(MemberListComponent, {
-      data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
-    });
-  }
-
   openAddMembers(): void {
-    this.dialog.open(AddMembersComponent, {
-      data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
-    });
-  }
+        if (this.openTh) {
+               const dialogRef = this.dialog.open(AddMembersComponent, {
+            data: { channelMembers: this.currentChannel.members, channel: this.currentChannel, isThreadOpen: this.openTh },
+        });
+            } else {
+                const dialogRef = this.dialog.open(AddMembersComponent, {
+            data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
+        });
+    }
+}
 
   handleThread(threadId: string): void {
     if (this.currentChannel && this.currentChannel.posts) {

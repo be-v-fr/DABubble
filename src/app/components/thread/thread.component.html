@@ -10,15 +10,23 @@
     </div>
     <div class="thread-content">
         <div class="thread-message">
+            <app-time-separator [timestamp]="post.date" *ngIf="post" />
             <app-message-item [postUid]="post?.user_id!" [post]="post!" [isMainPostThread]="true"
-                [messageSender]="true" />
-            <div class="antworten-separator">{{ threadPosts?.length }} Antworten</div>
+                [messageSender]="isCurrentUserAuthor(post?.user_id!)" />
+            <div class="antworten-separator">{{ post?.thread?.posts?.length }} Antworten</div>
         </div>
-        @for (thPost of this.channelsService.getChannelThreadPosts(this.channelData!.id, this.post?.post_id!); track
-        $index) {
+        @if(post && post.thread) {
+        @for (thPost of post.thread.posts; track thPost; let i = $index) {
         <div class="thread-antworten">
-            <app-message-item [postUid]="thPost.user_id" [post]="thPost" [messageSender]="false" />
+            @if(i == 0) {
+            <app-time-separator [timestamp]="thPost.date" [previous]="post.date" />
+            } @else {
+            <app-time-separator [timestamp]="thPost.date" [previous]="post.thread.posts[i - 1].date" />
+            }
+            <app-message-item [id]="thPost.post_id" [postUid]="thPost.user_id" [post]="thPost"
+                [messageSender]="isCurrentUserAuthor(thPost.user_id)" />
         </div>
+        }
         }
     </div>
     <app-message-box [replying]="true" (sent)="onCreatePost($event)" />

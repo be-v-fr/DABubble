@@ -6,7 +6,8 @@
         <button type="button" class="searchbar-icon material-icons-outlined"
             (click)="onCloseSearchClick()">close</button>
         } @else {
-        <button type="button" class="searchbar-icon material-icons-outlined" (click)="onSearchClick($event)">search</button>
+        <button type="button" class="searchbar-icon material-icons-outlined"
+            (click)="onSearchClick($event)">search</button>
         }
         @if(
         searchInput.length > 0 && !hidingResults &&
@@ -22,7 +23,11 @@
                 </p>
                 <ul class="search-results-list">
                     @for(channel of searchResultsChannels; track channel) {
-                    <li># {{ channel.name }}</li>
+                    <li class="search-results-channel" [routerLink]="['/main-chat', channel.channel_id]"
+                        (click)="clearSearch()">
+                        <span># {{ channel.name }}</span>
+                        <app-members-overview [channel]="channel" />
+                    </li>
                     }
                 </ul>
             </div>
@@ -35,7 +40,7 @@
                 </p>
                 <ul class="search-results-list">
                     @for(user of searchResultsUsers; track user) {
-                    <li>
+                    <li (click)="openUserProfile(user)">
                         <img [src]="user.avatarSrc" alt="Avatar" />
                         {{ user.name }}
                     </li>
@@ -50,8 +55,25 @@
                     Posts
                 </p>
                 <ul class="search-results-list">
-                    @for(post of searchResultsPosts; track post) {
-                    <li>{{ post.message }}</li>
+                    @for(post of searchResultsPosts; track post; let i = $index) {
+                    <li class="search-results-post" *ngIf="postChannelIndices[i] != -1" (click)="clearSearch()"
+                        [routerLink]="[userChannels[postChannelIndices[i]].isPmChannel ? '/direct-message' : '/main-chat', post.channel_id]"
+                        [queryParams]="{post: post.post_id}">
+                        <div class="top-line">
+                            <span>
+                                <b>{{ searchResultsPostAuthors[i] }}</b>
+                            </span>
+                            <span class="date">
+                                {{timeService.toRelativeDateWithClock(post.date)}}
+                            </span>
+                            <span class="channel-name" *ngIf="!userChannels[postChannelIndices[i]].isPmChannel">
+                                # {{userChannels[postChannelIndices[i]].name}}
+                            </span>
+                        </div>
+                        <span class="bottom-line">
+                            <i>&bdquo;{{ searchResultsPostsDisplay[i] }}&ldquo;</i>
+                        </span>
+                    </li>
                     }
                 </ul>
             </div>

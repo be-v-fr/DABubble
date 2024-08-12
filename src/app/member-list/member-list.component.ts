@@ -52,8 +52,8 @@ export class MemberListComponent {
     }
   }
 
-  openUserProfile(): void {
-    this.dialog.open(UserProfileCardComponent);
+  openUserProfile(user: User): void {
+    this.dialog.open(UserProfileCardComponent, {data: user});
   }
 
   closeCard() {

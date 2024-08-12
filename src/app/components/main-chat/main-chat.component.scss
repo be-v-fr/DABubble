@@ -3,10 +3,15 @@
 .main-container {
   height: 100%;
   display: flex;
-  gap: 22px;
-
+  gap: 20px;
+  overflow: hidden;
+  border-radius: 30px;
+  
   .main-section {
+    overflow: hidden;
+    position: relative;
     height: 100%;
+    width: 100%;
     display: flex;
     flex-grow: 4;
     position: relative;
@@ -16,6 +21,7 @@
     border-radius: 30px;
 
     .main-header {
+      position: relative;
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -51,39 +57,6 @@
             display: flex;
             align-items: center;
             gap: 10px;
-
-        .members-btn {
-            box-sizing: border-box;
-            padding: 3px 10px;
-            width: fit-content;
-            height: 46px;
-            border-radius: 100px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.2s ease, background-color 0.2s ease;
-            &:hover {
-                color: $purple-blue-bright;
-                background-color: #eceefe;
-            }
-            .m-images-container {
-                margin-left: 10px;
-                max-width: 100px;
-                height: 40px;
-                img {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 30px;
-                    border: 2px solid white;
-                    margin-left: -10px;
-                }
-            }
-            span {
-                font-size: 20px;
-                font-weight: 700;
-            }
-        }
 
         .add-members-btn {
             width: 40px;

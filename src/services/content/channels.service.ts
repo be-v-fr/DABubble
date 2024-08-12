@@ -43,16 +43,40 @@ export class ChannelsService implements OnDestroy {
     return this.channels.slice();
   }
 
+  getAllThreadsReplies(channel: Channel): Post[] {
+    let replies: Post[] = [];
+    channel.posts.forEach(p => replies.push(...p.thread.posts));
+    return replies;
+  }
+
+  isPostInThread(channel: Channel, postId: string): boolean {
+    if(this.getAllThreadsReplies(channel).find(r => r.post_id === postId)) {
+      return true;
+    }
+    return false;
+  }
+
   async getChannel(id: string): Promise<Channel | undefined> {
     return this.channels.find(c => c.channel_id === id);
   }
 
-  getChannelThreadPosts(id: string, post_id: string): Post[] | undefined {
-    const channel = this.channels.find(c => c.channel_id === id);
+  getChannelThreadPosts(channel_id: string, post_id: string): Post[] | undefined {
+    const channel = this.channels.find(c => c.channel_id === channel_id);
     const post = channel?.posts.find(p => p.post_id === post_id);
     return post?.thread.posts;
   }
 
+  getPostInThread(channel: Channel, post_id: string): {postInThread: Post | undefined, thread_id: string} {
+    let postInThread: Post | undefined = undefined;
+    let thread_id: string = '';
+    channel.posts.forEach(p => {
+      if (postInThread === undefined) {
+        postInThread = p.thread.posts.find(p => p.post_id === post_id);
+        if (postInThread) { thread_id = p.thread.thread_id }
+      }
+    });
+    return { postInThread, thread_id };
+  }
 
   async addChannel(channel: Channel): Promise<string> {
     await this.storeChannel(channel);

@@ -27,13 +27,24 @@ export class TimeService {
   }
 
   toRelativeDate(timestamp: number): string {
+    const diffInDays = this.getDifferenceInDays(timestamp);
+    return this.getRelativeDay(diffInDays);
+  }
+
+  getDifferenceInDays(timestamp: number) {
     const now = new Date();
     const date = new Date(timestamp);
     const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const msInDay = 86400000;
     const diffInMs = midnight.getTime() - date.getTime();
     const diffInDays = Math.floor(diffInMs / msInDay) + 1;
-    return this.getRelativeDay(diffInDays);
+    return diffInDays;    
+  }
+
+  isOnSameDay(timestamp_1: number, timestamp_2: number) {
+    const date_1 = new Date(timestamp_1).toISOString().split('T')[0];
+    const date_2 = new Date(timestamp_2).toISOString().split('T')[0];
+    return date_1 === date_2;
   }
 
   getRelativeDay(diffInDays: number): string {

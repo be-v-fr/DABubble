@@ -1,12 +1,13 @@
-<form class="container" #addMembersForm="ngForm">
+<form class="container" [class.show]="isOpen" [class.thread-open]="isThreadOpen" #addMembersForm="ngForm">
   <div class="headlineAndCloseBtn">
+    <button class="close-thread-btn">
+      <span class="material-icons-outlined" (click)="closeCard()">close</span>
+    </button>
     <div>
       <span>Leute hinzufügen</span>
       <span># Entwicklerteam</span>
     </div>
-    <button class="close-thread-btn">
-      <span class="material-icons-outlined" (click)="closeCard()">close</span>
-    </button>
+   
   </div>
   <div class="inputContainer">
     <app-add-members-input [(selectedUsers)]="selectedUsers" [channel]="channel" (submit)="addUsersToMembers()"/>
