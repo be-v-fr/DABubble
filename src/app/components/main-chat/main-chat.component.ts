@@ -54,6 +54,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   currentDate: number = Date.now();
   onInvalidOrForbiddenRoute: boolean = false;
   @ViewChildren(MessageItemComponent, { read: ElementRef }) messageItems!: QueryList<ElementRef>;
+  savedPostsLength: number | null = null;
 
   constructor(
     private dialog: MatDialog,
@@ -112,9 +113,21 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   goToPost(postId: string | undefined) {
     this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
+      if(this.hasPostLengthChanged(elements)) {
       (postId && postId.length > 0) ? this.handlePostAndThreadScrolling(elements, postId) : this.autoscrollToLastPost(elements);
+    }
     });
     this.messageItems.notifyOnChanges();
+  }
+
+  hasPostLengthChanged(elements: QueryList<ElementRef>): boolean {
+    const currentLength = elements.toArray().length;
+    if(currentLength != this.savedPostsLength) {
+      this.savedPostsLength = currentLength;
+      return true;
+    } else {
+      return false;
+    }
   }
 
   handlePostAndThreadScrolling(elements: QueryList<ElementRef>, postId: string) {
