@@ -64,17 +64,15 @@ export class SearchComponent {
     }
 
     searchChannels(term: string): void {
-        if(term.startsWith(' ')) {term = term.slice(1)}
+        if (term.startsWith(' ')) { term = term.slice(1) }
         this.searchResultsChannels = this.userChannels.filter(c => {
-            return !c.isPmChannel && (
-                c.name.toLowerCase().includes(term) ||
-                c.description.toLowerCase().includes(term)
-            );
+            return !c.isPmChannel &&
+                (c.name.toLowerCase().includes(term) || c.description.toLowerCase().includes(term));
         });
     }
 
     searchUsers(term: string): void {
-        if(term.startsWith(' ')) {term = term.slice(1)}
+        if (term.startsWith(' ')) { term = term.slice(1) }
         this.searchResultsUsers = this.users.filter(u => {
             return u.uid != this.mainUser.uid &&
                 (u.name.toLowerCase().includes(term) || u.email.toLowerCase().includes(term));
