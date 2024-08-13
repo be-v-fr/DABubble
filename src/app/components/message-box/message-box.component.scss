@@ -1,6 +1,7 @@
 @import '../../../styles.scss';
 
 .message-box-container {
+    position: relative;
     height: 145px;
     display: flex;
     flex-direction: column;
@@ -57,9 +58,54 @@
 
         }
 
-
         .send-btn {
             color: $purple-blue;
+        }
+    }
+
+    .members-list {
+        position: absolute;
+        left: 0;
+        bottom: calc(100% + 0.5px);
+        background: white;
+        list-style-type: none;
+        font-size: 21px;
+        max-width: 400px;
+        max-height: 354px;
+        @include scrollbar();
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px 20px;
+        border-radius: 20px 20px 0 20px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+        animation: expand 225ms ease;
+        @keyframes expand {
+            from {max-height: 0;}
+            to {max-height: 354px;}
+        }
+        li {
+            width: 100%;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            border-radius: 30px;
+            padding: 8px 10px;
+            @include transition(75ms);
+            cursor: pointer;
+            img {
+                margin-left: -5px;
+                margin-right: 15px;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            &:hover {
+                color: $purple-blue-bright;
+                background-color: $violet-bright;
+            }
         }
     }
 }

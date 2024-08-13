@@ -1,23 +1,28 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
 import { FormsModule, NgForm, NgModel } from '@angular/forms';
 import { Post } from '../../../models/post.class';
+import { Channel } from '../../../models/channel.class';
+import { CommonModule } from '@angular/common';
+import { User } from '../../../models/user.class';
+
 
 @Component({
   selector: 'app-message-box',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './message-box.component.html',
   styleUrl: './message-box.component.scss'
 })
 export class MessageBoxComponent implements AfterViewInit {
   data = {
     message: ''
-  }
+  };
   @Input() replying: boolean = false;
-  @Input() channelName?: string;
+  @Input() channel?: Channel;
   @Input() recipient?: string;
   @Output() sent = new EventEmitter<string>();
   @ViewChild('messageBox') messageBoxInput!: ElementRef<HTMLInputElement>;
+  showingMembersList: boolean = true; // set to false later
 
   ngAfterViewInit(): void {
     this.autofocus();
@@ -30,13 +35,17 @@ export class MessageBoxComponent implements AfterViewInit {
   getPlaceholder() {
     if(this.replying) {
       return 'Antworten...';
-    } else if(this.channelName) {
-      return `Nachricht an # ${this.channelName}`;
+    } else if(this.channel && this.channel.name) {
+      return `Nachricht an # ${this.channel.name}`;
     } else if(this.recipient) {
       return `Nachricht an @${this.recipient}`;
     } else {
       return 'Neue Nachricht';
     }
+  }
+
+  onContainerClick() {
+    this.messageBoxInput.nativeElement.focus();
   }
 
   /**
@@ -49,5 +58,22 @@ export class MessageBoxComponent implements AfterViewInit {
       // clear form
       form.reset()
     }
+  }
+
+  toggleMembersList(e: Event): void {
+    e.stopPropagation();
+    e.preventDefault();
+    this.showingMembersList = !this.showingMembersList;
+    this.messageBoxInput.nativeElement.focus();
+  }
+
+  @HostListener('document:click', ['$event'])
+  hideMembersList(): void {
+      this.showingMembersList = false;
+  }
+
+  addToMessage(string: string) {
+    this.data.message += string;
+    this.messageBoxInput.nativeElement.focus();
   }
 }

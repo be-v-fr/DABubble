@@ -43,7 +43,7 @@
             </div>
             }
         </div>
-        <app-message-box [channelName]="currentChannel.name" (sent)="onCreatePost($event)" />
+        <app-message-box [channel]="currentChannel" (sent)="onCreatePost($event)" />
     </section>
     <app-thread class="thread" *ngIf="openTh" (closeTh)="closeThread($event)" [post]="currPost!"
         [channelData]="{ id: this.currentChannel.channel_id, name: this.currentChannel.name }" />
