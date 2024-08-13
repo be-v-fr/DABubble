@@ -12,15 +12,19 @@ import { AuthService } from '../../../services/auth.service';
 import { ChannelsService } from '../../../services/content/channels.service';
 import { Reaction } from '../../../models/reaction.class';
 import { ReactionService } from '../../../services/content/reaction.service';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-message-item',
   standalone: true,
-  imports: [CommonModule, TimeSeparatorComponent],
+  imports: [CommonModule, FormsModule, TimeSeparatorComponent],
   templateUrl: './message-item.component.html',
   styleUrls: ['./message-item.component.scss']
 })
 export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
+
+  isOnEdit = false;
+  messageToUpdate = '';
 
   @Input() post: Post = new Post();
   @Input() lastReply = this.post?.thread.posts[this.post.thread.posts.length - 1]?.date ?? null;
@@ -47,6 +51,7 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.authSub = this.subAuth();
+    this.messageToUpdate = this.post.message;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -87,6 +92,24 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
         data: { uid }
       });
     }
+  }
+
+  onEditMessage() {
+    this.messageToUpdate = this.post.message;
+    this.isOnEdit = true;
+  }
+
+  onSubmit(form: NgForm) {
+    if (form.submitted && form.valid) {
+      this.channelsService.updatePost(this.post.channel_id, this.post.post_id, this.messageToUpdate);
+      this.isOnEdit = false;
+      // clear form
+      form.reset()
+    }
+  }
+
+  cancelEditMessage() {
+    this.isOnEdit = false;
   }
 
   objectKeys(obj: any): string[] {

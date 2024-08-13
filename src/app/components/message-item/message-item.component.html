@@ -1,18 +1,20 @@
 <div *ngIf="post" class="message-container" [class.reversed]="messageSender">
-    <div class="reaction-bar-container" *ngIf="!isMainPostThread">
+    <div class="reaction-bar-container" *ngIf="!isMainPostThread && !isOnEdit">
         <button>
             <span (click)="onShowEmojiPicker()" class="material-icons-outlined">add_reaction</span>
         </button>
         <button (click)="onOpenNewThread()">
             <span class="material-icons-outlined">insert_comment</span>
         </button>
-        <button>
+        <button (click)="onEditMessage()">
             <span class="material-icons-outlined">more_vert</span>
         </button>
     </div>
     <div class="img-container">
         <img [src]="postUser.avatarSrc" alt="Avatar">
     </div>
+
+    @if (!isOnEdit) {
     <div class="message-content">
         <div class="user-name-container">
             <div class="user-name" (click)="openUserProfile(post.user_id)">{{postUser.name}}</div>
@@ -46,4 +48,20 @@
             </button>
         </div>
     </div>
+    }@else{
+    <form class="message-edit" (ngSubmit)="onSubmit(editMessageForm)" #editMessageForm="ngForm">
+        <input type="text" [(ngModel)]="messageToUpdate" #message="ngModel" name="message">
+        <div class="message-edit-footer">
+            <div class="message-edit-footer-reaction">
+                <button type="button" (click)="onShowEmojiPicker()">
+                    <span class=" material-icons-outlined">sentiment_satisfied_alt</span>
+                </button>
+            </div>
+            <div class="message-edit-footer-actions">
+                <button class="message-edit-cancel" (click)="cancelEditMessage()">Abbrechen</button>
+                <button class="message-edit-save" type="submit">Speichern</button>
+            </div>
+        </div>
+    </form>
+    }
 </div>
