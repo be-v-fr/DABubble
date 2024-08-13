@@ -1,36 +1,45 @@
 <div class="userCard">
-  <div class="head">
-    <p>Profil</p>
-    <div class="close-thread-btn" (click)="closeCard()">
-      <span class="material-icons-outlined">close</span>
- 
+    <div class="head">
+        <p>Profil</p>
+        <div class="close-card-btn" (click)="closeCard()">
+            <span class="material-icons-outlined">close</span>
+    
+        </div>
     </div>
-  </div>
-  <div class="profileImg">
-    <img class="#" src="../../assets/img/userProfileImg/Sofia Müller.png" />
-  </div>
-  <div class="userName">
-    <h1>Sofia Müller</h1>
-    <div class="online">
-      <p></p>
-      <p>Aktiv</p>
+    <div class="profileImg">
+        <img class="#" src="{{ user.avatarSrc}}" />
     </div>
-  </div>
-  <div class="emailContainer">
-    <div class="email">
-      <img src="../../assets/img/userProfileImg/mail.png" />
-      <p>E-Mail-Adresse</p>
+    <div class="userName">
+        <h1>{{ user.name}}</h1>
+        <div class="online">
+            <div class="onlinedot"
+                    [ngClass]="{'online': activityService.getUserState(user).state == 'active'}" 
+                    [ngClass]="{'idle': activityService.getUserState(user).state == 'idle'}"
+            ></div>
+            @if (activityService.getUserState(user).state == 'active') {
+                <p class="status-text online">Aktiv</p>
+            } @else if (activityService.getUserState(user).state == 'idle') {
+                <p class="status-text idle">Abwesend</p>
+            } @else {
+                <p class="status-text offline">Offline ({{activityService.getUserState(user).state}})</p>
+            }
+        </div>
     </div>
-    <div class="showEmail">
-      <p>sofia.muel&#64;beispiel.com</p>
+    <div class="emailContainer">
+        <div class="email">
+            <img src="../../assets/img/userProfileImg/mail.png" />
+            <p>E-Mail-Adresse</p>
+        </div>
+        <div class="showEmail">
+            <p>{{ user.email}}</p>
+        </div>
     </div>
-  </div>
-  <div class="submit-btns">
-    <a routerLink="/direct-message/:id">
-    <button class="form-btn-primary" (click)="closeCard()">
-      Nachricht
-      <img src="../../assets/img/userProfileImg/mode_comment.png" />
-    </button>
-  </a>
-  </div>
+    <div class="submit-btns">
+        <a routerLink="/direct-message/:id">
+            <button class="form-btn-primary" (click)="closeCard()">
+                Nachricht
+                <img src="../../assets/img/userProfileImg/mode_comment.png" />
+            </button>
+        </a>
+    </div>
 </div>
