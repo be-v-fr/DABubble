@@ -38,31 +38,41 @@ export class SearchComponent {
 
     constructor(
         private dialog: MatDialog,
-        private router: Router    
+        private router: Router
     ) { }
 
     search(): void {
         if (this.searchInput.length > 0) {
             const term: string = this.searchInput.toLowerCase();
-            this.searchChannels(term);
-            this.searchUsers(term);
-            this.searchPosts(term);
+            this.triggerSearchCategories(term);
             this.hidingResults = false;
         } else {
             this.clearSearch();
         }
     }
 
+    triggerSearchCategories(term: string) {
+        if (term.startsWith('@')) {
+            this.searchUsers(term.slice(1));
+        } else if (term.startsWith('#')) {
+            this.searchChannels(term.slice(1));
+        } else {
+            this.searchChannels(term);
+            this.searchUsers(term);
+            this.searchPosts(term);
+        }
+    }
+
     searchChannels(term: string): void {
+        if (term.startsWith(' ')) { term = term.slice(1) }
         this.searchResultsChannels = this.userChannels.filter(c => {
-            return !c.isPmChannel && (
-                c.name.toLowerCase().includes(term) ||
-                c.description.toLowerCase().includes(term)
-            );
+            return !c.isPmChannel &&
+                (c.name.toLowerCase().includes(term) || c.description.toLowerCase().includes(term));
         });
     }
 
     searchUsers(term: string): void {
+        if (term.startsWith(' ')) { term = term.slice(1) }
         this.searchResultsUsers = this.users.filter(u => {
             return u.uid != this.mainUser.uid &&
                 (u.name.toLowerCase().includes(term) || u.email.toLowerCase().includes(term));

@@ -25,6 +25,7 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() channelData: { id: string, name: string } | undefined;
   @Output() closeTh = new EventEmitter<boolean>();
   @ViewChildren(MessageItemComponent, { read: ElementRef }) messageItems!: QueryList<ElementRef>;
+  savedPostsLength: number | null = null;
 
   currUid: string | null = null;
   reactionPicker = false;
@@ -77,9 +78,21 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
 
   goToPost(postId: string | undefined) {
     this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
+      if(this.hasPostLengthChanged(elements)) {
       (postId && postId.length > 0) ? this.autoscrollToPost(elements, postId) : this.autoscrollToLastPost(elements);
+      }
     });
     this.messageItems.notifyOnChanges();
+  }
+
+  hasPostLengthChanged(elements: QueryList<ElementRef>): boolean {
+    const currentLength = elements.toArray().length;
+    if(currentLength != this.savedPostsLength) {
+      this.savedPostsLength = currentLength;
+      return true;
+    } else {
+      return false;
+    }
   }
 
   autoscrollToPost(elements: QueryList<ElementRef>, postId: string) {
@@ -94,10 +107,9 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   autoscrollToLastPost(elements: QueryList<ElementRef>) {
-    if (this.post) {
-      const lastPost: Post = this.post.thread.posts[this.post.thread.posts.length - 1];
-      this.autoscrollToPost(elements, this.post.thread.posts[this.post.thread.posts.length - 1].post_id);
-    }
+    const array = elements.toArray();
+    const postRef = array.pop();
+    if (postRef) { postRef.nativeElement.scrollIntoView({}); }
   }
 
   isCurrentUserAuthor(id: string): boolean {
