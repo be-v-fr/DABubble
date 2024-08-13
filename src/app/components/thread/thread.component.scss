@@ -13,7 +13,6 @@
     border-left: 1px solid white;
     border-right: 1px solid white;
     overflow: hidden;
-
     .thread-header {
         width: 100%;
         display: flex;
@@ -22,7 +21,6 @@
         padding: 25px 40px;
         border-radius: 30px 30px 0 0;
         box-shadow: 0px 2px 10px 0px rgb(0, 0, 0, 0.08);
-
         .thread-title {
             display: flex;
             align-items: center;
@@ -31,7 +29,6 @@
             font-size: 24px;
             font-weight: 700;
             line-height: 32.74px;
-
             span {
                 font-size: 14px;
                 font-weight: 400;
@@ -39,18 +36,15 @@
                 color: $purple-blue-bright;
             }
         }
-
         .close-thread-btn {
             color: $grey;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 8px 10px;
-
             span {
                 font-size: 24px;
             }
-
             &:hover {
                 color: $purple-blue-bright;
                 background-color: $violet-bright;
@@ -58,232 +52,13 @@
             }
         }
     }
-
     .thread-content {
         margin-top: 22px;
         width: inherit;
         height: 100%;
         overflow-y: auto;
         @include scrollbar();
-
         .thread-message {
-
-            // .message-items-container {
-            //     margin-top: 22px;
-            //     overflow-y: auto;
-            //     @include scrollbar();
-
-            //     .message-container {
-            //         position: relative;
-            //         margin-top: 30px;
-            //         display: flex;
-            //         justify-content: flex-start;
-            //         align-items: flex-start;
-            //         padding: 20px;
-            //         gap: 30px;
-
-            //         .reaction-bar-container {
-            //             position: absolute;
-            //             top: -18px;
-            //             right: 75px;
-            //             display: flex;
-            //             align-items: center;
-            //             justify-content: center;
-            //             gap: 5px;
-            //             max-width: 215px;
-            //             height: 46px;
-            //             background-color: white;
-            //             border: 1px solid $purple-light;
-            //             border-radius: 25px 25px 0 25px;
-            //             padding: 10px 15px 10px 20px;
-
-            //             button {
-            //                 display: flex;
-            //                 align-items: center;
-            //                 justify-content: center;
-            //                 padding: 8px;
-            //                 border-radius: 20px;
-
-            //                 span {
-            //                     width: 24px;
-            //                     height: 24px;
-            //                 }
-
-            //                 &:hover {
-            //                     color: $purple-blue;
-            //                     background-color: $violet-bright;
-            //                 }
-            //             }
-
-            //             display: none;
-            //         }
-
-            //         .img-container {
-            //             img {
-            //                 width: 70px;
-            //                 height: 70px;
-            //             }
-            //         }
-
-            //         .message-content {
-            //             // width: min-content;
-            //             display: flex;
-            //             flex-direction: column;
-            //             align-items: flex-start;
-            //             gap: 8px;
-
-            //             .user-name-container {
-            //                 display: flex;
-            //                 justify-content: center;
-            //                 align-items: center;
-            //                 gap: 20px;
-
-            //                 .user-name {
-            //                     font-size: 18px;
-            //                     font-weight: 700;
-            //                     line-height: 24.55px;
-
-            //                     &:hover {
-            //                         color: rgb(68, 77, 242);
-            //                         ;
-            //                     }
-            //                 }
-
-            //                 span {
-            //                     color: $grey;
-            //                     font-size: 14px;
-            //                     font-weight: 400;
-            //                     line-height: 19.1px;
-            //                 }
-            //             }
-
-            //             .message-text {
-            //                 background-color: $violet-bright;
-            //                 border-radius: 0 30px 30px 30px;
-            //                 padding: 15px;
-            //                 font-size: 18px;
-            //                 font-weight: 400;
-            //                 line-height: 24.55px;
-            //             }
-
-
-            //             .message-answers {
-            //                 display: flex;
-            //                 align-items: center;
-            //                 gap: 20px;
-
-            //                 button {
-            //                     color: $purple-blue-bright;
-            //                     font-size: 18px;
-            //                     font-weight: 400;
-            //                     line-height: 24.55px;
-            //                     padding: 0px;
-            //                     transition: transform 0.2s ease-in-out;
-
-            //                     &:hover {
-            //                         transform: scale(1.1);
-            //                     }
-            //                 }
-
-            //                 span {
-            //                     color: $grey;
-            //                     font-size: 14px;
-            //                     font-weight: 400;
-            //                     line-height: 19.1px;
-            //                 }
-            //             }
-
-            //             .reactions-container {
-            //                 display: flex;
-            //                 align-items: stretch;
-            //                 justify-content: center;
-            //                 gap: 10px;
-
-            //                 .reaction {
-            //                     position: relative;
-            //                     min-width: 63px;
-            //                     padding: 5px 10px;
-            //                     border: 1px solid $purple-light;
-            //                     border-radius: 20px;
-            //                     display: flex;
-            //                     align-items: center;
-            //                     gap: 10px;
-
-            //                     .reaction-info {
-            //                         position: absolute;
-            //                         z-index: 1;
-            //                         top: -93px;
-            //                         left: 50%;
-            //                         max-width: 200px;
-            //                         min-width: 160px;
-            //                         text-align: center;
-            //                         color: white;
-            //                         background-color: $purple-blue-bright;
-            //                         border-radius: 30px 30px 30px 0;
-            //                         padding: 15px 10px;
-
-            //                         .reaction-info-name {
-            //                             font-size: 18px;
-            //                             line-height: 21.6px;
-            //                         }
-
-            //                         display: none;
-            //                     }
-
-            //                     &:hover {
-            //                         cursor: pointer;
-            //                         border: 1px solid $purple-blue;
-
-            //                         .reaction-info {
-            //                             display: block;
-            //                         }
-            //                     }
-            //                 }
-
-            //                 button {
-            //                     display: flex;
-            //                     align-items: center;
-            //                     border-radius: 20px;
-
-            //                     &:hover {
-            //                         color: $purple-blue;
-            //                     }
-
-            //                     span {
-            //                         font-size: 24px;
-            //                     }
-            //                 }
-            //             }
-            //         }
-
-            //         &:hover {
-            //             background-color: $violet-bright;
-
-            //             .reaction-bar-container {
-            //                 display: flex;
-            //             }
-
-            //             .message-content {
-            //                 .message {
-            //                     .message-text {
-            //                         background-color: white;
-            //                     }
-            //                 }
-            //             }
-
-            //             .reactions-container {
-            //                 .reaction {
-            //                     background-color: white;
-            //                 }
-
-            //                 button {
-            //                     background-color: white;
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
-
             .antworten-separator {
                 display: flex;
                 align-items: center;
@@ -294,19 +69,17 @@
                 line-height: 24.55px;
                 color: $purple-light;
                 padding: 0 33px 0 33px;
-
+                text-wrap: nowrap;
                 &::after {
                     content: '';
                     display: inline-block;
-
-                    width: 65%;
+                    width: 100%;
                     height: 1px;
                     background-color: $purple-light;
                 }
             }
         }
     }
-
     app-message-box {
         width: 90%;
     }

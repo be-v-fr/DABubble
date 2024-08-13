@@ -27,6 +27,7 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
   @Input() lastReply = this.post?.thread.posts[this.post.thread.posts.length - 1]?.date ?? null;
   @Input() messageSender?: boolean;
   @Input() isMainPostThread = false;
+  @Input() ComeFromThread = false;
   @Input() postUid: string = "";
   @Output() threadId = new EventEmitter<string>();
 

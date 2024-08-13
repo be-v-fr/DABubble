@@ -3,9 +3,11 @@
         <button>
             <span (click)="onShowEmojiPicker()" class="material-icons-outlined">add_reaction</span>
         </button>
-        <button (click)="onOpenNewThread()">
-            <span class="material-icons-outlined">insert_comment</span>
-        </button>
+        @if (!ComeFromThread) {
+            <button (click)="onOpenNewThread()">
+                <span class="material-icons-outlined">insert_comment</span>
+            </button>
+        }
         <button>
             <span class="material-icons-outlined">more_vert</span>
         </button>
@@ -14,14 +16,14 @@
         <img [src]="postUser.avatarSrc" alt="Avatar">
     </div>
     <div class="message-content">
-        <div class="user-name-container">
+        <div class="user-name-container" [class.reversed]="messageSender">
             <div class="user-name" (click)="openUserProfile(post.user_id)">{{postUser.name}}</div>
             <span>{{ timeService.toClock(post.date) }} Uhr</span>
         </div>
         <div class="message">
             <div class="message-text">{{ post.message }}</div>
         </div>
-        @if(post.thread.posts.length > 0) {
+        @if(post.thread.posts.length > 0 && !ComeFromThread) {
         <div class="message-answers">
             <button (click)="onOpenNewThread()">{{ post.thread.posts.length }} Antworten</button>
             <span *ngIf="lastReply">Letzte Antwort {{timeService.toRelativeDateWithClock(lastReply)}}</span>
