@@ -12,6 +12,7 @@ import { AuthService } from '../../../services/auth.service';
 import { ChannelsService } from '../../../services/content/channels.service';
 import { Reaction } from '../../../models/reaction.class';
 import { ReactionService } from '../../../services/content/reaction.service';
+import { MainUserProfileCardComponent } from '../../main-user/main-user-profile-card/main-user-profile-card.component';
 
 @Component({
   selector: 'app-message-item',
@@ -83,10 +84,16 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
 
   openUserProfile(uid: string): void {
     if (uid) {
-        let viewUser:User = new User(this.usersService.getUserByUid(uid));
-      this.dialog.open(UserProfileCardComponent, {
-        data: { viewUser }
-      });
+        if (uid == this.currentUser?.uid) {
+            this.dialog.open(MainUserProfileCardComponent, {
+                data: { 'mainUser': this.currentUser }
+            });
+        } else {
+            let viewUser:User = new User(this.usersService.getUserByUid(uid));
+            this.dialog.open(UserProfileCardComponent, {
+                data: { 'viewUser': viewUser }
+            });
+        }
     }
   }
 
