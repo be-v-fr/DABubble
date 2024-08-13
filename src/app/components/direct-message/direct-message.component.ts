@@ -16,6 +16,7 @@ import { ForbiddenChannelFeedbackComponent } from '../main-chat/forbidden-channe
 import { AuthService } from '../../../services/auth.service';
 import { TimeService } from '../../../services/time.service';
 import { Post } from '../../../models/post.class';
+import { MainUserProfileCardComponent } from '../../main-user/main-user-profile-card/main-user-profile-card.component';
 
 @Component({
   selector: 'app-direct-message',
@@ -100,8 +101,18 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     this.scrollSub.unsubscribe();
   }
 
-  openUserProfile(): void {
-    this.dialog.open(UserProfileCardComponent);
+  openUserProfile(openUser: User | undefined): void {
+    if (openUser) {
+        if (openUser.uid == this.currUser?.uid) {
+            this.dialog.open(MainUserProfileCardComponent, {
+                data: { 'mainUser': this.currUser }
+            });
+        } else {
+            this.dialog.open(UserProfileCardComponent, {
+                data: { 'viewUser': openUser }
+            });
+        }
+    }
   }
 
   async initChannel(channelId: string): Promise<void> {
