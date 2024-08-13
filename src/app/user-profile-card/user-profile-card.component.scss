@@ -1,127 +1,143 @@
 ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface{
-  border-radius: 30px !important;
+    border-radius: 30px !important;
+}
+*:focus {
+    outline: none;
 }
 
 @import "../../styles.scss";
 
 .userCard {
-  width: 500px;
-  height: 705px;
-  background-color: white;
-  
-}
-.head {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 420px;
-  height: 40px;
-  margin-left: 40px;
-  position: absolute;
-  top: 40px;
-  align-items: baseline;
-  p {
-    font-weight: 700;
-    font-size: 24px;
-  }
-  img{
-    cursor: pointer;
-
-  }
-}
-
-
-.profileImg {
-  position: absolute;
-  left: 150px;
-  top: 125px;
-  img {
-    width: 200px;
-    height: 200px;
-    border-radius: 100%;
-  }
-}
-
-.userName {
-  display: flex;
-  flex-direction: column;
-  width: 420px;
-  height: 86px;
-  position: absolute;
-  top: 370px;
-  left: 40px;
-  p:first-child {
-    width: 16px;
-    height: 16px;
-    background-color: #92c83e;
-    border-radius: 100%;
-  }
-  p:last-child {
-    font-weight: 400;
-    font-size: 20px;
-    color: #92c83e;
-  }
-}
-.online {
-  display: flex;
-  align-items: baseline;
-  gap: 15px;
-  margin-top: 15px;
-}
-.emailContainer {
-  display: flex;
-  flex-direction: column;
-  width: 420px;
-  height: 70px;
-  gap: 15px;
-  margin-top: 501px;
-  margin-left: 40px;
-  .email {
+    padding: 40px;
+    width: 500px;
+    background-color: white;
     display: flex;
-    gap: 20px;
-    img{
-      width: 25px;
-      height: 20px;
+    flex-direction: column;
+    gap: 45px;
+    .head {
+        width: 100%;
+        height: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: baseline;
+        p {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .close-card-btn {
+            color: rgb(0, 0, 0, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 8px;
+            cursor: pointer;
+            &:hover {
+                color: $purple-blue-bright;
+                background-color: $violet-bright;
+                border-radius: 20px;
+            }
+        }
     }
-    p{
-      font-weight: 700;
-    font-size: 20px;
+    .profileImg {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        img {
+            width: 200px;
+            height: 200px;
+            border-radius: 100%;
+        }
     }
-  }
-  .showEmail{
-    margin-left: 50px;
-    p{
-      font-weight: 400;
-      font-size: 18px;
-      color: #1381FF;
+    .userName {
+        width: 100%;
+        // height: 86px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        h1 {
+            margin-block-end: 0;
+        }
+        .online {
+            height: 27px;
+            display: flex;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 15px;
+            .onlinedot {
+                content: '';
+                width: 16px;
+                height: 16px;
+                box-sizing: border-box;
+                background-color: $onlinedot-online;
+                border: 2px solid $onlinedot-border;
+                border-radius: 50%;
+                &.online {
+                    background-color: $onlinedot-online;
+                }
+                &.idle {
+                    background-color: #c8c82e;
+                }
+                &.offline {
+                    background-color: $onlinedot-offline;
+                }
+            }
+            .status-text {
+                font-weight: 400;
+                font-size: 20px;
+                margin-block-end: 0;
+                &.online {
+                    color: $onlinedot-online;
+                }
+                &.idle {
+                    color: #c8c82e;
+                }
+            }
+        }
     }
-  }
-}
-.submit-btns{
-  margin-top: 45px;
-  margin-left: 168px;
-  a{
-    text-decoration: none;
-  }
-  button{
-    width: 164px;
-    display: flex;
-    flex-direction: row-reverse;
-    gap: 10px;
-  }
+    .emailContainer {
+        width: 100%;
+        height: 70px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        .email {
+            display: flex;
+            gap: 20px;
+            img{
+                width: 25px;
+                height: 20px;
+            }
+            p{
+                font-size: 20px;
+                font-weight: 700;
+                margin-block-end: 0;
+            }
+        }
+        .showEmail{
+            margin-left: 50px;
+            p{
+                margin-block-end: 0;
+                color: #1381FF;
+                font-size: 18px;
+                font-weight: 400;
+            }
+        }
+    }
+    .submit-btns{
+        display: flex;
+        justify-content: center;
+        a{
+            border-radius: 25px;
+            text-decoration: none;
+        }
+        button{
+            width: 164px;
+            display: flex;
+            flex-direction: row-reverse;
+            gap: 10px;
+        }
+    }
 }
 
-.close-thread-btn {
-  color: rgb(0, 0, 0, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 8px;
-  cursor: pointer;
 
-  &:hover {
-    color: $purple-blue-bright;
-    background-color: $violet-bright;
-    border-radius: 20px;
-  }
-}

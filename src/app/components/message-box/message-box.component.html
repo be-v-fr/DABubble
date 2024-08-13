@@ -1,16 +1,16 @@
-<form class="message-box-container" (ngSubmit)="onSubmit(messageForm)" #messageForm="ngForm">
+<form class="message-box-container" (ngSubmit)="onSubmit(messageForm)" #messageForm="ngForm" (click)="onContainerClick()">
     <input [placeholder]="getPlaceholder()" [(ngModel)]="data.message" name="messageBox"
-    #messageBox="ngModel" required>
+    autocomplete="off" #messageBox required>
     <div class="message-box-footer">
         <!-- TO DO: Implement actions -->
         <div class="message-box-actions">
-            <button>
+            <button type="button">
                 <span class="material-icons-outlined icon">add</span>
             </button>
-            <button>
+            <button type="button">
                 <span class="material-icons-outlined">sentiment_satisfied_alt</span>
             </button>
-            <button>
+            <button type="button" (click)="toggleMembersList($event)">
                 <span class="material-icons-outlined icon">alternate_email</span>
             </button>
         </div>
@@ -18,4 +18,12 @@
             <span class="material-icons-outlined icon">send</span>
         </button>
     </div>
+    <ul class="members-list" *ngIf="channel && showingMembersList">
+        @for(member of channel.members; track member) {
+            <li (click)="addToMessage(member.name)">
+                <img src="{{member.avatarSrc}}" alt="Avatar">
+                <span>{{member.name}}</span>
+            </li>
+        }
+    </ul>
 </form>
