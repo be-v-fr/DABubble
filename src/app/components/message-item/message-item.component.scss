@@ -201,6 +201,85 @@
             }
         }
 
+        .message-edit {
+            width: 90%;
+            height: 145px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 20px;
+            border: 1px solid #adb0d9;
+            border-radius: 20px;
+            background-color: white;
+
+            input {
+                width: 100%;
+                color: $grey;
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 24.55px;
+            }
+
+            .message-edit-footer {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .message-edit-footer-reaction {
+                    button {
+                        color: #686868;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 8px 10px;
+
+                        &:hover {
+                            color: $purple-blue-bright;
+                            background-color: $violet-bright;
+                            border-radius: 20px;
+                        }
+                    }
+                }
+
+                .message-edit-footer-actions {
+                    display: flex;
+                    gap: 32px;
+
+                    button {
+                        text-align: center;
+                        font-size: 18px;
+                        font-weight: 700;
+                        line-height: 24.55px;
+                        padding: 12px 25px;
+                        border-radius: 50px;
+                    }
+
+                    .message-edit-cancel {
+                        color: $purple-blue-active;
+                        border: 1px solid $purple-blue-brighter;
+
+                        &:hover {
+                            color: white;
+                            background-color: $purple-blue-active;
+                        }
+                    }
+
+                    .message-edit-save {
+                        color: white;
+                        border: 1px solid white;
+                        background-color: $purple-blue-active;
+
+                        &:hover {
+                            color: $purple-blue-active;
+                            background-color: white;
+                            border: 1px solid $purple-blue-brighter;
+                        }
+                    }
+
+                }
+            }
+        }
+
         &:hover {
             background-color: $violet-bright;
 

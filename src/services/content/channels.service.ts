@@ -50,7 +50,7 @@ export class ChannelsService implements OnDestroy {
   }
 
   isPostInThread(channel: Channel, postId: string): boolean {
-    if(this.getAllThreadsReplies(channel).find(r => r.post_id === postId)) {
+    if (this.getAllThreadsReplies(channel).find(r => r.post_id === postId)) {
       return true;
     }
     return false;
@@ -66,7 +66,7 @@ export class ChannelsService implements OnDestroy {
     return post?.thread.posts;
   }
 
-  getPostInThread(channel: Channel, post_id: string): {postInThread: Post | undefined, thread_id: string} {
+  getPostInThread(channel: Channel, post_id: string): { postInThread: Post | undefined, thread_id: string } {
     let postInThread: Post | undefined = undefined;
     let thread_id: string = '';
     channel.posts.forEach(p => {
@@ -138,6 +138,22 @@ export class ChannelsService implements OnDestroy {
     } else {
       console.error(`Channel with ID ${channel_id} not found`);
     }
+  }
+
+  async updatePost(channel_id: string, post_id: string, updatedMessage: string) {
+    const channel = this.channels.find(c => c.channel_id === channel_id);
+    if (!channel) {
+      console.error(`Channel with ID ${channel_id} not found`);
+      return;
+    }
+    const post = channel.posts.find(p => p.post_id === post_id);
+    if (!post) {
+      console.error(`Post with ID ${post_id} not found in channel ${channel_id}`);
+      return;
+    }
+    post.message = updatedMessage;
+    await this.updateChannelInStorage(channel);
+    this.channels$.next(this.channels.slice());
   }
 
   async addPostToPmChannel(channel_id: string, uid: string, message: string) {
