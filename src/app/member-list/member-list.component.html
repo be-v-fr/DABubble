@@ -1,5 +1,4 @@
-<div>
-<div class="memberCard" *ngIf="memberListVisible">
+<div class="memberCard" *ngIf="memberListVisible" [class.thread-open]="isThreadOpen">
     <div class="headline-close-btn">
         <div class="title-box">
             <span>Mitglieder</span>
@@ -28,4 +27,3 @@
             </button>
         </div>
     </div>
-</div>

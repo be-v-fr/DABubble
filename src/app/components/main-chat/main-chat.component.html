@@ -7,7 +7,7 @@
                 <span class="material-icons-outlined icon">keyboard_arrow_down</span>
             </button>
             <div class="main-header-members">
-                <app-members-overview [channel]="currentChannel" />
+                <app-members-overview [channel]="currentChannel" [openTh]="openTh"/>
                 <button class="add-members-btn" (click)="openAddMembers()">
                     <span class="material-icons-outlined icon">person_add_alt</span>
                 </button>

@@ -12,14 +12,21 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class MembersOverviewComponent {
   @Input() channel: Channel = new Channel();
+  @Input() openTh: boolean = false;
 
   constructor(
     private dialog: MatDialog,
-  ) {}
+  ) { }
 
   openMemberList(): void {
-    this.dialog.open(MemberListComponent, {
-      data: { channelMembers: this.channel.members, channel: this.channel }
-    });
+    if (this.openTh) {
+      const dialogRef = this.dialog.open(MemberListComponent, {
+        data: { channelMembers: this.channel.members, channel: this.channel, isThreadOpen: this.openTh }
+      });
+    } else {
+      const dialogRef = this.dialog.open(MemberListComponent, {
+        data: { channelMembers: this.channel.members, channel: this.channel }
+      });
+    }
   }
 }

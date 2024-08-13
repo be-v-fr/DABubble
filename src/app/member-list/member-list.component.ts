@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../models/user.class';
@@ -16,12 +16,14 @@ import { ActivityService } from '../../services/activity.service';
   styleUrls: ['./member-list.component.scss']
 })
 export class MemberListComponent {
+  @Input() isThreadOpen: boolean = false; 
+
   channelMembers: User[];
   channel: Channel;
   memberListVisible = true;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { channelMembers: User[], channel: Channel },
+    @Inject(MAT_DIALOG_DATA) public data: { channelMembers: User[], channel: Channel;  isThreadOpen: boolean },
     private dialog: MatDialog,
     private channelsService: ChannelsService,
     public activityService: ActivityService,
@@ -29,6 +31,7 @@ export class MemberListComponent {
   ) {
     this.channelMembers = data.channelMembers;
     this.channel = data.channel;
+    this.isThreadOpen = data.isThreadOpen;
   }
 
   addMember(): void {
