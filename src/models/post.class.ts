@@ -31,7 +31,7 @@ export class Post {
         thread: any;
         date: number;
         reactions: any[];
-        attachmentRef: StorageReference;
+        attachmentRef: string;
     } {
         return {
             post_id: this.post_id,
@@ -41,7 +41,7 @@ export class Post {
             thread: this.thread.toJson(),
             date: this.date,
             reactions: this.reactions.map(r => r.toJson()),
-            attachmentRef : this.attachmentRef
+            attachmentRef : this.attachmentRef.toString()
         };
     }
 }

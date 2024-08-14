@@ -5,7 +5,7 @@ import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user.class';
 import { StorageService } from '../../../services/storage.service';
-import { StorageReference } from 'firebase/storage';
+import { StorageReference, deleteObject } from 'firebase/storage';
 
 @Component({
   selector: 'app-message-box',
@@ -28,6 +28,7 @@ export class MessageBoxComponent implements AfterViewInit {
   @Input() recipient?: string;
   @Output() sent = new EventEmitter<{}>();
   @ViewChild('messageBox') messageBoxInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   showingMembersList: boolean = false;
   public storageService = inject(StorageService);
 
@@ -59,11 +60,17 @@ export class MessageBoxComponent implements AfterViewInit {
    * This function is triggered by the login form submission.
    * @param form - login form
    */
-  onSubmit(form: NgForm) {
+  async onSubmit(form: NgForm) {
     if (form.submitted && form.valid) {
-      // if attachment, upload attachment; set attachmentRef property 
-      this.sent.emit({ message: this.data.message, attachmentRef: this.data.attachmentRef });
-      form.reset();
+      if (this.channel) {
+        this.loading = true;
+        await this.handleAttachmentSubmission();
+        this.sent.emit({ message: this.data.message, attachmentRef: this.data.attachmentRef });
+        form.reset();
+        this.loading = false;
+      } else {
+        console.error('No channel selected!'); // add user feedback (at least in new message component)
+      }
     }
   }
 
@@ -85,31 +92,44 @@ export class MessageBoxComponent implements AfterViewInit {
   }
 
   async onFileSelection(e: Event) {
-    this.loading = true;
     const input = e.target as HTMLInputElement;
-    if (input.files) {
+    if (input.files && input.files.length > 0) {
+      this.loading = true;
       const file: File = input.files[0];
       this.storageService.uploadTempAttachment(file)
-        .then(async (response) => await this.onTempFileUpload(response, file.name))
+        .then(async (response) => {
+          await this.onTempFileUpload(response, file.name);
+          this.loading = false;
+        })
         .catch((err: Error) => console.error(err));
     }
   }
 
   async onTempFileUpload(fileRef: StorageReference, fileName: string) {
     this.data.attachmentTempRef = fileRef;
-    this.data.attachmentTempSrc = await this.storageService.getUrl(fileRef);
     this.data.attachmentTempName = fileName;
+    this.data.attachmentTempSrc = await this.storageService.getUrl(fileRef);
   }
 
-  deleteTempFile() {
+  deleteTempFile(): void {
+    deleteObject(this.data.attachmentTempRef);
     this.data.attachmentTempRef = null;
     this.data.attachmentTempSrc = '';
-    this.data.attachmentTempName = '';    
+    this.data.attachmentTempName = '';
   }
 
-  //   onFileUpload(response: any) {
-  //     if (response.includes(this.userData.uid)) {
-  //       add src to post
-  //     }
-  //   }
+  async handleAttachmentSubmission(): Promise<void> {
+    if (this.channel && this.data.attachmentTempRef && this.fileInput.nativeElement.files) {
+      const file = this.fileInput.nativeElement.files[0];
+      await this.storageService.uploadAttachment(file, this.channel.channel_id)
+        .then(async (response) => this.onFileUpload(response))
+        .catch((err: Error) => console.error(err));
+    }
+  }
+
+  onFileUpload(fileRef: StorageReference) {
+    this.data.attachmentRef = fileRef;
+    this.deleteTempFile();
+    console.log('attachment uploaded:', fileRef);
+  }
 }
