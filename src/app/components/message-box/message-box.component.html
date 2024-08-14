@@ -1,29 +1,38 @@
-<form class="message-box-container" (ngSubmit)="onSubmit(messageForm)" #messageForm="ngForm" (click)="onContainerClick()">
-    <input [placeholder]="getPlaceholder()" [(ngModel)]="data.message" name="messageBox"
-    autocomplete="off" #messageBox required>
-    <div class="message-box-footer">
-        <!-- TO DO: Implement actions -->
-        <div class="message-box-actions">
-            <button type="button">
-                <span class="material-icons-outlined icon">add</span>
-            </button>
-            <button type="button">
-                <span class="material-icons-outlined">sentiment_satisfied_alt</span>
-            </button>
-            <button type="button" (click)="toggleMembersList($event)">
-                <span class="material-icons-outlined icon">alternate_email</span>
+<div class="message-box-wrapper">
+    <form class="message-box-container" (ngSubmit)="onSubmit(messageForm)" #messageForm="ngForm"
+        (click)="onContainerClick()">
+        <input [placeholder]="getPlaceholder()" [(ngModel)]="data.message" name="messageBox" autocomplete="off"
+            #messageBox required>
+        <div class="message-box-footer">
+            <div class="message-box-actions">
+                <input type="file" #fileInput name="fileInput" style="display: none" ngModel
+            (change)="onFileSelection($event)" (click)="onFileSelection($event)" accept="image/*">
+                <button type="button" (click)="fileInput.click()">
+                    <span class="material-icons-outlined icon">add</span>
+                </button>
+                <button type="button">
+                    <span class="material-icons-outlined">sentiment_satisfied_alt</span>
+                </button>
+                <button type="button" (click)="toggleMembersList($event)">
+                    <span class="material-icons-outlined icon">alternate_email</span>
+                </button>
+            </div>
+            <button class="send-btn" type="submit" [disabled]="loading">
+                <span class="material-icons-outlined icon">send</span>
             </button>
         </div>
-        <button class="send-btn" type="submit">
-            <span class="material-icons-outlined icon">send</span>
-        </button>
-    </div>
-    <ul class="members-list" *ngIf="channel && showingMembersList">
-        @for(member of channel.members; track member) {
+        <ul class="members-list" *ngIf="channel && showingMembersList">
+            @for(member of channel.members; track member) {
             <li (click)="addToMessage(member.name)">
                 <img src="{{member.avatarSrc}}" alt="Avatar">
                 <span>{{member.name}}</span>
             </li>
-        }
-    </ul>
-</form>
+            }
+        </ul>
+    </form>
+    <div class="attachment-container" *ngIf="data.attachmentTempRef">
+        <button class="material-icons-outlined" (click)="deleteTempFile()">close</button>
+        <img src="{{data.attachmentTempSrc}}" alt="Anhang" />
+        <p><i>{{data.attachmentTempName}}</i></p>
+    </div>
+</div>

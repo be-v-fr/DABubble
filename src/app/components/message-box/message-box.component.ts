@@ -1,10 +1,11 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, HostListener, inject } from '@angular/core';
 import { FormsModule, NgForm, NgModel } from '@angular/forms';
 import { Post } from '../../../models/post.class';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user.class';
-
+import { StorageService } from '../../../services/storage.service';
+import { StorageReference } from 'firebase/storage';
 
 @Component({
   selector: 'app-message-box',
@@ -14,15 +15,21 @@ import { User } from '../../../models/user.class';
   styleUrl: './message-box.component.scss'
 })
 export class MessageBoxComponent implements AfterViewInit {
+  loading: boolean = false;
   data = {
-    message: ''
+    message: '',
+    attachmentTempRef: null as any,
+    attachmentTempSrc: '',
+    attachmentTempName: '',
+    attachmentRef: null as any
   };
   @Input() replying: boolean = false;
   @Input() channel?: Channel;
   @Input() recipient?: string;
-  @Output() sent = new EventEmitter<string>();
+  @Output() sent = new EventEmitter<{}>();
   @ViewChild('messageBox') messageBoxInput!: ElementRef<HTMLInputElement>;
-  showingMembersList: boolean = true; // set to false later
+  showingMembersList: boolean = false;
+  public storageService = inject(StorageService);
 
   ngAfterViewInit(): void {
     this.autofocus();
@@ -33,11 +40,11 @@ export class MessageBoxComponent implements AfterViewInit {
   }
 
   getPlaceholder() {
-    if(this.replying) {
+    if (this.replying) {
       return 'Antworten...';
-    } else if(this.channel && this.channel.name) {
+    } else if (this.channel && this.channel.name) {
       return `Nachricht an # ${this.channel.name}`;
-    } else if(this.recipient) {
+    } else if (this.recipient) {
       return `Nachricht an @${this.recipient}`;
     } else {
       return 'Neue Nachricht';
@@ -53,10 +60,10 @@ export class MessageBoxComponent implements AfterViewInit {
    * @param form - login form
    */
   onSubmit(form: NgForm) {
-    if (form.submitted && form.valid) { 
-      this.sent.emit(this.data.message);
-      // clear form
-      form.reset()
+    if (form.submitted && form.valid) {
+      // if attachment, upload attachment; set attachmentRef property 
+      this.sent.emit({ message: this.data.message, attachmentRef: this.data.attachmentRef });
+      form.reset();
     }
   }
 
@@ -69,11 +76,40 @@ export class MessageBoxComponent implements AfterViewInit {
 
   @HostListener('document:click', ['$event'])
   hideMembersList(): void {
-      this.showingMembersList = false;
+    this.showingMembersList = false;
   }
 
   addToMessage(string: string) {
     this.data.message += string;
     this.messageBoxInput.nativeElement.focus();
   }
+
+  async onFileSelection(e: Event) {
+    this.loading = true;
+    const input = e.target as HTMLInputElement;
+    if (input.files) {
+      const file: File = input.files[0];
+      this.storageService.uploadTempAttachment(file)
+        .then(async (response) => await this.onTempFileUpload(response, file.name))
+        .catch((err: Error) => console.error(err));
+    }
+  }
+
+  async onTempFileUpload(fileRef: StorageReference, fileName: string) {
+    this.data.attachmentTempRef = fileRef;
+    this.data.attachmentTempSrc = await this.storageService.getUrl(fileRef);
+    this.data.attachmentTempName = fileName;
+  }
+
+  deleteTempFile() {
+    this.data.attachmentTempRef = null;
+    this.data.attachmentTempSrc = '';
+    this.data.attachmentTempName = '';    
+  }
+
+  //   onFileUpload(response: any) {
+  //     if (response.includes(this.userData.uid)) {
+  //       add src to post
+  //     }
+  //   }
 }

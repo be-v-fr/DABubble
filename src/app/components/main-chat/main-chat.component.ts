@@ -174,13 +174,13 @@ export class MainChatComponent implements OnInit, OnDestroy {
     return currentPost.user_id;
   }
 
-  onCreatePost(message: string): void {
+  onCreatePost(data: any): void {
     if (!this.currentUid || !this.currentChannel.channel_id) {
       console.error('User ID or channel ID is not set.');
       return;
     }
 
-    this.channelsService.addPostToChannel(this.currentChannel.channel_id, this.currentUid, message)
+    this.channelsService.addPostToChannel(this.currentChannel.channel_id, this.currentUid, data.message, data.attachmentRef)
       .then(() => console.log('Post successfully added to the channel'))
       .catch(err => console.error('Error adding post to the channel:', err));
   }

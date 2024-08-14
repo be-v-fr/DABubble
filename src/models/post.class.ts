@@ -1,3 +1,4 @@
+import { StorageReference } from "firebase/storage";
 import { Reaction } from "./reaction.class";
 import { Thread } from "./thread.class";
 
@@ -9,6 +10,7 @@ export class Post {
     thread: Thread;
     date: number;
     reactions: Reaction[];
+    attachmentRef: StorageReference;
 
     constructor(obj?: any) {
         this.post_id = obj && obj.post_id ? obj.post_id : '';
@@ -18,6 +20,7 @@ export class Post {
         this.thread = obj && obj.thread ? new Thread(obj.thread) : new Thread();
         this.date = obj && obj.date ? obj.date : -1;
         this.reactions = obj && obj.reactions ? obj.reactions.map((r: any) => new Reaction(r)) : [];
+        this.attachmentRef = obj && obj.attachmentRef ? obj.attachmentRef : '';
     }
 
     toJson(): {
@@ -28,6 +31,7 @@ export class Post {
         thread: any;
         date: number;
         reactions: any[];
+        attachmentRef: StorageReference;
     } {
         return {
             post_id: this.post_id,
@@ -36,7 +40,8 @@ export class Post {
             user_id: this.user_id,
             thread: this.thread.toJson(),
             date: this.date,
-            reactions: this.reactions.map(r => r.toJson())
+            reactions: this.reactions.map(r => r.toJson()),
+            attachmentRef : this.attachmentRef
         };
     }
 }
