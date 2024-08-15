@@ -28,7 +28,7 @@
             <div class="user-name" (click)="openUserProfile(post.user_id)">{{postUser.name}}</div>
             <span>{{ timeService.toClock(post.date) }} Uhr</span>
         </div>
-        <div class="message">
+        <div class="message" *ngIf="post.message.length > 0">
             <div class="message-text">{{ post.message }}</div>
         </div>
         @if(post.thread.posts.length > 0 && !ComeFromThread) {
