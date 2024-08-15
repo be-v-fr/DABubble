@@ -51,7 +51,7 @@
         </div>
         <div class="attachment-container" *ngIf="attachmentFileName">
             <a [href]="post.attachmentSrc" [download]="attachmentFileName" target="_blank">
-                <img [src]="post.attachmentSrc" alt="Anhang">
+                <img [src]="post.attachmentSrc" [alt]="attachmentFileName">
             </a>
         </div>
     </div>
