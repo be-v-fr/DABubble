@@ -8,15 +8,17 @@
             <span class="material-icons-outlined">insert_comment</span>
         </button>
         }
-        <button type="button" (click)="showEditActions()">
-            <span class="material-icons-outlined">more_vert</span>
-            @if (showActions) {
-            <div class="edit-message-container">
-                <button class="edit-message" (click)="onEditMessage()">Nachricht bearbeiten</button>
-                <button class="delete-message" (click)="onDeletePost()">Nachricht löschen</button>
-            </div>
-            }
-        </button>
+        @if (messageSender) {
+            <button type="button" (click)="showEditActions()">
+                <span class="material-icons-outlined">more_vert</span>
+                @if (showActions) {
+                <div class="edit-message-container">
+                    <button class="edit-message" (click)="onEditMessage()">Nachricht bearbeiten</button>
+                    <button class="delete-message" (click)="onDeletePost()">Nachricht löschen</button>
+                </div>
+                }
+            </button>
+        }
     </div>
     <div class="img-container">
         <img [src]="postUser.avatarSrc" alt="Avatar">
