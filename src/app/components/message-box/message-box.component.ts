@@ -61,7 +61,7 @@ export class MessageBoxComponent implements AfterViewInit {
    * @param form - login form
    */
   onSubmit(form: NgForm) {
-    if (form.submitted && form.valid) {
+    if (form.submitted && form.valid && !this.isFormEmpty()) {
       if (this.channel || this.inThread) {
         this.loading = true;
         this.sent.emit({ message: this.data.message, attachmentSrc: this.data.attachmentSrc });
@@ -72,6 +72,10 @@ export class MessageBoxComponent implements AfterViewInit {
         console.error('No channel selected!'); // add user feedback (at least in new message component)
       }
     }
+  }
+
+  isFormEmpty(): boolean {
+    return this.data.message.length == 0 && this.data.attachmentSrc.length == 0;
   }
 
   toggleMembersList(e: Event): void {

@@ -2,7 +2,7 @@
     <form class="message-box-container" (ngSubmit)="onSubmit(messageForm)" #messageForm="ngForm"
         (click)="onContainerClick()">
         <input [placeholder]="getPlaceholder()" [(ngModel)]="data.message" name="messageBox" autocomplete="off"
-            #messageBox required>
+            #messageBox>
         <div class="message-box-footer">
             <div class="message-box-actions">
                 <input type="file" #fileInput name="fileInput" style="display: none" ngModel
