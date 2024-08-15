@@ -49,7 +49,7 @@
                 <span class="material-icons-outlined icon">add_reaction</span>
             </button>
         </div>
-        <div class="attachment-container" *ngIf="post.attachmentSrc.length > 0">
+        <div class="attachment-container" *ngIf="attachmentFileName">
             <a [href]="post.attachmentSrc" [download]="attachmentFileName" target="_blank">
                 <img [src]="post.attachmentSrc" alt="Anhang">
             </a>
