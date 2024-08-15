@@ -25,6 +25,7 @@ export class MessageBoxComponent implements AfterViewInit {
   @Input() replying: boolean = false;
   @Input() channel?: Channel;
   @Input() recipient?: string;
+  @Input() inThread: boolean = false;
   @Output() sent = new EventEmitter<{}>();
   @ViewChild('messageBox') messageBoxInput!: ElementRef<HTMLInputElement>;
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
@@ -61,7 +62,7 @@ export class MessageBoxComponent implements AfterViewInit {
    */
   onSubmit(form: NgForm) {
     if (form.submitted && form.valid) {
-      if (this.channel) {
+      if (this.channel || this.inThread) {
         this.loading = true;
         this.sent.emit({ message: this.data.message, attachmentSrc: this.data.attachmentSrc });
         form.reset();
