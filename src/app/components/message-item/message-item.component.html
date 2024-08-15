@@ -49,11 +49,12 @@
                 <span class="material-icons-outlined icon">add_reaction</span>
             </button>
         </div>
-        <div class="attachment-container" *ngIf="attachmentFileName">
-            <a [href]="post.attachmentSrc" [download]="attachmentFileName" target="_blank">
+            <a class="attachment" *ngIf="attachmentFileName" [href]="post.attachmentSrc" [download]="attachmentFileName" target="_blank">
                 <img [src]="post.attachmentSrc" [alt]="attachmentFileName">
+                <div class="download-icon-wrapper">
+                    <span class="material-icons-outlined download-icon">download</span>
+                </div>
             </a>
-        </div>
     </div>
     } @else {
     <form class="message-edit" (ngSubmit)="onSubmit(editMessageForm)" #editMessageForm="ngForm">

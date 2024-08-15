@@ -310,25 +310,43 @@
         }
     }
 
-    .attachment-container {
+    .attachment {
         width: 128px;
         height: 128px;
         border-radius: 30px;
-        a {
+        position: relative;
+        cursor: pointer;
+        filter: brightness(1);
+
+        img {
             max-width: 100%;
             max-height: 100%;
             border-radius: inherit;
-            cursor: pointer;
-            filter: brightness(1);
+            object-fit: cover;
             @include transition(125ms);
-            img {
-                max-width: 100%;
-                max-height: 100%;
-                border-radius: inherit;
-                object-fit: cover;
+        }
+
+        .download-icon-wrapper {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .download-icon {
+                font-size: 64px;
+                color: white;
+                opacity: 0;
+                @include transition(225ms);
             }
-            &:hover {
+        }
+
+        &:hover {
+            img {
                 filter: brightness(0.84);
+            }
+            .download-icon-wrapper .download-icon {
+                opacity: 0.8;
             }
         }
     }
