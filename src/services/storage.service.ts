@@ -146,18 +146,10 @@ export class StorageService {
       if (fileRef.toString().includes(uid)) { deleteObject(fileRef) }
     });
   }
-  
-
-  async uploadTempAttachment(attach: File): Promise<StorageReference> {
-    const relFilePath = 'temp/' + uuidv4() + '/' + attach.name;
-    const fileRef = ref(this.storage, relFilePath);
-    await this.upload(attach, fileRef);
-    return fileRef;
-  }
 
 
   async uploadAttachment(attach: File, channel_id: string): Promise<StorageReference> {
-    const relFilePath = channel_id + '/' + uuidv4() + '/' + attach.name;
+    const relFilePath = 'attach/' + channel_id + '/' + uuidv4() + '/' + attach.name;
     const fileRef = ref(this.storage, relFilePath);
     await this.upload(attach, fileRef);
     return fileRef;

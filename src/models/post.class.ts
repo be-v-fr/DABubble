@@ -10,7 +10,7 @@ export class Post {
     thread: Thread;
     date: number;
     reactions: Reaction[];
-    attachmentRef: StorageReference;
+    attachmentSrc: string;
 
     constructor(obj?: any) {
         this.post_id = obj && obj.post_id ? obj.post_id : '';
@@ -20,7 +20,7 @@ export class Post {
         this.thread = obj && obj.thread ? new Thread(obj.thread) : new Thread();
         this.date = obj && obj.date ? obj.date : -1;
         this.reactions = obj && obj.reactions ? obj.reactions.map((r: any) => new Reaction(r)) : [];
-        this.attachmentRef = obj && obj.attachmentRef ? obj.attachmentRef : '';
+        this.attachmentSrc = obj && obj.attachmentSrc ? obj.attachmentSrc : '';
     }
 
     toJson(): {
@@ -31,7 +31,7 @@ export class Post {
         thread: any;
         date: number;
         reactions: any[];
-        attachmentRef: string;
+        attachmentSrc: string;
     } {
         return {
             post_id: this.post_id,
@@ -41,7 +41,7 @@ export class Post {
             thread: this.thread.toJson(),
             date: this.date,
             reactions: this.reactions.map(r => r.toJson()),
-            attachmentRef : this.attachmentRef.toString()
+            attachmentSrc : this.attachmentSrc
         };
     }
 }

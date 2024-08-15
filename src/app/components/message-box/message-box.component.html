@@ -30,9 +30,9 @@
             }
         </ul>
     </form>
-    <div class="attachment-container" *ngIf="data.attachmentTempRef">
-        <button class="material-icons-outlined" (click)="deleteTempFile()">close</button>
-        <img src="{{data.attachmentTempSrc}}" alt="Anhang" />
-        <p><i>{{data.attachmentTempName}}</i></p>
+    <div class="attachment-container" *ngIf="data.attachmentRef">
+        <button class="material-icons-outlined" (click)="deleteFile()">close</button>
+        <img src="{{data.attachmentSrc}}" alt="Anhang" />
+        <p><i>{{data.attachmentName}}</i></p>
     </div>
 </div>

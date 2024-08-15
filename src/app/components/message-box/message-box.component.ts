@@ -18,10 +18,9 @@ export class MessageBoxComponent implements AfterViewInit {
   loading: boolean = false;
   data = {
     message: '',
-    attachmentTempRef: null as any,
-    attachmentTempSrc: '',
-    attachmentTempName: '',
-    attachmentRef: null as any
+    attachmentRef: null as any,
+    attachmentSrc: '',
+    attachmentName: ''
   };
   @Input() replying: boolean = false;
   @Input() channel?: Channel;
@@ -60,13 +59,13 @@ export class MessageBoxComponent implements AfterViewInit {
    * This function is triggered by the login form submission.
    * @param form - login form
    */
-  async onSubmit(form: NgForm) {
+  onSubmit(form: NgForm) {
     if (form.submitted && form.valid) {
       if (this.channel) {
         this.loading = true;
-        await this.handleAttachmentSubmission();
-        this.sent.emit({ message: this.data.message, attachmentRef: this.data.attachmentRef });
+        this.sent.emit({ message: this.data.message, attachmentSrc: this.data.attachmentSrc });
         form.reset();
+        this.resetFile();
         this.loading = false;
       } else {
         console.error('No channel selected!'); // add user feedback (at least in new message component)
@@ -96,40 +95,30 @@ export class MessageBoxComponent implements AfterViewInit {
     if (input.files && input.files.length > 0) {
       this.loading = true;
       const file: File = input.files[0];
-      this.storageService.uploadTempAttachment(file)
+      const ref = this.channel ? this.channel.channel_id : 'general';
+      this.storageService.uploadAttachment(file, ref)
         .then(async (response) => {
-          await this.onTempFileUpload(response, file.name);
+          await this.onFileUpload(response, file.name);
           this.loading = false;
         })
         .catch((err: Error) => console.error(err));
     }
   }
 
-  async onTempFileUpload(fileRef: StorageReference, fileName: string) {
-    this.data.attachmentTempRef = fileRef;
-    this.data.attachmentTempName = fileName;
-    this.data.attachmentTempSrc = await this.storageService.getUrl(fileRef);
-  }
-
-  deleteTempFile(): void {
-    deleteObject(this.data.attachmentTempRef);
-    this.data.attachmentTempRef = null;
-    this.data.attachmentTempSrc = '';
-    this.data.attachmentTempName = '';
-  }
-
-  async handleAttachmentSubmission(): Promise<void> {
-    if (this.channel && this.data.attachmentTempRef && this.fileInput.nativeElement.files) {
-      const file = this.fileInput.nativeElement.files[0];
-      await this.storageService.uploadAttachment(file, this.channel.channel_id)
-        .then(async (response) => this.onFileUpload(response))
-        .catch((err: Error) => console.error(err));
-    }
-  }
-
-  onFileUpload(fileRef: StorageReference) {
+  async onFileUpload(fileRef: StorageReference, fileName: string) {
     this.data.attachmentRef = fileRef;
-    this.deleteTempFile();
-    console.log('attachment uploaded:', fileRef);
+    this.data.attachmentName = fileName;
+    this.data.attachmentSrc = await this.storageService.getUrl(fileRef);
+  }
+
+  resetFile(): void {
+    this.data.attachmentRef = null;
+    this.data.attachmentSrc = '';
+    this.data.attachmentName = '';
+  }
+
+  deleteFile(): void {
+    deleteObject(this.data.attachmentRef);
+    this.resetFile();
   }
 }

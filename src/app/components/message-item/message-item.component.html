@@ -4,9 +4,9 @@
             <span (click)="onShowEmojiPicker()" class="material-icons-outlined">add_reaction</span>
         </button>
         @if (!ComeFromThread) {
-            <button (click)="onOpenNewThread()">
-                <span class="material-icons-outlined">insert_comment</span>
-            </button>
+        <button (click)="onOpenNewThread()">
+            <span class="material-icons-outlined">insert_comment</span>
+        </button>
         }
         <button (click)="onEditMessage()">
             <span class="material-icons-outlined">more_vert</span>
@@ -49,8 +49,13 @@
                 <span class="material-icons-outlined icon">add_reaction</span>
             </button>
         </div>
+        <div class="attachment-container" *ngIf="post.attachmentSrc.length > 0">
+            <a [href]="post.attachmentSrc" [download]="attachmentFileName" target="_blank">
+                <img [src]="post.attachmentSrc" alt="Anhang">
+            </a>
+        </div>
     </div>
-    }@else{
+    } @else {
     <form class="message-edit" (ngSubmit)="onSubmit(editMessageForm)" #editMessageForm="ngForm">
         <input type="text" [(ngModel)]="messageToUpdate" #message="ngModel" name="message">
         <div class="message-edit-footer">

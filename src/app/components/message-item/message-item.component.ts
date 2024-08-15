@@ -14,6 +14,8 @@ import { Reaction } from '../../../models/reaction.class';
 import { ReactionService } from '../../../services/content/reaction.service';
 import { MainUserProfileCardComponent } from '../../main-user/main-user-profile-card/main-user-profile-card.component';
 import { FormsModule, NgForm } from '@angular/forms';
+import { StorageService } from '../../../services/storage.service';
+
 
 @Component({
   selector: 'app-message-item',
@@ -39,6 +41,7 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
   groupedEmojis: { [key: string]: { count: number, users: string[] } } = {};
   currentUser: User | undefined;
   postUser: User = new User();
+  attachmentFileName: string | null = null;
 
   private authSub = new Subscription();
 
@@ -48,12 +51,23 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
     private usersService: UsersService,
     private channelsService: ChannelsService,
     private reactionsService: ReactionService,
-    public timeService: TimeService
+    public timeService: TimeService,
+    private storageService: StorageService
   ) { }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.authSub = this.subAuth();
     this.messageToUpdate = this.post.message;
+    this.initAttachment();
+  }
+
+  initAttachment(): void {
+    if (this.post.attachmentSrc.length > 0) {
+      const parsedUrl = new URL(this.post.attachmentSrc);
+      const path = parsedUrl.pathname;
+      const fileName = path.split('/').pop();
+      if (fileName) { this.attachmentFileName = fileName }
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -90,16 +104,16 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
 
   openUserProfile(uid: string): void {
     if (uid) {
-        if (uid == this.currentUser?.uid) {
-            this.dialog.open(MainUserProfileCardComponent, {
-                data: { 'mainUser': this.currentUser }
-            });
-        } else {
-            let viewUser:User = new User(this.usersService.getUserByUid(uid));
-            this.dialog.open(UserProfileCardComponent, {
-                data: { 'viewUser': viewUser }
-            });
-        }
+      if (uid == this.currentUser?.uid) {
+        this.dialog.open(MainUserProfileCardComponent, {
+          data: { 'mainUser': this.currentUser }
+        });
+      } else {
+        let viewUser: User = new User(this.usersService.getUserByUid(uid));
+        this.dialog.open(UserProfileCardComponent, {
+          data: { 'viewUser': viewUser }
+        });
+      }
     }
   }
 

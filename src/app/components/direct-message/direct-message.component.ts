@@ -194,7 +194,7 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
         return;
       }
 
-      await this.channelService.addPostToPmChannel(this.channel.channel_id, this.currUser.uid, data.message, data.attachmentRef);
+      await this.channelService.addPostToPmChannel(this.channel.channel_id, this.currUser.uid, data.message, data.attachmentSrc);
       console.log('Post successfully added to the channel');
     } catch (err) {
       console.error('Error adding post to the channel:', err);

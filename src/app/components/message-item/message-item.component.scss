@@ -52,6 +52,7 @@
 
         .img-container {
             height: 70px;
+
             img {
                 width: 70px;
                 height: 70px;
@@ -71,9 +72,11 @@
                 justify-content: center;
                 align-items: center;
                 gap: 20px;
+
                 &.reversed {
                     flex-direction: row-reverse;
                 }
+
                 .user-name {
                     font-size: 18px;
                     font-weight: 700;
@@ -303,6 +306,29 @@
                 button {
                     background-color: white;
                 }
+            }
+        }
+    }
+
+    .attachment-container {
+        width: 128px;
+        height: 128px;
+        border-radius: 30px;
+        a {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: inherit;
+            cursor: pointer;
+            filter: brightness(1);
+            @include transition(125ms);
+            img {
+                max-width: 100%;
+                max-height: 100%;
+                border-radius: inherit;
+                object-fit: cover;
+            }
+            &:hover {
+                filter: brightness(0.84);
             }
         }
     }

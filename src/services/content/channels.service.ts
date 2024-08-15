@@ -116,7 +116,7 @@ export class ChannelsService implements OnDestroy {
     }
   }
 
-  async addPostToChannel(channel_id: string, uid: string, message: string, attachmentRef: string) {
+  async addPostToChannel(channel_id: string, uid: string, message: string, attachmentSrc: string) {
     const newPost = new Post({
       post_id: uuidv4(),
       channel_id: channel_id,
@@ -129,7 +129,7 @@ export class ChannelsService implements OnDestroy {
       }),
       date: Date.now(),
       reactions: [],
-      attachmentRef
+      attachmentSrc
     });
     const channel = this.channels.find(c => c.channel_id === channel_id);
     if (channel) {
@@ -157,7 +157,7 @@ export class ChannelsService implements OnDestroy {
     this.channels$.next(this.channels.slice());
   }
 
-  async addPostToPmChannel(channel_id: string, uid: string, message: string, attachmentRef: string) {
+  async addPostToPmChannel(channel_id: string, uid: string, message: string, attachmentSrc: string) {
     const newPost = new Post({
       post_id: uuidv4(),
       channel_id: channel_id,
@@ -165,7 +165,7 @@ export class ChannelsService implements OnDestroy {
       user_id: uid,
       date: Date.now(),
       reactions: [],
-      attachmentRef: attachmentRef
+      attachmentSrc: attachmentSrc
     });
     const channel = this.channels.find(c => c.channel_id === channel_id);
     if (channel) {
@@ -177,7 +177,7 @@ export class ChannelsService implements OnDestroy {
     }
   }
 
-  async addPostToThread(channel_id: string, thread_id: string, uid: string, message: string, attachmentRef: string) {
+  async addPostToThread(channel_id: string, thread_id: string, uid: string, message: string, attachmentSrc: string) {
     const newPost = new Post({
       post_id: uuidv4(),
       channel_id: channel_id,
@@ -186,7 +186,7 @@ export class ChannelsService implements OnDestroy {
       thread: new Thread(),
       date: Date.now(),
       reactions: [],
-      attachmentRef
+      attachmentSrc
     });
 
     const channel = this.channels.find(c => c.channel_id === channel_id);
