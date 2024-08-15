@@ -27,6 +27,7 @@ import { StorageService } from '../../../services/storage.service';
 export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
 
   isOnEdit = false;
+  showActions = false;
   messageToUpdate = '';
 
   @Input() post: Post = new Post();
@@ -117,9 +118,14 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  showEditActions() {
+    this.showActions = !this.showActions;
+  }
+
   onEditMessage() {
     this.messageToUpdate = this.post.message;
     this.isOnEdit = true;
+    this.showActions = false;
   }
 
   onSubmit(form: NgForm) {

@@ -30,6 +30,7 @@
             padding: 10px 15px 10px 20px;
 
             button {
+                position: relative;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -39,6 +40,28 @@
                 span {
                     width: 24px;
                     height: 24px;
+                }
+
+                .edit-message-container {
+                    position: absolute;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    top: 22px;
+                    left: 27px;
+                    width: 300px;
+                    height: 110px;
+                    background-color: white;
+                    padding: 10px 20px 10px 20px;
+                    border-radius: 0px 30px 30px 30px;
+
+                    button {
+                        width: 100%;
+                        font-size: 17px;
+                        font-weight: 600;
+                        line-height: 32.74px;
+                    }
                 }
 
                 &:hover {
@@ -345,6 +368,7 @@
             img {
                 filter: brightness(0.84);
             }
+
             .download-icon-wrapper .download-icon {
                 opacity: 0.8;
             }

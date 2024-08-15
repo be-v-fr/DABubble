@@ -8,8 +8,14 @@
             <span class="material-icons-outlined">insert_comment</span>
         </button>
         }
-        <button (click)="onEditMessage()">
+        <button type="button" (click)="showEditActions()">
             <span class="material-icons-outlined">more_vert</span>
+            @if (showActions) {
+            <div class="edit-message-container">
+                <button class="edit-message" (click)="onEditMessage()">Nachricht bearbeiten</button>
+                <button class="delete-message">Nachricht löschen</button>
+            </div>
+            }
         </button>
     </div>
     <div class="img-container">
@@ -49,12 +55,13 @@
                 <span class="material-icons-outlined icon">add_reaction</span>
             </button>
         </div>
-            <a class="attachment" *ngIf="attachmentFileName" [href]="post.attachmentSrc" [download]="attachmentFileName" target="_blank">
-                <img [src]="post.attachmentSrc" [alt]="attachmentFileName">
-                <div class="download-icon-wrapper">
-                    <span class="material-icons-outlined download-icon">download</span>
-                </div>
-            </a>
+        <a class="attachment" *ngIf="attachmentFileName" [href]="post.attachmentSrc" [download]="attachmentFileName"
+            target="_blank">
+            <img [src]="post.attachmentSrc" [alt]="attachmentFileName">
+            <div class="download-icon-wrapper">
+                <span class="material-icons-outlined download-icon">download</span>
+            </div>
+        </a>
     </div>
     } @else {
     <form class="message-edit" (ngSubmit)="onSubmit(editMessageForm)" #editMessageForm="ngForm">
