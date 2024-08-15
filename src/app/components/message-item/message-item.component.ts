@@ -143,7 +143,6 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
 
   onDeletePost() {
     this.channelsService.deletePost(this.post.channel_id, this.post.post_id);
-    this.isOnEdit = true;
     this.showActions = false;
   }
 
