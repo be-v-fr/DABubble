@@ -147,15 +147,29 @@ export class ChannelsService implements OnDestroy {
       console.error(`Channel with ID ${channel_id} not found`);
       return;
     }
-    const post = channel.posts.find(p => p.post_id === post_id);
+
+    let post = channel.posts.find(p => p.post_id === post_id);
+
+    if (!post) {
+      for (let parentPost of channel.posts) {
+        post = parentPost.thread.posts.find(tp => tp.post_id === post_id);
+        if (post) {
+          break;
+        }
+      }
+    }
+
     if (!post) {
       console.error(`Post with ID ${post_id} not found in channel ${channel_id}`);
       return;
     }
+
     post.message = updatedMessage;
+
     await this.updateChannelInStorage(channel);
     this.channels$.next(this.channels.slice());
   }
+
 
   async deletePost(channel_id: string, post_id: string) {
     try {
