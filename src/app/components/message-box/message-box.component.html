@@ -6,7 +6,8 @@
         <div class="message-box-footer">
             <div class="message-box-actions">
                 <input type="file" #fileInput name="fileInput" style="display: none" ngModel
-            (change)="onFileSelection($event)" (click)="onFileSelection($event)" accept="image/*">
+                    (change)="onFileSelection($event)" (click)="onFileSelection($event)"
+                    accept="image/*,application/pdf">
                 <button type="button" (click)="fileInput.click()">
                     <span class="material-icons-outlined icon">add</span>
                 </button>
@@ -32,7 +33,13 @@
     </form>
     <div class="attachment-container" *ngIf="data.attachmentRef">
         <button class="material-icons-outlined" (click)="deleteFile()">close</button>
-        <img src="{{data.attachmentSrc}}" alt="Anhang" />
-        <p><i>{{data.attachmentName}}</i></p>
+        @if(data.attachmentSrc.includes('.pdf')) {
+        <div class="pdf-icon-wrapper">
+            <img src="assets/img/icons/pdf.svg" class="pdf-icon" alt="Anhang" />
+        </div>
+        } @else {
+        <img [src]="data.attachmentSrc" class="img-thumb" alt="Anhang" />
+        }
+        <p class="file-name"><i>{{data.attachmentName}}</i></p>
     </div>
 </div>

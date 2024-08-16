@@ -164,16 +164,26 @@
         }
     }
 
-    img {
+    .img-thumb, .pdf-icon-wrapper {
         max-width: 100%;
         height: auto;
         max-height: 92px;
         object-fit: cover;
+        display: flex;
+        justify-content: center;
+
+        .pdf-icon {
+            margin-top: 23px;
+            width: 36px;
+            height: auto;
+        }
     }
 
-    p {
+    .file-name, .file-name i {
         max-width: 100%;
+        overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        color: $grey;
     }
 }
