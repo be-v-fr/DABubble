@@ -5,8 +5,11 @@ import {
   uploadBytesResumable,
   listAll,
   deleteObject,
-  getDownloadURL
+  getDownloadURL,
+  StorageReference
 } from '@angular/fire/storage';
+import { v4 as uuidv4 } from 'uuid';
+
 
 @Injectable({
   providedIn: 'root'
@@ -142,5 +145,13 @@ export class StorageService {
     dir.items.forEach((fileRef: any) => {
       if (fileRef.toString().includes(uid)) { deleteObject(fileRef) }
     });
+  }
+
+
+  async uploadAttachment(attach: File, channel_id: string): Promise<StorageReference> {
+    const relFilePath = 'attach/' + channel_id + '/' + uuidv4() + '/' + attach.name;
+    const fileRef = ref(this.storage, relFilePath);
+    await this.upload(attach, fileRef);
+    return fileRef;
   }
 }

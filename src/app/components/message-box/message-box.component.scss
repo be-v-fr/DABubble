@@ -1,15 +1,28 @@
 @import '../../../styles.scss';
 
-.message-box-container {
-    position: relative;
+.message-box-wrapper {
+    width: 100%;
     height: 145px;
+    display: flex;
+    gap: 20px;
+    margin: 45px 0;
+}
+
+.main-container {
+    border: 1px solid $purple-light;
+    border-radius: 20px;
+    padding: 20px;
+    height: 145px;
+}
+
+.message-box-container {
+    @extend .main-container;
+    flex: 1;
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 40px;
     padding: 20px;
-    margin: 45px 0;
-    border: 1px solid $purple-light;
-    border-radius: 20px;
 
     input {
         font-size: 18px;
@@ -79,12 +92,19 @@
         gap: 10px;
         padding: 12px 20px;
         border-radius: 20px 20px 0 20px;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
         animation: expand 225ms ease;
+
         @keyframes expand {
-            from {max-height: 0;}
-            to {max-height: 354px;}
+            from {
+                max-height: 0;
+            }
+
+            to {
+                max-height: 354px;
+            }
         }
+
         li {
             width: 100%;
             height: 58px;
@@ -94,6 +114,7 @@
             padding: 8px 10px;
             @include transition(75ms);
             cursor: pointer;
+
             img {
                 margin-left: -5px;
                 margin-right: 15px;
@@ -102,10 +123,57 @@
                 border-radius: 50%;
                 object-fit: cover;
             }
+
             &:hover {
                 color: $purple-blue-bright;
                 background-color: $violet-bright;
             }
         }
+    }
+}
+
+.attachment-container {
+    @extend .main-container;
+    width: 145px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: space-between;
+    gap: 4px;
+
+    button {
+        position: absolute;
+        top: 26px;
+        right: 26px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        font-size: 16px;
+        color: $grey;
+        background-color: rgba(239, 239, 239, 0.8);
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include transition(75ms);
+
+        &:hover {
+            color: $purple-blue-bright;
+            background-color: $violet-bright;
+            box-shadow: 1px 2px 4px rgba(0,0,0,0.2);
+        }
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        max-height: 92px;
+        object-fit: cover;
+    }
+
+    p {
+        max-width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }

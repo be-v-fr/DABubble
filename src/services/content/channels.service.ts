@@ -116,7 +116,7 @@ export class ChannelsService implements OnDestroy {
     }
   }
 
-  async addPostToChannel(channel_id: string, uid: string, message: string) {
+  async addPostToChannel(channel_id: string, uid: string, message: string, attachmentSrc: string) {
     const newPost = new Post({
       post_id: uuidv4(),
       channel_id: channel_id,
@@ -128,7 +128,8 @@ export class ChannelsService implements OnDestroy {
         posts: [],
       }),
       date: Date.now(),
-      reactions: []
+      reactions: [],
+      attachmentSrc
     });
     const channel = this.channels.find(c => c.channel_id === channel_id);
     if (channel) {
@@ -156,14 +157,53 @@ export class ChannelsService implements OnDestroy {
     this.channels$.next(this.channels.slice());
   }
 
-  async addPostToPmChannel(channel_id: string, uid: string, message: string) {
+  async deletePost(channel_id: string, post_id: string) {
+    try {
+      const channel = this.channels.find(c => c.channel_id === channel_id);
+      if (!channel) {
+        console.error(`Channel with ID ${channel_id} not found`);
+        return;
+      }
+      const postIndex = channel.posts.findIndex(p => p.post_id === post_id);
+      if (postIndex !== -1) {
+        channel.posts.splice(postIndex, 1);
+        await this.updateChannelInStorage(channel);
+        this.channels$.next(this.channels.slice());
+        return;
+      }
+
+      let postFoundInThread = false;
+      for (const post of channel.posts) {
+        const threadPostIndex = post.thread.posts.findIndex(tp => tp.post_id === post_id);
+        if (threadPostIndex !== -1) {
+          post.thread.posts.splice(threadPostIndex, 1);
+          postFoundInThread = true;
+          break;
+        }
+      }
+
+      if (postFoundInThread) {
+        await this.updateChannelInStorage(channel);
+        this.channels$.next(this.channels.slice());
+      } else {
+        console.error(`Post with ID ${post_id} not found in channel ${channel_id}`);
+      }
+
+    } catch (error) {
+      console.error('An error occurred while deleting post from channel:', error);
+    }
+  }
+
+
+  async addPostToPmChannel(channel_id: string, uid: string, message: string, attachmentSrc: string) {
     const newPost = new Post({
       post_id: uuidv4(),
       channel_id: channel_id,
       message: message,
       user_id: uid,
       date: Date.now(),
-      reactions: []
+      reactions: [],
+      attachmentSrc: attachmentSrc
     });
     const channel = this.channels.find(c => c.channel_id === channel_id);
     if (channel) {
@@ -175,7 +215,7 @@ export class ChannelsService implements OnDestroy {
     }
   }
 
-  async addPostToThread(channel_id: string, thread_id: string, uid: string, message: string) {
+  async addPostToThread(channel_id: string, thread_id: string, uid: string, message: string, attachmentSrc: string) {
     const newPost = new Post({
       post_id: uuidv4(),
       channel_id: channel_id,
@@ -183,7 +223,8 @@ export class ChannelsService implements OnDestroy {
       user_id: uid,
       thread: new Thread(),
       date: Date.now(),
-      reactions: []
+      reactions: [],
+      attachmentSrc
     });
 
     const channel = this.channels.find(c => c.channel_id === channel_id);

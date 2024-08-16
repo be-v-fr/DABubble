@@ -30,6 +30,7 @@
             padding: 10px 15px 10px 20px;
 
             button {
+                position: relative;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -39,6 +40,28 @@
                 span {
                     width: 24px;
                     height: 24px;
+                }
+
+                .edit-message-container {
+                    position: absolute;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    top: 22px;
+                    left: 27px;
+                    width: 300px;
+                    height: 110px;
+                    background-color: white;
+                    padding: 10px 20px 10px 20px;
+                    border-radius: 0px 30px 30px 30px;
+
+                    button {
+                        width: 100%;
+                        font-size: 17px;
+                        font-weight: 600;
+                        line-height: 32.74px;
+                    }
                 }
 
                 &:hover {
@@ -52,6 +75,7 @@
 
         .img-container {
             height: 70px;
+
             img {
                 width: 70px;
                 height: 70px;
@@ -71,9 +95,11 @@
                 justify-content: center;
                 align-items: center;
                 gap: 20px;
+
                 &.reversed {
                     flex-direction: row-reverse;
                 }
+
                 .user-name {
                     font-size: 18px;
                     font-weight: 700;
@@ -303,6 +329,48 @@
                 button {
                     background-color: white;
                 }
+            }
+        }
+    }
+
+    .attachment {
+        width: 128px;
+        height: 128px;
+        border-radius: 30px;
+        position: relative;
+        cursor: pointer;
+        filter: brightness(1);
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: inherit;
+            object-fit: cover;
+            @include transition(125ms);
+        }
+
+        .download-icon-wrapper {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .download-icon {
+                font-size: 64px;
+                color: white;
+                opacity: 0;
+                @include transition(225ms);
+            }
+        }
+
+        &:hover {
+            img {
+                filter: brightness(0.84);
+            }
+
+            .download-icon-wrapper .download-icon {
+                opacity: 0.8;
             }
         }
     }

@@ -121,7 +121,7 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.channelsService.getChannelThreadPosts(this.channelData!.id, this.post?.post_id!);
   }
 
-  onCreatePost(message: string) {
+  onCreatePost(data: any) {
     if (!this.currUid) {
       console.error('Current user ID is not set.');
       return;
@@ -130,7 +130,7 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
       console.error('Current channel ID is not set.');
       return;
     }
-    this.channelsService.addPostToThread(this.channelData.id, this.post!.thread.thread_id, this.currUid, message)
+    this.channelsService.addPostToThread(this.channelData.id, this.post!.thread.thread_id, this.currUid, data.message, data.attachmentSrc)
       .then(() => console.log('Post successfully added to the channel'))
       .catch(err => console.error('Error adding post to the channel:', err));
   }

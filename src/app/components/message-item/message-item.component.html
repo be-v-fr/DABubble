@@ -4,13 +4,21 @@
             <span (click)="onShowEmojiPicker()" class="material-icons-outlined">add_reaction</span>
         </button>
         @if (!ComeFromThread) {
-            <button (click)="onOpenNewThread()">
-                <span class="material-icons-outlined">insert_comment</span>
+        <button (click)="onOpenNewThread()">
+            <span class="material-icons-outlined">insert_comment</span>
+        </button>
+        }
+        @if (messageSender) {
+            <button type="button" (click)="showEditActions()">
+                <span class="material-icons-outlined">more_vert</span>
+                @if (showActions) {
+                <div class="edit-message-container">
+                    <button class="edit-message" (click)="onEditMessage()">Nachricht bearbeiten</button>
+                    <button class="delete-message" (click)="onDeletePost()">Nachricht löschen</button>
+                </div>
+                }
             </button>
         }
-        <button (click)="onEditMessage()">
-            <span class="material-icons-outlined">more_vert</span>
-        </button>
     </div>
     <div class="img-container">
         <img [src]="postUser.avatarSrc" alt="Avatar">
@@ -22,7 +30,7 @@
             <div class="user-name" (click)="openUserProfile(post.user_id)">{{postUser.name}}</div>
             <span>{{ timeService.toClock(post.date) }} Uhr</span>
         </div>
-        <div class="message">
+        <div class="message" *ngIf="post.message.length > 0">
             <div class="message-text">{{ post.message }}</div>
         </div>
         @if(post.thread.posts.length > 0 && !ComeFromThread) {
@@ -49,8 +57,15 @@
                 <span class="material-icons-outlined icon">add_reaction</span>
             </button>
         </div>
+        <a class="attachment" *ngIf="attachmentFileName" [href]="post.attachmentSrc" [download]="attachmentFileName"
+            target="_blank">
+            <img [src]="post.attachmentSrc" [alt]="attachmentFileName">
+            <div class="download-icon-wrapper">
+                <span class="material-icons-outlined download-icon">download</span>
+            </div>
+        </a>
     </div>
-    }@else{
+    } @else {
     <form class="message-edit" (ngSubmit)="onSubmit(editMessageForm)" #editMessageForm="ngForm">
         <input type="text" [(ngModel)]="messageToUpdate" #message="ngModel" name="message">
         <div class="message-edit-footer">

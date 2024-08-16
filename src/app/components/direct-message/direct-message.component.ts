@@ -187,14 +187,14 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     }
   }
 
-  async onCreatePost(message: string): Promise<void> {
+  async onCreatePost(data: any): Promise<void> {
     try {
       if (!this.currUser?.uid || !this.channel?.channel_id) {
         console.error('User ID or channel is not set.');
         return;
       }
 
-      await this.channelService.addPostToPmChannel(this.channel.channel_id, this.currUser.uid, message);
+      await this.channelService.addPostToPmChannel(this.channel.channel_id, this.currUser.uid, data.message, data.attachmentSrc);
       console.log('Post successfully added to the channel');
     } catch (err) {
       console.error('Error adding post to the channel:', err);
