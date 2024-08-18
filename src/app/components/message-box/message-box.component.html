@@ -6,11 +6,11 @@
         <div class="message-box-footer">
             <div class="message-box-actions">
                 <input type="file" #fileInput name="fileInput" style="display: none" ngModel
-            (change)="onFileSelection($event)" (click)="onFileSelection($event)" accept="image/*">
+                    (change)="onFileSelection($event)" (click)="onFileSelection($event)" accept="image/*">
                 <button type="button" (click)="fileInput.click()">
                     <span class="material-icons-outlined icon">add</span>
                 </button>
-                <button type="button">
+                <button type="button" (click)="onShowEmojiPicker()">
                     <span class="material-icons-outlined">sentiment_satisfied_alt</span>
                 </button>
                 <button type="button" (click)="toggleMembersList($event)">

@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user.class';
 import { StorageService } from '../../../services/storage.service';
 import { StorageReference, deleteObject } from 'firebase/storage';
+import { ReactionService } from '../../../services/content/reaction.service';
 
 @Component({
   selector: 'app-message-box',
@@ -31,6 +32,8 @@ export class MessageBoxComponent implements AfterViewInit {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   showingMembersList: boolean = false;
   public storageService = inject(StorageService);
+
+  constructor(private reactionsService: ReactionService) { }
 
   ngAfterViewInit(): void {
     this.autofocus();
@@ -93,6 +96,10 @@ export class MessageBoxComponent implements AfterViewInit {
   addToMessage(string: string) {
     this.data.message += string;
     this.messageBoxInput.nativeElement.focus();
+  }
+
+  onShowEmojiPicker() {
+    this.reactionsService.toggleReactionsPicker();
   }
 
   async onFileSelection(e: Event) {

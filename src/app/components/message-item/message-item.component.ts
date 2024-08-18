@@ -160,17 +160,9 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
       console.error('Current user is not defined');
       return;
     }
+    this.reactionsService.currentPost = this.post;
 
-    const existingReaction = this.post.reactions.find(r => r.emoji === emoji && r.user.uid === this.currentUser?.uid);
-    if (!existingReaction) {
-      try {
-        await this.channelsService.addReactionToPost(this.post.channel_id, this.post.post_id, this.currentUser, emoji);
-      } catch (error) {
-        console.error('Error adding reaction to post:', error);
-      }
-    } else {
-      await this.channelsService.deleteReactionFromPost(this.post.channel_id, this.post.post_id, this.currentUser.uid, emoji);
-    }
+    await this.reactionsService.addReaction(emoji, this.currentUser);
   }
 
   async getGroupedEmojis(reactions: Reaction[]): Promise<{ [key: string]: { count: number, users: string[] } }> {

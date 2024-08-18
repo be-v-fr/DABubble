@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { User } from '../../models/user.class';
 import { Post } from '../../models/post.class';
 import { ChannelsService } from './channels.service';
+import { emojis } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class ReactionService {
     this._reactionsPicker$.next(!this._reactionsPicker$.value);
   }
 
-  async addReaction(event: { emoji: { native: string } }, user: User): Promise<void> {
+  async addReaction(event: any, user: User): Promise<void> {
+
     if (!user) {
       console.error('Current user is not defined');
       return;
@@ -31,32 +33,41 @@ export class ReactionService {
       return;
     }
 
-    // Check if the user already reacted with the same emoji
-    const existingReaction = this.currentPost.reactions.find(r => r.emoji === event.emoji.native && r.user.uid === user.uid);
-
-    if (existingReaction) {
-      console.warn('User has already reacted with this emoji');
-      this._reactionsPicker$.next(false); // Close the picker if the reaction already exists
-      return;
-    }
+    const existingReaction = this.currentPost.reactions.find(
+      r => r.emoji === event && r.user.uid === user.uid
+    );
 
     try {
-      // Add the reaction
-      await this.channelsService.addReactionToPost(this.currentPost.channel_id, this.currentPost.post_id, user, event.emoji.native);
+      if (existingReaction) {
+        await this.channelsService.deleteReactionFromPost(
+          this.currentPost.channel_id,
+          this.currentPost.post_id,
+          user.uid,
+          event
+        );
+      } else {
+        await this.channelsService.addReactionToPost(
+          this.currentPost.channel_id,
+          this.currentPost.post_id,
+          user,
+          event.emoji.native
+        );
+      }
 
-      // Optionally, you can update `currentPost` here if necessary
-      // Fetch the updated post from the server
-      const posts = await this.channelsService.getChannelThreadPosts(this.currentPost.channel_id, this.currentPost.post_id);
+      const posts = this.channelsService.getChannelThreadPosts(
+        this.currentPost.channel_id,
+        this.currentPost.post_id
+      );
 
       this.currentPost = posts?.find(p => p.post_id === this.currentPost.post_id) || this.currentPost;
 
     } catch (error) {
-      console.error('Error adding reaction to post:', error);
+      console.error('Error handling reaction for post:', error);
       // Optionally, show user feedback for errors
-      // this.snackBar.open('Failed to add reaction', 'Close', { duration: 2000 });
+      // this.snackBar.open('Failed to handle reaction', 'Close', { duration: 2000 });
     } finally {
-      // Always close the picker
       this._reactionsPicker$.next(false);
     }
   }
+
 }
