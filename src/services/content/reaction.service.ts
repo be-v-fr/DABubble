@@ -33,7 +33,7 @@ export class ReactionService {
     }
 
     const existingReaction = this.currentPost.reactions.find(
-      r => r.emoji === event && r.user.uid === user.uid
+      r => r.emoji === event.emoji.native && r.user.uid === user.uid
     );
 
     try {
@@ -42,7 +42,7 @@ export class ReactionService {
           this.currentPost.channel_id,
           this.currentPost.post_id,
           user.uid,
-          event
+          event.emoji.native
         );
       } else {
         await this.channelsService.addReactionToPost(

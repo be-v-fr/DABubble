@@ -157,13 +157,15 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   async onHandleReaction(emoji: any) {
+    let reaction = { emoji: { native: emoji } };
+
     if (!this.currentUser) {
       console.error('Current user is not defined');
       return;
     }
     this.reactionsService.currentPost = this.post;
 
-    await this.reactionsService.addReaction(emoji, this.currentUser);
+    await this.reactionsService.addReaction(reaction, this.currentUser);
   }
 
   async getGroupedEmojis(reactions: Reaction[]): Promise<{ [key: string]: { count: number, users: string[] } }> {
