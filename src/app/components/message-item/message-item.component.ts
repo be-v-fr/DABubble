@@ -151,6 +151,7 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onShowEmojiPicker() {
+    this.reactionsService.reactionToMessage = false;
     this.reactionsService.currentPost = this.post;
     this.reactionsService.toggleReactionsPicker();
   }

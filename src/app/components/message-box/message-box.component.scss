@@ -1,11 +1,26 @@
 @import '../../../styles.scss';
 
 .message-box-wrapper {
+    position: relative;
     width: 100%;
     height: 145px;
     display: flex;
     gap: 20px;
     margin: 45px 0;
+
+    .reaction-container {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: -435px;
+        left: -160px;
+        z-index: 1000;
+
+        emoji-mart {
+            position: absolute;
+            left: 40%;
+        }
+    }
 }
 
 .main-container {
@@ -160,11 +175,12 @@
         &:hover {
             color: $purple-blue-bright;
             background-color: $violet-bright;
-            box-shadow: 1px 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
         }
     }
 
-    .img-thumb, .pdf-icon-wrapper {
+    .img-thumb,
+    .pdf-icon-wrapper {
         max-width: 100%;
         height: auto;
         max-height: 92px;
@@ -179,7 +195,8 @@
         }
     }
 
-    .file-name, .file-name i {
+    .file-name,
+    .file-name i {
         max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;

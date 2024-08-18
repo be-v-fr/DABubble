@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 import { User } from '../../models/user.class';
 import { Post } from '../../models/post.class';
 import { ChannelsService } from './channels.service';
-import { emojis } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +10,7 @@ import { emojis } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 export class ReactionService {
   private _reactionsPicker$ = new BehaviorSubject<boolean>(false);
   reactionsPicker$ = this._reactionsPicker$.asObservable();
+  reactionToMessage = false;
   currentPost!: Post;
 
   constructor(
@@ -22,7 +22,6 @@ export class ReactionService {
   }
 
   async addReaction(event: any, user: User): Promise<void> {
-
     if (!user) {
       console.error('Current user is not defined');
       return;

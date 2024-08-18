@@ -48,6 +48,7 @@ export class HomeComponent {
     public currentUser = new User();
     public users: User[] = [];
     public userChannels: Channel[] = [];
+
     public showNav = true;
     public reactionsPickerVisible = false;
 
@@ -115,7 +116,10 @@ export class HomeComponent {
     }
 
     async onAddReaction(event: { emoji: { native: string } }) {
-        this.reactionsService.addReaction(event, this.currentUser);
+        if (!this.reactionsService.reactionToMessage) {
+            this.reactionsService.addReaction(event, this.currentUser);
+        }
+
     }
 
     closeReactionsPicker() {
