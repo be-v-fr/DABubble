@@ -59,7 +59,13 @@
         </div>
         <a class="attachment" *ngIf="attachmentFileName" [href]="post.attachmentSrc" [download]="attachmentFileName"
             target="_blank">
-            <img [src]="post.attachmentSrc" [alt]="attachmentFileName">
+            @if(post.attachmentSrc.includes('.pdf')) {
+                <div class="pdf-icon-wrapper">
+                    <img src="assets/img/icons/pdf.svg" class="pdf-icon" alt="Anhang" />
+                </div>
+                } @else {
+                <img [src]="post.attachmentSrc" class="img-thumb" alt="Anhang" />
+                }
             <div class="download-icon-wrapper">
                 <span class="material-icons-outlined download-icon">download</span>
             </div>
