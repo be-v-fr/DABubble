@@ -34,8 +34,9 @@ export class MessageBoxComponent implements OnInit, AfterViewInit {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   showingMembersList: boolean = false;
   public storageService = inject(StorageService);
+  errorMsg: string | null = null;
 
-  constructor(public reactionsService: ReactionService) { }
+  constructor(public reactionsService: ReactionService) {}
 
   ngOnInit(): void {
     this.reactionsService.reactionsPicker$.subscribe((rp) => {
@@ -124,16 +125,33 @@ export class MessageBoxComponent implements OnInit, AfterViewInit {
   async onFileSelection(e: Event) {
     const input = e.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.loading = true;
       const file: File = input.files[0];
-      const ref = this.channel ? this.channel.channel_id : 'general';
-      this.storageService.uploadAttachment(file, ref)
-        .then(async (response) => {
-          await this.onFileUpload(response, file.name);
-          this.loading = false;
-        })
-        .catch((err: Error) => console.error(err));
+      this.isImgOrPdf(file) ? await this.uploadFile(file) : this.showError('Bitte wähle ein Bild oder eine PDF-Datei.');
     }
+  }
+
+  isImgOrPdf(file: File): boolean {
+    return this.storageService.isImage(file) || this.storageService.isPdf(file);
+  }
+
+  async uploadFile(file: File) {
+    this.resetError();
+    this.loading = true;
+    const ref = this.channel ? this.channel.channel_id : 'general';
+    this.storageService.uploadAttachment(file, ref)
+      .then(async (response) => {
+        await this.onFileUpload(response, file.name);
+        this.loading = false;
+      })
+      .catch((err: Error) => console.error(err));
+  }
+
+  showError(msg: string): void {
+    this.errorMsg = msg;
+  }
+
+  resetError(): void {
+    this.errorMsg = null;
   }
 
   async onFileUpload(fileRef: StorageReference, fileName: string) {

@@ -39,6 +39,10 @@ export class StorageService {
     return img.type.includes('image');
   }
 
+  isPdf(file: File): boolean {
+    return file.type.includes('pdf');
+  }
+
 
   // not in use so far
   async deleteFolder(ref: any) {
