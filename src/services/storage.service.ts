@@ -112,7 +112,6 @@ export class StorageService {
   }
 
 
-  // OPTIONAL: implement file compression or maximum file size on upload
   async uploadAvatar(img: File, uid: string): Promise<string> {
     const relFilePath = 'avatars/' + this.generateAvatarName(img, uid);
     const fileRef: any = ref(this.storage, relFilePath);
@@ -153,7 +152,7 @@ export class StorageService {
 
 
   async uploadAttachment(attach: File, channel_id: string): Promise<StorageReference> {
-    const relFilePath = 'attach/' + channel_id + '/' + uuidv4() + '/' + attach.name;
+    const relFilePath = 'attach/' + channel_id + '/' + uuidv4().substring(0,6) + '_' + attach.name;
     const fileRef = ref(this.storage, relFilePath);
     await this.upload(attach, fileRef);
     return fileRef;
