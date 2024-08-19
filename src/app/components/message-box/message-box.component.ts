@@ -76,15 +76,15 @@ export class MessageBoxComponent implements OnInit, AfterViewInit {
     const empty = this.isFormEmpty();
     if (form.submitted && form.valid && !empty) {
       this.resetError();
-      if (this.channel || this.inThread) {
-        this.sent.emit({ message: this.data.message, attachmentSrc: this.data.attachmentSrc });
-        this.resetAll(form);
-      } else {
-        this.showError('Die Nachricht ist an niemanden adressiert.');
-      }
+      (this.channel || this.inThread) ? this.completeForm(form) : this.showError('Die Nachricht ist an niemanden adressiert.');
     } else if(empty) {
       this.showError('Schreibe eine Nachricht oder wähle eine Datei.');
     }
+  }
+
+  completeForm(form: NgForm) {
+    this.sent.emit({ message: this.data.message, attachmentSrc: this.data.attachmentSrc });
+    this.resetAll(form);    
   }
 
   resetAll(form: NgForm) {
