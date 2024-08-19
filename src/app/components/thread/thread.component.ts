@@ -12,6 +12,8 @@ import { ChannelsService } from '../../../services/content/channels.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TimeSeparatorComponent } from '../time-separator/time-separator.component';
 import { TimeService } from '../../../services/time.service';
+import { User } from '../../../models/user.class';
+import { Channel } from '../../../models/channel.class';
 
 @Component({
   selector: 'app-thread',
@@ -22,7 +24,8 @@ import { TimeService } from '../../../services/time.service';
 })
 export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() post: Post | undefined;
-  @Input() channelData: { id: string, name: string } | undefined;
+  @Input() channelData: { id: string, name: string, members: User[] } | undefined;
+  channel: Channel | null = null;
   @Output() closeTh = new EventEmitter<boolean>();
   @ViewChildren(MessageItemComponent, { read: ElementRef }) messageItems!: QueryList<ElementRef>;
   savedPostsLength: number | null = null;
@@ -46,6 +49,7 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.authSub = this.subAuth();
+    this.initChannel();
     this.channelsSub = this.subChannels();
   }
 
@@ -69,17 +73,25 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  async initChannel(): Promise<void> {
+    if (this.channelData?.id) {
+      const channel = await this.channelsService.getChannel(this.channelData.id);
+      this.channel = channel || null;
+    }
+  }
+
   subChannels(): Subscription {
     return this.channelsService.channels$.subscribe(() => {
       const threadPosts = this.getPosts();
-      if (this.post && threadPosts) {this.post.thread.posts = threadPosts}
+      if (this.post && threadPosts) { this.post.thread.posts = threadPosts }
+      this.initChannel();
     })
   }
 
   goToPost(postId: string | undefined) {
     this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
-      if(this.hasPostLengthChanged(elements)) {
-      (postId && postId.length > 0) ? this.autoscrollToPost(elements, postId) : this.autoscrollToLastPost(elements);
+      if (this.hasPostLengthChanged(elements)) {
+        (postId && postId.length > 0) ? this.autoscrollToPost(elements, postId) : this.autoscrollToLastPost(elements);
       }
     });
     this.messageItems.notifyOnChanges();
@@ -87,7 +99,7 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
 
   hasPostLengthChanged(elements: QueryList<ElementRef>): boolean {
     const currentLength = elements.toArray().length;
-    if(currentLength != this.savedPostsLength) {
+    if (currentLength != this.savedPostsLength) {
       this.savedPostsLength = currentLength;
       return true;
     } else {
