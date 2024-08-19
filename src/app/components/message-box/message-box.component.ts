@@ -135,13 +135,29 @@ export class MessageBoxComponent implements OnInit, AfterViewInit {
     const input = e.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file: File = input.files[0];
-      this.isImgOrPdf(file) ? await this.uploadFile(file) : this.showError('Bitte wähle ein Bild oder eine PDF-Datei.');
+      if(this.isValidFile(file)) {await this.uploadFile(file)}
       input.value = '';
+    }
+  }
+
+  isValidFile(file: File): boolean {
+    if(!this.isImgOrPdf(file)) {
+      this.showError('Bitte wähle ein Bild oder eine PDF-Datei.');
+      return false;
+    } else if(!this.hasValidSize(file)) {
+      this.showError('Die Datei darf nicht größer als 500kB sein.');
+      return false;
+    } else {
+      return true;
     }
   }
 
   isImgOrPdf(file: File): boolean {
     return this.storageService.isImage(file) || this.storageService.isPdf(file);
+  }
+
+  hasValidSize(file: File): boolean {
+    return file.size <= 500 * 1024;
   }
 
   async uploadFile(file: File) {
