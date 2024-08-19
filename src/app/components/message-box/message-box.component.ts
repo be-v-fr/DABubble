@@ -73,20 +73,29 @@ export class MessageBoxComponent implements OnInit, AfterViewInit {
    * @param form - login form
    */
   onSubmit(form: NgForm) {
-    if (form.submitted && form.valid && !this.isFormEmpty()) {
+    const empty = this.isFormEmpty();
+    if (form.submitted && form.valid && !empty) {
+      this.resetError();
       if (this.channel || this.inThread) {
-        this.loading = true;
         this.sent.emit({ message: this.data.message, attachmentSrc: this.data.attachmentSrc });
-        form.reset();
-        this.resetFile();
-        this.loading = false;
+        this.resetAll(form);
       } else {
-        console.error('No channel selected!'); // add user feedback (at least in new message component)
+        this.showError('Die Nachricht ist an niemanden adressiert.');
       }
+    } else if(empty) {
+      this.showError('Schreibe eine Nachricht oder wähle eine Datei.');
     }
   }
 
+  resetAll(form: NgForm) {
+    form.reset();
+    this.data.message = '';
+    this.resetFile();
+  }
+
   isFormEmpty(): boolean {
+    console.log('message:', this.data.message);
+    console.log('attachment:', this.data.attachmentSrc);
     return this.data.message.length == 0 && this.data.attachmentSrc.length == 0;
   }
 
@@ -127,6 +136,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit {
     if (input.files && input.files.length > 0) {
       const file: File = input.files[0];
       this.isImgOrPdf(file) ? await this.uploadFile(file) : this.showError('Bitte wähle ein Bild oder eine PDF-Datei.');
+      input.value = '';
     }
   }
 

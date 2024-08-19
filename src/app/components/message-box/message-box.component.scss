@@ -88,6 +88,9 @@
 
         .send-btn {
             color: $purple-blue;
+            &:disabled {
+                opacity: 0.5;
+            }
         }
     }
 
