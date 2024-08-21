@@ -9,11 +9,13 @@ import { Subscription, combineLatest } from 'rxjs';
 import { UsersService } from '../../../services/users.service';
 import { ChannelsService } from '../../../services/content/channels.service';
 import { AuthService } from '../../../services/auth.service';
+import { ActivityService } from '../../../services/activity.service';
+import { ActivityStateDotComponent } from '../activity-state-dot/activity-state-dot.component';
 
 @Component({
   selector: 'app-expandable-button',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ActivityStateDotComponent],
   providers: [
     {
       provide: MatDialogRef,
@@ -50,6 +52,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private userService: UsersService,
     private channelsService: ChannelsService,
+    private activityService: ActivityService
   ) {
     // this.router.events.subscribe(event => {
     //   if (event instanceof NavigationEnd && window.innerWidth <= 768) {

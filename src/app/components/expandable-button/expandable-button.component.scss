@@ -147,14 +147,12 @@
                                     height: 50px;
                                     border-radius: 50%;
                                 }
-                                .on-off-line-sign {
+                                app-activity-state-dot {
                                     position: absolute;
-                                    top: 40px;
-                                    left: 35px;
+                                    bottom: 5px;
+                                    right: 2px;
                                     width: 14px;
                                     height: 14px;
-                                    border: 2px solid white;
-                                    border-radius: 100%;
                                 }
                             }
                         }
