@@ -1,6 +1,7 @@
-::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface{
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
     border-radius: 30px !important;
 }
+
 *:focus {
     outline: none;
 }
@@ -14,6 +15,7 @@
     display: flex;
     flex-direction: column;
     gap: 45px;
+
     .head {
         width: 100%;
         height: 40px;
@@ -21,10 +23,12 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: baseline;
+
         p {
             font-size: 24px;
             font-weight: 700;
         }
+
         .close-card-btn {
             color: rgb(0, 0, 0, 1);
             display: flex;
@@ -32,6 +36,7 @@
             justify-content: center;
             padding: 8px 8px;
             cursor: pointer;
+
             &:hover {
                 color: $purple-blue-bright;
                 background-color: $violet-bright;
@@ -39,70 +44,85 @@
             }
         }
     }
+
     .profileImg {
         width: 100%;
         display: flex;
         justify-content: center;
+
         img {
             width: 200px;
             height: 200px;
             border-radius: 100%;
         }
     }
+
     .userName {
         width: 100%;
         // height: 86px;
         display: flex;
         flex-direction: column;
         gap: 15px;
+
         h1 {
             margin-block-end: 0;
         }
+
         .online {
             height: 27px;
             display: flex;
             align-items: center;
             flex-wrap: nowrap;
             gap: 15px;
+
             app-activity-state-dot {
                 width: 16px;
                 height: 16px;
             }
+
             .status-text {
                 font-weight: 400;
                 font-size: 20px;
                 margin-block-end: 0;
+
                 &.online {
                     color: $onlinedot-online;
                 }
+
                 &.idle {
                     color: #c8c82e;
                 }
             }
         }
     }
+
     .emailContainer {
         width: 100%;
         height: 70px;
         display: flex;
         flex-direction: column;
         gap: 15px;
+
         .email {
             display: flex;
             gap: 20px;
-            img{
+
+            img {
                 width: 25px;
                 height: 20px;
             }
-            p{
+
+            p {
                 font-size: 20px;
                 font-weight: 700;
                 margin-block-end: 0;
             }
         }
-        .showEmail{
+
+        .showEmail {
             margin-left: 50px;
-            p{
+
+            p {
                 margin-block-end: 0;
                 color: #1381FF;
                 font-size: 18px;
@@ -110,14 +130,17 @@
             }
         }
     }
-    .submit-btns{
+
+    .submit-btns {
         display: flex;
         justify-content: center;
-        a{
+
+        a {
             border-radius: 25px;
             text-decoration: none;
         }
-        button{
+
+        button {
             width: 164px;
             display: flex;
             flex-direction: row-reverse;
@@ -125,5 +148,3 @@
         }
     }
 }
-
-
