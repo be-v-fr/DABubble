@@ -9,15 +9,15 @@
         </button>
         }
         @if (messageSender) {
-            <button type="button" (click)="showEditActions()">
-                <span class="material-icons-outlined">more_vert</span>
-                @if (showActions) {
-                <div class="edit-message-container">
-                    <button class="edit-message" (click)="onEditMessage()">Nachricht bearbeiten</button>
-                    <button class="delete-message" (click)="onDeletePost()">Nachricht löschen</button>
-                </div>
-                }
-            </button>
+        <button type="button" (click)="showEditActions()">
+            <span class="material-icons-outlined">more_vert</span>
+            @if (showActions) {
+            <div class="edit-message-container">
+                <button class="edit-message" (click)="onEditMessage()">Nachricht bearbeiten</button>
+                <button class="delete-message" (click)="onDeletePost()">Nachricht löschen</button>
+            </div>
+            }
+        </button>
         }
     </div>
     <div class="img-container">
@@ -60,12 +60,12 @@
         <a class="attachment" *ngIf="attachmentFileName" [href]="post.attachmentSrc" [download]="attachmentFileName"
             target="_blank">
             @if(post.attachmentSrc.includes('.pdf')) {
-                <div class="pdf-icon-wrapper">
-                    <img src="assets/img/icons/pdf.svg" class="pdf-icon" alt="Anhang" />
-                </div>
-                } @else {
-                <img [src]="post.attachmentSrc" class="img-thumb" alt="Anhang" />
-                }
+            <div class="pdf-icon-wrapper">
+                <img src="assets/img/icons/pdf.svg" class="pdf-icon" alt="Anhang" />
+            </div>
+            } @else {
+            <img [src]="post.attachmentSrc" class="img-thumb" alt="Anhang" />
+            }
             <div class="download-icon-wrapper">
                 <span class="material-icons-outlined download-icon">download</span>
             </div>
@@ -76,7 +76,7 @@
         <input type="text" [(ngModel)]="messageToUpdate" #message="ngModel" name="message">
         <div class="message-edit-footer">
             <div class="message-edit-footer-reaction">
-                <button type="button">
+                <button type="button" (click)="onShowEmojiPickerInEdit()">
                     <span class=" material-icons-outlined">sentiment_satisfied_alt</span>
                 </button>
             </div>

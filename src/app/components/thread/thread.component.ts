@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, QueryList, SimpleChanges, ViewChildren, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
 import { MessageItemComponent } from "../message-item/message-item.component";
 import { MessageBoxComponent } from "../message-box/message-box.component";
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
@@ -28,7 +28,6 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
   savedPostsLength: number | null = null;
 
   currUid: string | null = null;
-  reactionPicker = false;
 
   private authSub = new Subscription();
   private channelsSub = new Subscription();
@@ -72,14 +71,14 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
   subChannels(): Subscription {
     return this.channelsService.channels$.subscribe(() => {
       const threadPosts = this.getPosts();
-      if (this.post && threadPosts) {this.post.thread.posts = threadPosts}
+      if (this.post && threadPosts) { this.post.thread.posts = threadPosts }
     })
   }
 
   goToPost(postId: string | undefined) {
     this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
-      if(this.hasPostLengthChanged(elements)) {
-      (postId && postId.length > 0) ? this.autoscrollToPost(elements, postId) : this.autoscrollToLastPost(elements);
+      if (this.hasPostLengthChanged(elements)) {
+        (postId && postId.length > 0) ? this.autoscrollToPost(elements, postId) : this.autoscrollToLastPost(elements);
       }
     });
     this.messageItems.notifyOnChanges();
@@ -87,7 +86,7 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
 
   hasPostLengthChanged(elements: QueryList<ElementRef>): boolean {
     const currentLength = elements.toArray().length;
-    if(currentLength != this.savedPostsLength) {
+    if (currentLength != this.savedPostsLength) {
       this.savedPostsLength = currentLength;
       return true;
     } else {

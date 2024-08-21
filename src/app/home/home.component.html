@@ -10,7 +10,7 @@
     <div class="main-content">
         <router-outlet></router-outlet>
     </div>
-    @if (reactionsPickerVisible && !reactionsService.reactionToMessage) {
+    @if (reactionsPickerVisible) {
     <div class="emoji-container" appClickStopPropagation (click)="closeReactionsPicker()">
         <emoji-mart title="Pick your emoji…" (emojiClick)="onAddReaction($event)" emoji="point_up"></emoji-mart>
     </div>

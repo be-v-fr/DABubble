@@ -45,6 +45,8 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
   attachmentFileName: string | null = null;
 
   private authSub = new Subscription();
+  private reactionSub = new Subscription();
+
 
   constructor(
     private dialog: MatDialog,
@@ -58,6 +60,7 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
     this.authSub = this.subAuth();
+    this.reactionSub = this.subReaction();
     this.messageToUpdate = this.post.message;
     this.initAttachment();
   }
@@ -79,6 +82,7 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     this.authSub.unsubscribe();
+    this.reactionSub.unsubscribe();
   }
 
   private async updateGroupedEmojis(): Promise<void> {
@@ -151,10 +155,28 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onShowEmojiPicker() {
-    this.reactionsService.reactionToMessage = false;
     this.reactionsService.currentPost = this.post;
     this.reactionsService.toggleReactionsPicker();
   }
+
+  onShowEmojiPickerInEdit() {
+    this.reactionsService.currentPost = this.post;
+    this.reactionsService.reactionToEditMessage = true;
+    this.reactionsService.toggleReactionsPicker();
+  }
+
+  addReactionToUpdateMessage(reaction: string) {
+    this.messageToUpdate += reaction;
+  }
+
+  subReaction(): Subscription {
+    return this.reactionsService.reactionToAdded$.subscribe((reaction) => {
+      if (reaction && this.reactionsService.reactionToEditMessage) {
+        this.addReactionToUpdateMessage(reaction);
+        this.reactionsService.setReaction('');
+      }
+    });
+  };
 
   async onHandleReaction(emoji: any) {
     let reaction = { emoji: { native: emoji } };

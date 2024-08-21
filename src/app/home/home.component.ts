@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { RouterOutlet } from '@angular/router';
@@ -116,13 +116,18 @@ export class HomeComponent {
     }
 
     async onAddReaction(event: { emoji: { native: string } }) {
-        if (!this.reactionsService.reactionToMessage) {
+        if (this.reactionsService.reactionToMessage || this.reactionsService.reactionToEditMessage) {
+            this.reactionsService.setReaction(event.emoji.native);
+        } else {
             this.reactionsService.addReaction(event, this.currentUser);
         }
-
+        this.reactionsService.reactionToMessage = false;
+        this.reactionsService.reactionToEditMessage = false;
     }
 
     closeReactionsPicker() {
+        this.reactionsService.reactionToMessage = false;
+        this.reactionsService.reactionToEditMessage = false;
         this.reactionsService.toggleReactionsPicker();
     }
 }

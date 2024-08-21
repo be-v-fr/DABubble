@@ -10,12 +10,20 @@ import { ChannelsService } from './channels.service';
 export class ReactionService {
   private _reactionsPicker$ = new BehaviorSubject<boolean>(false);
   reactionsPicker$ = this._reactionsPicker$.asObservable();
+
+  reactionToAdded$ = new BehaviorSubject<string>('');
+
   reactionToMessage = false;
+  reactionToEditMessage = false;
   currentPost!: Post;
 
   constructor(
     private channelsService: ChannelsService
   ) { }
+
+  setReaction(reaction: string): void {
+    this.reactionToAdded$.next(reaction);
+  }
 
   toggleReactionsPicker() {
     this._reactionsPicker$.next(!this._reactionsPicker$.value);

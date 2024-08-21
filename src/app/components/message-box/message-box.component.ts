@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, HostListener, inject, OnInit } from '@angular/core';
-import { FormsModule, NgForm, NgModel } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, HostListener, inject, OnInit, OnDestroy } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
 import { StorageService } from '../../../services/storage.service';
@@ -7,6 +7,7 @@ import { StorageReference, deleteObject } from 'firebase/storage';
 import { ReactionService } from '../../../services/content/reaction.service';
 import { ClickStopPropagationDirective } from '../../shared/click-stop-propagation.directive';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-message-box',
@@ -15,7 +16,8 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
   templateUrl: './message-box.component.html',
   styleUrl: './message-box.component.scss'
 })
-export class MessageBoxComponent implements OnInit, AfterViewInit {
+export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
+  private reactionSub = new Subscription();
   loading: boolean = false;
   public reactionsPickerVisible = false;
 
@@ -40,11 +42,16 @@ export class MessageBoxComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.reactionsService.reactionsPicker$.subscribe((rp) => {
       this.reactionsPickerVisible = rp;
-    })
+    });
+    this.reactionSub = this.subReaction();
   }
 
   ngAfterViewInit(): void {
     this.autofocus();
+  }
+
+  ngOnDestroy(): void {
+    this.reactionSub.unsubscribe();
   }
 
   autofocus() {
@@ -111,15 +118,15 @@ export class MessageBoxComponent implements OnInit, AfterViewInit {
     this.reactionsService.toggleReactionsPicker();
   }
 
-  onAddReaction(event: any) {
-    this.addToMessage(event.emoji.native);
-    this.closeReactionsPicker();
-  }
 
-  closeReactionsPicker() {
-    this.reactionsService.toggleReactionsPicker();
-    this.reactionsService.reactionToMessage = false;
-  }
+  subReaction(): Subscription {
+    return this.reactionsService.reactionToAdded$.subscribe((reaction) => {
+      if (reaction && this.reactionsService.reactionToMessage) {
+        this.addToMessage(reaction);
+        this.reactionsService.setReaction('');
+      }
+    });
+  };
 
   async onFileSelection(e: Event) {
     const input = e.target as HTMLInputElement;

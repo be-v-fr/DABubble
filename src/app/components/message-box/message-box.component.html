@@ -1,9 +1,9 @@
 <div class="message-box-wrapper">
-    @if (reactionsService.reactionToMessage) {
+    <!-- @if (reactionsService.reactionToMessage) {
     <div class="reaction-container" appClickStopPropagation (click)="closeReactionsPicker()">
         <emoji-mart title="Pick your emoji…" (emojiClick)="onAddReaction($event)" emoji="point_up"></emoji-mart>
     </div>
-    }
+    } -->
     <form class="message-box-container" (ngSubmit)="onSubmit(messageForm)" #messageForm="ngForm"
         (click)="onContainerClick()">
         <input [placeholder]="getPlaceholder()" [(ngModel)]="data.message" name="messageBox" autocomplete="off"
