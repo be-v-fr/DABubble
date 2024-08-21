@@ -45,7 +45,7 @@ export class MemberListComponent {
       if (newUsers && newUsers.length > 0) {
         this.channelMembers.push(...newUsers);
       } else {this.checkMembersIndependently()}
-      
+
     });
   }
 

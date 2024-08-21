@@ -5,11 +5,12 @@ import { RouterLink } from '@angular/router';
 import { User } from '../../models/user.class';
 import { ActivityService } from '../../services/activity.service';
 import { CommonModule } from '@angular/common';
+import { ActivityStateDotComponent } from '../components/activity-state-dot/activity-state-dot.component';
 
 @Component({
   selector: 'app-user-profile-card',
   standalone: true,
-  imports: [RouterModule,CommonModule,RouterLink],
+  imports: [RouterModule,CommonModule,RouterLink,ActivityStateDotComponent],
   templateUrl: './user-profile-card.component.html',
   styleUrl: './user-profile-card.component.scss'
 })
