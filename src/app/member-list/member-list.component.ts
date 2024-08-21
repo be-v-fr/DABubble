@@ -7,11 +7,12 @@ import { UserProfileCardComponent } from '../user-profile-card/user-profile-card
 import { Channel } from '../../models/channel.class';
 import { ChannelsService } from '../../services/content/channels.service';
 import { ActivityService } from '../../services/activity.service';
+import { ActivityStateDotComponent } from '../components/activity-state-dot/activity-state-dot.component';
 
 @Component({
   selector: 'app-member-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ActivityStateDotComponent],
   templateUrl: './member-list.component.html',
   styleUrls: ['./member-list.component.scss']
 })

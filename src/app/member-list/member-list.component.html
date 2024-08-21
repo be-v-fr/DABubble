@@ -13,9 +13,7 @@
                 <button class="member-btn" (click)="openUserProfile(user)">
                     <img [src]="user.avatarSrc" alt="{{user.name}}" />
                     <span class="member-name">{{ user.name }}</span>
-                    <div class="onlinedot" [ngClass]="{'online': activityService.getUserState(user).state == 'active'}"
-                        [ngClass]="{'idle': activityService.getUserState(user).state == 'idle'}"
-                        [ngClass]="{'offline': activityService.getUserState(user).state == 'loggedOut'}"></div>
+                    <app-activity-state-dot [user]="user" />
                 </button>
             </div>
         </div>
