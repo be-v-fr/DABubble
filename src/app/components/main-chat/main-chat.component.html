@@ -46,7 +46,7 @@
         <app-message-box [channel]="currentChannel" (sent)="onCreatePost($event)" />
     </section>
     <app-thread class="thread" *ngIf="openTh" (closeTh)="closeThread($event)" [post]="currPost!"
-        [channelData]="{ id: this.currentChannel.channel_id, name: this.currentChannel.name }" />
+        [channelData]="{ id: this.currentChannel.channel_id, name: this.currentChannel.name, members: this.currentChannel.members}" />
     } @else {
     <section class="main-section">
         <app-forbidden-channel-feedback />

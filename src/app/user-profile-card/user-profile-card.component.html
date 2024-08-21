@@ -12,16 +12,13 @@
     <div class="userName">
         <h1>{{ user.name}}</h1>
         <div class="online">
-            <div class="onlinedot"
-                    [ngClass]="{'online': activityService.getUserState(user).state == 'active'}" 
-                    [ngClass]="{'idle': activityService.getUserState(user).state == 'idle'}"
-            ></div>
+            <app-activity-state-dot [user]="user" />
             @if (activityService.getUserState(user).state == 'active') {
                 <p class="status-text online">Aktiv</p>
             } @else if (activityService.getUserState(user).state == 'idle') {
                 <p class="status-text idle">Abwesend</p>
             } @else {
-                <p class="status-text offline">Offline ({{activityService.getUserState(user).state}})</p>
+                <p class="status-text offline">Offline</p>
             }
         </div>
     </div>

@@ -35,8 +35,7 @@
                     <a [routerLink]="['/direct-message']" (click)="onUserClick(user)">
                         <div class="message-img-container">
                             <img src="{{user.avatarSrc}}" alt="{{user.name}}">
-                            <span [ngStyle]="online ? {background: '#92c83e'} : {background: '#686868'}"
-                                class="on-off-line-sign"></span>
+                            <app-activity-state-dot [user]="user" />
                         </div>
                         <span>{{ user.name }} @if(first) {(Du)}</span>
                     </a>

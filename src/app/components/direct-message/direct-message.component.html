@@ -5,7 +5,7 @@
       <div class="header-img-container">
         <div class="hoverImgContainer" (click)="openUserProfile(recipient)">
           <img [src]="recipient?.avatarSrc" [alt]="recipient?.name" />
-          <span class="onlinedot"></span>
+          <app-activity-state-dot *ngIf="recipient" [user]="recipient" />
 
           <span class="header-username">{{ recipient?.name }}</span>
         </div>

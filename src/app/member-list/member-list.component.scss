@@ -71,30 +71,12 @@
                         font-size: 18px;
                         font-weight: 400;
                     }
-                    .onlinedot {
+                    app-activity-state-dot {
                         position: absolute;
-                        content: '';
                         bottom: 4px;
                         left: 58px;
                         width: 14px;
                         height: 14px;
-                        box-sizing: border-box;
-                        background-color: $onlinedot-online;
-                        border: 2px solid $onlinedot-border;
-                        border-radius: 50%;
-                        &.online {
-                            background-color: $onlinedot-online;
-                        }
-                        &.idle {
-                            background-color: #c8c82e;
-                        }
-                        &.offline {
-                            background-color: $onlinedot-offline;
-                        }
-                        @media screen and (max-width: 768px) {
-                            width: 14px;
-                            height: 14px;
-                        }
                     }
                 }
             }

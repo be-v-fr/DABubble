@@ -17,6 +17,7 @@ import { AuthService } from '../../../services/auth.service';
 import { TimeService } from '../../../services/time.service';
 import { Post } from '../../../models/post.class';
 import { MainUserProfileCardComponent } from '../../main-user/main-user-profile-card/main-user-profile-card.component';
+import { ActivityStateDotComponent } from '../activity-state-dot/activity-state-dot.component';
 
 @Component({
   selector: 'app-direct-message',
@@ -29,7 +30,8 @@ import { MainUserProfileCardComponent } from '../../main-user/main-user-profile-
     PickerComponent,
     TimeSeparatorComponent,
     MessageItemComponent,
-    ForbiddenChannelFeedbackComponent
+    ForbiddenChannelFeedbackComponent,
+    ActivityStateDotComponent
   ],
 })
 export class DirectMessageComponent implements OnInit, OnDestroy {

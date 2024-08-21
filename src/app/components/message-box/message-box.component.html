@@ -11,7 +11,7 @@
         <div class="message-box-footer">
             <div class="message-box-actions">
                 <input type="file" #fileInput name="fileInput" style="display: none" ngModel
-                    (change)="onFileSelection($event)" (click)="onFileSelection($event)"
+                    (change)="onFileSelection($event)"
                     accept="image/*,application/pdf">
                 <button type="button" (click)="fileInput.click()">
                     <span class="material-icons-outlined icon">add</span>
@@ -35,6 +35,7 @@
             </li>
             }
         </ul>
+        <p *ngIf="errorMsg" class="error-msg">{{errorMsg}}</p>
     </form>
     <div class="attachment-container" *ngIf="data.attachmentRef">
         <button class="material-icons-outlined" (click)="deleteFile()">close</button>

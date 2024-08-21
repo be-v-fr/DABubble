@@ -36,8 +36,9 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   showingMembersList: boolean = false;
   public storageService = inject(StorageService);
+  errorMsg: string | null = null;
 
-  constructor(public reactionsService: ReactionService) { }
+  constructor(public reactionsService: ReactionService) {}
 
   ngOnInit(): void {
     this.reactionsService.reactionsPicker$.subscribe((rp) => {
@@ -79,20 +80,29 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param form - login form
    */
   onSubmit(form: NgForm) {
-    if (form.submitted && form.valid && !this.isFormEmpty()) {
-      if (this.channel || this.inThread) {
-        this.loading = true;
-        this.sent.emit({ message: this.data.message, attachmentSrc: this.data.attachmentSrc });
-        form.reset();
-        this.resetFile();
-        this.loading = false;
-      } else {
-        console.error('No channel selected!'); // add user feedback (at least in new message component)
-      }
+    const empty = this.isFormEmpty();
+    if (form.submitted && form.valid && !empty) {
+      this.resetError();
+      (this.channel || this.inThread) ? this.completeForm(form) : this.showError('Die Nachricht ist an niemanden adressiert.');
+    } else if(empty) {
+      this.showError('Schreibe eine Nachricht oder wähle eine Datei.');
     }
   }
 
+  completeForm(form: NgForm) {
+    this.sent.emit({ message: this.data.message, attachmentSrc: this.data.attachmentSrc });
+    this.resetAll(form);    
+  }
+
+  resetAll(form: NgForm) {
+    form.reset();
+    this.data.message = '';
+    this.resetFile();
+  }
+
   isFormEmpty(): boolean {
+    console.log('message:', this.data.message);
+    console.log('attachment:', this.data.attachmentSrc);
     return this.data.message.length == 0 && this.data.attachmentSrc.length == 0;
   }
 
@@ -131,16 +141,50 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   async onFileSelection(e: Event) {
     const input = e.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.loading = true;
       const file: File = input.files[0];
-      const ref = this.channel ? this.channel.channel_id : 'general';
-      this.storageService.uploadAttachment(file, ref)
-        .then(async (response) => {
-          await this.onFileUpload(response, file.name);
-          this.loading = false;
-        })
-        .catch((err: Error) => console.error(err));
+      if(this.isValidFile(file)) {await this.uploadFile(file)}
+      input.value = '';
     }
+  }
+
+  isValidFile(file: File): boolean {
+    if(!this.isImgOrPdf(file)) {
+      this.showError('Bitte wähle ein Bild oder eine PDF-Datei.');
+      return false;
+    } else if(!this.hasValidSize(file)) {
+      this.showError('Die Datei darf nicht größer als 500kB sein.');
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  isImgOrPdf(file: File): boolean {
+    return this.storageService.isImage(file) || this.storageService.isPdf(file);
+  }
+
+  hasValidSize(file: File): boolean {
+    return file.size <= 500 * 1024;
+  }
+
+  async uploadFile(file: File) {
+    this.resetError();
+    this.loading = true;
+    const ref = this.channel ? this.channel.channel_id : 'general';
+    this.storageService.uploadAttachment(file, ref)
+      .then(async (response) => {
+        await this.onFileUpload(response, file.name);
+        this.loading = false;
+      })
+      .catch((err: Error) => console.error(err));
+  }
+
+  showError(msg: string): void {
+    this.errorMsg = msg;
+  }
+
+  resetError(): void {
+    this.errorMsg = null;
   }
 
   async onFileUpload(fileRef: StorageReference, fileName: string) {

@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { Channel } from '../../../models/channel.class';
 import { Post } from '../../../models/post.class';
 import { SearchComponent } from './search/search.component';
+import { ActivityStateDotComponent } from '../../components/activity-state-dot/activity-state-dot.component';
 
 
 @Component({
@@ -24,7 +25,8 @@ import { SearchComponent } from './search/search.component';
         MatDialogModule,
         AnimationIntroComponent,
         FormsModule,
-        SearchComponent
+        SearchComponent,
+        ActivityStateDotComponent
     ],
     providers: [
         {
@@ -47,7 +49,6 @@ export class HeaderComponent {
         private router: Router,
         private authService: AuthService,
         private usersService: UsersService,
-        public activityService: ActivityService,
         public introService: AnimationIntroService
     ) { }
 
