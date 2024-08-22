@@ -148,15 +148,21 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
       this.channelMembersDataUpdated = true;
       const usersSub: Subscription = this.usersService.users$.subscribe(async () => {
         if (this.channel) {
-          for (let i = 0; i < this.channel.members.length; i++) {
-            let m = this.channel.members[i];
-            const updatedUser: User | undefined = this.usersService.getUserByUid(m.uid);
-            if (updatedUser) { this.channel.members[i] = updatedUser }
-          };
+          this.runtimeUpdateChannelMembersData();
           usersSub.unsubscribe();
           await this.channelService.updateChannel(this.channel);
         }
       });
+    }
+  }
+
+  runtimeUpdateChannelMembersData(): void {
+    if (this.channel) {
+      for (let i = 0; i < this.channel.members.length; i++) {
+        let m = this.channel.members[i];
+        const updatedUser: User | undefined = this.usersService.getUserByUid(m.uid);
+        if (updatedUser) { this.channel.members[i] = updatedUser }
+      };
     }
   }
 

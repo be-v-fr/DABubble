@@ -135,15 +135,19 @@ export class MainChatComponent implements OnInit, OnDestroy {
     if (!this.channelMembersDataUpdated) {
       this.channelMembersDataUpdated = true;
       const usersSub: Subscription = this.usersService.users$.subscribe(async () => {
-        for (let i = 0; i < this.currentChannel.members.length; i++) {
-          let m = this.currentChannel.members[i];
-          const updatedUser: User | undefined = this.usersService.getUserByUid(m.uid);
-          if (updatedUser) {this.currentChannel.members[i] = updatedUser }
-        };
+        this.runtimeUpdateChannelMembersData();
         usersSub.unsubscribe();
         await this.channelsService.updateChannel(this.currentChannel);
       });
     }
+  }
+
+  runtimeUpdateChannelMembersData(): void {
+    for (let i = 0; i < this.currentChannel.members.length; i++) {
+      let m = this.currentChannel.members[i];
+      const updatedUser: User | undefined = this.usersService.getUserByUid(m.uid);
+      if (updatedUser) {this.currentChannel.members[i] = updatedUser }
+    };
   }
 
   goToPost(postId: string | undefined) {
