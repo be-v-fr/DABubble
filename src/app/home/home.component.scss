@@ -103,12 +103,15 @@ button.nav-button {
         height: calc(100% - 80px); // Höhe 100% - Header, damit bei Dialog's kein Scrollbalken erscheint
         padding: 0;
         gap: 0;
+        
 
         app-navigation.expanded {
             width: 100%;
         }
     }
-
+    .main-container.expanded{
+        gap: 0;
+    }
     // .main-content{
     //     position: absolute;
     //     left: 0;

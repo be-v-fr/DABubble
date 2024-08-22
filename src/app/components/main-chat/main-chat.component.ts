@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
@@ -21,6 +21,7 @@ import { UsersService } from '../../../services/users.service';
 import { AddMembersComponent } from '../../add-members/add-members.component';
 import { ForbiddenChannelFeedbackComponent } from './forbidden-channel-feedback/forbidden-channel-feedback.component';
 import { MembersOverviewComponent } from './members-overview/members-overview.component';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-main-chat',
@@ -43,6 +44,9 @@ export class MainChatComponent implements OnInit, OnDestroy {
   private channelSub!: Subscription;
   private scrollSub!: Subscription;
   private postsSub!: Subscription;
+
+  isChannelOpen: boolean = true;
+  @ViewChild(NavigationComponent) navigationComponent!: NavigationComponent;
 
   currentUid: string | undefined;
   currentChannel = new Channel();
@@ -83,6 +87,17 @@ export class MainChatComponent implements OnInit, OnDestroy {
         this.setChannel(this.currentChannel.channel_id);
       }
     });
+
+    this.checkScreenWidth();
+    window.addEventListener('resize', this.checkScreenWidth.bind(this));
+  }
+
+  checkScreenWidth(): void {
+    this.isChannelOpen = window.innerWidth > 768;
+  }
+
+  toggleChannel(): void {
+    this.isChannelOpen = !this.isChannelOpen;
   }
 
   ngOnDestroy(): void {
@@ -105,6 +120,10 @@ export class MainChatComponent implements OnInit, OnDestroy {
       this.currentChannel = channel;
       this.currentChannelAuthorName = this.usersService.getUserByUid(this.currentChannel.author_uid)?.name;
       this.activeUsers = this.activityService.getActiveUsers();
+      if (window.innerWidth <= 768) {
+        this.isChannelOpen = true;
+      }
+
       this.scrollSub = this.route.queryParams.subscribe(params => {
         setTimeout(() => this.goToPost(params['post']), 20);
       });
@@ -113,16 +132,16 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   goToPost(postId: string | undefined) {
     this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
-      if(this.hasPostLengthChanged(elements)) {
-      (postId && postId.length > 0) ? this.handlePostAndThreadScrolling(elements, postId) : this.autoscrollToLastPost(elements);
-    }
+      if (this.hasPostLengthChanged(elements)) {
+        (postId && postId.length > 0) ? this.handlePostAndThreadScrolling(elements, postId) : this.autoscrollToLastPost(elements);
+      }
     });
     this.messageItems.notifyOnChanges();
   }
 
   hasPostLengthChanged(elements: QueryList<ElementRef>): boolean {
     const currentLength = elements.toArray().length;
-    if(currentLength != this.savedPostsLength) {
+    if (currentLength != this.savedPostsLength) {
       this.savedPostsLength = currentLength;
       return true;
     } else {

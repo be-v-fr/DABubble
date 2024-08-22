@@ -46,6 +46,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
 
   @Output() userClick = new EventEmitter<void>();
 
+
   constructor(
     private dialog: MatDialog,
     private router: Router,
@@ -103,6 +104,8 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
     this.isMenuExpanded = !this.isMenuExpanded;
     this.isRotated = !this.isRotated;
   }
+
+  
 
   //  @HostListener('window:resize', ['$event'])
   // onResize(event: Event) {

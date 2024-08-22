@@ -139,6 +139,17 @@
 
 @media screen and (max-width: 768px) {
   .main-container {
-    display: none;
+    position: fixed;
+    right: 0;
+    left: 0;
+    border-radius: unset;
+    .main-section{
+      height: 90vh;
+      border-radius: unset;
+      .main-header{
+        border-radius: unset;
+      }
+    }
   }
 }
+ 
