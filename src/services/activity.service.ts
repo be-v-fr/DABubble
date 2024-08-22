@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { User } from '../models/user.class';
-import { UserState } from '../interfaces/userState.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -85,22 +84,19 @@ export class ActivityService implements OnDestroy {
     }
   }
 
-  getUserState(user: User): UserState {
+  getUserState(user: User): 'active' | 'idle' | 'loggedOut' {
     // console.log('triggered at', Date.now(), 'for user', user.name);
-    let state: 'active' | 'idle' | 'loggedOut' = 'idle';
     const updatedUser = this.usersService.users.find(u => u.uid === user.uid);
     if (updatedUser) {
-      if (updatedUser.lastActivity === -1) { state = 'loggedOut' }
-      else if (Date.now() - updatedUser.lastActivity < this.idleDuration) { state = 'active' }
+      if (updatedUser.lastActivity === -1) { return 'loggedOut' }
+      else if (Date.now() - updatedUser.lastActivity < this.idleDuration) { return 'active' }
     }
-    return {
-      uid: user.uid,
-      state: state
-    };
-  }
+    return 'idle';
+  };
+
 
   getActiveUsers(): User[] {
-    return this.usersService.getAllUsers().filter(user => this.getUserState(user).state === 'active');
+    return this.usersService.getAllUsers().filter(user => this.getUserState(user) === 'active');
   }
 
   getAllUsers(): User[] {
