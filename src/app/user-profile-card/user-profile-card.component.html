@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="profileImg">
-        <img class="#" src="{{ user.avatarSrc}}" />
+        <img class="#" [src]="user.avatarSrc" />
     </div>
     <div class="userName">
         <h1>{{ user.name}}</h1>
@@ -28,7 +28,7 @@
             <p>E-Mail-Adresse</p>
         </div>
         <div class="showEmail">
-            <p>{{ user.email}}</p>
+            <p>{{ user.email }}</p>
         </div>
     </div>
     <div class="submit-btns">

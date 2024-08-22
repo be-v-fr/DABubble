@@ -19,9 +19,9 @@ export class UserProfileCardComponent {
   constructor(
     private dialogRef: MatDialogRef<UserProfileCardComponent>,
     public activityService: ActivityService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: User 
   ) {
-    this.user = data.viewUser;
+    this.user = data;
     console.log('user-profile-card [data]: ', data);
    }
   
