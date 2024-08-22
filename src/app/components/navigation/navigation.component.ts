@@ -24,19 +24,10 @@ export class NavigationComponent {
       public usersService: UsersService,
   ) {}
 
-  // closeNavigation() {
-  //   if (window.innerWidth <= 768) {
-  //     this.isVisible = false;
-  //   }
-  // }
-
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event: Event) {
-  //   if (window.innerWidth <= 768 && !this.isVisible) {
-  //     this.isVisible = true;
-  //   } else if (window.innerWidth > 768) {
-  //     this.isVisible = true;
-  //   }
-  // }
+  closeNavigation() {
+    if (window.innerWidth <= 768) {
+      this.isVisible = false;
+    }
+  }
 
 }

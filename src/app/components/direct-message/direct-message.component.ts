@@ -18,6 +18,7 @@ import { TimeService } from '../../../services/time.service';
 import { Post } from '../../../models/post.class';
 import { MainUserProfileCardComponent } from '../../main-user/main-user-profile-card/main-user-profile-card.component';
 import { ActivityStateDotComponent } from '../activity-state-dot/activity-state-dot.component';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-direct-message',
@@ -48,6 +49,7 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
   online: boolean = true;
   emojiPicker: boolean = false;
   onInvalidOrForbiddenRoute: boolean = false;
+  channelMembersDataUpdated: boolean = false;
   @ViewChildren(MessageItemComponent, { read: ElementRef }) messageItems!: QueryList<ElementRef>;
 
   constructor(
@@ -57,7 +59,8 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     private channelService: ChannelsService,
     public activityService: ActivityService,
     private authService: AuthService,
-    public timeService: TimeService
+    public timeService: TimeService,
+    private usersService: UsersService
   ) { }
 
   ngOnInit(): void {
@@ -105,15 +108,15 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
 
   openUserProfile(openUser: User | undefined): void {
     if (openUser) {
-        if (openUser.uid == this.currUser?.uid) {
-            this.dialog.open(MainUserProfileCardComponent, {
-                data: { 'mainUser': this.currUser }
-            });
-        } else {
-            this.dialog.open(UserProfileCardComponent, {
-                data: { 'viewUser': openUser }
-            });
-        }
+      if (openUser.uid == this.currUser?.uid) {
+        this.dialog.open(MainUserProfileCardComponent, {
+          data: { 'mainUser': this.currUser }
+        });
+      } else {
+        this.dialog.open(UserProfileCardComponent, {
+          data: { 'viewUser': openUser }
+        });
+      }
     }
   }
 
@@ -131,11 +134,35 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
         this.scrollSub = this.route.queryParams.subscribe(params => {
           setTimeout(() => this.goToPost(params['post']), 20);
         });
+        this.updateChannelMembersData();
       } else {
         this.onInvalidOrForbiddenRoute = true;
       }
     } catch (error) {
       console.error('Error fetching channel:', error);
+    }
+  }
+
+  updateChannelMembersData(): void {
+    if (!this.channelMembersDataUpdated) {
+      this.channelMembersDataUpdated = true;
+      const usersSub: Subscription = this.usersService.users$.subscribe(async () => {
+        if (this.channel) {
+          this.runtimeUpdateChannelMembersData();
+          usersSub.unsubscribe();
+          await this.channelService.updateChannel(this.channel);
+        }
+      });
+    }
+  }
+
+  runtimeUpdateChannelMembersData(): void {
+    if (this.channel) {
+      for (let i = 0; i < this.channel.members.length; i++) {
+        let m = this.channel.members[i];
+        const updatedUser: User | undefined = this.usersService.getUserByUid(m.uid);
+        if (updatedUser) { this.channel.members[i] = updatedUser }
+      };
     }
   }
 

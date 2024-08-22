@@ -101,8 +101,22 @@
     .thread-container {
         right: 20px; 
         position: absolute;
-        height: 729px;
+        height: calc(100% - 25px);
     }
+    
+}
+
+@media screen and (max-width: 1000px) {
+    .thread-container {
+        max-width: 100%;
+        height: 90vh;
+        left: 0;
+        border-radius: unset;
+        .thread-header{
+            border-radius: unset;
+        }
+    }
+    
 }
 
 @media screen and (max-width: 768px) {

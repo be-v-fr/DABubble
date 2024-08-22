@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { User } from '../models/user.class';
-import { UserState } from '../interfaces/userState.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +16,6 @@ export class ActivityService implements OnDestroy {
   private authSub = new Subscription();
   private usersSub = new Subscription();
   private currentUser = new User();
-
-  public userStates: UserState[] = [];
 
   constructor() {
     this.initListeners();
@@ -34,19 +31,11 @@ export class ActivityService implements OnDestroy {
   }
 
   subAuth(): Subscription {
-    return this.authService.user$.subscribe((user: any) => {
-      // console.log('user$ (auth) triggered');
-      if (user) { this.setUserStates() }
-      this.setLastActivityOnAuth(user);
-    });
+    return this.authService.user$.subscribe((user: any) => this.setLastActivityOnAuth(user));
   }
 
   subUsers(): Subscription {
-    return this.usersService.users$.subscribe(() => {
-      this.syncCurrentUser();
-      this.setUserStates();
-      // console.log('users$ triggered');
-    });
+    return this.usersService.users$.subscribe(() => this.syncCurrentUser());
   }
 
 
@@ -62,15 +51,11 @@ export class ActivityService implements OnDestroy {
 
 
   /**
-   * The interval in this function has two different functions:
-   * - One function sets/updates the public "userStates" property
-   * - The "activitySettingAllowed" is set to true again to allow reacting to activity of the current user
+   * This function uses an interval to set the "activitySettingAllowed" to true again
+   * to allow reacting to activity of the current user.
    */
   initInterval() {
-    setInterval(() => {
-      this.setUserStates();
-      this.activitySettingAllowed = true;
-    }, 30 * 1000);
+    setInterval(() => this.activitySettingAllowed = true, 10 * 1000);
   }
 
   setLastActivity() {
@@ -78,7 +63,6 @@ export class ActivityService implements OnDestroy {
       this.currentUser.lastActivity = Date.now();
       this.usersService.updateUser(this.currentUser);
       this.activitySettingAllowed = false;
-      // console.log('activity set');
     }
   }
 
@@ -86,11 +70,9 @@ export class ActivityService implements OnDestroy {
     if (user && this.currentUser.lastActivity == -1) {
       this.currentUser.lastActivity = Date.now();
       this.usersService.updateUser(this.currentUser);
-      // console.log('auth activity set: active');
     } else if (!user && this.currentUser.lastActivity > 0) {
       this.currentUser.lastActivity = -1;
       this.usersService.updateUser(this.currentUser);
-      // console.log('auth activity set: logged out');
     }
   }
 
@@ -102,27 +84,18 @@ export class ActivityService implements OnDestroy {
     }
   }
 
-  setUserStates(): void {
-    this.userStates = [];
-    this.usersService.getAllUsers().forEach(u => this.userStates.push(this.getUserState(u)));
-  }
-
-  getUserState(user: User): UserState {
-    // console.log('triggered at', Date.now(), 'for user', user.name);
-    let state: 'active' | 'idle' | 'loggedOut' = 'idle';
+  getUserState(user: User): 'active' | 'idle' | 'loggedOut' {
     const updatedUser = this.usersService.users.find(u => u.uid === user.uid);
     if (updatedUser) {
-      if (updatedUser.lastActivity === -1) { state = 'loggedOut' }
-      else if (Date.now() - updatedUser.lastActivity < this.idleDuration) { state = 'active' }
+      if (updatedUser.lastActivity === -1) { return 'loggedOut' }
+      else if (Date.now() - updatedUser.lastActivity < this.idleDuration) { return 'active' }
     }
-    return {
-      uid: user.uid,
-      state: state
-    };
-  }
+    return 'idle';
+  };
+
 
   getActiveUsers(): User[] {
-    return this.usersService.getAllUsers().filter(user => this.getUserState(user).state === 'active');
+    return this.usersService.getAllUsers().filter(user => this.getUserState(user) === 'active');
   }
 
   getAllUsers(): User[] {

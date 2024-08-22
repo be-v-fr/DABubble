@@ -15,6 +15,6 @@ export class ActivityStateDotComponent {
   private activityService = inject(ActivityService);
 
   getState(): 'active' | 'idle' | 'loggedOut' {
-    return this.activityService.getUserState(this.user).state;
+    return this.activityService.getUserState(this.user);
   }
 }

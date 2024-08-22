@@ -13,9 +13,9 @@
         <h1>{{ user.name}}</h1>
         <div class="online">
             <app-activity-state-dot [user]="user" />
-            @if (activityService.getUserState(user).state == 'active') {
+            @if (activityService.getUserState(user) == 'active') {
                 <p class="status-text online">Aktiv</p>
-            } @else if (activityService.getUserState(user).state == 'idle') {
+            } @else if (activityService.getUserState(user) == 'idle') {
                 <p class="status-text idle">Abwesend</p>
             } @else {
                 <p class="status-text offline">Offline</p>

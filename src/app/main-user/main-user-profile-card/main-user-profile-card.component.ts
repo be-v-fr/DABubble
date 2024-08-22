@@ -4,15 +4,17 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { User } from '../../../models/user.class';
 import { EditMainUserProfileCardComponent } from '../edit-main-user-profile-card/edit-main-user-profile-card.component';
 import { EditMainUserAvatarComponent } from '../../main-user/edit-main-user-avatar/edit-main-user-avatar.component';
-import { ActivityService } from '../../../services/activity.service';
 import { CommonModule } from '@angular/common';
+import { ActivityStateDotComponent } from '../../components/activity-state-dot/activity-state-dot.component';
+import { ActivityService } from '../../../services/activity.service';
 
 @Component({
     selector: 'app-main-user-profile-card',
     standalone: true,
     imports: [
         CommonModule,
-        RouterLink
+        RouterLink,
+        ActivityStateDotComponent
     ],
     templateUrl: './main-user-profile-card.component.html',
     styleUrl: './main-user-profile-card.component.scss'
