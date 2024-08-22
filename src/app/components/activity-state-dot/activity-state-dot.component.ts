@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivityService } from '../../../services/activity.service';
 import { User } from '../../../models/user.class';
 
@@ -10,11 +10,22 @@ import { User } from '../../../models/user.class';
   templateUrl: './activity-state-dot.component.html',
   styleUrl: './activity-state-dot.component.scss'
 })
-export class ActivityStateDotComponent {
+export class ActivityStateDotComponent implements OnInit, OnDestroy {
   @Input() user: User = new User();
   private activityService = inject(ActivityService);
+  public state: 'active' | 'idle' | 'loggedOut' = 'active';
+  private interval: any | null = null;
 
-  getState(): 'active' | 'idle' | 'loggedOut' {
-    return this.activityService.getUserState(this.user);
+
+  ngOnInit(): void {
+    this.interval = setInterval(() => this.updateState(), 3 * 1000);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
+  }
+
+  updateState(): void {
+    this.state = this.activityService.getUserState(this.user);
   }
 }
