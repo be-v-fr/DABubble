@@ -37,7 +37,7 @@ import { Channel } from '../../models/channel.class';
 })
 export class HomeComponent {
     private authService = inject(AuthService);
-    private usersService = inject(UsersService);
+    public usersService = inject(UsersService);
     private channelsService = inject(ChannelsService);
     public activityService = inject(ActivityService);
     public reactionsPicker = inject(ReactionService);

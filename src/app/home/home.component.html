@@ -7,7 +7,7 @@
 <app-header [mainUser]="currentUser" [users]="users" [userChannels]="userChannels"></app-header>
 <div class="main-container" [class.expanded]="showNav">
     <app-navigation [ngClass]="{ 'expanded ': showNav}"></app-navigation>
-    <div class="main-content">
+    <div class="main-content" [class.hide]="usersService.mainChatViewState == 'workspace'">
         <router-outlet></router-outlet>
     </div>
     @if (reactionsPickerVisible) {

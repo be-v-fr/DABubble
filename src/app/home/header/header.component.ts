@@ -1,17 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LogOutCardComponent } from '../../main-user/log-out-card/log-out-card.component';
 import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { UsersService } from '../../../services/users.service';
-import { ActivityService } from '../../../services/activity.service';
 import { User } from '../../../models/user.class';
 import { AnimationIntroComponent } from '../../animation-intro/animation-intro.component';
 import { AnimationIntroService } from '../../animation-intro/service/animation-intro.service';
 import { FormsModule } from '@angular/forms';
 import { Channel } from '../../../models/channel.class';
-import { Post } from '../../../models/post.class';
 import { SearchComponent } from './search/search.component';
 import { ActivityStateDotComponent } from '../../components/activity-state-dot/activity-state-dot.component';
 
@@ -48,7 +46,7 @@ export class HeaderComponent {
         public dialog: MatDialog,
         private router: Router,
         private authService: AuthService,
-        private usersService: UsersService,
+        public usersService: UsersService,
         public introService: AnimationIntroService
     ) { }
 

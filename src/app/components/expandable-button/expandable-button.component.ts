@@ -50,7 +50,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private router: Router,
     private authService: AuthService,
-    private userService: UsersService,
+    public userService: UsersService,
     private channelsService: ChannelsService,
     private activityService: ActivityService
   ) {

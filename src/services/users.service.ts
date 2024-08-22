@@ -24,7 +24,7 @@ export class UsersService implements OnDestroy {
   users: User[] = [];
   unsubUsers;
   firestore: Firestore = inject(Firestore);
-
+  public mainChatViewState: 'workspace' | 'mainchat' | 'thread' = 'mainchat';
   private channelsService = inject(ChannelsService);
   private storageService = inject(StorageService);
 
@@ -132,4 +132,17 @@ export class UsersService implements OnDestroy {
       }
     });
   }
+
+  mobileBackBtn() {
+    if (this.mainChatViewState == 'thread') {
+        this.mainChatViewState = 'mainchat';
+    } else {
+        this.mainChatViewState = 'workspace';
+    }  
+  }
+
+  setMobileView(option: 'workspace' | 'mainchat' | 'thread') {
+    this.mainChatViewState = option;
+  }
+
 }

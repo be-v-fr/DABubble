@@ -69,7 +69,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.authSub = this.authService.user$.subscribe(() => this.currentUid = this.authService.getCurrentUid());
-
+    console.log('Alex-Test - MainChat - ###############################################################################');
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {

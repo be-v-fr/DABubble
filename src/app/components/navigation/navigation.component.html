@@ -4,7 +4,7 @@
             <img src="../../../assets/img/workspace_logo.svg" alt="Workspace Logo">
             <span>Devspace</span>
         </button>
-        <a routerLink="/new" class="new-message-btn">
+        <a (click)="usersService.setMobileView('mainchat')" routerLink="/new" class="new-message-btn">
             <img src="../../../assets/img/icons/edit_square.svg" alt="Neue Nachricht">
         </a>
     </div>

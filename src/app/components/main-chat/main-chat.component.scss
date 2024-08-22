@@ -139,6 +139,13 @@
 
 @media screen and (max-width: 768px) {
   .main-container {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    .thread {
+        max-width: none;
+        position: relative;
+    }
   }
 }
