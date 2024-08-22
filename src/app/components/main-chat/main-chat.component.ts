@@ -59,6 +59,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   onInvalidOrForbiddenRoute: boolean = false;
   @ViewChildren(MessageItemComponent, { read: ElementRef }) messageItems!: QueryList<ElementRef>;
   savedPostsLength: number | null = null;
+  channelMembersDataUpdated: boolean = false;
 
   constructor(
     private dialog: MatDialog,
@@ -123,11 +124,26 @@ export class MainChatComponent implements OnInit, OnDestroy {
       if (window.innerWidth <= 768) {
         this.isChannelOpen = true;
       }
-
+      this.updateChannelMembersData();
       this.scrollSub = this.route.queryParams.subscribe(params => {
         setTimeout(() => this.goToPost(params['post']), 20);
       });
     } else { this.onInvalidOrForbiddenRoute = true };
+  }
+
+  updateChannelMembersData(): void {
+    if (!this.channelMembersDataUpdated) {
+      this.channelMembersDataUpdated = true;
+      const usersSub: Subscription = this.usersService.users$.subscribe(async () => {
+        for (let i = 0; i < this.currentChannel.members.length; i++) {
+          let m = this.currentChannel.members[i];
+          const updatedUser: User | undefined = this.usersService.getUserByUid(m.uid);
+          if (updatedUser) {this.currentChannel.members[i] = updatedUser }
+        };
+        usersSub.unsubscribe();
+        await this.channelsService.updateChannel(this.currentChannel);
+      });
+    }
   }
 
   goToPost(postId: string | undefined) {
