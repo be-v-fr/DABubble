@@ -61,7 +61,7 @@
 @media screen and (max-width: 900px) {
     :host {
         section{
-            border-radius: 0;
+            // border-radius: 0;
             .nav-header {
                 display: none;
             } 
@@ -87,6 +87,15 @@
                     } 
                 }
             }
+        }
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    :host {
+        section{
+            border-radius: 0;
         }
     }
 }
