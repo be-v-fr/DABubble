@@ -85,7 +85,6 @@ export class ActivityService implements OnDestroy {
   }
 
   getUserState(user: User): 'active' | 'idle' | 'loggedOut' {
-    // console.log('triggered at', Date.now(), 'for user', user.name);
     const updatedUser = this.usersService.users.find(u => u.uid === user.uid);
     if (updatedUser) {
       if (updatedUser.lastActivity === -1) { return 'loggedOut' }
