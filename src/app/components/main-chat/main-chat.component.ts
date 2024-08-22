@@ -59,6 +59,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   onInvalidOrForbiddenRoute: boolean = false;
   @ViewChildren(MessageItemComponent, { read: ElementRef }) messageItems!: QueryList<ElementRef>;
   savedPostsLength: number | null = null;
+  channelMembersDataUpdated: boolean = false;
 
   constructor(
     private dialog: MatDialog,
@@ -73,7 +74,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.authSub = this.authService.user$.subscribe(() => this.currentUid = this.authService.getCurrentUid());
-
+    console.log('Alex-Test - MainChat - ###############################################################################');
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
@@ -123,11 +124,30 @@ export class MainChatComponent implements OnInit, OnDestroy {
       if (window.innerWidth <= 768) {
         this.isChannelOpen = true;
       }
-
+      this.updateChannelMembersData();
       this.scrollSub = this.route.queryParams.subscribe(params => {
         setTimeout(() => this.goToPost(params['post']), 20);
       });
     } else { this.onInvalidOrForbiddenRoute = true };
+  }
+
+  updateChannelMembersData(): void {
+    if (!this.channelMembersDataUpdated) {
+      this.channelMembersDataUpdated = true;
+      const usersSub: Subscription = this.usersService.users$.subscribe(async () => {
+        this.runtimeUpdateChannelMembersData();
+        usersSub.unsubscribe();
+        await this.channelsService.updateChannel(this.currentChannel);
+      });
+    }
+  }
+
+  runtimeUpdateChannelMembersData(): void {
+    for (let i = 0; i < this.currentChannel.members.length; i++) {
+      let m = this.currentChannel.members[i];
+      const updatedUser: User | undefined = this.usersService.getUserByUid(m.uid);
+      if (updatedUser) {this.currentChannel.members[i] = updatedUser }
+    };
   }
 
   goToPost(postId: string | undefined) {

@@ -12,35 +12,57 @@
         padding: 15px 16px;
         height: 80px;
     }
-}
-
-app-animation-intro {
-    position: fixed;
-    inset: 0;
-    z-index: 10;
-}
-
-.logo-wrapper {
-    z-index: 999;
-    min-width: 336px;
-    width: 336px;
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-    img {
-        height: 70px;
-        width: auto;
-        @media screen and (max-width: 1024px) {
-            height: 56px;
-        }
+    .logo-wrapper {
+        z-index: 999;
+        min-width: 336px;
+        width: 336px;
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
         @media screen and (max-width: 768px) {
-            height: 45px;
+            min-width: 160px;
+            &.hide {
+                display: none;
+            }
+        }
+        img {
+            height: 70px;
+            width: auto;
+            @media screen and (max-width: 1024px) {
+                height: 56px;
+            }
+            @media screen and (max-width: 768px) {
+                height: 45px;
+            }
         }
     }
-    @media screen and (max-width: 768px) {
-        min-width: 160px;
+    .logo-btn {
+        padding: 0;
+        align-items: center;
+        gap: 2px;
+        display: none;
+        .devspace {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            img {
+                width: 50px;
+                height: 50px;
+            }
+            span {
+                font-size: 24px;
+                font-weight: 700;
+                line-height: 32.74px;
+            }
+        }
+        &.show {
+            @media screen and (max-width: 768px) {
+                display: flex;
+            }
+        }
     }
 }
+
 
 app-search {
     width: 100%;
@@ -74,54 +96,54 @@ app-search {
         min-width: auto;
         width: fit-content;
     }
-}
-
-.userprofile-name {
-    height: fit-content;
-    line-height: 100%;
-    text-align: right;
-	overflow: hidden;
-	display: -webkit-box;
-    line-clamp: 2;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: horizontal; 
-    text-overflow: ellipsis;
-    @media screen and (max-width: 1024px) {
-        display: none;
-    }
-}
-
-.userprofile-image-box {
-    position: relative;
-    img {
-        width: 70px;
-        height: 70px;
-        border-radius: 999px;
-        box-sizing: border-box;
-        @media screen and (max-width: 768px) {
-            width: 50px;
-            height: 50px;
+    .userprofile-name {
+        height: fit-content;
+        line-height: 100%;
+        text-align: right;
+        overflow: hidden;
+        display: -webkit-box;
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: horizontal; 
+        text-overflow: ellipsis;
+        @media screen and (max-width: 1024px) {
+            display: none;
         }
     }
-    app-activity-state-dot {
-        position: absolute;
-        bottom: 6px;
-        right: 0px;
-        width: 17px;
-        height: 17px;
-        @media screen and (max-width: 768px) {
-            width: 14px;
-            height: 14px;
+    .userprofile-image-box {
+        position: relative;
+        img {
+            width: 70px;
+            height: 70px;
+            border-radius: 999px;
+            box-sizing: border-box;
+            @media screen and (max-width: 768px) {
+                width: 50px;
+                height: 50px;
+            }
+        }
+        app-activity-state-dot {
+            position: absolute;
+            bottom: 6px;
+            right: 0px;
+            width: 17px;
+            height: 17px;
+            @media screen and (max-width: 768px) {
+                width: 14px;
+                height: 14px;
+            }
+        }
+    }
+    .userprofile-menu-box {
+        img {
+            width: 30px;
+            height: 30px;
+        }
+        @media screen and (max-width: 1024px) {
+            display: none;
         }
     }
 }
 
-.userprofile-menu-box {
-    img {
-        width: 30px;
-        height: 30px;
-    }
-    @media screen and (max-width: 1024px) {
-        display: none;
-    }
-}
+
+

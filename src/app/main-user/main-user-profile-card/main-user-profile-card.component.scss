@@ -127,26 +127,12 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
             align-items: center;
             flex-wrap: nowrap;
             gap: 15px;
-            .onlinedot {
-                content: '';
+            app-activity-state-dot {
                 position: relative;
                 bottom: 6px;
                 right: 0px;
                 width: 16px;
                 height: 16px;
-                box-sizing: border-box;
-                background-color: $onlinedot-online;
-                border: 2px solid $onlinedot-border;
-                border-radius: 50%;
-                &.online {
-                    background-color: $onlinedot-online;
-                }
-                &.idle {
-                    background-color: #c8c82e;
-                }
-                &.offline {
-                    background-color: $onlinedot-offline;
-                }
             }
             .status-text {
                 font-weight: 400;

@@ -16,15 +16,19 @@
         background-color: #eceefe;
     }
     .m-images-container {
-        margin-left: 10px;
+        margin-left: 0px;
         max-width: 100px;
         height: 40px;
+        display: flex;
+        flex-wrap: nowrap;
         img {
             width: 40px;
             height: 40px;
             border-radius: 30px;
             border: 2px solid white;
-            margin-left: -10px;
+            &:nth-child(1n+2) {
+                margin-left: -10px;
+            }
         }
     }
     span {
@@ -32,3 +36,21 @@
         font-weight: 700;
     }
 }
+
+
+
+
+@media  screen and (max-width: 1024px) {
+    .members-btn {
+        .m-images-container {
+            margin-left: 20px;
+            img {
+                &:nth-child(1n+1) {
+                    margin-left: -20px;
+                }
+            }
+        }
+    }
+}
+    
+    

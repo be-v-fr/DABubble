@@ -17,16 +17,13 @@
             <p class="edit" (click)="openEditProfile(mainUser)"><span>Bearbeiten</span><img src="/assets/img/icons/edit.svg" ></p>
         </div>
         <div class="online-status">
-            <div class="onlinedot"
-                [ngClass]="{'online': activityService.getUserState(mainUser).state == 'active'}" 
-                [ngClass]="{'idle': activityService.getUserState(mainUser).state == 'idle'}"
-            ></div>
-            @if (activityService.getUserState(mainUser).state == 'active') {
+            <app-activity-state-dot [user]="mainUser" />
+            @if (activityService.getUserState(mainUser) == 'active') {
                 <p class="status-text online">Aktiv</p>
-            } @else if (activityService.getUserState(mainUser).state == 'idle') {
+            } @else if (activityService.getUserState(mainUser) == 'idle') {
                 <p class="status-text idle">Abwesend</p>
             } @else {
-                <p class="status-text offline">Offline ({{activityService.getUserState(mainUser).state}})</p>
+                <p class="status-text offline">Offline</p>
             }
         </div>
     </div>

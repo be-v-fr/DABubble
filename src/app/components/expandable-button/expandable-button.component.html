@@ -16,7 +16,7 @@
         <div *ngIf="showBtn()" class="channel-menu">
             <ul>
                 @for (channel of userChannels; track channel) {<li>
-                    <a class="list-item-content" [routerLink]="['/main-chat', channel.channel_id]">
+                    <a (click)="userService.setMobileView('mainchat')" class="list-item-content" [routerLink]="['/main-chat', channel.channel_id]">
                         <p class="list-item-text">
                             <span>#</span> {{channel.name}}
                         </p>
@@ -32,7 +32,7 @@
             <ul>
                 @for (user of users; track $index; let first = $first) {
                 <li>
-                    <a [routerLink]="['/direct-message']" (click)="onUserClick(user)">
+                    <a (click)="userService.setMobileView('mainchat')" [routerLink]="['/direct-message']" (click)="onUserClick(user)">
                         <div class="message-img-container">
                             <img src="{{user.avatarSrc}}" alt="{{user.name}}">
                             <app-activity-state-dot [user]="user" />

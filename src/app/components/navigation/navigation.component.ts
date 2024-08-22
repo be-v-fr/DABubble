@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user.class';
 import { Subscription } from 'rxjs';
 import { ChannelsService } from '../../../services/content/channels.service';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-navigation',
@@ -18,6 +19,10 @@ export class NavigationComponent {
 
   @Input() showNav: boolean = true;
   isVisible = true;
+  
+  constructor(
+      public usersService: UsersService,
+  ) {}
 
   closeNavigation() {
     if (window.innerWidth <= 768) {
