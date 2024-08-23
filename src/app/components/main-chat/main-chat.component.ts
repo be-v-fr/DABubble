@@ -82,7 +82,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
         this.closeThread(false);
       }
     });
-
+ 
     this.channelSub = this.channelsService.channels$.subscribe(() => {
       if (this.currentChannel.channel_id) {
         this.setChannel(this.currentChannel.channel_id);
@@ -94,7 +94,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
   checkScreenWidth(): void {
-    this.isChannelOpen = window.innerWidth > 768;
+    this.isChannelOpen = window.innerWidth > 768; 
   }
 
   toggleChannel(): void {
