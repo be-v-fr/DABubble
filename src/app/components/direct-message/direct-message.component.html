@@ -3,11 +3,11 @@
   <section class="direct-m-container">
     <div class="direct-m-header">
       <div class="header-img-container">
-        <div class="hoverImgContainer" (click)="openUserProfile(recipient)">
-          <img [src]="recipient?.avatarSrc" [alt]="recipient?.name" />
+        <div class="hoverImgContainer" *ngIf="recipient" (click)="openUserProfile(recipient)">
+          <img [src]="recipient.avatarSrc" [alt]="recipient.name" />
           <app-activity-state-dot *ngIf="recipient" [user]="recipient" />
 
-          <span class="header-username">{{ recipient?.name }}</span>
+          <span class="header-username">{{ recipient.name }}</span>
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@
           <div class="member-img-container">
             <img [src]="recipient?.avatarSrc" [alt]=" recipient?.name" />
           </div>
-          <span (click)="openUserProfile(recipient)">{{ recipient?.name }}</span>
+          <span *ngIf="recipient" (click)="openUserProfile(recipient)">{{ recipient.name }}</span>
         </div>
         @if(currUser?.uid === recipient?.uid) {<p>
           <b>Dieser Raum ist nur für dich da.</b>

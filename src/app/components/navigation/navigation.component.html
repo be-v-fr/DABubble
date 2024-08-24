@@ -8,19 +8,11 @@
             <img src="../../../assets/img/icons/edit_square.svg" alt="Neue Nachricht">
         </a>
     </div>
-
-    <div class="mobile-searchbar-wrapper">
-        <div class="searchbar-box">
-            <input id="searchbar" type="text" placeholder="Gehe zu ...">
-            <div class="searchbar-icon">
-                <img src="/assets/img/icons/search.svg">
-            </div>
-        </div>
-    </div>
-
+    @if(currentUser && users && userChannels) {
+    <app-search [mainUser]="currentUser" [users]="usersService.users" [userChannels]="userChannels" [placeholder]="'Gehe zu...'" />
+    }
     <div class="nav-main">
         <app-expandable-button class="channel" title="Channels" icon="workspaces" [showBtn]="true" />
         <app-expandable-button class="direct" title="Direktnachrichten" icon="account_circle" [showBtn]="false" />
-
     </div>
 </section>
