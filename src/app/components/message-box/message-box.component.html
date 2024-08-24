@@ -1,18 +1,11 @@
 <div class="message-box-wrapper">
-    <!-- @if (reactionsService.reactionToMessage) {
-    <div class="reaction-container" appClickStopPropagation (click)="closeReactionsPicker()">
-        <emoji-mart title="Pick your emoji…" (emojiClick)="onAddReaction($event)" emoji="point_up"></emoji-mart>
-    </div>
-    } -->
     <form class="message-box-container" (ngSubmit)="onSubmit(messageForm)" #messageForm="ngForm"
         (click)="onContainerClick()">
-        <input [placeholder]="getPlaceholder()" [(ngModel)]="data.message" name="messageBox" autocomplete="off"
-            #messageBox>
+        <input [placeholder]="getPlaceholder()" [(ngModel)]="message" name="messageBox" autocomplete="off" #messageBox>
         <div class="message-box-footer">
             <div class="message-box-actions">
                 <input type="file" #fileInput name="fileInput" style="display: none" ngModel
-                    (change)="onFileSelection($event)"
-                    accept="image/*,application/pdf">
+                    (change)="onFileSelection($event)" accept="image/*,application/pdf">
                 <button type="button" (click)="fileInput.click()">
                     <span class="material-icons-outlined icon">add</span>
                 </button>

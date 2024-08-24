@@ -7,7 +7,7 @@
                 <span class="material-icons-outlined icon">keyboard_arrow_down</span>
             </button>
             <div class="main-header-members">
-                <app-members-overview [channel]="currentChannel" [openTh]="openTh"/>
+                <app-members-overview [channel]="currentChannel" [openTh]="openTh" />
                 <button class="add-members-btn" (click)="openAddMembers()">
                     <span class="material-icons-outlined icon">person_add_alt</span>
                 </button>
@@ -43,7 +43,7 @@
             </div>
             }
         </div>
-        <app-message-box [channel]="currentChannel" (sent)="onCreatePost($event)" />
+        <app-message-box [channel]="currentChannel" [inThread]="false" (sent)="onCreatePost($event)" />
     </section>
     <app-thread class="thread" *ngIf="openTh" (closeTh)="closeThread($event)" [post]="currPost!"
         [channelData]="{ id: this.currentChannel.channel_id, name: this.currentChannel.name, members: this.currentChannel.members}" />

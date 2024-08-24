@@ -23,6 +23,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
   data = {
     message: '',
+    messageInThread: '',
     attachmentRef: null as any,
     attachmentSrc: '',
     attachmentName: ''
@@ -30,7 +31,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() replying: boolean = false;
   @Input() channel?: Channel;
   @Input() recipient?: string;
-  @Input() inThread: boolean = false;
+  @Input({ required: true }) inThread?: boolean | undefined;
   @Output() sent = new EventEmitter<{}>();
   @ViewChild('messageBox') messageBoxInput!: ElementRef<HTMLInputElement>;
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
@@ -38,7 +39,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   public storageService = inject(StorageService);
   errorMsg: string | null = null;
 
-  constructor(public reactionsService: ReactionService) {}
+  constructor(public reactionsService: ReactionService) { }
 
   ngOnInit(): void {
     this.reactionsService.reactionsPicker$.subscribe((rp) => {
@@ -53,6 +54,18 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.reactionSub.unsubscribe();
+  }
+
+  get message(): string {
+    return this.inThread ? this.data.messageInThread : this.data.message;
+  }
+
+  set message(value: string) {
+    if (this.reactionsService.addReactionInThread === true) {
+      this.data.messageInThread = value;
+    } else if (this.reactionsService.addReactionInThread === false) {
+      this.data.message = value;
+    }
   }
 
   autofocus() {
@@ -72,7 +85,12 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onContainerClick() {
-    this.messageBoxInput.nativeElement.focus();
+    if (this.inThread === true) {
+      this.reactionsService.addReactionInThread = true;
+    } else if (this.inThread === false) {
+      this.reactionsService.addReactionInThread = false;
+    }
+    // this.messageBoxInput.nativeElement.focus();
   }
 
   /**
@@ -84,14 +102,18 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     if (form.submitted && form.valid && !empty) {
       this.resetError();
       (this.channel || this.inThread) ? this.completeForm(form) : this.showError('Die Nachricht ist an niemanden adressiert.');
-    } else if(empty) {
+    } else if (empty) {
       this.showError('Schreibe eine Nachricht oder wähle eine Datei.');
     }
   }
 
   completeForm(form: NgForm) {
-    this.sent.emit({ message: this.data.message, attachmentSrc: this.data.attachmentSrc });
-    this.resetAll(form);    
+    if (this.inThread) {
+      this.sent.emit({ message: this.data.messageInThread, attachmentSrc: this.data.attachmentSrc });
+    } else {
+      this.sent.emit({ message: this.data.message, attachmentSrc: this.data.attachmentSrc });
+    }
+    this.resetAll(form);
   }
 
   resetAll(form: NgForm) {
@@ -103,7 +125,12 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   isFormEmpty(): boolean {
     console.log('message:', this.data.message);
     console.log('attachment:', this.data.attachmentSrc);
-    return this.data.message.length == 0 && this.data.attachmentSrc.length == 0;
+    if (this.inThread) {
+      return (this.data.messageInThread.length == 0 && this.data.attachmentSrc.length == 0);
+    } else {
+      return (this.data.message.length == 0 && this.data.attachmentSrc.length == 0);
+
+    }
   }
 
   toggleMembersList(e: Event): void {
@@ -119,7 +146,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addToMessage(string: string) {
-    this.data.message += string;
+    this.message += string;
     this.messageBoxInput.nativeElement.focus();
   }
 
@@ -127,7 +154,6 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     this.reactionsService.reactionToMessage = true;
     this.reactionsService.toggleReactionsPicker();
   }
-
 
   subReaction(): Subscription {
     return this.reactionsService.reactionToAdded$.subscribe((reaction) => {
@@ -142,16 +168,16 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     const input = e.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file: File = input.files[0];
-      if(this.isValidFile(file)) {await this.uploadFile(file)}
+      if (this.isValidFile(file)) { await this.uploadFile(file) }
       input.value = '';
     }
   }
 
   isValidFile(file: File): boolean {
-    if(!this.isImgOrPdf(file)) {
+    if (!this.isImgOrPdf(file)) {
       this.showError('Bitte wähle ein Bild oder eine PDF-Datei.');
       return false;
-    } else if(!this.hasValidSize(file)) {
+    } else if (!this.hasValidSize(file)) {
       this.showError('Die Datei darf nicht größer als 500kB sein.');
       return false;
     } else {

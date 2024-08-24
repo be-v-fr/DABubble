@@ -133,14 +133,11 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onCreatePost(data: any) {
-    if (!this.currUid) {
-      console.error('Current user ID is not set.');
+    if (!this.currUid || !this.channelData?.id) {
+      console.error('User ID or channel ID is not set.');
       return;
     }
-    if (!this.channelData?.id) {
-      console.error('Current channel ID is not set.');
-      return;
-    }
+
     this.channelsService.addPostToThread(this.channelData.id, this.post!.thread.thread_id, this.currUid, data.message, data.attachmentSrc)
       .then(() => console.log('Post successfully added to the channel'))
       .catch(err => console.error('Error adding post to the channel:', err));

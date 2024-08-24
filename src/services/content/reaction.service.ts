@@ -15,6 +15,7 @@ export class ReactionService {
 
   reactionToMessage = false;
   reactionToEditMessage = false;
+  addReactionInThread = false;
   currentPost!: Post;
 
   constructor(

@@ -1,7 +1,7 @@
 <div *ngIf="post" class="message-container" [class.reversed]="messageSender">
     <div class="reaction-bar-container" *ngIf="!isMainPostThread && !isOnEdit">
-        <button>
-            <span (click)="onShowEmojiPicker()" class="material-icons-outlined">add_reaction</span>
+        <button (click)="onShowEmojiPicker()">
+            <span class="material-icons-outlined">add_reaction</span>
         </button>
         @if (!ComeFromThread) {
         <button (click)="onOpenNewThread()">
