@@ -103,8 +103,10 @@ button.nav-button {
         &.expanded {
             gap: 0;
         }
-        app-navigation.expanded {
+        app-navigation, app-navigation.expanded {
+            opacity: 1;
             width: 100%;
+            transition: none;
         }
         .main-content.hide {
             display: none;

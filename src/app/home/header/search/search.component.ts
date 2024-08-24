@@ -23,6 +23,7 @@ export class SearchComponent {
     @Input() mainUser: User = new User;
     @Input() users: User[] = [];
     @Input() userChannels: Channel[] = [];
+    @Input() placeholder: string = 'Devspace durchsuchen';
     searchInput: string = '';
     searchResultsChannels: Channel[] = [];
     searchResultsUsers: User[] = [];

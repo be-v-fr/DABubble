@@ -106,17 +106,11 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     this.scrollSub.unsubscribe();
   }
 
-  openUserProfile(openUser: User | undefined): void {
-    if (openUser) {
-      if (openUser.uid == this.currUser?.uid) {
-        this.dialog.open(MainUserProfileCardComponent, {
-          data: { 'mainUser': this.currUser }
-        });
-      } else {
-        this.dialog.open(UserProfileCardComponent, {
-          data: { 'viewUser': openUser }
-        });
-      }
+  openUserProfile(user: User): void {
+    if (user) {
+      this.dialog.open(UserProfileCardComponent, {
+        data: user
+      });
     }
   }
 

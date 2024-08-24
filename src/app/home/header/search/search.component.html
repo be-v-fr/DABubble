@@ -1,6 +1,6 @@
 <form class="searchbar-wrapper" #searchForm="ngForm">
     <div class="searchbar-box">
-        <input #searchbar name="searchbar" [(ngModel)]="searchInput" type="text" placeholder="Devspace durchsuchen"
+        <input #searchbar name="searchbar" [(ngModel)]="searchInput" type="text" [placeholder]="placeholder"
             autocomplete="off" (keyup)="search()">
         @if(searchInput.length > 0 && !hidingResults) {
         <button type="button" class="searchbar-icon material-icons-outlined"
