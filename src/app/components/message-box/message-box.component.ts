@@ -8,6 +8,7 @@ import { ReactionService } from '../../../services/content/reaction.service';
 import { ClickStopPropagationDirective } from '../../shared/click-stop-propagation.directive';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { Subscription } from 'rxjs';
+import { User } from '../../../models/user.class';
 
 @Component({
   selector: 'app-message-box',
@@ -18,7 +19,10 @@ import { Subscription } from 'rxjs';
 })
 export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   private reactionSub = new Subscription();
+
   loading: boolean = false;
+  showingMembersList: boolean = false;
+  errorMsg: string | null = null;
   public reactionsPickerVisible = false;
 
   data = {
@@ -28,16 +32,18 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     attachmentSrc: '',
     attachmentName: ''
   };
+  @Input() channelList!: Channel[];
+  @Input() userList?: User[];
+
   @Input() replying: boolean = false;
   @Input() channel?: Channel;
   @Input() recipient?: string;
   @Input({ required: true }) inThread?: boolean | undefined;
   @Output() sent = new EventEmitter<{}>();
+
   @ViewChild('messageBox') messageBoxInput!: ElementRef<HTMLInputElement>;
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
-  showingMembersList: boolean = false;
   public storageService = inject(StorageService);
-  errorMsg: string | null = null;
 
   constructor(public reactionsService: ReactionService) { }
 
@@ -101,7 +107,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     const empty = this.isFormEmpty();
     if (form.submitted && form.valid && !empty) {
       this.resetError();
-      (this.channel || this.inThread) ? this.completeForm(form) : this.showError('Die Nachricht ist an niemanden adressiert.');
+      (this.channel || this.inThread || this.channelList!.length > 0) ? this.completeForm(form) : this.showError('Die Nachricht ist an niemanden adressiert.');
     } else if (empty) {
       this.showError('Schreibe eine Nachricht oder wähle eine Datei.');
     }
@@ -129,7 +135,6 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
       return (this.data.messageInThread.length == 0 && this.data.attachmentSrc.length == 0);
     } else {
       return (this.data.message.length == 0 && this.data.attachmentSrc.length == 0);
-
     }
   }
 

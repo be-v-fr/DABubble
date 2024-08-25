@@ -36,7 +36,6 @@ export class NewMessageComponent implements OnInit, OnDestroy {
   searchResultsChannels: Channel[] = [];
   searchResultsUsers: User[] = [];
   searchResultsPostAuthors: string[] = [];
-  hidingResults: boolean = false;
 
   @ViewChild('searchbar', { read: ElementRef }) searchbar!: ElementRef<HTMLInputElement>;
   public extended: 'channels' | 'users' | 'posts' | null = null;
@@ -68,12 +67,24 @@ export class NewMessageComponent implements OnInit, OnDestroy {
     this.channelsSub.unsubscribe();
   }
 
+  onCreatePost(data: any): void {
+    if (this.channelList.length > 0) {
+      this.channelList.forEach(c => {
+        this.channelsService.addPostToChannel(c.channel_id, this.mainUser.uid, data.message, data.attachmentSrc)
+      });
+
+    }
+    this.clearLists();
+    // if (this.userList.length > 0) {
+    //   this.userList.forEach(u => {
+    //     this.channelsService.addPostToPmChannel(this.channel.channel_id, this.currUser.uid, data.message, data.attachmentSrc);
+    //   });
+    // }
+  }
+
   subAuth(): Subscription {
     return this.authService.user$.subscribe((user) => {
       if (user) {
-        // this.syncCurrentUser();
-        // this.syncUsers();
-        // this.setUserChannels(this.channelsService.channels);
         this.usersSub = this.subUsers();
       }
     });
@@ -114,7 +125,6 @@ export class NewMessageComponent implements OnInit, OnDestroy {
     if (this.searchInput.length > 0) {
       const term: string = this.searchInput.toLowerCase();
       this.triggerSearchCategories(term);
-      this.hidingResults = false;
     } else {
       this.clearSearch();
     }
@@ -147,7 +157,6 @@ export class NewMessageComponent implements OnInit, OnDestroy {
   onResultsClick(e: Event): void {
     e.preventDefault();
     e.stopPropagation();
-    // this.autofocusSearch();
   }
 
   onCloseSearchClick(): void {
@@ -170,10 +179,10 @@ export class NewMessageComponent implements OnInit, OnDestroy {
     this.extended = null;
   }
 
-  // @HostListener('document:click', ['$event'])
-  // hideResults(): void {
-  //   this.hidingResults = true;
-  // }
+  clearLists(): void {
+    this.channelList = [];
+    this.userList = [];
+  }
 
   addChannelToList(channel: Channel) {
     this.channelList.push(channel);

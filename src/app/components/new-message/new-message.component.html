@@ -57,6 +57,7 @@
             </div>
         </div>
     </div>
-    <app-message-box [inThread]="false" />
+    <app-message-box [inThread]="false" [channelList]="channelList" [userList]="userList"
+        (sent)="onCreatePost($event)" />
     <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="emojiPicker"></emoji-mart>
 </div>
