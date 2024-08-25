@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { MessageBoxComponent } from '../message-box/message-box.component';
@@ -6,12 +6,9 @@ import { CommonModule } from '@angular/common';
 import { Channel } from '../../../models/channel.class';
 import { RouterLink } from '@angular/router';
 import { User } from '../../../models/user.class';
-import { Post } from '../../../models/post.class';
 import { MembersOverviewComponent } from "../main-chat/members-overview/members-overview.component";
 import { UsersService } from '../../../services/users.service';
 import { TimeService } from '../../../services/time.service';
-import { MatDialog } from '@angular/material/dialog';
-import { UserProfileCardComponent } from '../../user-profile-card/user-profile-card.component';
 import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { ChannelsService } from '../../../services/content/channels.service';
@@ -32,13 +29,13 @@ export class NewMessageComponent implements OnInit, OnDestroy {
   users: User[] = [];
   userChannels: Channel[] = [];
 
+  channelList: Channel[] = [];
+  userList: User[] = [];
+
   searchInput: string = '';
   searchResultsChannels: Channel[] = [];
   searchResultsUsers: User[] = [];
-  searchResultsPosts: Post[] = [];
-  searchResultsPostsDisplay: string[] = [];
   searchResultsPostAuthors: string[] = [];
-  postChannelIndices: number[] = [];
   hidingResults: boolean = false;
 
   @ViewChild('searchbar', { read: ElementRef }) searchbar!: ElementRef<HTMLInputElement>;
@@ -55,9 +52,7 @@ export class NewMessageComponent implements OnInit, OnDestroy {
   private authSub = new Subscription();
   private usersSub = new Subscription();
 
-  constructor(
-    private dialog: MatDialog,
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.syncCurrentUser();
@@ -130,10 +125,6 @@ export class NewMessageComponent implements OnInit, OnDestroy {
       this.searchUsers(term.slice(1));
     } else if (term.startsWith('#')) {
       this.searchChannels(term.slice(1));
-    } else {
-      // this.searchChannels(term);
-      // this.searchUsers(term);
-      // this.searchPosts(term);
     }
   }
 
@@ -156,7 +147,7 @@ export class NewMessageComponent implements OnInit, OnDestroy {
   onResultsClick(e: Event): void {
     e.preventDefault();
     e.stopPropagation();
-    this.autofocusSearch();
+    // this.autofocusSearch();
   }
 
   onCloseSearchClick(): void {
@@ -176,17 +167,31 @@ export class NewMessageComponent implements OnInit, OnDestroy {
     this.searchInput = '';
     this.searchResultsChannels = [];
     this.searchResultsUsers = [];
-    this.searchResultsPosts = [];
     this.extended = null;
   }
 
-  @HostListener('document:click', ['$event'])
-  hideResults(): void {
-    this.hidingResults = true;
+  // @HostListener('document:click', ['$event'])
+  // hideResults(): void {
+  //   this.hidingResults = true;
+  // }
+
+  addChannelToList(channel: Channel) {
+    this.channelList.push(channel);
+    this.clearSearch();
   }
 
-  openUserProfile(user: User): void {
-    this.dialog.open(UserProfileCardComponent, { data: user });
-    this.hideResults();
+  removeChannel(channel: Channel) {
+    let indexToRemove = this.channelList.findIndex(c => c.channel_id === channel.channel_id);
+    this.channelList.splice(indexToRemove, 1);
+  }
+
+  addUserToList(user: User): void {
+    this.userList.push(user);
+    this.clearSearch();
+  }
+
+  removeUser(user: User) {
+    let indexToRemove = this.userList.findIndex(u => u.uid === user.uid);
+    this.userList.splice(indexToRemove, 1);
   }
 }

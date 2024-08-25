@@ -3,6 +3,25 @@
         <h3>Neue Nachricht</h3>
         <input name="searchbar" [(ngModel)]="searchInput" type="text"
             placeholder="An: #channel, oder @jemand oder E-Mail Adresse" autocomplete="off" (keyup)="search()">
+        <div *ngIf="searchResultsChannels.length === 0">
+            @if (channelList.length > 0) {
+            <ul class="channel-list">
+                @for (channel of channelList; track $index) {
+                <li (click)="removeChannel(channel)"><span>#</span>{{ channel.name }}</li>
+                }
+            </ul>
+            }
+            @if (userList.length > 0) {
+            <ul class="users-list">
+                @for (user of userList; track $index) {
+                <li (click)="removeUser(user)"><span class="img-container"><img [src]="user.avatarSrc"
+                            [alt]="user.name"></span>{{
+                    user.name }}</li>
+                }
+            </ul>
+            }
+        </div>
+
         <div class="search-results-container" (click)="onResultsClick($event)">
             <div class="search-results-list-container" *ngIf="searchResultsChannels.length > 0"
                 [ngClass]="{'extended': extended === 'channels', 'collapsed': extended && extended != 'channels'}">
@@ -13,8 +32,7 @@
                 </p>
                 <ul class="search-results-list">
                     @for(channel of searchResultsChannels; track channel) {
-                    <li class="search-results-channel" [routerLink]="['/main-chat', channel.channel_id]"
-                        (click)="clearSearch()">
+                    <li class="search-results-channel" (click)="addChannelToList(channel)">
                         <span># {{ channel.name }}</span>
                         <app-members-overview [channel]="channel" />
                     </li>
@@ -30,39 +48,9 @@
                 </p>
                 <ul class="search-results-list">
                     @for(user of searchResultsUsers; track user) {
-                    <li (click)="openUserProfile(user)">
+                    <li (click)="addUserToList(user)">
                         <img [src]="user.avatarSrc" alt="Avatar" />
                         {{ user.name }}
-                    </li>
-                    }
-                </ul>
-            </div>
-            <div class="search-results-list-container" *ngIf="searchResultsPosts.length > 0"
-                [ngClass]="{'extended': extended === 'posts', 'collapsed': extended && extended != 'posts'}">
-                <p class="search-results-title" (click)="toggleListExtension('posts')">
-                    <span class="material-icons-outlined arrow-icon">arrow_drop_down</span>
-                    <span class="material-icons-outlined">insert_comment</span>
-                    Posts
-                </p>
-                <ul class="search-results-list">
-                    @for(post of searchResultsPosts; track post; let i = $index) {
-                    <li class="search-results-post" *ngIf="postChannelIndices[i] != -1" (click)="clearSearch()"
-                        [routerLink]="[userChannels[postChannelIndices[i]].isPmChannel ? '/direct-message' : '/main-chat', post.channel_id]"
-                        [queryParams]="{post: post.post_id}">
-                        <div class="top-line">
-                            <span>
-                                <b>{{ searchResultsPostAuthors[i] }}</b>
-                            </span>
-                            <span class="date">
-                                {{timeService.toRelativeDateWithClock(post.date)}}
-                            </span>
-                            <span class="channel-name" *ngIf="!userChannels[postChannelIndices[i]].isPmChannel">
-                                # {{userChannels[postChannelIndices[i]].name}}
-                            </span>
-                        </div>
-                        <span class="bottom-line">
-                            <i>&bdquo;{{ searchResultsPostsDisplay[i] }}&ldquo;</i>
-                        </span>
                     </li>
                     }
                 </ul>
