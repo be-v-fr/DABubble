@@ -40,7 +40,8 @@ export class HomeComponent {
     public usersService = inject(UsersService);
     private channelsService = inject(ChannelsService);
     public activityService = inject(ActivityService);
-    public reactionsPicker = inject(ReactionService);
+    public reactionsService = inject(ReactionService);
+    // public reactionsPicker = inject(ReactionService);
 
     private authSub = new Subscription();
     private usersSub = new Subscription();
@@ -52,7 +53,7 @@ export class HomeComponent {
     public showNav = true;
     public reactionsPickerVisible = false;
 
-    constructor(public reactionsService: ReactionService) { }
+    constructor() { }
 
 
     ngOnInit(): void {
@@ -60,7 +61,7 @@ export class HomeComponent {
         this.authSub = this.subAuth();
         this.reactionsService.reactionsPicker$.subscribe((rp) => {
             this.reactionsPickerVisible = rp;
-        })
+        });
     }
 
     ngOnDestroy(): void {
@@ -119,7 +120,7 @@ export class HomeComponent {
         if (this.reactionsService.reactionToMessage || this.reactionsService.reactionToEditMessage) {
             this.reactionsService.setReaction(event.emoji.native);
         } else {
-            this.reactionsService.addReaction(event, this.currentUser); 
+            this.reactionsService.addReaction(event, this.currentUser);
         }
         this.reactionsService.reactionToMessage = false;
         this.reactionsService.reactionToEditMessage = false;
