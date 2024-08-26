@@ -51,8 +51,8 @@
                 }
             }
         }
-        .mobile-searchbar-wrapper{
-            display: none;
+        .mobile-searchbar {
+            width: 100%;
         }
     }
 }
@@ -65,28 +65,6 @@
             .nav-header {
                 display: none;
             } 
-            .mobile-searchbar-wrapper{
-                display: block;
-                width: 100%;
-                .searchbar-box {
-                    height: 42px;
-                    background-color: #fff;
-                    border-radius: 42px;
-                    border: 1px solid rgba(173, 176, 217, 1);
-                    padding: 8px 24px;
-                    display: flex;
-                        input {
-                        width: 100%;
-                        font-size: 17px;
-                        &::placeholder {
-                            color: $grey;
-                        }
-                    }
-                    .searchbar-icon {
-                        display: flex;
-                    } 
-                }
-            }
         }
     }
 }

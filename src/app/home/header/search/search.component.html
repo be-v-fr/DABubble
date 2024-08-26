@@ -1,4 +1,4 @@
-<form class="searchbar-wrapper" #searchForm="ngForm">
+<form class="searchbar-wrapper" [ngClass]="inHeader? 'in-header' : 'in-navigation'" #searchForm="ngForm">
     <div class="searchbar-box">
         <input #searchbar name="searchbar" [(ngModel)]="searchInput" type="text" [placeholder]="placeholder"
             autocomplete="off" (keyup)="search()">

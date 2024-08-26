@@ -24,6 +24,7 @@ export class SearchComponent {
     @Input() users: User[] = [];
     @Input() userChannels: Channel[] = [];
     @Input() placeholder: string = 'Devspace durchsuchen';
+    @Input() inHeader: boolean = true;
     searchInput: string = '';
     searchResultsChannels: Channel[] = [];
     searchResultsUsers: User[] = [];

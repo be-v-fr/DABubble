@@ -120,16 +120,19 @@
                     justify-content: center;
                     align-items: flex-start;
                     gap: 0;
+
                     .top-line {
                         width: 100%;
                         display: flex;
                         gap: 12px;
                         overflow: hidden;
                         font-size: 20px;
+
                         .date {
                             font-size: 16px;
                             color: $grey;
                         }
+
                         .channel-name {
                             font-size: 16px;
                             color: $purple-blue-bright;
@@ -138,6 +141,7 @@
                             white-space: nowrap;
                         }
                     }
+
                     .bottom-line {
                         width: 100%;
                         font-size: 18px;
@@ -145,6 +149,7 @@
                         text-overflow: ellipsis;
                         white-space: nowrap;
                     }
+
                     &:hover {
                         .top-line .date {
                             color: $purple-blue-bright;
@@ -158,6 +163,7 @@
             .search-results-title .arrow-icon {
                 transform: rotate(0deg);
             }
+
             .search-results-list {
                 max-height: 654px;
             }
@@ -167,14 +173,38 @@
             .search-results-title .arrow-icon {
                 transform: rotate(180deg);
             }
+
             .search-results-list {
                 max-height: 0px;
                 padding: 0 20px;
             }
         }
     }
+}
 
-    @media screen and (max-width: 1024px) {
+.in-navigation {
+    display: none;
+
+    .searchbar-box {
+        border: 1px solid $purple-light;
+        border-radius: 24px;
+        height: 48px;
+        padding: 8px 24px;
+        input {
+            font-size: 17px;
+        }
+        .searchbar-icon {
+            font-size: 24px;
+        }
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .in-header {
         display: none;
+    }
+
+    .in-navigation {
+        display: block;
     }
 }
