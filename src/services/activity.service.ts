@@ -8,7 +8,7 @@ import { User } from '../models/user.class';
   providedIn: 'root'
 })
 export class ActivityService implements OnDestroy {
-  private readonly idleDuration: number = 180 * 1000;
+  private readonly idleDuration: number = 10 * 1000;
   private activitySettingAllowed: boolean = true;
 
   private authService = inject(AuthService);
