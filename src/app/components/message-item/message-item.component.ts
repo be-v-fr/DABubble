@@ -116,7 +116,7 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
       } else {
         let viewUser: User = new User(this.usersService.getUserByUid(uid));
         this.dialog.open(UserProfileCardComponent, {
-          data: { 'viewUser': viewUser }
+          data: viewUser
         });
       }
     }
