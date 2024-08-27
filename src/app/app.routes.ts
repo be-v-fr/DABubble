@@ -22,6 +22,7 @@ import { AddMembersComponent } from './add-members/add-members.component';
 import { DirectMessageComponent } from './components/direct-message/direct-message.component';
 import { EditMainUserAvatarComponent } from './main-user/edit-main-user-avatar/edit-main-user-avatar.component';
 import { authGuard } from './shared/auth.guard';
+import { ChangeEmailComponent } from './auth/change-email/change-email.component';
 
 
 export const routes: Routes = [
@@ -49,6 +50,7 @@ export const routes: Routes = [
       { path: 'pickAvatar', component: PickAvatarComponent },
       { path: 'requestPwReset', component: RequestPwResetComponent },
       { path: 'resetPw', component: ResetPwComponent },
+      { path: 'changeEmail', component: ChangeEmailComponent}
     ],
   },
   { path: 'impress', component: ImpressComponent },

@@ -36,6 +36,8 @@
                 </div>
                 @if((email.touched || editMainUser.submitted) && !email.valid) {
                     <p class="error-msg">Diese E-Mail-Adresse ist leider ungültig.</p>
+                } @else if (emailAuthError.length > 0) {
+                    <p class="error-msg">{{emailAuthError}}</p> 
                 }
             </div>
             <div class="submit-btns">

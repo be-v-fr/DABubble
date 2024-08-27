@@ -1,0 +1,17 @@
+<div class="content-wrapper">
+    <div class="content-main content-card">
+        <h1>
+            Neue Email <br class="d-640" />bestätigen
+            <div class="back-btn-container">
+                <a routerLink="/auth/logIn" class="black-to-blue-btn">
+                    <img src="assets/img/icons/go_back_arrow.svg" alt="go back">
+                </a>
+            </div>
+        </h1>
+        @if(emailUpdated) {
+        <p class="advice">Deine E-Mail-Adresse wurde erfolgreich geändert.</p>
+        } @else {
+        <p class="advice">...</p>
+        }
+    </div>
+</div>

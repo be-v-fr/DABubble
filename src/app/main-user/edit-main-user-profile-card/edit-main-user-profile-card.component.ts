@@ -5,6 +5,8 @@ import { User } from '../../../models/user.class';
 import { EditMainUserAvatarComponent } from '../edit-main-user-avatar/edit-main-user-avatar.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UsersService } from '../../../services/users.service';
+import { AuthService } from '../../../services/auth.service';
+
 
 @Component({
     selector: 'app-edit-main-user-profile-card',
@@ -17,6 +19,8 @@ export class EditMainUserProfileCardComponent {
     public mainUser: User = new User;
     public userData: User = new User;   
     private usersService = inject(UsersService);
+    private authService = inject(AuthService);
+    emailAuthError: string = '';
 
     constructor (
         private dialogRef: MatDialogRef<EditMainUserProfileCardComponent>,
@@ -36,15 +40,33 @@ export class EditMainUserProfileCardComponent {
     }
     
     async saveMainUser() {
-        if (this.userData.email !== this.mainUser.email) {
-            console.log('Update email necessary', this.mainUser);
-        }
-        this.mainUser.name = this.userData.name;
-        this.mainUser.email = this.userData.email;
-        console.log('mainUser: ', this.mainUser);
-        await this.usersService.updateUser(this.mainUser);
+        await this.saveName();
+        await this.handleEmail();
         this.closeDialog();
     }
+
+    async saveName() {
+        this.mainUser.name = this.userData.name;
+        await this.usersService.updateUser(this.mainUser);
+    }
+
+    async handleEmail() {
+        if (this.userData.email !== this.mainUser.email) {
+            console.log('request email verification!');
+            await this.authService.requestEmailEdit(this.userData.email)
+                .catch(e => this.showEmailError(e));
+            // USER FEEDBACK (NOTIFICATION);
+        }
+    }
+
+
+    showEmailError(err: Error) {
+        const error: string = err.toString();
+        if(error.includes('auth/requires-recent-login')) {
+            this.emailAuthError = 'Logge dich aus Sicherheitsgründen bitte erneut ein und versuche es nochmal.'
+        }
+    }
+
     
     onSubmit(form: NgForm) {
         if (form.submitted && form.valid) { this.saveMainUser(); }
