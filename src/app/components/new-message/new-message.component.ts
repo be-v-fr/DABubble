@@ -70,16 +70,27 @@ export class NewMessageComponent implements OnInit, OnDestroy {
   onCreatePost(data: any): void {
     if (this.channelList.length > 0) {
       this.channelList.forEach(c => {
-        this.channelsService.addPostToChannel(c.channel_id, this.mainUser.uid, data.message, data.attachmentSrc)
+        this.channelsService.addPostToChannel(c.channel_id, this.mainUser.uid, data.message, data.attachmentSrc);
+      });
+    }
+
+    if (this.userList.length > 0) {
+      let channelsToPostOn: Channel[] = [];
+
+      this.userList.forEach(u => {
+        const filteredChannels = this.userChannels.filter(c =>
+          c.isPmChannel && c.members.some(m => m.uid === u.uid)
+        );
+        channelsToPostOn.push(...filteredChannels);
       });
 
+      if (channelsToPostOn.length > 0) {
+        channelsToPostOn.forEach(c => {
+          this.channelsService.addPostToPmChannel(c.channel_id, this.mainUser.uid, data.message, data.attachmentSrc);
+        });
+      }
     }
     this.clearLists();
-    // if (this.userList.length > 0) {
-    //   this.userList.forEach(u => {
-    //     this.channelsService.addPostToPmChannel(this.channel.channel_id, this.currUser.uid, data.message, data.attachmentSrc);
-    //   });
-    // }
   }
 
   subAuth(): Subscription {

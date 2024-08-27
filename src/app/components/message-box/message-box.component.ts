@@ -33,7 +33,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     attachmentName: ''
   };
   @Input() channelList!: Channel[];
-  @Input() userList?: User[];
+  @Input() userList!: User[];
 
   @Input() replying: boolean = false;
   @Input() channel?: Channel;
@@ -107,7 +107,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     const empty = this.isFormEmpty();
     if (form.submitted && form.valid && !empty) {
       this.resetError();
-      (this.channel || this.inThread || this.channelList!.length > 0) ? this.completeForm(form) : this.showError('Die Nachricht ist an niemanden adressiert.');
+      (this.channel || this.inThread || this.channelList!.length > 0 || this.userList!.length > 0) ? this.completeForm(form) : this.showError('Die Nachricht ist an niemanden adressiert.');
     } else if (empty) {
       this.showError('Schreibe eine Nachricht oder wähle eine Datei.');
     }

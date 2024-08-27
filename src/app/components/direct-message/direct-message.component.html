@@ -42,7 +42,7 @@
         </p>}
       </div>
       }
-      <app-message-box (sent)="onCreatePost($event)" [inThread]="false" />
+      <app-message-box [channel]="channel" (sent)="onCreatePost($event)" [inThread]="false" />
     </div>
     <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="emojiPicker"></emoji-mart>
   </section>
