@@ -9,7 +9,13 @@ import {
   updateProfile,
   user
 } from "@angular/fire/auth";
-import { sendPasswordResetEmail, confirmPasswordReset } from "firebase/auth";
+import {
+  sendPasswordResetEmail,
+  confirmPasswordReset,
+  updateEmail,
+  verifyBeforeUpdateEmail,
+  applyActionCode
+} from "firebase/auth";
 import { Observable, from, merge, BehaviorSubject, map } from "rxjs";
 import { UsersService } from "./users.service";
 import { User } from "../models/user.class";
@@ -116,6 +122,7 @@ export class AuthService {
     return from(promise);
   }
 
+
   resetPassword(oobCode: string, password: string): Observable<void> {
     const promise = confirmPasswordReset(
       this.firebaseAuth,
@@ -124,6 +131,31 @@ export class AuthService {
     ).then(() => { });
     return from(promise);
   }
+
+
+  async requestEmailEdit(newEmail: string): Promise<void> {
+    if (this.firebaseAuth.currentUser) {
+      await verifyBeforeUpdateEmail(
+        this.firebaseAuth.currentUser,
+        newEmail
+      ).then(() => { });
+    } else {
+      // handle guest login
+    }
+  }
+
+
+  async confirmEmailEdit(oobCode: string): Promise<void> {
+    if (this.firebaseAuth.currentUser) {
+      await applyActionCode(
+        this.firebaseAuth,
+        oobCode
+      ).then(() => { });
+    } else {
+      // handle guest login
+    }
+  }
+
 
   /**
    * Log out
