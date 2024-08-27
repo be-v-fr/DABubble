@@ -82,19 +82,12 @@ export class MainChatComponent implements OnInit, OnDestroy {
         this.closeThread(false);
       }
     });
- 
+
     this.channelSub = this.channelsService.channels$.subscribe(() => {
       if (this.currentChannel.channel_id) {
         this.setChannel(this.currentChannel.channel_id);
       }
     });
-
-    this.checkScreenWidth();
-    window.addEventListener('resize', this.checkScreenWidth.bind(this));
-  }
-
-  checkScreenWidth(): void {
-   
   }
 
   toggleChannel(): void {
@@ -146,7 +139,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.currentChannel.members.length; i++) {
       let m = this.currentChannel.members[i];
       const updatedUser: User | undefined = this.usersService.getUserByUid(m.uid);
-      if (updatedUser) {this.currentChannel.members[i] = updatedUser }
+      if (updatedUser) { this.currentChannel.members[i] = updatedUser }
     };
   }
 

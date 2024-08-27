@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { RouterOutlet } from '@angular/router';
@@ -41,7 +41,6 @@ export class HomeComponent {
     private channelsService = inject(ChannelsService);
     public activityService = inject(ActivityService);
     public reactionsService = inject(ReactionService);
-    // public reactionsPicker = inject(ReactionService);
 
     private authSub = new Subscription();
     private usersSub = new Subscription();

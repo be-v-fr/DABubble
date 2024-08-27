@@ -15,8 +15,6 @@ import { MessageItemComponent } from '../message-item/message-item.component';
 import { ForbiddenChannelFeedbackComponent } from '../main-chat/forbidden-channel-feedback/forbidden-channel-feedback.component';
 import { AuthService } from '../../../services/auth.service';
 import { TimeService } from '../../../services/time.service';
-import { Post } from '../../../models/post.class';
-import { MainUserProfileCardComponent } from '../../main-user/main-user-profile-card/main-user-profile-card.component';
 import { ActivityStateDotComponent } from '../activity-state-dot/activity-state-dot.component';
 import { UsersService } from '../../../services/users.service';
 
@@ -41,7 +39,7 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
   private postsSub!: Subscription;
 
   channelId?: string;
-  channel?: Channel; // Directly use Channel type
+  channel?: Channel;
   savedPostsLength: number | null = null;
   currUser?: User;
   recipient?: User;
@@ -78,7 +76,6 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
       this.channelService.channels$.subscribe(() => {
         if (this.channelId) {
           this.initChannel(this.channelId);
-          this.handlePostsLength();
         }
       })
     );
@@ -162,7 +159,9 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
 
   goToPost(postId: string | undefined) {
     this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
-      (postId && postId.length > 0) ? this.autoscrollToPost(elements, postId) : this.autoscrollToLastPost(elements);
+      if (this.hasPostLengthChanged(elements)) {
+        (postId && postId.length > 0) ? this.autoscrollToPost(elements, postId) : this.autoscrollToLastPost(elements);
+      }
     });
     this.messageItems.notifyOnChanges();
   }
@@ -185,14 +184,13 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     if (postRef) { postRef.nativeElement.scrollIntoView({}); }
   }
 
-  handlePostsLength(): void {
-    if (this.channel) {
-      const currentLength = this.channel.posts.length;
-      if (!this.savedPostsLength || (this.savedPostsLength && this.savedPostsLength < currentLength)) {
-        const lastPost: Post = this.channel.posts[currentLength - 1];
-        this.goToPost(lastPost.post_id);
-      }
+  hasPostLengthChanged(elements: QueryList<ElementRef>): boolean {
+    const currentLength = elements.toArray().length;
+    if (currentLength != this.savedPostsLength) {
       this.savedPostsLength = currentLength;
+      return true;
+    } else {
+      return false;
     }
   }
 
