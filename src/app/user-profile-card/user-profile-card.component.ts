@@ -22,7 +22,6 @@ export class UserProfileCardComponent {
     @Inject(MAT_DIALOG_DATA) public data: User 
   ) {
     this.user = data;
-    console.log('user-profile-card [data]: ', data);
    }
   
   closeCard(){
