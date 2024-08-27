@@ -14,7 +14,7 @@
         <span class="userprofile-name">{{ mainUser.name || '...' }}</span>
         <div class="userprofile-image-box">
             <img src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}">
-            <app-activity-state-dot [user]="mainUser" />
+            <app-activity-state-dot *ngIf="mainUser.uid.length > 0" [user]="mainUser" />
         </div>
         <div class="userprofile-menu-box">
             <img src="/assets/img/icons/dropdown_arrow.svg">

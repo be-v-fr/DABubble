@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivityService } from '../../../services/activity.service';
 import { User } from '../../../models/user.class';
 
@@ -16,8 +16,8 @@ export class ActivityStateDotComponent implements OnInit, OnDestroy {
   public state: 'active' | 'idle' | 'loggedOut' = 'active';
   private interval: any | null = null;
 
-
   ngOnInit(): void {
+    this.updateState();
     this.interval = setInterval(() => this.updateState(), 3 * 1000);
   }
 
