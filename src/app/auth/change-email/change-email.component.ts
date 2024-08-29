@@ -3,7 +3,6 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-change-email',
@@ -18,8 +17,6 @@ export class ChangeEmailComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private authService = inject(AuthService);
   private authSub = new Subscription();
-  private usersService = inject(UsersService);
-  private usersSub = new Subscription();
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -30,31 +27,14 @@ export class ChangeEmailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.authSub.unsubscribe();
-    this.usersSub.unsubscribe();
   }
 
   subAuth(): Subscription {
-    console.log('sub!');
     return this.authService.user$.subscribe(async user => {
-      console.log('triggered!', user);
       if (user && this.oobCode.length > 0) {
-        console.log('new email verified (before)?', user.emailVerified);
-        await this.authService.confirmEmailEdit(this.oobCode);
-        console.log('new email verified (after)?', user.emailVerified);
-        if(user.emailVerified) {
-          this.usersSub = this.subUsers(user.uid);
-        }
+        this.authService.confirmEmailEdit(this.oobCode)
+          .then(() => this.emailUpdated = true);
       }
     });
-  }
-
-  subUsers(uid: string): Subscription {
-    return this.usersService.users$.subscribe(async () => {
-      const user = this.usersService.getUserByUid(uid);
-      if(user) {
-        await this.usersService.updateUser(user);
-        this.emailUpdated = true;      
-      }
-    })
   }
 }
