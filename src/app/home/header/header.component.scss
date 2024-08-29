@@ -55,6 +55,13 @@
                 line-height: 32.74px;
             }
         }
+        &:hover {
+            .devspace {
+                span {
+                    color: $purple-blue-bright;
+                }
+            }
+        }
         &.show {
             @media screen and (max-width: 768px) {
                 display: flex;

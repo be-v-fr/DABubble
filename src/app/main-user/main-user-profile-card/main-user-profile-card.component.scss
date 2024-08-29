@@ -80,6 +80,15 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
         position: absolute;
         top: 300px;
         right: 110px;
+        width: 30px;
+        height: 30px;
+        border-radius: 99px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:hover {
+            background-color: $violet-bright;
+        }
         img {
             cursor: pointer;
         }
@@ -278,7 +287,16 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
                     color: $purple-blue-bright;
                     font-weight: 600;
                     font-size: 18px;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 99px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                     cursor: pointer;
+                    &:hover {
+                        background-color: $violet-bright;
+                    }
                     img {
                         display: inline;
                     }

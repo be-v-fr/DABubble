@@ -1,11 +1,11 @@
 <section *ngIf="isVisible">
     <div class="nav-header">
-        <button class="logo-btn">
-            <img src="../../../assets/img/workspace_logo.svg" alt="Workspace Logo">
+        <div class="logo-btn">
+            <img src="/assets/img/workspace_logo.svg">
             <span>Devspace</span>
-        </button>
+        </div>
         <a (click)="usersService.setMobileView('mainchat')" routerLink="/new" class="new-message-btn">
-            <img src="../../../assets/img/icons/edit_square.svg" alt="Neue Nachricht">
+            <img src="/assets/img/icons/edit_square.svg" >
         </a>
     </div>
     @if(currentUser && users && userChannels) {
