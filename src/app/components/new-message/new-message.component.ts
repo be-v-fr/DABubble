@@ -146,7 +146,16 @@ export class NewMessageComponent implements OnInit, OnDestroy {
       this.searchUsers(term.slice(1));
     } else if (term.startsWith('#')) {
       this.searchChannels(term.slice(1));
+    } else {
+      this.searchByEmail(term);
     }
+  }
+
+  searchByEmail(term: string) {
+    this.searchResultsUsers = this.users.filter(u => {
+      return u.uid != this.mainUser.uid &&
+        (u.email.toLowerCase().includes(term));
+    });
   }
 
   searchChannels(term: string): void {
