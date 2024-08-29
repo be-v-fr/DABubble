@@ -42,12 +42,12 @@
                 </li>
                 }
 
-                <a (click)="userService.setMobileView('mainchat')" routerLink="/new">
-                    <div [class.isExpanded]="isMenuExpanded" class="new-message-icon">
-                        <img src="../../../assets/img/icons/new_message.svg">
-                    </div>
-                </a>
             </ul>
         </div>
     </div>
+    <a (click)="userService.setMobileView('mainchat')" routerLink="/new" class="new-message-mobile-btn">
+        <div class="new-message-icon">
+            <img src="../../../assets/img/icons/new_message.svg">
+        </div>
+    </a>
 </div>
