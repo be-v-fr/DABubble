@@ -1,14 +1,14 @@
 <div class="userCard">
     <div class="head">
         <p>Profil</p>
-        <a (click)="closeDialog()">
+        <a (click)="closeDialog()" class="black-to-blue-btn">
             <img src="/assets/img/icons/close.svg" />
         </a>
     </div>
     <div class="profileImg defaultPic">
         <img class="#" src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}" />
     </div>
-    <div class="imgedit">
+    <div class="imgedit black-to-blue-btn">
         <img src="/assets/img/icons/edit.svg" (click)="openEditAvatar()" >
     </div>
     <div class="userName">

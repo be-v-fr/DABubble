@@ -13,14 +13,30 @@
   transform: scale(0);
   opacity: 0;
   transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+
   &.show {
     transform: scale(1);
     opacity: 1;
   }
 }
-  .container.thread-open {
-   right: 525px; 
+
+.container.thread-open {
+  right: 525px;
+}
+
+.close-thread-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    color: #535af1;
+    background-color: #eceefe;
+    border-radius: 25px
   }
+}
 
 
 
@@ -53,6 +69,8 @@
       font-weight: 700;
       font-size: 24px;
       height: 33px;
+      display: flex;
+      align-items: center;
     }
 
     span:nth-child(2) {

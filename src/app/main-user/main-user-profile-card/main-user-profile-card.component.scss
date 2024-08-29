@@ -92,9 +92,14 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
         img {
             cursor: pointer;
         }
-        img:hover {
-            content: url('/assets/img/icons/edit_hover.svg');
-        }
+        // img:hover {
+        //     content: url('/assets/img/icons/edit_hover.svg');
+        //      }
+        // &:hover{
+        //     background-color:#eceefe;
+        //     border-radius:25px;
+        // padding: 8px 8px;      
+        // }
     }
     .userName {
         position: absolute;

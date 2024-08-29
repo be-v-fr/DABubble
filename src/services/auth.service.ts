@@ -133,14 +133,16 @@ export class AuthService {
   }
 
 
-  async requestEmailEdit(newEmail: string): Promise<void> {
+  requestEmailEdit(newEmail: string): Observable<void> {
     if (this.firebaseAuth.currentUser) {
-      await verifyBeforeUpdateEmail(
+      const promise = verifyBeforeUpdateEmail(
         this.firebaseAuth.currentUser,
         newEmail
-      ).then(() => { });
+      ).then(() => { })
+      return from(promise);
     } else {
-      // handle guest login
+      const promise = new Promise<void>(() => console.log('else case...'));
+      return from(promise);
     }
   }
 

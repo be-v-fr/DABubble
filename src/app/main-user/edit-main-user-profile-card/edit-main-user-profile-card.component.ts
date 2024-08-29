@@ -17,32 +17,31 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class EditMainUserProfileCardComponent {
     public mainUser: User = new User;
-    public userData: User = new User;   
+    public userData: User = new User;
     private usersService = inject(UsersService);
     private authService = inject(AuthService);
     emailAuthError: string = '';
 
-    constructor (
+    constructor(
         private dialogRef: MatDialogRef<EditMainUserProfileCardComponent>,
         private dialogAvatarRef: MatDialogRef<EditMainUserAvatarComponent>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
         console.log('Edit MainUser Card..constr. data:', data);
-    
+
         this.mainUser = this.data.mainUser;
         this.userData.name = this.data.mainUser.name;
         this.userData.email = this.data.mainUser.email;
     }
-    
+
     closeDialog() {
         this.dialogRef.close();
     }
-    
+
     async saveMainUser() {
         await this.saveName();
-        await this.handleEmail();
-        this.closeDialog();
+        this.handleEmail();
     }
 
     async saveName() {
@@ -52,22 +51,22 @@ export class EditMainUserProfileCardComponent {
 
     async handleEmail() {
         if (this.userData.email !== this.mainUser.email) {
-            console.log('request email verification!');
-            await this.authService.requestEmailEdit(this.userData.email)
-                .catch(e => this.showEmailError(e));
-            // USER FEEDBACK (NOTIFICATION);
-        }
+            this.authService.requestEmailEdit(this.userData.email).subscribe({
+                next: () => this.closeDialog(),
+                error: (err) => this.showEmailError(err)
+            });
+        } else { this.closeDialog() }
     }
 
 
     showEmailError(err: Error) {
         const error: string = err.toString();
-        if(error.includes('auth/requires-recent-login')) {
-            this.emailAuthError = 'Logge dich aus Sicherheitsgründen bitte erneut ein und versuche es nochmal.'
+        if (error.includes('auth/requires-recent-login')) {
+            this.emailAuthError = 'Dein letzter Login liegt lange zurück. Logge dich aus Sicherheitsgründen bitte erneut ein und versuche es nochmal.'
         }
     }
 
-    
+
     onSubmit(form: NgForm) {
         if (form.submitted && form.valid) { this.saveMainUser(); }
     }
@@ -78,14 +77,14 @@ export class EditMainUserProfileCardComponent {
                 mainUser: this.mainUser
             }
         });
-      
-        this.dialogAvatarRef.afterOpened().subscribe( () => {
+
+        this.dialogAvatarRef.afterOpened().subscribe(() => {
             this.closeDialog();
         });
-      
+
         this.dialogAvatarRef.afterClosed().subscribe(result => {
             console.log('The dialog "EditMainUserAvatar" was Closed.', result);
         });
     }
-    
+
 }
