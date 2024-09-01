@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { MessageBoxComponent } from '../message-box/message-box.component';
@@ -59,6 +59,19 @@ export class NewMessageComponent implements OnInit, OnDestroy {
     this.reactionsService.reactionsPicker$.subscribe((rp) => {
       this.reactionsPickerVisible = rp;
     });
+    this.mobilePlaceholder();
+  }
+
+  mobilePlaceholder() {
+    if (this.searchbar) {
+      const placeholder = window.innerWidth <= 480 ? 'An: #channel, oder @jemand' : 'An: #channel, oder @jemand oder E-Mail Adresse';
+      this.searchbar.nativeElement.placeholder = placeholder;
+    }
+  }
+  
+  @HostListener('window:resize')
+  onResize() {
+    this.mobilePlaceholder();
   }
 
   ngOnDestroy(): void {

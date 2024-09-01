@@ -12,26 +12,31 @@
     gap: 15px;
     top: 220px;
     right: 100px;
+
     .headline-close-btn {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         .title-box {
             font-size: 24px;
             font-weight: 700;
         }
+
         .close-thread-btn {
             height: 40px;
             width: 40px;
             border-radius: 99px;
             display: grid;
             place-items: center;
+
             &:hover {
                 color: $purple-blue-bright;
                 background-color: $violet-bright;
             }
         }
     }
+
     .member-list-container {
         position: relative;
         height: calc(100% - 40px);
@@ -39,6 +44,7 @@
         flex-direction: column;
         justify-content: space-between;
         gap: 15px;
+
         .members-list-box {
             @include scrollbar();
             overflow-y: scroll;
@@ -46,31 +52,37 @@
             flex-direction: column;
             gap: 15px;
             flex-grow: 1;
+
             .member-btn-container {
                 display: flex;
                 flex-direction: column;
                 gap: 13px;
+
                 .member-btn {
                     position: relative;
                     padding: 4px 20px;
                     display: flex;
                     align-items: center;
                     gap: 15px;
+
                     &:hover {
                         color: $purple-blue-bright;
                         background-color: $violet-bright;
                         border-radius: 100px;
                         cursor: pointer;
                     }
+
                     img {
                         height: 50px;
                         width: 50px;
                         border-radius: 99px;
                     }
+
                     .member-name {
                         font-size: 18px;
                         font-weight: 400;
                     }
+
                     app-activity-state-dot {
                         position: absolute;
                         bottom: 4px;
@@ -81,12 +93,14 @@
                 }
             }
         }
+
         .add-member-btn {
             padding: 4px 29px 4px 20px;
             border-radius: 100px;
             display: flex;
             align-items: center;
             gap: 15px;
+
             .icon {
                 width: 40px;
                 height: 40px;
@@ -95,10 +109,12 @@
                 display: grid;
                 place-items: center;
             }
+
             .add-member-text {
                 font-size: 18px;
                 font-weight: 400;
             }
+
             &:hover {
                 color: #535af1;
                 background-color: #eceefe;
@@ -106,8 +122,23 @@
         }
     }
 }
+
 .memberCard.thread-open {
-    right: 525px; 
-   }
+    right: 525px;
+}
 
+@media screen and (max-width: 768px) {
+    .memberCard {
+        transform: translate(-50%);
+        right: 0;
+        max-width: 398px;
+        height: 371px;
+        left: 50%;
+    }
+}
 
+@media screen and (max-width: 430px) {
+    .memberCard {
+        max-width: 320px;
+    }
+}
