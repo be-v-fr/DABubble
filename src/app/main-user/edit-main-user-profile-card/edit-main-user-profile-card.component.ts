@@ -19,7 +19,7 @@ export class EditMainUserProfileCardComponent {
     public mainUser: User = new User;
     public userData: User = new User;
     private usersService = inject(UsersService);
-    private authService = inject(AuthService);
+    public authService = inject(AuthService);
     emailAuthError: string = '';
     showEmailSentFeedback: boolean = false;
     disableForm: boolean = false;

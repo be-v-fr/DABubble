@@ -35,6 +35,7 @@ export class AuthService {
   guestUser$: BehaviorSubject<User | null>;
   user$: Observable<any>;
   private authAsGuest: boolean = false;
+  public isGoogleUser: boolean = false;
 
   constructor() {
     if (this.currentUserIsGuest()) { this.logInAsGuest() }
@@ -171,7 +172,7 @@ export class AuthService {
         oobCode
       ).then(() => { });
     } else {
-      // handle guest login
+      console.error('You are not logged in. You must be logged in to confirm your edited email address.')
     }
   }
 
