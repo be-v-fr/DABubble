@@ -55,16 +55,13 @@ export class EditMainUserProfileCardComponent {
 
     async handleEmail() {
         if (this.userData.email !== this.mainUser.email) {
+            this.disableForm = true;
             if (this.authService.currentUserIsGuest()) {
                 await this.updateEmail();
                 this.disableForm = false;
                 this.closeDialog();
             } else {
-                this.disableForm = true;
-                this.authService.requestEmailEdit(this.userData.email).subscribe({
-                    next: () => this.onEmailEditRequest(),
-                    error: (err) => this.showEmailError(err)
-                });
+                this.requestEmailEdit();
             }
         } else { this.closeDialog() }
     }
@@ -73,6 +70,14 @@ export class EditMainUserProfileCardComponent {
     async updateEmail() {
         this.mainUser.email = this.userData.email;
         await this.usersService.updateUser(this.mainUser);
+    }
+
+
+    requestEmailEdit() {
+        this.authService.requestEmailEdit(this.userData.email).subscribe({
+            next: () => this.onEmailEditRequest(),
+            error: (err) => this.showEmailError(err)
+        });
     }
 
 
