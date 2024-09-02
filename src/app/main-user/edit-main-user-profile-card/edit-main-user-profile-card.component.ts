@@ -45,7 +45,7 @@ export class EditMainUserProfileCardComponent {
         this.disableForm = true;
         await this.saveName();
         this.disableForm = false;
-        this.handleEmail();
+        await this.handleEmail();
     }
 
     async saveName() {
@@ -55,17 +55,28 @@ export class EditMainUserProfileCardComponent {
 
     async handleEmail() {
         if (this.userData.email !== this.mainUser.email) {
-            this.disableForm = true;
-            this.authService.requestEmailEdit(this.userData.email).subscribe({
-                next: () => this.onEmailEditRequest(),
-                error: (err) => this.showEmailError(err)
-            });
+            if (this.authService.currentUserIsGuest()) {
+                await this.updateEmail();
+                this.disableForm = false;
+                this.closeDialog();
+            } else {
+                this.disableForm = true;
+                this.authService.requestEmailEdit(this.userData.email).subscribe({
+                    next: () => this.onEmailEditRequest(),
+                    error: (err) => this.showEmailError(err)
+                });
+            }
         } else { this.closeDialog() }
     }
 
 
+    async updateEmail() {
+        this.mainUser.email = this.userData.email;
+        await this.usersService.updateUser(this.mainUser);
+    }
+
+
     onEmailEditRequest() {
-        console.error('email success!');
         this.showEmailSentFeedback = true;
         setTimeout(() => {
             this.disableForm = false;
@@ -75,7 +86,6 @@ export class EditMainUserProfileCardComponent {
 
 
     showEmailError(err: Error) {
-        console.error('email error!');
         const error: string = err.toString();
         if (error.includes('auth/requires-recent-login')) {
             this.emailAuthError = 'Dein letzter Login liegt lange zurück. Logge dich aus Sicherheitsgründen bitte erneut ein und versuche es nochmal.';
