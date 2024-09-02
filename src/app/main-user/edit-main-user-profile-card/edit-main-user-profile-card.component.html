@@ -39,7 +39,7 @@
                         [required]="mainUser.email.length > 0" [disabled]="disableForm || authService.isGoogleUser" />
                 </div>
                 @if(authService.isGoogleUser) {
-                <p class="error-msg">Per Google registrierte Nutzer können ihre Email-Adresse nicht bearbeiten.</p>
+                <p class="error-msg">Per Google registrierte Nutzer können ihre E-Mail-Adresse nicht bearbeiten.</p>
                 } @else if((email.touched || editMainUser.submitted) && !email.valid && !email.disabled) {
                 <p class="error-msg">Diese E-Mail-Adresse ist leider ungültig.</p>
                 } @else if (emailAuthError.length > 0) {
