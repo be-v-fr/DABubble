@@ -21,6 +21,8 @@ export class EditMainUserProfileCardComponent {
     private usersService = inject(UsersService);
     private authService = inject(AuthService);
     emailAuthError: string = '';
+    showEmailSentFeedback: boolean = false;
+    disableForm: boolean = false;
 
     constructor(
         private dialogRef: MatDialogRef<EditMainUserProfileCardComponent>,
@@ -40,7 +42,9 @@ export class EditMainUserProfileCardComponent {
     }
 
     async saveMainUser() {
+        this.disableForm = true;
         await this.saveName();
+        this.disableForm = false;
         this.handleEmail();
     }
 
@@ -51,18 +55,31 @@ export class EditMainUserProfileCardComponent {
 
     async handleEmail() {
         if (this.userData.email !== this.mainUser.email) {
+            this.disableForm = true;
             this.authService.requestEmailEdit(this.userData.email).subscribe({
-                next: () => this.closeDialog(),
+                next: () => this.onEmailEditRequest(),
                 error: (err) => this.showEmailError(err)
             });
         } else { this.closeDialog() }
     }
 
 
+    onEmailEditRequest() {
+        console.error('email success!');
+        this.showEmailSentFeedback = true;
+        setTimeout(() => {
+            this.disableForm = false;
+            this.closeDialog();
+        }, 4000);
+    }
+
+
     showEmailError(err: Error) {
+        console.error('email error!');
         const error: string = err.toString();
         if (error.includes('auth/requires-recent-login')) {
-            this.emailAuthError = 'Dein letzter Login liegt lange zurück. Logge dich aus Sicherheitsgründen bitte erneut ein und versuche es nochmal.'
+            this.emailAuthError = 'Dein letzter Login liegt lange zurück. Logge dich aus Sicherheitsgründen bitte erneut ein und versuche es nochmal.';
+            this.disableForm = false;
         }
     }
 

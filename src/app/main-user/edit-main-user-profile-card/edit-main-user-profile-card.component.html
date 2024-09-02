@@ -6,22 +6,23 @@
         </a>
     </div>
     <div class="profileImg defaultPic">
-        <img class="#" src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}"/>
+        <img class="#" src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}" />
     </div>
     <div class="inputContainer">
         <form (ngSubmit)="onSubmit(editMainUser)" #editMainUser="ngForm">
             <div class="nameContainer">
                 <div class="userName">
                     <div class="icon">
-                        <img src="../../assets/img/userProfileImg/account_circle.png"/>
+                        <img src="../../assets/img/userProfileImg/account_circle.png" />
                     </div>
                     <p>Vollständiger Name</p>
                 </div>
                 <div class="inputField">
-                    <input [(ngModel)]="userData.name" type="text" name="name" #name="ngModel" placeholder="{{ mainUser.name || 'Vorname Name' }}" value="{{ mainUser.name }}" required />
+                    <input [(ngModel)]="userData.name" type="text" name="name" #name="ngModel" [disabled]="disableForm"
+                        placeholder="{{ mainUser.name || 'Vorname Name' }}" value="{{ mainUser.name }}" required />
                 </div>
                 @if(name.touched && !name.valid) {
-                    <p class="error-msg">Bitte schreiben Sie einen Namen.</p>
+                <p class="error-msg">Bitte schreiben Sie einen Namen.</p>
                 }
             </div>
             <div class="emailContainer">
@@ -32,17 +33,24 @@
                     <p>E-Mail-Adresse</p>
                 </div>
                 <div class="inputField">
-                    <input [(ngModel)]="userData.email" type="email" name="email" #email="ngModel" placeholder="{{ mainUser.email || 'vorname.name&#64;beispiel.de' }}" pattern="[a-zA-Z0-9\.%_\+\-]{1,}[@][a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,}" value="{{ mainUser.email }}" [required]="mainUser.email.length > 0"/>
+                    <input [(ngModel)]="userData.email" type="email" name="email" #email="ngModel"
+                        placeholder="{{ mainUser.email || 'vorname.name&#64;beispiel.de' }}"
+                        pattern="[a-zA-Z0-9\.%_\+\-]{1,}[@][a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,}" value="{{ mainUser.email }}"
+                        [required]="mainUser.email.length > 0" [disabled]="disableForm" />
                 </div>
-                @if((email.touched || editMainUser.submitted) && !email.valid) {
-                    <p class="error-msg">Diese E-Mail-Adresse ist leider ungültig.</p>
+                @if((email.touched || editMainUser.submitted) && !email.valid && !email.disabled) {
+                <p class="error-msg">Diese E-Mail-Adresse ist leider ungültig.</p>
                 } @else if (emailAuthError.length > 0) {
-                    <p class="error-msg">{{emailAuthError}}</p> 
+                <p class="error-msg">{{emailAuthError}}</p>
+                } @else if (showEmailSentFeedback) {
+                <p class="small-msg">An <i>{{userData.email}}</i> wurde eine Bestätigungsmail versendet. Klicke den dortigen
+                    Link, um die Änderung abzuschließen.</p>
                 }
             </div>
             <div class="submit-btns">
-                <button type="button" class="form-btn-secondary" (click)="closeDialog()">Abbrechen</button>
-                <button type="submit" class="form-btn-primary">Speichern</button>
+                <button type="button" class="form-btn-secondary" (click)="closeDialog()"
+                    [disabled]="disableForm">Abbrechen</button>
+                <button type="submit" class="form-btn-primary" [disabled]="disableForm">Speichern</button>
             </div>
         </form>
     </div>

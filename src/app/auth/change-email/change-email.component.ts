@@ -33,7 +33,10 @@ export class ChangeEmailComponent implements OnInit, OnDestroy {
     return this.authService.user$.subscribe(async user => {
       if (user && this.oobCode.length > 0) {
         this.authService.confirmEmailEdit(this.oobCode)
-          .then(() => this.emailUpdated = true);
+          .then(() => {
+            this.emailUpdated = true;
+            this.authService.logOut();
+          });
       }
     });
   }

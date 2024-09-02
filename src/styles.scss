@@ -253,11 +253,11 @@ a {
     }
 }
 
-.error-msg {
+.small-msg {
     position: absolute;
     top: calc(100% + 3px);
     left: 0;
-    color: $magenta;
+    color: $purple-blue;
     font-size: 14px;
     animation: fade-in 250ms ease-out;
 
@@ -274,6 +274,11 @@ a {
     @media screen and (max-height: 800px),
     screen and (max-width: 1024px) {
         font-size: 13px;
-    }
+    }    
+}
+
+.error-msg {
+    @extend .small-msg;
+    color: $magenta;
 }
 
