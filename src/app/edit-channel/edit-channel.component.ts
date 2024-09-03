@@ -41,8 +41,6 @@ export class EditChannelComponent {
     this.channelAuthorName = this.getAuthorName();
     this.userIsAuthor = (this.data.author_uid === this.authService.getCurrentUid());
     this.checkScreenSize();
-    console.log(this.mobileView);
-
   }
 
   @HostListener('window:resize', ['$event'])
