@@ -31,7 +31,10 @@ export class ActivityService implements OnDestroy {
   }
 
   subAuth(): Subscription {
-    return this.authService.user$.subscribe((user: any) => this.setLastActivityOnAuth(user));
+    return this.authService.user$.subscribe(async (user: any) => {
+      this.setLastActivityOnAuth(user);
+      await this.syncCurrentUser();
+    });
   }
 
   subUsers(): Subscription {
