@@ -18,6 +18,7 @@ export class ActivityStateDotComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.updateState();
+    setTimeout(() => this.updateState(), 400);
     this.interval = setInterval(() => this.updateState(), 3 * 1000);
   }
 
