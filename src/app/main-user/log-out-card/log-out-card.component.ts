@@ -2,6 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RouterLink, Router } from '@angular/router';
 import { MainUserProfileCardComponent } from '../main-user-profile-card/main-user-profile-card.component';
+import { AuthService } from '../../../services/auth.service';
+import { ActivityService } from '../../../services/activity.service';
+import { User } from '../../../models/user.class';
 
 
 @Component({
@@ -18,6 +21,8 @@ import { MainUserProfileCardComponent } from '../main-user-profile-card/main-use
 export class LogOutCardComponent {
     constructor(
         private router: Router,
+        private authService: AuthService,
+        private activityService: ActivityService,
         public dialogRef: MatDialogRef<LogOutCardComponent>,
         public dialogUserRef: MatDialogRef<MainUserProfileCardComponent>,
         public dialog: MatDialog,
@@ -34,7 +39,6 @@ export class LogOutCardComponent {
         });
 
         this.dialogUserRef.afterClosed().subscribe(result => {
-            console.log('The dialog "MainUserProfileCard" was Closed.', result); // remove later
         });
     }
 
@@ -43,8 +47,15 @@ export class LogOutCardComponent {
     }
   
     logMeOut() {
-        this.dialogRef.close('logout');
-        this.router.navigate(['/auth/logIn']); // remove later
+        try {
+            this.authService.logOut();
+            this.dialogRef.close('logout');
+            this.router.navigate(['/auth/logIn']);
+            this.activityService.currentUser = new User();
+        } catch (error) {
+            console.error('Error at Logout', error);
+            this.dialogRef.close('logout');
+        }
     }
   
     openImpress() {

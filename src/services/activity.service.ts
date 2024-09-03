@@ -15,7 +15,7 @@ export class ActivityService implements OnDestroy {
   private usersService = inject(UsersService);
   private authSub = new Subscription();
   private usersSub = new Subscription();
-  private currentUser = new User();
+  public currentUser = new User();
 
   constructor() {
     this.initListeners();
@@ -63,9 +63,9 @@ export class ActivityService implements OnDestroy {
 
   async setLastActivity() {
     if (this.activitySettingAllowed && this.authService.getCurrentUid()) {
+      this.activitySettingAllowed = false;
       this.currentUser.lastActivity = Date.now();
       await this.usersService.updateUser(this.currentUser);
-      this.activitySettingAllowed = false;
     }
   }
 
