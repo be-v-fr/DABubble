@@ -117,7 +117,7 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
     this.resetFileError();
     const user = this.usersService.getUserByUid(this.userData.uid);
     if (user) {
-      user.avatarSrc = `assets/img/avatar/avatar_${index}.svg`;
+      user.avatarSrc = (index === 'blank' ? 'assets/img/profile_blank.svg' : `assets/img/avatar/avatar_${index}.svg`);
       await this.usersService.updateUser(user);
       this.userData.avatarSrc = user.avatarSrc;
     }
@@ -194,16 +194,6 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
    */
   resetFileError(): void {
     this.fileError = null;
-  }
-
-
-  /**
-   * This function unselects the current avatar in favor of
-   * a blank user profile picture. 
-   */
-  unselectAvatar() {
-    this.userData.avatarSrc = 'assets/img/profile_blank.svg';
-    this.resetFileError();
   }
 
 
