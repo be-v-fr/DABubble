@@ -31,7 +31,10 @@ export class ActivityService implements OnDestroy {
   }
 
   subAuth(): Subscription {
-    return this.authService.user$.subscribe((user: any) => this.setLastActivityOnAuth(user));
+    return this.authService.user$.subscribe((user: any) => {
+      this.setLastActivityOnAuth(user);
+      this.syncCurrentUser();
+    });
   }
 
   subUsers(): Subscription {
@@ -58,21 +61,21 @@ export class ActivityService implements OnDestroy {
     setInterval(() => this.activitySettingAllowed = true, 10 * 1000);
   }
 
-  setLastActivity() {
-    if (this.activitySettingAllowed && this.currentUser.uid) {
+  async setLastActivity() {
+    if (this.activitySettingAllowed && this.authService.getCurrentUid()) {
       this.currentUser.lastActivity = Date.now();
-      this.usersService.updateUser(this.currentUser);
+      await this.usersService.updateUser(this.currentUser);
       this.activitySettingAllowed = false;
     }
   }
 
-  setLastActivityOnAuth(user: any) {
+  async setLastActivityOnAuth(user: any) {
     if (user && this.currentUser.lastActivity == -1) {
       this.currentUser.lastActivity = Date.now();
-      this.usersService.updateUser(this.currentUser);
+      await this.usersService.updateUser(this.currentUser);
     } else if (!user && this.currentUser.lastActivity > 0) {
       this.currentUser.lastActivity = -1;
-      this.usersService.updateUser(this.currentUser);
+      await this.usersService.updateUser(this.currentUser);
     }
   }
 

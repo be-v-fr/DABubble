@@ -94,7 +94,6 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
       this.userData.avatarSrc = user.avatarSrc;
     } else {
       console.error(`Benutzer mit der UID ${this.userData.uid} wurde nicht gefunden.`);
-      // Optional: Hier kannst du eine Standard-Avatarquelle setzen oder eine andere Fehlerbehandlung durchführen
     }
   }
 
@@ -113,9 +112,16 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
    * This function sets a selected avatar from the default avatars assortment.
    * @param index avatar index as in the corresponding file name
    */
-  selectDefaultAvatar(index: string) {
+  async selectDefaultAvatar(index: string) {
+    this.loading = true;
     this.resetFileError();
-    this.userData.avatarSrc = `assets/img/avatar/avatar_${index}.svg`;
+    const user = this.usersService.getUserByUid(this.userData.uid);
+    if (user) {
+      user.avatarSrc = (index === 'blank' ? 'assets/img/profile_blank.svg' : `assets/img/avatar/avatar_${index}.svg`);
+      await this.usersService.updateUser(user);
+      this.userData.avatarSrc = user.avatarSrc;
+    }
+    this.loading = false;
   }
 
 
@@ -188,16 +194,6 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
    */
   resetFileError(): void {
     this.fileError = null;
-  }
-
-
-  /**
-   * This function unselects the current avatar in favor of
-   * a blank user profile picture. 
-   */
-  unselectAvatar() {
-    this.userData.avatarSrc = 'assets/img/profile_blank.svg';
-    this.resetFileError();
   }
 
 
