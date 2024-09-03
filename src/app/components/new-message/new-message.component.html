@@ -1,7 +1,7 @@
 <div id="mobile-message-container" class="new-message-container">
     <div class="new-message-header">
         <h3>Neue Nachricht</h3>
-        <input name="searchbar" [(ngModel)]="searchInput" type="text"
+        <input #searchbar name="searchbar" [(ngModel)]="searchInput" type="text"
             placeholder="An: #channel, oder @jemand oder E-Mail Adresse" autocomplete="off" (keyup)="search()">
         <div *ngIf="searchResultsChannels.length === 0">
             @if (channelList.length > 0) {

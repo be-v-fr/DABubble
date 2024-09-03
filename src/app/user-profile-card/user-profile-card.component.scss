@@ -148,3 +148,28 @@
         }
     }
 }
+
+@media screen and (max-width: 768px) {
+    .userCard {
+        width: 398px;
+        height: 705px;
+
+        .showEmail {
+            display: flex;
+            justify-content: center;
+            margin-left: 0px !important;
+        }
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .userCard {
+        width: 300px;
+        height: 630px;
+
+        .profileImg img {
+            width: 150px;
+            height: 150px;
+        }
+    }
+}

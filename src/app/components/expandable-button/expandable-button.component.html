@@ -34,7 +34,7 @@
                 <li>
                     <a (click)="userService.setMobileView('mainchat')" [routerLink]="['/direct-message']" (click)="onUserClick(user)">
                         <div class="message-img-container">
-                            <img src="{{user.avatarSrc}}" alt="{{user.name}}">
+                            <img src="{{user.avatarSrc}}">
                             <app-activity-state-dot [user]="user" />
                         </div>
                         <span>{{ user.name }} @if(first) {(Du)}</span>
@@ -42,11 +42,6 @@
                 </li>
                 }
 
-                <a routerLink="/new">
-                    <div class="new-message-icon">
-                        <img src="../../../assets/img/icons/new_message.svg">
-                    </div>
-                </a>
             </ul>
         </div>
     </div>

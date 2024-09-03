@@ -19,8 +19,10 @@ export class EditMainUserProfileCardComponent {
     public mainUser: User = new User;
     public userData: User = new User;
     private usersService = inject(UsersService);
-    private authService = inject(AuthService);
+    public authService = inject(AuthService);
     emailAuthError: string = '';
+    showEmailSentFeedback: boolean = false;
+    disableForm: boolean = false;
 
     constructor(
         private dialogRef: MatDialogRef<EditMainUserProfileCardComponent>,
@@ -40,8 +42,10 @@ export class EditMainUserProfileCardComponent {
     }
 
     async saveMainUser() {
+        this.disableForm = true;
         await this.saveName();
-        this.handleEmail();
+        this.disableForm = false;
+        await this.handleEmail();
     }
 
     async saveName() {
@@ -51,18 +55,46 @@ export class EditMainUserProfileCardComponent {
 
     async handleEmail() {
         if (this.userData.email !== this.mainUser.email) {
-            this.authService.requestEmailEdit(this.userData.email).subscribe({
-                next: () => this.closeDialog(),
-                error: (err) => this.showEmailError(err)
-            });
+            this.disableForm = true;
+            if (this.authService.currentUserIsGuest()) {
+                await this.updateEmail();
+                this.disableForm = false;
+                this.closeDialog();
+            } else {
+                this.requestEmailEdit();
+            }
         } else { this.closeDialog() }
+    }
+
+
+    async updateEmail() {
+        this.mainUser.email = this.userData.email;
+        await this.usersService.updateUser(this.mainUser);
+    }
+
+
+    requestEmailEdit() {
+        this.authService.requestEmailEdit(this.userData.email).subscribe({
+            next: () => this.onEmailEditRequest(),
+            error: (err) => this.showEmailError(err)
+        });
+    }
+
+
+    onEmailEditRequest() {
+        this.showEmailSentFeedback = true;
+        setTimeout(() => {
+            this.disableForm = false;
+            this.closeDialog();
+        }, 4000);
     }
 
 
     showEmailError(err: Error) {
         const error: string = err.toString();
         if (error.includes('auth/requires-recent-login')) {
-            this.emailAuthError = 'Dein letzter Login liegt lange zurück. Logge dich aus Sicherheitsgründen bitte erneut ein und versuche es nochmal.'
+            this.emailAuthError = 'Dein letzter Login liegt lange zurück. Logge dich aus Sicherheitsgründen bitte erneut ein und versuche es nochmal.';
+            this.disableForm = false;
         }
     }
 

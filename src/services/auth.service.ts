@@ -16,7 +16,7 @@ import {
   verifyBeforeUpdateEmail,
   applyActionCode
 } from "firebase/auth";
-import { Observable, from, merge, BehaviorSubject, map } from "rxjs";
+import { Observable, from, merge, BehaviorSubject, map, Subscription } from "rxjs";
 import { UsersService } from "./users.service";
 import { User } from "../models/user.class";
 
@@ -35,6 +35,7 @@ export class AuthService {
   guestUser$: BehaviorSubject<User | null>;
   user$: Observable<any>;
   private authAsGuest: boolean = false;
+  public isGoogleUser: boolean = false;
 
   constructor() {
     if (this.currentUserIsGuest()) { this.logInAsGuest() }
@@ -71,9 +72,26 @@ export class AuthService {
       this.firebaseAuth,
       email,
       password
-    ).then(() => this.usersService.clearUpInactiveGuests());
+    ).then(() => this.onRegisteredLogin(email));
     return from(promise);
   }
+
+
+  onRegisteredLogin(email: string) {
+    this.usersService.clearUpInactiveGuests();
+    const usersSub: Subscription = this.usersService.users$.subscribe(() => {
+      const currentUid = this.getCurrentUid();
+      if (currentUid) {
+        const currentUser = this.usersService.getUserByUid(currentUid);
+        if (currentUser && currentUser.email != email) {
+          currentUser.email = email;
+          this.usersService.updateUser(currentUser);
+          usersSub.unsubscribe();
+        }
+      }
+    });
+  }
+
 
   logInWithGoogle(): Observable<void> {
     const promise = signInWithPopup(
@@ -154,7 +172,7 @@ export class AuthService {
         oobCode
       ).then(() => { });
     } else {
-      // handle guest login
+      console.error('You are not logged in. You must be logged in to confirm your edited email address.')
     }
   }
 
