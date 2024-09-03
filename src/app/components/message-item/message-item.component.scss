@@ -119,7 +119,6 @@
             }
 
             .message {
-                width: 100%;
 
                 .message-text {
                     background-color: $violet-bright;
@@ -351,12 +350,14 @@
             @include transition(125ms);
 
         }
+
         .pdf-icon-wrapper {
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: rgba(64, 64, 64, 0.1);
+
             .pdf-icon {
                 width: 36px;
                 height: auto;

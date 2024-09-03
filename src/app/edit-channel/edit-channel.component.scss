@@ -7,6 +7,7 @@
   position: fixed;
   transform: translate(-50%, -50%);
   border-radius: 30px;
+  @include scrollbar();
 }
 
 .headlineAndCloseBtn {
@@ -153,6 +154,69 @@
   }
 }
 
+.members-list-container {
+  width: 792px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-left: 40px;
+  margin-top: 20px;
+  border: 1px solid rgba(173, 176, 217, 1);
+  border-radius: 20px;
+  padding: 20px;
+
+  .members-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 13px;
+
+    .member {
+      width: 306px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 30px;
+      }
+    }
+  }
+
+  .members-list-btn {
+    width: 282px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    font-size: 18px;
+    font-weight: 400;
+    cursor: pointer;
+
+    span {
+      width: 40px;
+      height: 40px;
+      background-color: #eceefe;
+      border-radius: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &:hover {
+      color: $purple-blue-bright !important;
+      background-color: $violet-bright;
+      border-radius: 100px;
+      font-weight: 650 !important;
+    }
+  }
+}
+
+
 .createdBy {
   display: flex;
   flex-direction: column;
@@ -182,8 +246,11 @@
 }
 
 .addChannelBtn {
-  margin-left: 628px;
-  margin-top: 45px;
+  margin: 45px 0 30px 628px;
+
+  button {
+    margin-bottom: 25px;
+  }
 }
 
 .editChannelName {
@@ -222,12 +289,17 @@
   margin-bottom: 16px;
 }
 
+.t-143 {
+  top: 143px !important;
+}
+
 @media screen and (max-width: 890px) {
   .container {
     position: fixed;
     border-radius: unset;
     height: 100vh;
     width: 100%;
+    overflow-x: auto;
   }
 
   .headlineAndCloseBtn {
@@ -237,12 +309,11 @@
   }
 
   .explainChannel,
-  .explain {
+  .explain,
+  .members-list-container {
     width: unset;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 20px;
     height: unset;
-    border: none;
 
     .line {
       top: 150px;
