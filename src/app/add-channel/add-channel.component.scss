@@ -129,6 +129,32 @@
 
 }
 
+@media screen and (max-width: 930px) {
+
+  .container{
+      width: 700px;
+    .headlineAndCloseBtn{
+      width: unset;
+      margin-right: 40px;
+    }
+
+    .channelName{
+      margin-right: 40px;
+      width: unset;
+    }
+    .explain{
+      margin-right: 40px;
+      width: unset;
+    }
+    .form-btn-primary{
+      position: absolute;
+      right: 40px;
+    }
+  }
+
+
+}
+
 @media screen and (max-width: 768px) {
   .container{
     position: fixed;
@@ -170,3 +196,5 @@
     right: 20px;
   }
 }
+
+
