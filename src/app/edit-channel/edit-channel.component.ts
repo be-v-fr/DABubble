@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, HostListener, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -22,8 +22,9 @@ export class EditChannelComponent {
   editMode: boolean = false;
   editDescriptionMode: boolean = false;
   editName: boolean = false;
-  channelName: string = '';
   nameAvailable: boolean = true;
+  mobileView = false;
+  channelName: string = '';
   channelDescription: string = '';
   channelAuthorName: string = '';
 
@@ -39,6 +40,16 @@ export class EditChannelComponent {
     this.channelDescription = data.description;
     this.channelAuthorName = this.getAuthorName();
     this.userIsAuthor = (this.data.author_uid === this.authService.getCurrentUid());
+    this.checkScreenSize();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    this.mobileView = window.innerWidth < 890;
   }
 
   getAuthorName(): string {
@@ -91,10 +102,10 @@ export class EditChannelComponent {
 
   onDeleteChannelSubmit() {
     this.dialog.open(DeleteChannelComponent, {
-      data: { 
+      data: {
         channel_id: this.data.channel_id,
         editChannelDialogRef: this.dialogRef
-      }      
+      }
     });
   }
 

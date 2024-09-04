@@ -7,17 +7,21 @@
   </div>
   <div class="explainChannel" [ngClass]="{ 'no-border': editName }">
     <div class="channelName" [ngClass]="{ width: editName }">
-      <div>
+      <div class="titleText">
         <span>Channel name</span>
         <span *ngIf="!editName"># {{ data.name }}</span>
       </div>
       @if(userIsAuthor) {
       <div *ngIf="!editName">
-        <button type="button" (click)="toggleEditName()">Bearbeiten</button>
+        <button type="button" (click)="toggleEditName()" *ngIf="!mobileView">Bearbeiten</button>
+        <button type="button" (click)="toggleEditName()" *ngIf="mobileView"><img src="/assets/img/icons/edit.svg"
+            alt="Edit"></button>
       </div>
       <div *ngIf="editName">
-        <button type="button" (click)="saveNameChanges()"
-          [disabled]="channelName.length == 0 || !nameAvailable">Speichern</button>
+        <button type="button" (click)="saveNameChanges()" [disabled]="channelName.length == 0 || !nameAvailable"
+          *ngIf="!mobileView">Speichern</button>
+        <button type="button" (click)="saveNameChanges()" [disabled]="channelName.length == 0 || !nameAvailable"
+          *ngIf="mobileView"><img src="/assets/img/icons/check_circle.svg" alt="Check"></button>
       </div>
       }
     </div>
@@ -31,18 +35,22 @@
     </div>
   </div>
   <div class="explain" [ngClass]="{ 'no-border': editDescriptionMode }">
-    <div class="channelName" [ngClass]="{ width: editDescriptionMode }">
+    <div class="channelName mb-16" [ngClass]="{ width: editDescriptionMode }">
       <div class="titleText">
         <span>Beschreibung</span>
         <span *ngIf="!editDescriptionMode">{{ data.description }}</span>
-        <span class="line"></span>
       </div>
+      <div class="line" [class.t-143]="editDescriptionMode"></div>
       @if(userIsAuthor) {
-      <div class="description" *ngIf="!editDescriptionMode">
-        <button type="button" (click)="toggleEditDescriptionMode()">Bearbeiten</button>
+      <div class="" *ngIf="!editDescriptionMode">
+        <button type="button" (click)="toggleEditDescriptionMode()" *ngIf="!mobileView">Bearbeiten</button>
+        <button type="button" (click)="toggleEditDescriptionMode()" *ngIf="mobileView"><img
+            src="/assets/img/icons/edit.svg" alt="Edit"></button>
       </div>
       <div *ngIf="editDescriptionMode">
-        <button type="button" (click)="saveDescriptionChanges()">Speichern</button>
+        <button type="button" (click)="saveDescriptionChanges()" *ngIf="!mobileView">Speichern</button>
+        <button type="button" (click)="saveDescriptionChanges()" *ngIf="mobileView"><img
+            src="/assets/img/icons/check_circle.svg" alt="Check"></button>
       </div>
       }
     </div>
@@ -59,13 +67,27 @@
       }
     </div>
   </div>
+  <div class="members-list-container" *ngIf="mobileView">
+    <ul class="members-list">
+      @for (member of data.members; track $index) {
+      <li class="member">
+        <img [src]="member.avatarSrc" alt="Avatar image">
+        {{member.name}}
+      </li>
+      }
+    </ul>
+    <button type="button" class="members-list-btn">
+      <span _ngcontent-ng-c3937422676="" class="material-icons-outlined icon">person_add_alt</span>
+      Mitglieder hinzufügen</button>
+  </div>
   <div class="addChannelBtn">
     @if(data.members.length > 1) {
     <button type="submit" class="form-btn-primary" (click)="leaveChannel()" [disabled]="data.name === 'Team'">Channel
       verlassen</button>
     } @else {
-      <button type="submit" class="form-btn-primary-warning" (click)="onDeleteChannelSubmit()" [disabled]="data.name === 'Team'">Channel
-        löschen</button>
+    <button type="submit" class="form-btn-primary-warning" (click)="onDeleteChannelSubmit()"
+      [disabled]="data.name === 'Team'">Channel
+      löschen</button>
     }
   </div>
 </div>

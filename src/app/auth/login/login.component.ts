@@ -113,8 +113,7 @@ export class LoginComponent implements OnDestroy {
     return new User({
       uid: authData.uid,
       name: authData.displayName,
-      email: authData.email,
-      avatarSrc: authData.photoURL
+      email: authData.email
     });
   }
 
