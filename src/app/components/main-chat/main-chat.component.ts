@@ -221,7 +221,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
   openAddMembers(): void {
-    if (window.innerWidth <= 430) {
+    if (window.innerWidth <= 768) {
       this.callOpenMemberList();
     } else {
       if (this.openTh) {
