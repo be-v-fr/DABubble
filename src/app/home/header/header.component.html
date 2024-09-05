@@ -10,14 +10,16 @@
         </div>
     </button>
     <app-search [mainUser]="mainUser" [users]="users" [userChannels]="userChannels" />
-    <div class="userprofile-wrapper" (click)="openUserLogoutCard()">
-        <span class="userprofile-name">{{ mainUser.name || '...' }}</span>
-        <div class="userprofile-image-box">
-            <img src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}">
-            <app-activity-state-dot *ngIf="mainUser.uid.length > 0" [user]="mainUser" />
-        </div>
-        <div class="userprofile-menu-box">
-            <img src="/assets/img/icons/dropdown_arrow.svg">
+    <div class="userprofile-wrapper">
+        <div class="userprofile-btn" (click)="openUserLogoutCard()">
+            <span class="userprofile-name">{{ mainUser.name || '...' }}</span>
+            <div class="userprofile-image-box">
+                <img src="{{ mainUser.avatarSrc || '/assets/img/avatar/empty_avatar.svg' }}">
+                <app-activity-state-dot *ngIf="mainUser.uid.length > 0" [user]="mainUser" />
+            </div>
+            <div class="userprofile-menu-box">
+                <img src="/assets/img/icons/dropdown_arrow.svg">
+            </div>
         </div>
     </div>
 </div>
