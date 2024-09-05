@@ -119,6 +119,9 @@
             }
 
             .message {
+                max-width: 590px;
+                overflow-x: hidden;
+                word-break: break-all;
 
                 .message-text {
                     background-color: $violet-bright;
