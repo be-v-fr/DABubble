@@ -38,7 +38,7 @@
     <div class="channelName mb-16" [ngClass]="{ width: editDescriptionMode }">
       <div class="titleText">
         <span>Beschreibung</span>
-        <span *ngIf="!editDescriptionMode">{{ data.description }}</span>
+        <span class="channel-description" *ngIf="!editDescriptionMode">{{ data.description }}</span>
       </div>
       <div class="line" [class.t-143]="editDescriptionMode"></div>
       @if(userIsAuthor) {

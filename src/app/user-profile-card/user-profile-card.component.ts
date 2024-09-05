@@ -10,7 +10,7 @@ import { ActivityStateDotComponent } from '../components/activity-state-dot/acti
 @Component({
   selector: 'app-user-profile-card',
   standalone: true,
-  imports: [RouterModule,CommonModule,RouterLink,ActivityStateDotComponent],
+  imports: [RouterModule, CommonModule, RouterLink, ActivityStateDotComponent],
   templateUrl: './user-profile-card.component.html',
   styleUrl: './user-profile-card.component.scss'
 })
@@ -19,12 +19,12 @@ export class UserProfileCardComponent {
   constructor(
     private dialogRef: MatDialogRef<UserProfileCardComponent>,
     public activityService: ActivityService,
-    @Inject(MAT_DIALOG_DATA) public data: User 
+    @Inject(MAT_DIALOG_DATA) public data: User
   ) {
     this.user = data;
-   }
-  
-  closeCard(){
+  }
+
+  closeCard() {
     this.dialogRef.close();
   }
 }

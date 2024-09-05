@@ -83,7 +83,7 @@
 
 .explain {
   width: 792px;
-  height: 273px;
+  height: fit-content;
   margin-left: 40px;
   margin-top: 20px;
   border: 1px solid rgba(173, 176, 217, 1);
@@ -92,7 +92,7 @@
 
   .line {
     position: absolute;
-    top: 110px;
+    top: 170px;
     width: 100%;
     height: 1px;
     border: 1px solid rgba(173, 176, 217, 1);
@@ -290,6 +290,14 @@
   margin-top: 20px;
   transition: 100ms ease-in;
 
+
+  .channel-description {
+    max-height: 105px;
+    max-width: 100%;
+    overflow-x: hidden;
+    word-break: break-all;
+    @include scrollbar();
+  }
 }
 
 .mb-16 {
@@ -323,7 +331,7 @@
     height: unset;
 
     .line {
-      top: 150px;
+      top: 195px;
     }
   }
 

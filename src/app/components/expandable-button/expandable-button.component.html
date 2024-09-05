@@ -18,7 +18,7 @@
                 @for (channel of userChannels; track channel) {<li>
                     <a (click)="userService.setMobileView('mainchat')" class="list-item-content" [routerLink]="['/main-chat', channel.channel_id]">
                         <p class="list-item-text">
-                            <span>#</span> {{channel.name}}
+                            <span>#</span> {{channel.name.slice(0,10)}}...
                         </p>
                     </a>
                 </li>}
@@ -37,7 +37,7 @@
                             <img src="{{user.avatarSrc}}">
                             <app-activity-state-dot [user]="user" />
                         </div>
-                        <span>{{ user.name }} @if(first) {(Du)}</span>
+                        <span>{{ user.name.slice(0,10) }}... @if(first) {(Du)}</span>
                     </a>
                 </li>
                 }
