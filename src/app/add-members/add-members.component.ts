@@ -16,7 +16,7 @@ import { AddMembersInputComponent } from './add-members-input/add-members-input.
   imports: [CommonModule, FormsModule, AddMembersInputComponent],
 })
 export class AddMembersComponent {
-  @Input() isThreadOpen: boolean = false; 
+  @Input() isThreadOpen: boolean = false;
   selectedUsers: User[] = [];
   channel: Channel;
   isOpen = false;
@@ -24,7 +24,7 @@ export class AddMembersComponent {
   constructor(
     private dialogRef: MatDialogRef<AddMembersComponent>,
     private channelsService: ChannelsService,
-    @Inject(MAT_DIALOG_DATA) public data: { channel: Channel; isThreadOpen: boolean  }
+    @Inject(MAT_DIALOG_DATA) public data: { channel: Channel; isThreadOpen: boolean }
   ) {
     this.channel = data.channel;
     this.isThreadOpen = data.isThreadOpen;
