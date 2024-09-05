@@ -178,11 +178,20 @@
       display: flex;
       align-items: center;
       gap: 15px;
+      cursor: pointer;
 
       img {
         width: 50px;
         height: 50px;
         border-radius: 30px;
+      }
+
+      &:hover {
+        color: $purple-blue-bright !important;
+        background-color: $violet-bright;
+        border-radius: 100px;
+        padding: 8px;
+        margin-left: -6px;
       }
     }
   }

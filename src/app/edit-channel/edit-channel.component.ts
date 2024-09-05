@@ -9,6 +9,8 @@ import { User } from '../../models/user.class';
 import { Router } from '@angular/router';
 import { DeleteChannelComponent } from './delete-channel/delete-channel.component';
 import { Subscription } from 'rxjs';
+import { UserProfileCardComponent } from '../user-profile-card/user-profile-card.component';
+import { AddMembersComponent } from '../add-members/add-members.component';
 
 @Component({
   selector: 'app-edit-channel',
@@ -59,6 +61,16 @@ export class EditChannelComponent {
     } else {
       return 'DABubble';
     }
+  }
+
+  openUserProfile(user: User): void {
+    this.dialog.open(UserProfileCardComponent, { data: user });
+  }
+
+  openAddMembers(): void {
+    const dialogRef = this.dialog.open(AddMembersComponent, {
+      data: { channelMembers: this.data.members, channel: this.data }
+    });
   }
 
   isTeamChannel(): boolean {

@@ -70,13 +70,13 @@
   <div class="members-list-container" *ngIf="mobileView">
     <ul class="members-list">
       @for (member of data.members; track $index) {
-      <li class="member">
+      <li class="member" (click)="openUserProfile(member)">
         <img [src]="member.avatarSrc" alt="Avatar image">
         {{member.name}}
-      </li>
+      </li> 
       }
     </ul>
-    <button type="button" class="members-list-btn">
+    <button type="button" class="members-list-btn" (click)="openAddMembers()">
       <span _ngcontent-ng-c3937422676="" class="material-icons-outlined icon">person_add_alt</span>
       Mitglieder hinzufügen</button>
   </div>
