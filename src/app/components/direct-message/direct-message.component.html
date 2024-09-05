@@ -7,7 +7,7 @@
           <img [src]="recipient.avatarSrc" [alt]="recipient.name" />
           <app-activity-state-dot *ngIf="recipient" [user]="recipient" />
 
-          <span class="header-username">{{ recipient.name }}</span>
+          <span class="header-username">{{ recipient.name.slice(0,10) }}...</span>
         </div>
       </div>
     </div>
@@ -19,7 +19,7 @@
           <app-time-separator [timestamp]="post.date"
             *ngIf="i == 0 || !timeService.isOnSameDay(post.date, channel.posts[i - 1].date)" />
           <app-message-item [id]="post.post_id" [postUid]="currUser.uid" [post]="post"
-            [messageSender]="isCurrentUserAuthor()" />
+            [messageSender]="isCurrentUserAuthor()" [isInDirectMessage]="true" />
         </div>
         }
       </div>
@@ -29,7 +29,7 @@
           <div class="member-img-container">
             <img [src]="recipient?.avatarSrc" [alt]=" recipient?.name" />
           </div>
-          <span *ngIf="recipient" (click)="openUserProfile(recipient)">{{ recipient.name }}</span>
+          <span *ngIf="recipient" (click)="openUserProfile(recipient)">{{ recipient.name.slice(0,10) }}...</span>
         </div>
         @if(currUser?.uid === recipient?.uid) {<p>
           <b>Dieser Raum ist nur für dich da.</b>

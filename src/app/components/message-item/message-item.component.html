@@ -3,7 +3,7 @@
         <button (click)="onShowEmojiPicker()">
             <span class="material-icons-outlined">add_reaction</span>
         </button>
-        @if (!ComeFromThread) {
+        @if (!ComeFromThread && !isInDirectMessage) {
         <button (click)="onOpenNewThread()">
             <span class="material-icons-outlined">insert_comment</span>
         </button>
