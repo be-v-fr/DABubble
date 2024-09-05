@@ -53,10 +53,14 @@
     }
 }
 
-@media  screen and (max-width: 430px) {
+@media  screen and (max-width: 768px) {
     .members-btn {
        display: none ;
     }
+}
+    
+
+@media  screen and (max-width: 430px) {
 }
     
     

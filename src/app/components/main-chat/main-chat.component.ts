@@ -44,10 +44,9 @@ export class MainChatComponent implements OnInit, OnDestroy {
   private channelSub!: Subscription;
   private scrollSub!: Subscription;
   private postsSub!: Subscription;
-
   isChannelOpen: boolean = true;
   @ViewChild(NavigationComponent) navigationComponent!: NavigationComponent;
-
+  @ViewChild(MembersOverviewComponent) membersOverviewComponent!: MembersOverviewComponent;
   currentUid: string | undefined;
   currentChannel = new Channel();
   currentChannelAuthorName?: string;
@@ -222,14 +221,26 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
   openAddMembers(): void {
-    if (this.openTh) {
-      const dialogRef = this.dialog.open(AddMembersComponent, {
-        data: { channelMembers: this.currentChannel.members, channel: this.currentChannel, isThreadOpen: this.openTh },
-      });
+    if (window.innerWidth <= 430) {
+      this.callOpenMemberList();
     } else {
-      const dialogRef = this.dialog.open(AddMembersComponent, {
-        data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
-      });
+      if (this.openTh) {
+        const dialogRef = this.dialog.open(AddMembersComponent, {
+          data: { channelMembers: this.currentChannel.members, channel: this.currentChannel, isThreadOpen: this.openTh },
+        });
+      } else {
+        const dialogRef = this.dialog.open(AddMembersComponent, {
+          data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
+        });
+      }
+    }
+  }
+
+  callOpenMemberList(): void {
+    if (this.membersOverviewComponent) {
+      this.membersOverviewComponent.openMemberList();
+    } else {
+      console.error('MembersOverviewComponent not found');
     }
   }
 
