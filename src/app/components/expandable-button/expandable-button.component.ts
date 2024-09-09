@@ -86,32 +86,32 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
   }
 
   initData(uid: string) {
-    if(this.userService.users.length > 0) {this.updateUsers(this.userService.users, uid)}
-    if(this.channelsService.channels.length > 0) {this.updateUserChannels(this.channelsService.channels)}
+    if(this.userService.users.length > 0) {this.syncUsers(this.userService.users, uid)}
+    if(this.channelsService.channels.length > 0) {this.syncUserChannels(this.channelsService.channels)}
   }
 
   subUsers(uid: string): Subscription {
-    return this.userService.users$.subscribe((users) => this.updateUsers(users, uid));
+    return this.userService.users$.subscribe((users) => this.syncUsers(users, uid));
   }
 
   subChannels(): Subscription {
-    return this.channelsService.channels$.subscribe((channels) => this.updateUserChannels(channels));
+    return this.channelsService.channels$.subscribe((channels) => this.syncUserChannels(channels));
   }
 
   stopLoading(instance: 'channels' | 'users') {
     if (this.instance.toString().includes(instance)) {this.loading = false}
   }
 
-  updateUsers(users: User[], uid: string) {
+  syncUsers(users: User[], uid: string) {
     this.stopLoading('users');
     this.currentUser = users.find(u => u.uid === uid);
     if (this.currentUser) {
       this.users = [this.currentUser].concat(users.filter(u => u.uid !== uid));   //  && u.name !== 'Gast'
-      this.updateUserChannels(this.channelsService.channels);
+      this.syncUserChannels(this.channelsService.channels);
     }    
   }
 
-  updateUserChannels(channels: Channel[]) {
+  syncUserChannels(channels: Channel[]) {
     this.stopLoading('channels');
     this.userChannels = channels.filter(c => !c.isPmChannel && c.members.some(m => m.uid === this.currentUser?.uid));
   }
