@@ -99,7 +99,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
   }
 
   stopLoading(instance: 'channels' | 'users') {
-    if (this.instance.toString().includes(instance)) {this.loading = false}
+    if (this.loading && this.instance.toString().includes(instance)) {this.loading = false}
   }
 
   syncUsers(users: User[], uid: string) {
