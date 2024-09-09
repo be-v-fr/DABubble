@@ -11,11 +11,12 @@ import { ChannelsService } from '../../../services/content/channels.service';
 import { AuthService } from '../../../services/auth.service';
 import { ActivityService } from '../../../services/activity.service';
 import { ActivityStateDotComponent } from '../activity-state-dot/activity-state-dot.component';
+import { LoadingCircleComponent } from './loading-circle/loading-circle.component';
 
 @Component({
   selector: 'app-expandable-button',
   standalone: true,
-  imports: [CommonModule, RouterLink, ActivityStateDotComponent],
+  imports: [CommonModule, RouterLink, ActivityStateDotComponent, LoadingCircleComponent],
   providers: [
     {
       provide: MatDialogRef,
@@ -35,14 +36,15 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
   currChannel?: Channel;
   currentUser?: User;
 
-  isMenuExpanded = true;
-  isOpen = true;
-  online = true;
+  isMenuExpanded: boolean = true;
+  isOpen: boolean = true;
+  online: boolean = true;
+  loading: boolean = true;
   users?: User[];
   isRotated = false;
   title = input.required<string>();
   icon = input.required<string>();
-  showBtn = input.required<boolean>();
+  instance = input.required<'channels' | 'users'>();
 
   @Output() userClick = new EventEmitter<void>();
 
@@ -76,7 +78,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
     return this.authService.user$.subscribe(() => {
       const uid = this.authService.getCurrentUid();
       if (uid) {
-        this.userSub = this.subUsers(uid)
+        this.userSub = this.subUsers(uid);
         this.channelsSub = this.subChannels();
       }
     });
@@ -84,6 +86,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
 
   subUsers(uid: string): Subscription {
     return this.userService.users$.subscribe((users) => {
+      this.stopLoading('users');
       this.currentUser = users.find(u => u.uid === uid);
       if (this.currentUser) {
         this.users = [this.currentUser].concat(users.filter(u => u.uid !== uid));   //  && u.name !== 'Gast'
@@ -93,7 +96,14 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
   }
 
   subChannels(): Subscription {
-    return this.channelsService.channels$.subscribe((channels) => this.updateUserChannels(channels));
+    return this.channelsService.channels$.subscribe((channels) => {
+      this.stopLoading('channels');
+      this.updateUserChannels(channels);
+    });
+  }
+
+  stopLoading(instance: 'channels' | 'users') {
+    if (this.instance.toString().includes(instance)) { this.loading = false }
   }
 
   updateUserChannels(channels: Channel[]) {
@@ -105,7 +115,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
     this.isRotated = !this.isRotated;
   }
 
-  
+
 
   //  @HostListener('window:resize', ['$event'])
   // onResize(event: Event) {

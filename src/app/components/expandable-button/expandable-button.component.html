@@ -7,16 +7,22 @@
                 {{ title() }}
             </div>
         </button>
-        <button *ngIf="showBtn()" (click)="onAddChannelClick()" class="cross-btn">
+        <button *ngIf="instance() == 'channels'" (click)="onAddChannelClick()" class="cross-btn">
             <span class="material-icons-outlined add-icon">add</span>
         </button>
     </div>
 
     <div *ngIf="isMenuExpanded" class="menu">
-        <div *ngIf="showBtn()" class="channel-menu">
+        @if(loading) {
+        <div class="loading-container">
+            <app-loading-circle></app-loading-circle>
+        </div>
+        } @else {
+        <div *ngIf="instance() == 'channels'" class="channel-menu">
             <ul>
                 @for (channel of userChannels; track channel) {<li>
-                    <a (click)="userService.setMobileView('mainchat')" class="list-item-content" [routerLink]="['/main-chat', channel.channel_id]">
+                    <a (click)="userService.setMobileView('mainchat')" class="list-item-content"
+                        [routerLink]="['/main-chat', channel.channel_id]">
                         <p class="list-item-text">
                             <span>#</span> {{channel.name.slice(0,10)}}...
                         </p>
@@ -28,11 +34,12 @@
                 <span>Channel hinzufügen</span>
             </button>
         </div>
-        <div *ngIf="!showBtn()" class="messages-menu">
+        <div *ngIf="instance() == 'users'" class="messages-menu">
             <ul>
                 @for (user of users; track $index; let first = $first) {
                 <li>
-                    <a (click)="userService.setMobileView('mainchat')" [routerLink]="['/direct-message']" (click)="onUserClick(user)">
+                    <a (click)="userService.setMobileView('mainchat')" [routerLink]="['/direct-message']"
+                        (click)="onUserClick(user)">
                         <div class="message-img-container">
                             <img src="{{user.avatarSrc}}">
                             <app-activity-state-dot [user]="user" />
@@ -44,5 +51,6 @@
 
             </ul>
         </div>
+        }
     </div>
 </div>
