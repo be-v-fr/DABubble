@@ -78,35 +78,41 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
     return this.authService.user$.subscribe(() => {
       const uid = this.authService.getCurrentUid();
       if (uid) {
+        this.initData(uid);
         this.userSub = this.subUsers(uid);
         this.channelsSub = this.subChannels();
       }
     });
   }
 
+  initData(uid: string) {
+    if(this.userService.users.length > 0) {this.updateUsers(this.userService.users, uid)}
+    if(this.channelsService.channels.length > 0) {this.updateUserChannels(this.channelsService.channels)}
+  }
+
   subUsers(uid: string): Subscription {
-    return this.userService.users$.subscribe((users) => {
-      this.stopLoading('users');
-      this.currentUser = users.find(u => u.uid === uid);
-      if (this.currentUser) {
-        this.users = [this.currentUser].concat(users.filter(u => u.uid !== uid));   //  && u.name !== 'Gast'
-        this.updateUserChannels(this.channelsService.channels);
-      }
-    });
+    return this.userService.users$.subscribe((users) => this.updateUsers(users, uid));
   }
 
   subChannels(): Subscription {
-    return this.channelsService.channels$.subscribe((channels) => {
-      this.stopLoading('channels');
-      this.updateUserChannels(channels);
-    });
+    return this.channelsService.channels$.subscribe((channels) => this.updateUserChannels(channels));
   }
 
   stopLoading(instance: 'channels' | 'users') {
-    if (this.instance.toString().includes(instance)) { this.loading = false }
+    if (this.instance.toString().includes(instance)) {this.loading = false}
+  }
+
+  updateUsers(users: User[], uid: string) {
+    this.stopLoading('users');
+    this.currentUser = users.find(u => u.uid === uid);
+    if (this.currentUser) {
+      this.users = [this.currentUser].concat(users.filter(u => u.uid !== uid));   //  && u.name !== 'Gast'
+      this.updateUserChannels(this.channelsService.channels);
+    }    
   }
 
   updateUserChannels(channels: Channel[]) {
+    this.stopLoading('channels');
     this.userChannels = channels.filter(c => !c.isPmChannel && c.members.some(m => m.uid === this.currentUser?.uid));
   }
 
