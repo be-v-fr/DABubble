@@ -15,7 +15,7 @@
     <div *ngIf="isMenuExpanded" class="menu">
         @if(loading) {
         <div class="loading-container">
-            <app-loading-circle></app-loading-circle>
+            <app-loading-circle />
         </div>
         } @else {
         <div *ngIf="instance() == 'channels'" class="channel-menu">
@@ -40,11 +40,13 @@
                 <li>
                     <a (click)="userService.setMobileView('mainchat')" [routerLink]="['/direct-message']"
                         (click)="onUserClick(user)">
-                        <div class="message-img-container">
-                            <img src="{{user.avatarSrc}}">
-                            <app-activity-state-dot [user]="user" />
+                        <div class="visible-part">
+                            <div class="message-img-container">
+                                <img src="{{user.avatarSrc}}">
+                                <app-activity-state-dot [user]="user" />
+                            </div>
+                            <span>{{ user.name.slice(0,10) }}... @if(first) {(Du)}</span>
                         </div>
-                        <span>{{ user.name.slice(0,10) }}... @if(first) {(Du)}</span>
                     </a>
                 </li>
                 }
