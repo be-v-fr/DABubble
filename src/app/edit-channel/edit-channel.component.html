@@ -9,7 +9,7 @@
     <div class="channelName" [ngClass]="{ width: editName }">
       <div class="titleText">
         <span>Channel name</span>
-        <span *ngIf="!editName"># {{ data.name }}</span>
+        <span *ngIf="!editName"><span>#</span> {{ data.name }}</span>
       </div>
       @if(userIsAuthor) {
       <div *ngIf="!editName">
