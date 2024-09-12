@@ -58,6 +58,7 @@ export class ActivityService implements OnDestroy {
    * to allow reacting to activity of the current user.
    */
   initInterval() {
+    setTimeout(() => this.activitySettingAllowed = true, 1 * 1000);
     setInterval(() => this.activitySettingAllowed = true, 10 * 1000);
   }
 
