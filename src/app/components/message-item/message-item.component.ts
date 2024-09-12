@@ -39,10 +39,9 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
   @Input() postUid: string = "";
   @Output() threadId = new EventEmitter<string>();
 
-  author: User | undefined;
   groupedEmojis: { [key: string]: { count: number, users: string[] } } = {};
   currentUser: User | undefined;
-  postUser: User = new User();
+  postUser: User = new User({name: 'Unbekannter Nutzer'});
   attachmentFileName: string | null = null;
 
   private authSub = new Subscription();
