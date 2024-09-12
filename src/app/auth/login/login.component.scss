@@ -7,6 +7,13 @@ screen and (max-height: 800px) {
     }
 }
 
+@media screen and (max-height: 640px) {
+    .link-purple-bg {
+        height: 28px;
+        margin-bottom: 0;
+    }
+}
+
 .google-btn {
     display: flex;
     justify-content: center;
@@ -39,6 +46,10 @@ screen and (max-height: 800px) {
         span {
             font-weight: 700;
         }
+    }
+
+    @media screen and (max-height: 800px) {
+        margin-bottom: 9px;
     }
 
     @media screen and (max-width: 408px) {
@@ -102,10 +113,6 @@ screen and (max-height: 800px) {
         }
     }
 
-    @media screen and (max-height: 800px) {
-        @include display-row();
-    }
-
     @media screen and (max-width: 1024px) {
         left: 0;
         right: 0;
@@ -116,6 +123,15 @@ screen and (max-height: 800px) {
         a {
             right: 0;
         }
+    }
+
+    @media screen and (max-height: 800px) {
+        @include display-row();
+        bottom: -40px;
+    }
+
+    @media screen and (max-height: 640px) {
+        bottom: -32px;
     }
 
     @media screen and (max-width: 408px) {
