@@ -340,14 +340,15 @@
     margin-top: 25px;
     position: absolute;
     right: 20px;
-    & button{
+
+    & button {
       width: 204px;
     }
   }
 
   span:nth-child(2) {
-    border: 1px solid $purple-light;
-    border-radius: 30px;
     padding: 20px;
   }
+
+  
 }
