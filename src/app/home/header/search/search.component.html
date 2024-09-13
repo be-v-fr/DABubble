@@ -25,7 +25,7 @@
                     @for(channel of searchResultsChannels; track channel) {
                     <li class="search-results-channel" [routerLink]="['/main-chat', channel.channel_id]"
                         (click)="clearSearch()">
-                        <span># {{ channel.name }}</span>
+                        <span class="limit-text"># {{ channel.name }}</span>
                         <app-members-overview *ngIf="inHeader" [channel]="channel" />
                     </li>
                     }
@@ -42,7 +42,7 @@
                     @for(user of searchResultsUsers; track user) {
                     <li (click)="openUserProfile(user)">
                         <img [src]="user.avatarSrc" alt="Avatar" />
-                        {{ user.name }}
+                        <span class="limit-text">{{ user.name }}</span>
                     </li>
                     }
                 </ul>

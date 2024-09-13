@@ -91,6 +91,7 @@
                     align-items: center;
                     border-radius: 30px;
                     padding: 8px 10px;
+                    overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     cursor: pointer;
@@ -103,6 +104,12 @@
                         height: 50px;
                         border-radius: 100%;
                         object-fit: cover;
+                    }
+
+                    .limit-text {
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
                     }
 
                     &:hover {
@@ -267,6 +274,7 @@
                 max-height: 342px;
             }
         }
+
         .collapsed {
             .search-results-list {
                 max-height: 0px;
