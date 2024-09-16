@@ -12,7 +12,8 @@
                 <button type="button" (click)="onShowEmojiPicker()">
                     <span class="material-icons-outlined">sentiment_satisfied_alt</span>
                 </button>
-                <button type="button" (click)="toggleMembersList($event)" *ngIf="channel && (channel.members[0].uid != channel.members[1].uid)">
+                <button type="button" (click)="toggleMembersList($event)"
+                    *ngIf="channel && channel.members.length > 1 && (channel.members[0].uid != channel.members[1].uid)">
                     <span class="material-icons-outlined icon">alternate_email</span>
                 </button>
             </div>

@@ -106,7 +106,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
     this.stopLoading('users');
     this.currentUser = users.find(u => u.uid === uid);
     if (this.currentUser) {
-      this.users = [this.currentUser].concat(users.filter(u => u.uid !== uid));   //  && u.name !== 'Gast'
+      this.users = [this.currentUser].concat(users.filter(u => u.uid !== uid));
       this.syncUserChannels(this.channelsService.channels);
     }    
   }

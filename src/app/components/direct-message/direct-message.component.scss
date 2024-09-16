@@ -162,7 +162,14 @@
 
       .direct-m-header {
         border-radius: 0;
+        position: sticky;
+        top: 0;
+        padding: 10px 16px 10px 16px;
       }
+
+      .direct-m-content{
+        overflow-y: auto;
+        padding-top: 30px;
     }
 
   }
@@ -171,4 +178,5 @@
     display: block;
   }
 
+}
 }
