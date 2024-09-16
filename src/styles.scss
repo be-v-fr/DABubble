@@ -42,6 +42,9 @@ $onlinedot-offline: #686868; // this is identical to "grey"
         box-shadow:
             inset -1px -1px 0px rgba(0, 0, 0, 0.05),
             inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+            &:hover {
+                cursor: pointer;
+            }
     }
 
     &::-webkit-scrollbar-button {
@@ -54,10 +57,16 @@ $onlinedot-offline: #686868; // this is identical to "grey"
         background-color: transparent;
     }
 
-    &:hover {
-        cursor: pointer;
-    }
 }
+
+@mixin textBreake($rows: 2) {
+    overflow: hidden;
+    line-clamp: $rows;
+    -webkit-line-clamp: $rows;
+    -webkit-box-orient: horizontal; 
+    text-overflow: ellipsis;
+}
+
 
 * {
     margin: 0;
@@ -81,6 +90,8 @@ input {
     border: none;
     outline: none;
     background: none;
+    padding-block: 0;
+    padding-inline: 0;
 }
 
 button,
@@ -280,5 +291,59 @@ a {
 .error-msg {
     @extend .small-msg;
     color: $magenta;
+}
+
+.dialog-all-corner-30 {
+    &.cdk-overlay-pane.mat-mdc-dialog-panel {
+        width: min(872px, 100%);
+        @media screen and (max-width: 890px) {
+            max-width: none;
+            width: 100%;
+        }
+    }
+    .mat-mdc-dialog-container .mdc-dialog__surface {
+        width: 100%;
+        border-radius: 30px;
+        background-color: transparent;
+        @media screen and (max-width: 890px) {
+            border-radius: 0;
+        }
+    }
+}
+
+.dialog-topleft-edge {
+    &.cdk-overlay-pane.mat-mdc-dialog-panel {
+        width: min(872px, 100%);
+        @media screen and (max-width: 890px) {
+            max-width: none;
+            width: 100%;
+        }
+    }
+    .mat-mdc-dialog-container .mdc-dialog__surface {
+        width: 100%;
+        border-radius: 30px;
+        background-color: transparent;
+        @media screen and (max-width: 890px) {
+            border-radius: 0;
+        }
+    }
+}
+
+.dialog-topright-edge {
+    &.cdk-overlay-pane.mat-mdc-dialog-panel {
+        width: min(872px, 100%);
+        @media screen and (max-width: 890px) {
+            max-width: none;
+            width: 100%;
+        }
+    }
+    .mat-mdc-dialog-container .mdc-dialog__surface {
+        width: 100%;
+        border-radius: 30px;
+        background-color: transparent;
+        @media screen and (max-width: 890px) {
+            border-radius: 0;
+        }
+    }
 }
 

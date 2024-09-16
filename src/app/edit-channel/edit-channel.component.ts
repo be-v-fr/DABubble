@@ -23,7 +23,7 @@ export class EditChannelComponent {
   userIsAuthor: boolean;
   editMode: boolean = false;
   editDescriptionMode: boolean = false;
-  editName: boolean = false;
+//   editName: boolean = false;
   nameAvailable: boolean = true;
   mobileView = false;
   channelName: string = '';
@@ -51,7 +51,7 @@ export class EditChannelComponent {
   }
 
   checkScreenSize() {
-    this.mobileView = window.innerWidth < 890;
+    this.mobileView = window.innerWidth < 891;
   }
 
   getAuthorName(): string {
@@ -81,13 +81,13 @@ export class EditChannelComponent {
     this.editMode = !this.editMode;
   }
 
-  toggleEditDescriptionMode() {
-    this.editDescriptionMode = !this.editDescriptionMode;
-  }
+//   toggleEditName() {
+//     this.editName = !this.editName;
+//   }
 
-  toggleEditName() {
-    this.editName = !this.editName;
-  }
+  toggleEditDescriptionMode() {
+    this.editDescriptionMode = !this.editDescriptionMode;  
+  }  
 
   checkNameAvailability() {
     if (this.channelName === this.data.name) { this.nameAvailable = true }
@@ -98,7 +98,8 @@ export class EditChannelComponent {
     this.data.name = this.channelName;
 
     await this.channelsService.updateChannel(this.data);
-    this.editName = false;
+    // this.editName = false;
+    this.editMode = false;
   }
 
   async saveDescriptionChanges() {

@@ -218,7 +218,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   }
 
   onEditChannel(): void {
-    this.dialog.open(EditChannelComponent, { data: this.currentChannel });
+    this.dialog.open(EditChannelComponent, { panelClass: "dialog-all-corner-30", data: this.currentChannel });
   }
 
   openAddMembers(): void {
