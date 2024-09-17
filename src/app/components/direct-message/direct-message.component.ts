@@ -18,6 +18,9 @@ import { TimeService } from '../../../services/time.service';
 import { ActivityStateDotComponent } from '../activity-state-dot/activity-state-dot.component';
 import { UsersService } from '../../../services/users.service';
 
+/**
+ * Component for managing and displaying direct messages between users.
+ */
 @Component({
   selector: 'app-direct-message',
   standalone: true,
@@ -38,16 +41,34 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
   private scrollSub!: Subscription;
   private postsSub!: Subscription;
 
+  /** The ID of the current channel */
   channelId?: string;
+
+  /** The current channel object */
   channel?: Channel;
+
+  /** The length of posts previously saved for comparison */
   savedPostsLength: number | null = null;
+
+  /** The current user */
   currUser?: User;
+
+  /** The recipient user of the direct message */
   recipient?: User;
 
+  /** Indicates if the user is online */
   online: boolean = true;
+
+  /** Indicates if the emoji picker is open */
   emojiPicker: boolean = false;
+
+  /** Indicates if the route is invalid or forbidden */
   onInvalidOrForbiddenRoute: boolean = false;
+
+  /** Indicates if channel members data has been updated */
   channelMembersDataUpdated: boolean = false;
+
+  /** Query list of message item components */
   @ViewChildren(MessageItemComponent, { read: ElementRef }) messageItems!: QueryList<ElementRef>;
 
   constructor(
@@ -61,6 +82,9 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     private usersService: UsersService
   ) { }
 
+  /**
+   * Initializes the component and subscribes to route and channel updates.
+   */
   ngOnInit(): void {
     this.auth();
     this.subscriptions.add(
@@ -81,12 +105,18 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Initializes the current user based on authentication state.
+   */
   auth() {
     const uid = this.authService.getCurrentUid();
     if (uid) { this.currUser = new User({ uid: uid }) }
     else { this.subAuth() }
   }
 
+  /**
+   * Subscribes to user authentication state and initializes the channel if necessary.
+   */
   subAuth() {
     this.subscriptions.add(
       this.authService.user$.subscribe((user) => {
@@ -98,11 +128,18 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Cleans up subscriptions on component destruction.
+   */
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
     this.scrollSub.unsubscribe();
   }
 
+  /**
+   * Opens a dialog displaying the user profile.
+   * @param user - The user whose profile should be displayed.
+   */
   openUserProfile(user: User): void {
     if (user) {
       this.dialog.open(UserProfileCardComponent, {
@@ -111,6 +148,10 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Initializes the channel and its users based on the provided channel ID.
+   * @param channelId - The ID of the channel to initialize.
+   */
   async initChannel(channelId: string): Promise<void> {
     if (!channelId) {
       console.error('Channel ID is not defined');
@@ -134,6 +175,9 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Updates the channel members data if it has not been updated already.
+   */
   updateChannelMembersData(): void {
     if (!this.channelMembersDataUpdated) {
       this.channelMembersDataUpdated = true;
@@ -147,6 +191,9 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Updates channel members data in runtime.
+   */
   runtimeUpdateChannelMembersData(): void {
     if (this.channel) {
       for (let i = 0; i < this.channel.members.length; i++) {
@@ -157,6 +204,10 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Scrolls to a specific post if it exists, or to the last post if no post ID is provided.
+   * @param postId - The ID of the post to scroll to.
+   */
   goToPost(postId: string | undefined) {
     this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
       if (this.hasPostLengthChanged(elements)) {
@@ -166,6 +217,11 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     this.messageItems.notifyOnChanges();
   }
 
+  /**
+   * Scrolls smoothly to the specified post.
+   * @param elements - The list of message elements.
+   * @param postId - The ID of the post to scroll to.
+   */
   autoscrollToPost(elements: QueryList<ElementRef>, postId: string) {
     const postRef = elements.find(el => el.nativeElement.id === postId);
     if (postRef) {
@@ -178,12 +234,21 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Scrolls to the last post in the message list.
+   * @param elements - The list of message elements.
+   */
   autoscrollToLastPost(elements: QueryList<ElementRef>) {
     const array = elements.toArray();
     const postRef = array.pop();
     if (postRef) { postRef.nativeElement.scrollIntoView({}); }
   }
 
+  /**
+   * Checks if the length of the message elements has changed.
+   * @param elements - The list of message elements.
+   * @returns True if the length has changed, otherwise false.
+   */
   hasPostLengthChanged(elements: QueryList<ElementRef>): boolean {
     const currentLength = elements.toArray().length;
     if (currentLength != this.savedPostsLength) {
@@ -194,6 +259,10 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Initializes the user and recipient based on the channel members.
+   * @param channel - The channel to initialize users for.
+   */
   initUsers(channel: Channel): void {
     if (channel.members.length > 1) {
       this.currUser = channel.members.find(m => m.uid === this.currUser?.uid);
@@ -208,6 +277,10 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Creates a new post in the direct message channel.
+   * @param data - The data for the new post.
+   */
   async onCreatePost(data: any): Promise<void> {
     try {
       if (!this.currUser?.uid || !this.channel?.channel_id) {
@@ -222,6 +295,10 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Checks if the current user is the author of the first post in the channel.
+   * @returns True if the current user is the author, otherwise false.
+   */
   isCurrentUserAuthor(): boolean {
     const firstPost = this.channel!.posts[0];
     return this.currUser?.uid === firstPost.user_id;

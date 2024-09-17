@@ -10,6 +10,9 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/user.class';
 
+/**
+ * Component for sending messages, including text, reactions, and file attachments.
+ */
 @Component({
   selector: 'app-message-box',
   standalone: true,
@@ -20,11 +23,19 @@ import { User } from '../../../models/user.class';
 export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   private reactionSub = new Subscription();
 
+  /** Indicates if a message is being sent or if it's loading */
   loading: boolean = false;
+
+  /** Indicates if the members list is currently being shown */
   showingMembersList: boolean = false;
+
+  /** Error message to be displayed to the user */
   errorMsg: string | null = null;
+
+  /** Indicates if the emoji picker is visible */
   public reactionsPickerVisible = false;
 
+  /** Data for the message box, including message content and file attachment details */
   data = {
     message: '',
     messageInThread: '',
@@ -32,21 +43,42 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     attachmentSrc: '',
     attachmentName: ''
   };
+
+  /** List of channels available to the user */
   @Input() channelList!: Channel[];
+
+  /** List of users available to the user */
   @Input() userList!: User[];
 
+  /** Indicates if the message is a reply */
   @Input() replying: boolean = false;
+
+  /** The current channel */
   @Input() channel?: Channel;
+
+  /** The recipient of the message */
   @Input() recipient?: string;
+
+  /** Indicates if the message is part of a thread */
   @Input({ required: true }) inThread?: boolean | undefined;
+
+  /** Event emitted when a message is sent */
   @Output() sent = new EventEmitter<{}>();
 
+  /** Reference to the message input element */
   @ViewChild('messageBox') messageBoxInput!: ElementRef<HTMLInputElement>;
+
+  /** Reference to the file input element */
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+  /** Injected service for handling file storage */
   public storageService = inject(StorageService);
 
   constructor(public reactionsService: ReactionService) { }
 
+  /**
+   * Initializes the component and subscribes to reaction service updates.
+   */
   ngOnInit(): void {
     this.reactionsService.reactionsPicker$.subscribe((rp) => {
       this.reactionsPickerVisible = rp;
@@ -54,14 +86,23 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     this.reactionSub = this.subReaction();
   }
 
+  /**
+   * Focuses the message input field after the view is initialized.
+   */
   ngAfterViewInit(): void {
     this.autofocus();
   }
 
+  /**
+   * Unsubscribes from all subscriptions when the component is destroyed.
+   */
   ngOnDestroy(): void {
     this.reactionSub.unsubscribe();
   }
 
+  /**
+   * Gets or sets the current message based on whether it is in a thread or not.
+   */
   get message(): string {
     return this.inThread ? this.data.messageInThread : this.data.message;
   }
@@ -74,10 +115,17 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  /**
+   * Focuses the message input field with a slight delay.
+   */
   autofocus() {
     setTimeout(() => this.messageBoxInput.nativeElement.focus(), 200);
   }
 
+  /**
+   * Returns a placeholder text for the message input field based on the current context.
+   * @returns The placeholder text.
+   */
   getPlaceholder() {
     if (this.replying) {
       return 'Antworten...';
@@ -90,6 +138,9 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  /**
+   * Handles a click event on the message box container, adjusting the reaction context.
+   */
   onContainerClick() {
     if (this.inThread === true) {
       this.reactionsService.addReactionInThread = true;
@@ -100,8 +151,8 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * This function is triggered by the login form submission.
-   * @param form - login form
+   * Handles form submission, validating and processing the message.
+   * @param form - The form to be processed.
    */
   onSubmit(form: NgForm) {
     const empty = this.isFormEmpty();
@@ -113,6 +164,10 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  /**
+   * Emits the message data and resets the form.
+   * @param form - The form to be reset.
+   */
   completeForm(form: NgForm) {
     if (this.inThread) {
       this.sent.emit({ message: this.data.messageInThread, attachmentSrc: this.data.attachmentSrc });
@@ -122,12 +177,20 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     this.resetAll(form);
   }
 
+  /**
+   * Resets the form and message data.
+   * @param form - The form to be reset.
+   */
   resetAll(form: NgForm) {
     form.reset();
     this.data.message = '';
     this.resetFile();
   }
 
+  /**
+   * Checks if the form is empty based on the current message and attachment data.
+   * @returns True if the form is empty, otherwise false.
+   */
   isFormEmpty(): boolean {
     console.log('message:', this.data.message);
     console.log('attachment:', this.data.attachmentSrc);
@@ -138,6 +201,10 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  /**
+   * Toggles the visibility of the members list and focuses the message input field.
+   * @param e - The click event.
+   */
   toggleMembersList(e: Event): void {
     e.stopPropagation();
     e.preventDefault();
@@ -145,21 +212,36 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     this.messageBoxInput.nativeElement.focus();
   }
 
+  /**
+   * Hides the members list when a click is detected outside of the component.
+   * @param event - The click event.
+   */
   @HostListener('document:click', ['$event'])
   hideMembersList(): void {
     this.showingMembersList = false;
   }
 
+  /**
+   * Adds a string to the current message and focuses the message input field.
+   * @param string - The string to be added.
+   */
   addToMessage(string: string) {
     this.message += string;
     this.messageBoxInput.nativeElement.focus();
   }
 
+  /**
+   * Shows the emoji picker and sets the reaction context to the message.
+   */
   onShowEmojiPicker() {
     this.reactionsService.reactionToMessage = true;
     this.reactionsService.toggleReactionsPicker();
   }
 
+  /**
+   * Subscribes to reactions service updates and adds reactions to the message.
+   * @returns The subscription to the reactions service.
+   */
   subReaction(): Subscription {
     return this.reactionsService.reactionToAdded$.subscribe((reaction) => {
       if (reaction && this.reactionsService.reactionToMessage) {
@@ -169,6 +251,10 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   };
 
+  /**
+   * Handles file selection and uploads the file if valid.
+   * @param e - The file selection event.
+   */
   async onFileSelection(e: Event) {
     const input = e.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -178,6 +264,11 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  /**
+   * Checks if the selected file is valid based on type and size.
+   * @param file - The file to be checked.
+   * @returns True if the file is valid, otherwise false.
+   */
   isValidFile(file: File): boolean {
     if (!this.isImgOrPdf(file)) {
       this.showError('Bitte wähle ein Bild oder eine PDF-Datei.');
@@ -190,14 +281,28 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  /**
+   * Checks if the file is an image or PDF.
+   * @param file - The file to be checked.
+   * @returns True if the file is an image or PDF, otherwise false.
+   */
   isImgOrPdf(file: File): boolean {
     return this.storageService.isImage(file) || this.storageService.isPdf(file);
   }
 
+  /**
+   * Checks if the file size is valid.
+   * @param file - The file to be checked.
+   * @returns True if the file size is valid, otherwise false.
+   */
   hasValidSize(file: File): boolean {
     return file.size <= 500 * 1024;
   }
 
+  /**
+   * Uploads the selected file to storage and updates the message data.
+   * @param file - The file to be uploaded.
+   */
   async uploadFile(file: File) {
     this.resetError();
     this.loading = true;
@@ -210,26 +315,44 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
       .catch((err: Error) => console.error(err));
   }
 
+  /**
+   * Displays an error message to the user.
+   * @param msg - The error message to be displayed.
+   */
   showError(msg: string): void {
     this.errorMsg = msg;
   }
 
+  /**
+   * Resets the error message.
+   */
   resetError(): void {
     this.errorMsg = null;
   }
 
+  /**
+   * Updates the message data with the uploaded file's reference and URL.
+   * @param fileRef - The file reference.
+   * @param fileName - The file name.
+   */
   async onFileUpload(fileRef: StorageReference, fileName: string) {
     this.data.attachmentRef = fileRef;
     this.data.attachmentName = fileName;
     this.data.attachmentSrc = await this.storageService.getUrl(fileRef);
   }
 
+  /**
+   * Resets the file-related data.
+   */
   resetFile(): void {
     this.data.attachmentRef = null;
     this.data.attachmentSrc = '';
     this.data.attachmentName = '';
   }
 
+  /**
+   * Deletes the uploaded file from storage and resets file-related data.
+   */
   deleteFile(): void {
     deleteObject(this.data.attachmentRef);
     this.resetFile();

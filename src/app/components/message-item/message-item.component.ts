@@ -16,7 +16,9 @@ import { MainUserProfileCardComponent } from '../../main-user/main-user-profile-
 import { FormsModule, NgForm } from '@angular/forms';
 import { StorageService } from '../../../services/storage.service';
 
-
+/**
+ * Component responsible for displaying individual messages in a chat, including editing, deleting, and reacting.
+ */
 @Component({
   selector: 'app-message-item',
   standalone: true,
@@ -26,27 +28,56 @@ import { StorageService } from '../../../services/storage.service';
 })
 export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
 
+  /** Indicates if the message is in edit mode */
   isOnEdit = false;
+
+  /** Indicates if actions (edit, delete) should be shown */
   showActions = false;
+
+  /** The message content to update */
   messageToUpdate = '';
 
+  /** The message post data */
   @Input() post: Post = new Post();
+
+  /** Date of the last reply in the thread */
   @Input() lastReply = this.post?.thread.posts[this.post.thread.posts.length - 1]?.date ?? null;
+
+  /** Indicates if the message sender is the current user */
   @Input() messageSender?: boolean;
+
+  /** Indicates if the message is in a direct message */
   @Input() isInDirectMessage = false;
+
+  /** Indicates if the message is in the main post thread */
   @Input() isMainPostThread = false;
+
+  /** Indicates if the message is coming from a thread */
   @Input() ComeFromThread = false;
+
+  /** The UID of the post */
   @Input() postUid: string = "";
+
+  /** Emits the thread ID when opening a new thread */
   @Output() threadId = new EventEmitter<string>();
 
+  /** Grouped emojis and their counts */
   groupedEmojis: { [key: string]: { count: number, users: string[] } } = {};
+
+  /** Current user data */
   currentUser: User | undefined;
+
+  /** User data of the post creator */
   postUser: User = new User({name: 'Unbekannter Nutzer'});
+
+  /** Name of the attachment file, if any */
   attachmentFileName: string | null = null;
 
+  /** Subscription for authentication state changes */
   private authSub = new Subscription();
-  private reactionSub = new Subscription();
 
+  /** Subscription for reaction updates */
+  private reactionSub = new Subscription();
 
   constructor(
     private dialog: MatDialog,
@@ -58,6 +89,9 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
     private storageService: StorageService
   ) { }
 
+  /**
+   * Initializes the component by subscribing to necessary services and setting up the message for editing.
+   */
   ngOnInit(): void {
     this.authSub = this.subAuth();
     this.reactionSub = this.subReaction();
@@ -65,6 +99,9 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
     this.initAttachment();
   }
 
+  /**
+   * Initializes the attachment file name based on the post's attachment source.
+   */
   initAttachment(): void {
     if (this.post.attachmentSrc.length > 0) {
       const parsedUrl = new URL(this.post.attachmentSrc);
@@ -74,23 +111,37 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  /**
+   * Responds to changes in input properties.
+   * @param changes - The changes to input properties.
+   */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['post'] && changes['post'].currentValue) {
       this.updateGroupedEmojis();
     }
   }
 
+  /**
+   * Unsubscribes from all subscriptions to avoid memory leaks.
+   */
   ngOnDestroy(): void {
     this.authSub.unsubscribe();
     this.reactionSub.unsubscribe();
   }
 
+  /**
+   * Updates the grouped emojis with counts and user names based on post reactions.
+   */
   private async updateGroupedEmojis(): Promise<void> {
     if (this.post.reactions) {
       this.groupedEmojis = await this.getGroupedEmojis(this.post.reactions);
     }
   }
 
+  /**
+   * Subscribes to authentication state changes and updates user information.
+   * @returns The subscription to authentication state changes.
+   */
   private subAuth(): Subscription {
     return this.authService.user$.subscribe(() => {
       const uid = this.authService.getCurrentUid();
@@ -103,10 +154,17 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  /**
+   * Emits the thread ID to open a new thread.
+   */
   onOpenNewThread() {
     this.threadId.emit(this.post.thread.thread_id);
   }
 
+  /**
+   * Opens the user profile in a dialog.
+   * @param uid - The UID of the user whose profile is to be opened.
+   */
   openUserProfile(uid: string): void {
     if (uid) {
       if (uid == this.currentUser?.uid) {
@@ -122,16 +180,26 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  /**
+   * Toggles the display of edit actions (edit, delete).
+   */
   showEditActions() {
     this.showActions = !this.showActions;
   }
 
+  /**
+   * Enables message editing mode and sets the message to be updated.
+   */
   onEditMessage() {
     this.messageToUpdate = this.post.message;
     this.isOnEdit = true;
     this.showActions = false;
   }
 
+  /**
+   * Submits the edited message and updates the post.
+   * @param form - The form containing the edited message.
+   */
   onSubmit(form: NgForm) {
     if (form.submitted && form.valid) {
       this.channelsService.updatePost(this.post.channel_id, this.post.post_id, this.messageToUpdate);
@@ -141,34 +209,59 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  /**
+   * Cancels the message editing mode.
+   */
   cancelEditMessage() {
     this.isOnEdit = false;
   }
 
+  /**
+   * Deletes the post and hides the edit actions.
+   */
   onDeletePost() {
     this.channelsService.deletePost(this.post.channel_id, this.post.post_id);
     this.showActions = false;
   }
 
+  /**
+   * Returns the keys of an object as an array of strings.
+   * @param obj - The object to get keys from.
+   * @returns An array of keys.
+   */
   objectKeys(obj: any): string[] {
     return Object.keys(obj);
   }
 
+  /**
+   * Opens the emoji picker for adding reactions to the post.
+   */
   onShowEmojiPicker() {
     this.reactionsService.currentPost = this.post;
     this.reactionsService.toggleReactionsPicker();
   }
 
+  /**
+   * Opens the emoji picker for adding reactions while editing a message.
+   */
   onShowEmojiPickerInEdit() {
     this.reactionsService.currentPost = this.post;
     this.reactionsService.reactionToEditMessage = true;
     this.reactionsService.toggleReactionsPicker();
   }
 
+  /**
+   * Adds a reaction to the message being updated.
+   * @param reaction - The reaction to add.
+   */
   addReactionToUpdateMessage(reaction: string) {
     this.messageToUpdate += reaction;
   }
 
+  /**
+   * Subscribes to reaction updates and handles new reactions.
+   * @returns The subscription to reaction updates.
+   */
   subReaction(): Subscription {
     return this.reactionsService.reactionToAdded$.subscribe((reaction) => {
       if (reaction && this.reactionsService.reactionToEditMessage) {
@@ -178,6 +271,10 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
     });
   };
 
+  /**
+   * Handles adding a reaction to the post.
+   * @param emoji - The emoji to be added as a reaction.
+   */
   async onHandleReaction(emoji: any) {
     let reaction = { emoji: { native: emoji } };
 
@@ -190,6 +287,11 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
     await this.reactionsService.addReaction(reaction, this.currentUser);
   }
 
+  /**
+   * Groups emojis from reactions and counts them, including user names who reacted.
+   * @param reactions - The list of reactions to process.
+   * @returns An object with grouped emojis, their counts, and users.
+   */
   async getGroupedEmojis(reactions: Reaction[]): Promise<{ [key: string]: { count: number, users: string[] } }> {
     let groups: { [key: string]: { count: number, users: string[] } } = {};
 

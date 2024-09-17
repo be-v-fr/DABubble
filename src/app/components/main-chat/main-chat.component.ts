@@ -15,7 +15,6 @@ import { Post } from '../../../models/post.class';
 import { AuthService } from '../../../services/auth.service';
 import { TimeService } from '../../../services/time.service';
 import { User } from '../../../models/user.class';
-import { MemberListComponent } from '../../member-list/member-list.component';
 import { ActivityService } from '../../../services/activity.service';
 import { UsersService } from '../../../services/users.service';
 import { AddMembersComponent } from '../../add-members/add-members.component';
@@ -71,6 +70,9 @@ export class MainChatComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
   ) { }
 
+  /**
+   * Initializes component by subscribing to necessary observables and setting up initial channel data.
+   */
   ngOnInit(): void {
     this.authSub = this.authService.user$.subscribe(() => this.currentUid = this.authService.getCurrentUid());
 
@@ -89,16 +91,27 @@ export class MainChatComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+  * Toggles the visibility of the channel.
+  */
   toggleChannel(): void {
     this.isChannelOpen = !this.isChannelOpen;
   }
 
+
+  /**
+   * Performs cleanup on component destruction by unsubscribing from all subscriptions.
+   */
   ngOnDestroy(): void {
     this.authSub.unsubscribe();
     this.channelSub.unsubscribe();
     this.scrollSub.unsubscribe();
   }
 
+  /**
+   * Initializes the channel with the given ID.
+   * @param channel_id - The ID of the channel to initialize.
+   */
   initChannel(channel_id: string): void {
     if (this.currentChannel.channel_id.length === 0) {
       this.currentChannel.channel_id = channel_id;
@@ -106,6 +119,10 @@ export class MainChatComponent implements OnInit, OnDestroy {
     this.setChannel(channel_id);
   }
 
+  /**
+   * Sets the current channel and updates related UI components.
+   * @param channel_id - The ID of the channel to set.
+   */
   setChannel(channel_id: string): void {
     const channel = this.channelsService.channels.find(c => c.channel_id === channel_id);
     if (channel && this.currentUid && channel.members.some(m => m.uid === this.currentUid)) {
@@ -123,6 +140,9 @@ export class MainChatComponent implements OnInit, OnDestroy {
     } else { this.onInvalidOrForbiddenRoute = true };
   }
 
+  /**
+   * Updates channel members data if it hasn't been updated yet.
+   */
   updateChannelMembersData(): void {
     if (!this.channelMembersDataUpdated) {
       this.channelMembersDataUpdated = true;
@@ -134,15 +154,22 @@ export class MainChatComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Updates channel members data in runtime based on current user list.
+   */
   updateChannelMembersDataInRuntime(): void {
     for (let i = this.currentChannel.members.length - 1; i >= 0; i--) {
       let m: User = this.currentChannel.members[i];
       const updatedUser: User | undefined = this.usersService.getUserByUid(m.uid);
       if (updatedUser) { this.currentChannel.members[i] = updatedUser }
-      else {this.currentChannel.members.splice(i, 1)}
+      else { this.currentChannel.members.splice(i, 1) }
     };
   }
 
+  /**
+   * Navigates to a specific post if needed.
+   * @param postId - The ID of the post to navigate to.
+   */
   goToPost(postId: string | undefined) {
     this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
       if (this.hasPostLengthChanged(elements)) {
@@ -152,6 +179,11 @@ export class MainChatComponent implements OnInit, OnDestroy {
     this.messageItems.notifyOnChanges();
   }
 
+  /**
+   * Checks if the length of posts has changed compared to the previously saved length.
+   * @param elements - The list of message items.
+   * @returns True if the length has changed, otherwise false.
+   */
   hasPostLengthChanged(elements: QueryList<ElementRef>): boolean {
     const currentLength = elements.toArray().length;
     if (currentLength != this.savedPostsLength) {
@@ -162,6 +194,11 @@ export class MainChatComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Handles scrolling to a specific post or thread.
+   * @param elements - The list of message items.
+   * @param postId - The ID of the post to scroll to.
+   */
   handlePostAndThreadScrolling(elements: QueryList<ElementRef>, postId: string) {
     const postRef = elements.find(el => el.nativeElement.id === postId);
     if (postRef) {
@@ -171,6 +208,10 @@ export class MainChatComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Autoscrolls to a specific post element.
+   * @param postRef - The reference to the post element.
+   */
   autoscrollToPost(postRef: ElementRef<any>) {
     this.postsSub.unsubscribe();
     postRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
@@ -180,12 +221,21 @@ export class MainChatComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Autoscrolls to the last post element.
+   * @param elements - The list of message items.
+   */
   autoscrollToLastPost(elements: QueryList<ElementRef>) {
     const array = elements.toArray();
     const postRef = array.pop();
     if (postRef) { postRef.nativeElement.scrollIntoView({}); }
   }
 
+  /**
+   * Opens a thread and autoscrolls to the first post in that thread.
+   * @param elements - The list of message items.
+   * @param postId - The ID of the post to find and open the thread for.
+   */
   openThreadAndAutoscrollToFirstPost(elements: QueryList<ElementRef>, postId: string) {
     const { postInThread, thread_id } = this.channelsService.getPostInThread(this.currentChannel, postId);
     if (thread_id.length > 0) {
@@ -196,16 +246,30 @@ export class MainChatComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Checks if the current user is the author of the post at the given index.
+   * @param index - The index of the post to check.
+   * @returns True if the current user is the author, otherwise false.
+   */
   isCurrentUserAuthor(index: number): boolean {
     const firstPost = this.currentChannel.posts[index];
     return this.currentUid === firstPost.user_id;
   }
 
+  /**
+   * Retrieves the user ID of the post at the given index.
+   * @param index - The index of the post to get the user ID from.
+   * @returns The user ID of the post.
+   */
   getPostUid(index: number) {
     const currentPost = this.currentChannel.posts[index];
     return currentPost.user_id;
   }
 
+  /**
+   * Creates a new post in the current channel.
+   * @param data - The data for the new post including the message and attachment.
+   */
   onCreatePost(data: any): void {
     if (!this.currentUid || !this.currentChannel.channel_id) {
       console.error('User ID or channel ID is not set.');
@@ -217,10 +281,16 @@ export class MainChatComponent implements OnInit, OnDestroy {
       .catch(err => console.error('Error adding post to the channel:', err));
   }
 
+  /**
+   * Opens a dialog to edit the current channel.
+   */
   onEditChannel(): void {
     this.dialog.open(EditChannelComponent, { panelClass: "dialog-all-corner-30", data: this.currentChannel });
   }
 
+  /**
+   * Opens a dialog to add members to the channel or shows the member list depending on screen size.
+   */
   openAddMembers(): void {
     if (window.innerWidth <= 768) {
       this.callOpenMemberList();
@@ -237,6 +307,9 @@ export class MainChatComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Calls the method to open the member list component.
+   */
   callOpenMemberList(): void {
     if (this.membersOverviewComponent) {
       this.membersOverviewComponent.openMemberList();
@@ -245,6 +318,10 @@ export class MainChatComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Handles opening a thread based on the provided thread ID.
+   * @param threadId - The ID of the thread to open.
+   */
   handleThread(threadId: string): void {
     if (this.currentChannel && this.currentChannel.posts) {
       const post = this.currentChannel.posts.find(post => post.thread.thread_id === threadId);
@@ -260,6 +337,10 @@ export class MainChatComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Closes the current thread based on the provided event value.
+   * @param event - The value indicating whether to close the thread or not.
+   */
   closeThread(event: any) {
     this.openTh = event;
   }

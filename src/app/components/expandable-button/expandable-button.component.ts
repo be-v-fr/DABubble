@@ -5,7 +5,7 @@ import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { AddChannelComponent } from '../../add-channel/add-channel.component';
 import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
-import { Subscription, combineLatest } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { UsersService } from '../../../services/users.service';
 import { ChannelsService } from '../../../services/content/channels.service';
 import { AuthService } from '../../../services/auth.service';
@@ -13,6 +13,9 @@ import { ActivityService } from '../../../services/activity.service';
 import { ActivityStateDotComponent } from '../activity-state-dot/activity-state-dot.component';
 import { LoadingCircleComponent } from './loading-circle/loading-circle.component';
 
+/**
+ * Component for an expandable button that displays menus for users and channels.
+ */
 @Component({
   selector: 'app-expandable-button',
   standalone: true,
@@ -31,24 +34,99 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
   private userSub!: Subscription;
   private channelsSub = new Subscription();
 
+  /**
+   * List of the user's channels.
+   * @type {Channel[]}
+   */
   userChannels: Channel[] = [];
+
+  /**
+   * New channel instance.
+   * @type {Channel}
+   */
   newChannel = new Channel();
+
+  /**
+   * Current channel.
+   * @type {Channel | undefined}
+   */
   currChannel?: Channel;
+
+  /**
+   * Current user.
+   * @type {User | undefined}
+   */
   currentUser?: User;
 
+  /**
+   * Flag indicating whether the menu is expanded.
+   * @type {boolean}
+   */
   isMenuExpanded: boolean = true;
+
+  /**
+   * Flag indicating whether the menu is open.
+   * @type {boolean}
+   */
   isOpen: boolean = true;
+
+  /**
+   * Flag indicating whether the user is online.
+   * @type {boolean}
+   */
   online: boolean = true;
+
+  /**
+   * Flag indicating whether data is being loaded.
+   * @type {boolean}
+   */
   loading: boolean = true;
+
+  /**
+   * List of users.
+   * @type {User[] | undefined}
+   */
   users?: User[];
+
+  /**
+   * Flag indicating whether the icon is rotated.
+   * @type {boolean}
+   */
   isRotated = false;
+
+  /**
+   * Button title.
+   * @type {string}
+   */
   title = input.required<string>();
+
+  /**
+   * Button icon.
+   * @type {string}
+   */
   icon = input.required<string>();
+
+  /**
+   * Type of the instance, either 'channels' or 'users'.
+   * @type {'channels' | 'users'}
+   */
   instance = input.required<'channels' | 'users'>();
 
+  /**
+   * EventEmitter that is emitted when a user is clicked.
+   * @type {EventEmitter<void>}
+   */
   @Output() userClick = new EventEmitter<void>();
 
-
+  /**
+   * Constructs the component with the required services.
+   * @param {MatDialog} dialog - The Angular Material dialog service.
+   * @param {Router} router - The Angular router.
+   * @param {AuthService} authService - The authentication service.
+   * @param {UsersService} userService - The user service.
+   * @param {ChannelsService} channelsService - The channels service.
+   * @param {ActivityService} activityService - The activity service.
+   */
   constructor(
     private dialog: MatDialog,
     private router: Router,
@@ -56,24 +134,28 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
     public userService: UsersService,
     private channelsService: ChannelsService,
     private activityService: ActivityService
-  ) {
-    // this.router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd && window.innerWidth <= 768) {
-    //     this.isMenuExpanded = false;
-    //   }
-    // });
-  }
+  ) { }
 
+  /**
+   * Initializes the component and subscribes to authentication updates.
+   */
   ngOnInit(): void {
     this.authSub = this.subAuth();
   }
 
+  /**
+   * Cleans up subscriptions when the component is destroyed.
+   */
   ngOnDestroy(): void {
     this.authSub.unsubscribe();
     this.userSub.unsubscribe();
     this.channelsSub.unsubscribe();
   }
 
+  /**
+   * Subscribes to authentication updates and initializes user data and channels.
+   * @returns {Subscription} - The authentication subscription object.
+   */
   subAuth(): Subscription {
     return this.authService.user$.subscribe(() => {
       const uid = this.authService.getCurrentUid();
@@ -85,58 +167,91 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Initializes user data and channels.
+   * @param {string} uid - The user ID of the current user.
+   */
   initData(uid: string) {
-    if(this.userService.users.length > 0) {this.syncUsers(this.userService.users, uid)}
-    if(this.channelsService.channels.length > 0) {this.syncUserChannels(this.channelsService.channels)}
+    if (this.userService.users.length > 0) {
+      this.syncUsers(this.userService.users, uid);
+    }
+    if (this.channelsService.channels.length > 0) {
+      this.syncUserChannels(this.channelsService.channels);
+    }
   }
 
+  /**
+   * Subscribes to user data updates.
+   * @param {string} uid - The user ID of the current user.
+   * @returns {Subscription} - The user subscription object.
+   */
   subUsers(uid: string): Subscription {
     return this.userService.users$.subscribe((users) => this.syncUsers(users, uid));
   }
 
+  /**
+   * Subscribes to channel updates.
+   * @returns {Subscription} - The channels subscription object.
+   */
   subChannels(): Subscription {
     return this.channelsService.channels$.subscribe((channels) => this.syncUserChannels(channels));
   }
 
+  /**
+   * Stops loading if the specified instance matches.
+   * @param {'channels' | 'users'} instance - The instance to stop loading for.
+   */
   stopLoading(instance: 'channels' | 'users') {
-    if (this.loading && this.instance.toString().includes(instance)) {this.loading = false}
+    if (this.loading && this.instance.toString().includes(instance)) {
+      this.loading = false;
+    }
   }
 
+  /**
+   * Synchronizes the user list and the current user.
+   * @param {User[]} users - The list of users.
+   * @param {string} uid - The user ID of the current user.
+   */
   syncUsers(users: User[], uid: string) {
     this.stopLoading('users');
     this.currentUser = users.find(u => u.uid === uid);
     if (this.currentUser) {
       this.users = [this.currentUser].concat(users.filter(u => u.uid !== uid));
       this.syncUserChannels(this.channelsService.channels);
-    }    
+    }
   }
 
+  /**
+   * Synchronizes the user's channel list.
+   * @param {Channel[]} channels - The list of channels.
+   */
   syncUserChannels(channels: Channel[]) {
     this.stopLoading('channels');
     this.userChannels = channels.filter(c => !c.isPmChannel && c.members.some(m => m.uid === this.currentUser?.uid));
   }
 
+  /**
+   * Toggles the menu's expanded/collapsed state.
+   */
   toggleMenu() {
     this.isMenuExpanded = !this.isMenuExpanded;
     this.isRotated = !this.isRotated;
   }
 
-
-
-  //  @HostListener('window:resize', ['$event'])
-  // onResize(event: Event) {
-  //   if (window.innerWidth <= 768) {
-  //     this.isMenuExpanded = false;
-  //     this.userClick.emit();
-  //   }
-  // }
-
+  /**
+   * Opens the dialog to add a new channel.
+   */
   onAddChannelClick(): void {
     const dialogRef = this.dialog.open(AddChannelComponent);
     dialogRef.componentInstance.channel.author_uid = this.currentUser!.uid;
     dialogRef.componentInstance.channel.members.push(this.currentUser!);
   }
 
+  /**
+   * Handles user click by either opening an existing channel or creating a new one.
+   * @param {User} user - The user that was clicked.
+   * @returns {Promise<void>}
+   */
   async onUserClick(user: User): Promise<void> {
     const channelExist: Channel | undefined = this.requestDirectMessageChannel(user);
     if (channelExist) {
@@ -149,12 +264,9 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * This function checks whether the requested channel already exists. It checks
-   * - if the channel is a private channel
-   * - if the channel includes both the current user and the selected user
-   * - if the selected user is different from the current user OR if the channel only includes the current user
-   * @param user - user clicked in menu
-   * @returns the requested channel, if it exists, OR undefined
+   * Checks if a direct message channel already exists for the given user.
+   * @param {User} user - The user for whom to check the channel.
+   * @returns {Channel | undefined} - The existing channel or undefined if none found.
    */
   requestDirectMessageChannel(user: User): Channel | undefined {
     return this.channelsService.getAllChannels().find(c =>
@@ -165,6 +277,12 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Prepares a new channel for direct messaging.
+   * @param {Channel} channel - The channel to prepare.
+   * @param {User} user - The user to include in the channel.
+   * @returns {Channel} - The prepared channel.
+   */
   prepareChannel(channel: Channel, user: User): Channel {
     channel.author_uid = this.currentUser!.uid;
     channel.members = [this.currentUser!, user];

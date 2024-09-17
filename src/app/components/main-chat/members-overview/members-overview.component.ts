@@ -11,13 +11,24 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './members-overview.component.scss'
 })
 export class MembersOverviewComponent {
+  /**
+   * The channel whose members are to be displayed.
+   */
   @Input() channel: Channel = new Channel();
+
+  /**
+   * Indicates if the thread is currently open.
+   */
   @Input() openTh: boolean = false;
 
   constructor(
     private dialog: MatDialog,
   ) { }
 
+  /**
+   * Opens a dialog to display the member list of the channel.
+   * If a thread is open, includes additional data related to the thread.
+   */
   openMemberList(): void {
     if (this.openTh) {
       const dialogRef = this.dialog.open(MemberListComponent, {

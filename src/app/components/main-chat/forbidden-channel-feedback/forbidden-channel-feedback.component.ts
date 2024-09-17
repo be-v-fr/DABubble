@@ -11,10 +11,17 @@ import { RouterLink } from '@angular/router';
 })
 export class ForbiddenChannelFeedbackComponent {
 
+  /**
+   * Creates an instance of the ForbiddenChannelFeedbackComponent.
+   * @param location - A service for navigation and accessing the browser's history.
+   */
   constructor(
     private location: Location,
-  ) {}
+  ) { }
 
+  /**
+   * Navigates back to the previous location in the browser's history.
+   */
   historyBack() {
     this.location.back();
   }
