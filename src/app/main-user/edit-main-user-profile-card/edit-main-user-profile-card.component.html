@@ -18,7 +18,7 @@
                     <p>Vollständiger Name</p>
                 </div>
                 <div class="inputField">
-                    <input [(ngModel)]="userData.name" type="text" name="name" #name="ngModel" [disabled]="disableForm"
+                    <input [(ngModel)]="userData.name" type="text" name="name" #name="ngModel"
                         placeholder="{{ mainUser.name || 'Vorname Name' }}" value="{{ mainUser.name }}" required />
                 </div>
                 @if(name.touched && !name.valid) {

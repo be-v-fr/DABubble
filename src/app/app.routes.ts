@@ -6,7 +6,6 @@ import { ImpressComponent } from './home/legal/impress/impress.component';
 import { PrivacypolicyComponent } from './home/legal/privacypolicy/privacypolicy.component';
 import { UserProfileCardComponent } from './user-profile-card/user-profile-card.component';
 import { MainUserProfileCardComponent } from './main-user/main-user-profile-card/main-user-profile-card.component';
-import { EditUserProfileCardComponent } from './edit-user-profile-card/edit-user-profile-card.component';
 import { EditMainUserProfileCardComponent } from './main-user/edit-main-user-profile-card/edit-main-user-profile-card.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { PickAvatarComponent } from './auth/pick-avatar/pick-avatar.component';
@@ -57,7 +56,6 @@ export const routes: Routes = [
   { path: 'privacypolicy', component: PrivacypolicyComponent },
   { path: 'userProfile', component: UserProfileCardComponent },
   { path: 'mainUser', component: MainUserProfileCardComponent },
-  { path: 'editUser', component: EditUserProfileCardComponent },
   { path: 'editMainUser', component: EditMainUserProfileCardComponent },
   { path: 'LogOut', component: LogOutCardComponent },
   { path: 'addMemberChannel', component: AddMembersAfterAddChannelComponent },
