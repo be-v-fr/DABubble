@@ -414,21 +414,21 @@
             .message {
                 width: auto !important;
 
-                .message-text {
-                    width: auto !important;
-                    background-color: $purple-blue-brighter;
-                    border-radius: 30px 0px 30px 30px !important;
-                    color: white;
-                }
+                width: auto !important;
+                background-color: $purple-blue-brighter;
+                border-radius: 30px 0px 30px 30px !important;
+                color: white;
+                // .message-text {
+                // }
             }
         }
 
         &:hover {
             .message-content {
                 .message {
-                    .message-text {
-                        background-color: $purple-blue-brighter !important;
-                    }
+                    background-color: $purple-blue-brighter !important;
+                    // .message-text {
+                    // }
                 }
             }
         }
