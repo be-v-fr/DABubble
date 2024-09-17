@@ -3,7 +3,8 @@
     <section class="main-section">
         <div class="main-header">
             <button class="channel-btn" (click)="onEditChannel()">
-                <span class="channel-btn-name"># {{ currentChannel.name.slice(0,10) }}...</span>
+                <img src="/assets/img/icons/tag2.svg">
+                <span class="channel-btn-name">{{ currentChannel.name }}</span>
                 <span class="material-icons-outlined icon">keyboard_arrow_down</span>
             </button>
             <div class="main-header-members">

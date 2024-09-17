@@ -59,12 +59,20 @@ $onlinedot-offline: #686868; // this is identical to "grey"
 
 }
 
-@mixin textBreake($rows: 2) {
+@mixin textOverflowSingle() {
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@mixin textOverflowMulti($rows: 2) {
+    overflow: hidden;
+    display: -webkit-box;
     line-clamp: $rows;
     -webkit-line-clamp: $rows;
-    -webkit-box-orient: horizontal; 
+    -webkit-box-orient: vertical; 
     text-overflow: ellipsis;
+    word-wrap: break-word;
 }
 
 

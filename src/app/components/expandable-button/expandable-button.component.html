@@ -2,9 +2,9 @@
     <div class="btn-container">
         <button (click)="toggleMenu()">
             <span class="material-icons-outlined icon" [class.rotated]="isRotated">arrow_drop_down</span>
-            <div class="channel-title">
+            <div class="channel-title-box">
                 <span class="material-icons-outlined icon">{{ icon() }}</span>
-                {{ title() }}
+                <span class="channel-title">{{ title() }}</span>
             </div>
         </button>
         <button *ngIf="instance() == 'channels'" (click)="onAddChannelClick()" class="cross-btn">
@@ -21,10 +21,10 @@
         <div *ngIf="instance() == 'channels'" class="channel-menu">
             <ul>
                 @for (channel of userChannels; track channel) {<li>
-                    <a (click)="userService.setMobileView('mainchat')" class="list-item-content"
+                    <a (click)="userService.setMobileView('mainchat')" class="list-item-content" title="{{channel.name}}"
                         [routerLink]="['/main-chat', channel.channel_id]">
                         <p class="list-item-text">
-                            <span>#</span> {{channel.name.slice(0,10)}}...
+                            <img src="/assets/img/icons/tag.svg"><span>{{channel.name}}</span>
                         </p>
                     </a>
                 </li>}
@@ -38,19 +38,18 @@
             <ul>
                 @for (user of users; track $index; let first = $first) {
                 <li>
-                    <a (click)="userService.setMobileView('mainchat')" [routerLink]="['/direct-message']"
+                    <a (click)="userService.setMobileView('mainchat')" [routerLink]="['/direct-message']" [attr.title]="first ? user.name + ' (Du)' : user.name"
                         (click)="onUserClick(user)">
                         <div class="visible-part">
                             <div class="message-img-container">
                                 <img src="{{user.avatarSrc}}">
                                 <app-activity-state-dot [user]="user" />
                             </div>
-                            <span>{{ user.name.slice(0,10) }}... @if(first) {(Du)}</span>
+                            <span>{{ user.name }} @if(first) {(Du)}</span>
                         </div>
                     </a>
                 </li>
                 }
-
             </ul>
         </div>
         }

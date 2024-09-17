@@ -27,11 +27,11 @@
     @if (!isOnEdit) {
     <div class="message-content">
         <div class="user-name-container" [class.reversed]="messageSender">
-            <div class="user-name" (click)="openUserProfile(post.user_id)">{{postUser.name.slice(0,10)}}...</div>
-            <span>{{ timeService.toClock(post.date) }} Uhr</span>
+            <span class="user-name" (click)="openUserProfile(post.user_id)">{{postUser.name}}</span>
+            <span class="post-time">{{ timeService.toClock(post.date) }} Uhr</span>
         </div>
         <div class="message" *ngIf="post.message.length > 0">
-            <div class="message-text">{{ post.message }}</div>
+            <span class="message-text">{{ post.message }}</span>
         </div>
         @if(post.thread.posts.length > 0 && !ComeFromThread) {
         <div class="message-answers">

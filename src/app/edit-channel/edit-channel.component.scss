@@ -43,14 +43,25 @@
         .editChannelName, .editChannelDescription {
             display: none;
         }
-        .channelName-text, .channelDescription-text {
+        .channelName-text {
             display: flex;
             align-items: center;
             gap: 10px;
             span {
                 width: 100%;
                 font-size: 18px;
-                @include textBreake(1);
+                @include textOverflowMulti();
+                // @include textOverflowSingle();
+            }
+        }
+        .channelDescription-text {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            span {
+                width: 100%;
+                font-size: 18px;
+                @include textOverflowMulti(99);
             }
         }
         .titleText {
@@ -63,6 +74,7 @@
             transition: 100ms ease-in;
             .title {
                 font-weight: 700;
+                @include textOverflowSingle();
             }
             .channel-edit-btn {
                 transition: padding-right 0.1s linear;
@@ -102,7 +114,6 @@
                 max-height: 105px;
                 max-width: 100%;
                 overflow-x: hidden;
-                // word-break: break-all;
                 hyphens: auto;
                 -ms-hyphens: auto;
                 -moz-hyphens: auto;
@@ -122,6 +133,7 @@
                 align-items: center;
                 gap: 10px;
                 input {
+                    width: 100%;
                     font-size: 18px;
                     font-weight: 400;
                 }
@@ -130,24 +142,6 @@
                 }
             }
         }
-        // button {
-        //     font-size: 18px;
-        //     font-weight: 600;
-        //     color: rgba(83, 90, 241, 1);
-        //     cursor: pointer;
-        //     img {
-        //         width: 30px;
-        //         height: 30px;
-        //     }
-        //     &:hover:enabled {
-        //         color: $purple-blue-bright !important;
-        //         font-weight: 650 !important;
-        //     }
-        //     &:disabled {
-        //         cursor: not-allowed;
-        //         color: $grey;
-        //     }
-        // }
     }
     
 }
@@ -191,7 +185,7 @@
                     width: 100%;
                     font-weight: 700;
                     font-size: 24px;
-                    @include textBreake(1);
+                    @include textOverflowSingle();
                 }
             }
             .close-dialog-btn {
@@ -274,7 +268,7 @@
             .createdBy-data {
                 color: $purple-blue-bright;
                 font-size: 24px;
-                @include textBreake();
+                @include textOverflowMulti();
             }
             .logo {
                 height: 32px;

@@ -27,13 +27,17 @@
                     transform: rotate(-90deg);
                 }
 
-                .channel-title {
+                .channel-title-box {
                     display: flex;
                     align-items: center;
                     gap: 10px;
                     font-size: 20px;
                     font-weight: 700;
                     line-height: 27.28px;
+                    .channel-title {
+                        font-size: 20px;
+                        font-weight: 700;
+                    }
                 }
 
                 .add-icon {
@@ -62,7 +66,7 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 25px;
-                margin-left: 30px;
+                // margin-left: 30px;
                 cursor: default !important;
 
                 ul {
@@ -71,8 +75,8 @@
                     display: flex;
                     flex-direction: column;
                     align-items: flex-start;
-                    gap: 25px;
-                    padding: 25px 0 0 0;
+                    gap: 13px;
+                    padding: 25px 0 0 30px;
                     overflow-y: auto;
                     @include scrollbar();
                     cursor: default !important;
@@ -86,8 +90,9 @@
                             display: flex;
                             color: black;
                             transition: all 0.1s ease-in;
-
+                            
                             .list-item-text {
+                                width: 100%;
                                 padding: 4px 20px;
                                 margin: 0;
                                 border-radius: 30px;
@@ -95,10 +100,17 @@
                                 font-size: 18px;
                                 font-weight: 400;
                                 color: inherit;
-
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
+                                img {
+                                    width: 24px;
+                                }
                                 span {
-                                    font-size: 24px;
-                                    font-weight: 700;
+                                    width: 100%;
+                                    font-size: 18px;
+                                    font-weight: 400;
+                                    @include textOverflowSingle();
                                 }
                             }
 
@@ -106,8 +118,13 @@
                                 .list-item-text {
                                     color: $purple-blue-bright;
                                     background-color: $violet-bright;
-                                    font-weight: 700;
                                     transition: all 0.1s ease-in;
+                                    img {
+                                        content: url('/assets/img/icons/tag_hover.svg');
+                                    }
+                                    span {
+                                        font-weight: 700;
+                                    }
                                 }
                             }
                         }
@@ -152,7 +169,7 @@
                     display: flex;
                     flex-direction: column;
                     align-items: flex-start;
-                    gap: 25px;
+                    gap: 13px;
                     padding: 25px;
                     cursor: inherit;
 
@@ -196,6 +213,11 @@
                                         height: 14px;
                                     }
                                 }
+                                span {
+                                    @include textOverflowMulti();
+                                    // display: inline;
+                                    // -webkit-box-orient: horizontal;
+                                }
                             }
 
                             &:hover .visible-part {
@@ -234,12 +256,9 @@
 
             .menu {
                 .channel-menu {
-                    margin-left: 25px;
-
                     ul {
-                        padding: 5px 0 0 0;
+                        padding: 5px 0 0 25px;
                     }
-
                     .add-channel {
                         padding-left: 20px;
 
@@ -248,7 +267,6 @@
                         }
                     }
                 }
-
                 .messages-menu {
                     ul {
                         margin-left: 0;
@@ -266,9 +284,7 @@
         .exp-btn-container {
             .menu {
                 .channel-menu {
-                    margin-left: 25px;
                     gap: 15px;
-
                     ul {
                         gap: 10px;
                     }
