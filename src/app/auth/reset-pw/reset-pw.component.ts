@@ -100,6 +100,6 @@ export class ResetPwComponent implements OnInit {
    * This function is called when the toast notification timeout has expired.
    */
   afterToast() {
-    this.router.navigateByUrl('auth/login');
+    this.router.navigateByUrl('auth/logIn');
   }
 }
