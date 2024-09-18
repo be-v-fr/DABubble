@@ -72,10 +72,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    overflow-y: auto;
     .direct-m-items {
       width: 100%;
-      height: 385px;
       overflow-y: auto;
       @include scrollbar();
     }
