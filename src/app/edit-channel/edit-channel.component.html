@@ -17,7 +17,7 @@
                 @if(userIsAuthor) {
                     <div class="channel-edit-btn">
                         @if (editMode) {
-                            <button type="button" (click)="saveNameChanges()" [disabled]="channelName.length == 0 || !nameAvailable">
+                            <button type="button" (click)="saveNameChanges()" [disabled]="channelName.length == 0 || !nameAvailable || loading">
                                 <span class="notmobileView">Speichern</span>
                                 <img class="mobileView img-check" src="/assets/img/icons/check_circle.svg">
                             </button>
@@ -50,7 +50,7 @@
                 @if(userIsAuthor) {
                     <div class="channel-edit-btn">
                         @if (editDescriptionMode) {
-                            <button type="button" (click)="saveDescriptionChanges()">
+                            <button type="button" (click)="saveDescriptionChanges()"  [disabled]="loading">
                                 <span class="notmobileView">Speichern</span>
                                 <img class="mobileView img-check" src="/assets/img/icons/check_circle.svg">
                             </button>
@@ -95,15 +95,15 @@
                 }
             </ul>
         </div>
-        <button type="button" class="members-list-btn" (click)="openAddMembers()">
+        <button type="button" class="members-list-btn" (click)="openAddMembers()" [disabled]="loading">
             <span class="material-icons-outlined icon">person_add_alt</span><span class="icon-text">Mitglieder hinzufügen</span>
         </button>
     </div>
     <div class="leaveChannelBtn">
         @if(data.members.length > 1) {
-            <button type="submit" class="form-btn-primary" (click)="leaveChannel()" [disabled]="data.name === 'Team'">Channel verlassen</button>
+            <button type="submit" class="form-btn-primary" (click)="leaveChannel()" [disabled]="data.name === 'Team'" || loading>Channel verlassen</button>
         } @else {
-            <button type="submit" class="form-btn-primary-warning" (click)="onDeleteChannelSubmit()" [disabled]="data.name === 'Team'">Channel löschen</button>
+            <button type="submit" class="form-btn-primary-warning" (click)="onDeleteChannelSubmit()" [disabled]="data.name === 'Team'" || loading>Channel löschen</button>
         }
     </div>
 </div>

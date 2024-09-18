@@ -23,12 +23,12 @@ export class EditChannelComponent {
   userIsAuthor: boolean;
   editMode: boolean = false;
   editDescriptionMode: boolean = false;
-//   editName: boolean = false;
   nameAvailable: boolean = true;
   mobileView = false;
   channelName: string = '';
   channelDescription: string = '';
   channelAuthorName: string = '';
+  loading: boolean = false;
 
   constructor(
     private dialog: MatDialog,
@@ -81,10 +81,6 @@ export class EditChannelComponent {
     this.editMode = !this.editMode;
   }
 
-//   toggleEditName() {
-//     this.editName = !this.editName;
-//   }
-
   toggleEditDescriptionMode() {
     this.editDescriptionMode = !this.editDescriptionMode;  
   }  
@@ -95,18 +91,19 @@ export class EditChannelComponent {
   }
 
   async saveNameChanges() {
+    this.loading = true;
     this.data.name = this.channelName;
-
     await this.channelsService.updateChannel(this.data);
-    // this.editName = false;
     this.editMode = false;
+    this.loading = false;
   }
 
   async saveDescriptionChanges() {
+    this.loading = true;
     this.data.description = this.channelDescription;
-
     await this.channelsService.updateChannel(this.data);
     this.editDescriptionMode = false;
+    this.loading = true;
   }
 
   closeChannel() {
@@ -125,6 +122,7 @@ export class EditChannelComponent {
   async leaveChannel() {
     const currentUserData = this.authService.getCurrent();
     if (currentUserData) {
+      this.loading = true;
       const currentUser = new User(currentUserData);
       await this.channelsService.removeChannelMember(currentUser, this.data.channel_id);
       this.router.navigate(['new']);
