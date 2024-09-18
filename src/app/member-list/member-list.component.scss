@@ -39,7 +39,7 @@
 
     .member-list-container {
         position: relative;
-        height: calc(100% - 40px);
+        height: calc(100% - 60px);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -50,25 +50,25 @@
             overflow-y: scroll;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 13px;
             flex-grow: 1;
 
             .member-btn-container {
                 display: flex;
                 flex-direction: column;
                 gap: 13px;
-
                 .member-btn {
                     position: relative;
                     padding: 4px 20px;
+                    border-radius: 100px;
                     display: flex;
                     align-items: center;
-                    gap: 15px;
+                    gap: 10px;
+                    overflow: hidden;
 
                     &:hover {
                         color: $purple-blue-bright;
                         background-color: $violet-bright;
-                        border-radius: 100px;
                         cursor: pointer;
                     }
 
@@ -81,6 +81,8 @@
                     .member-name {
                         font-size: 18px;
                         font-weight: 400;
+                        text-align: left;
+                        @include textOverflowMulti();
                     }
 
                     app-activity-state-dot {

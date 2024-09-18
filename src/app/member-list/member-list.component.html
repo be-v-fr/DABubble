@@ -10,7 +10,7 @@
     <div class="member-list-container">
         <div class="members-list-box">
             <div *ngFor="let user of channelMembers" class="member-btn-container">
-                <button class="member-btn" (click)="openUserProfile(user)">
+                <button class="member-btn" (click)="openUserProfile(user)" title="{{ user.name }}">
                     <img [src]="user.avatarSrc" alt="{{user.name}}" />
                     <span class="member-name">{{ user.name }}</span>
                     <app-activity-state-dot [user]="user" />
@@ -25,3 +25,5 @@
             </button>
         </div>
     </div>
+</div>
+
