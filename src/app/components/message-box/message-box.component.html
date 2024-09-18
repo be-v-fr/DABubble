@@ -23,7 +23,7 @@
         </div>
         <ul class="members-list" *ngIf="channel && showingMembersList">
             @for(member of channel.members; track member) {
-            <li (click)="addToMessage(member.name)">
+            <li (click)="addToMessage(member.name)" title="{{member.name}}">
                 <img src="{{member.avatarSrc}}" alt="Avatar">
                 <span>{{member.name}}</span>
             </li>
