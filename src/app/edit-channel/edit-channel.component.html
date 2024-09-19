@@ -101,9 +101,9 @@
     </div>
     <div class="leaveChannelBtn">
         @if(data.members.length > 1) {
-            <button type="submit" class="form-btn-primary" (click)="leaveChannel()" [disabled]="data.name === 'Team'" || loading>Channel verlassen</button>
+            <button type="submit" class="form-btn-primary" (click)="leaveChannel()" [disabled]="data.name === 'Team' || loading">Channel verlassen</button>
         } @else {
-            <button type="submit" class="form-btn-primary-warning" (click)="onDeleteChannelSubmit()" [disabled]="data.name === 'Team'" || loading>Channel löschen</button>
+            <button type="submit" class="form-btn-primary-warning" (click)="onDeleteChannelSubmit()" [disabled]="data.name === 'Team' || loading">Channel löschen</button>
         }
     </div>
 </div>
