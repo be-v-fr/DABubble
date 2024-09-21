@@ -30,8 +30,6 @@ export class MainUserProfileCardComponent {
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
-        console.log('MainUser Profile-Card..constr. data:', data);
-        
         this.mainUser = this.data.mainUser;
     }
 
@@ -49,10 +47,6 @@ export class MainUserProfileCardComponent {
         this.dialogUserRef.afterOpened().subscribe( () => {
             this.closeDialog();
         });
-
-        this.dialogUserRef.afterClosed().subscribe(result => {
-            console.log('The dialog "EditMainUserProfileCard" was Closed.', result);
-        });
     }
 
     openEditAvatar() {
@@ -64,10 +58,6 @@ export class MainUserProfileCardComponent {
 
         this.dialogAvatarRef.afterOpened().subscribe( () => {
             this.closeDialog();
-        });
-
-        this.dialogAvatarRef.afterClosed().subscribe(result => {
-            console.log('The dialog "EditMainUserAvatar" was Closed.', result);
         });
     }
 
