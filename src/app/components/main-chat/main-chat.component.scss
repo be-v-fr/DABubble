@@ -138,6 +138,16 @@
     }
 }
 
+@media screen and (max-width: 1200px) {
+    .main-container {
+        &:has(.thread) {
+            .main-section {
+                min-width: 470px;
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 768px) {
     .main-container {
         position: absolute;

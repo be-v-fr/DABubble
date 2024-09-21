@@ -9,26 +9,28 @@
     <div class="profileImg">
         <img class="#" [src]="user.avatarSrc" />
     </div>
-    <div class="userName">
-        <h1>{{ user.name}}</h1>
-        <div class="online">
-            <app-activity-state-dot [user]="user" />
-            @if (activityService.getUserState(user) == 'active') {
-            <p class="status-text online">Aktiv</p>
-            } @else if (activityService.getUserState(user) == 'idle') {
-            <p class="status-text idle">Abwesend</p>
-            } @else {
-            <p class="status-text offline">Offline</p>
-            }
+    <div class="profile-content">
+        <div class="userName">
+            <h1>{{ user.name}}</h1>
+            <div class="online">
+                <app-activity-state-dot [user]="user" />
+                @if (activityService.getUserState(user) == 'active') {
+                <p class="status-text online">Aktiv</p>
+                } @else if (activityService.getUserState(user) == 'idle') {
+                <p class="status-text idle">Abwesend</p>
+                } @else {
+                <p class="status-text offline">Offline</p>
+                }
+            </div>
         </div>
-    </div>
-    <div class="emailContainer">
-        <div class="email">
-            <img src="../../assets/img/userProfileImg/mail.png" />
-            <p>E-Mail-Adresse</p>
-        </div>
-        <div class="showEmail">
-            <p>{{ user.email }}</p>
+        <div class="emailContainer">
+            <div class="email">
+                <img src="../../assets/img/userProfileImg/mail.png" />
+                <p>E-Mail-Adresse</p>
+            </div>
+            <div class="showEmail">
+                <p>{{ user.email }}</p>
+            </div>
         </div>
     </div>
     <div class="submit-btns">

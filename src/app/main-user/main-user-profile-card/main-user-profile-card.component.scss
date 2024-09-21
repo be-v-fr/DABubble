@@ -8,6 +8,7 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
     position: fixed;
     top: 110px;
     right: 20px;
+    max-height: calc(100% - 32px);
     width: 500px;
     height: 600px;
     background-color: white;
@@ -92,14 +93,6 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
         img {
             cursor: pointer;
         }
-        // img:hover {
-        //     content: url('/assets/img/icons/edit_hover.svg');
-        //      }
-        // &:hover{
-        //     background-color:#eceefe;
-        //     border-radius:25px;
-        // padding: 8px 8px;      
-        // }
     }
     .userName {
         position: absolute;
@@ -117,6 +110,8 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
             .name {
                 font-size: 24px;
                 font-weight: 600;
+                overflow: hidden;
+                word-break: break-word;
             }
             .edit {
                 color: $purple-blue-bright;
@@ -186,6 +181,8 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
                 font-weight: 400;
                 font-size: 18px;
                 color: #1381FF;
+                overflow: hidden;
+                word-break: break-word;
             }
         }
     }

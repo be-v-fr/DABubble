@@ -22,11 +22,12 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        align-items: baseline;
+        align-items: center;
 
         p {
             font-size: 24px;
             font-weight: 700;
+            margin: 0;
         }
 
         .close-card-btn {
@@ -57,76 +58,88 @@
         }
     }
 
-    .userName {
+    .profile-content {
         width: 100%;
-        // height: 86px;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-
-        h1 {
-            margin-block-end: 0;
-        }
-
-        .online {
-            height: 27px;
+        height: 100%;
+        overflow-y: auto;
+        @include scrollbar();
+        .userName {
+            width: 100%;
             display: flex;
-            align-items: center;
-            flex-wrap: nowrap;
+            flex-direction: column;
             gap: 15px;
-
-            app-activity-state-dot {
-                width: 16px;
-                height: 16px;
-            }
-
-            .status-text {
-                font-weight: 400;
-                font-size: 20px;
+    
+            h1 {
                 margin-block-end: 0;
-
-                &.online {
-                    color: $onlinedot-online;
-                }
-
-                &.idle {
-                    color: #c8c82e;
-                }
-            }
-        }
-    }
-
-    .emailContainer {
-        width: 100%;
-        height: 70px;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-
-        .email {
-            display: flex;
-            gap: 20px;
-
-            img {
-                width: 25px;
-                height: 20px;
-            }
-
-            p {
-                font-size: 20px;
+                font-family: 'Nunito', sans-serif;
+                font-size: 32px;
                 font-weight: 700;
-                margin-block-end: 0;
+                overflow: hidden;
+                word-break: break-word;
+            }
+    
+            .online {
+                height: 27px;
+                display: flex;
+                align-items: center;
+                flex-wrap: nowrap;
+                gap: 15px;
+    
+                app-activity-state-dot {
+                    width: 16px;
+                    height: 16px;
+                }
+    
+                .status-text {
+                    font-weight: 400;
+                    font-size: 20px;
+                    margin-block-end: 0;
+    
+                    &.online {
+                        color: $onlinedot-online;
+                    }
+    
+                    &.idle {
+                        color: #c8c82e;
+                    }
+                }
             }
         }
-
-        .showEmail {
-            margin-left: 50px;
-
-            p {
-                margin-block-end: 0;
-                color: #1381FF;
-                font-size: 18px;
-                font-weight: 400;
+    
+        .emailContainer {
+            width: 100%;
+            height: 70px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+    
+            .email {
+                display: flex;
+                gap: 20px;
+    
+                img {
+                    width: 25px;
+                    height: 20px;
+                }
+    
+                p {
+                    font-size: 20px;
+                    font-weight: 700;
+                    margin-block-end: 0;
+                }
+            }
+    
+            .showEmail {
+                margin-left: 50px;
+    
+                p {
+                    margin-block-end: 0;
+                    color: #1381FF;
+                    font-size: 18px;
+                    font-weight: 400;
+                    overflow: hidden;
+                    word-break: break-word;
+                }
             }
         }
     }
@@ -170,6 +183,27 @@
         .profileImg img {
             width: 150px;
             height: 150px;
+        }
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .userCard {
+        padding: 20px;
+        width: auto;
+        height: calc(100% - 32px);
+        gap: 15px;
+        .profileImg img {
+            width: 150px;
+            height: 150px;
+        }
+        .profile-content {
+            .userName {
+                h1 {
+                    font-size: 20px;
+                    line-height: 100%;
+                }
+            }
         }
     }
 }
