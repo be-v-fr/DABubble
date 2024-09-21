@@ -314,10 +314,7 @@
                 padding: 10px;
             }
 
-
             container: message-edit / inline-size;
-
-            // ONLY IF WORKSPACE MENU IS OPENED !! IS THERE A PURE CSS SOLUTION TO THIS ??
             @container message-edit (max-width: 400px) {
                 .message-edit-footer {
                     width: 100%;
