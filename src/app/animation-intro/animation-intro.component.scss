@@ -191,6 +191,9 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
 .logo-animate {
     .logo-container {
         animation: size-container calc($animation-duration * 0.42) ease-in-out;
+        @media screen and (max-width: 480px) {
+            animation-name: size-container-480;
+        }
         animation-delay: calc($animation-duration * 0.44);
         animation-fill-mode: backwards;
         @keyframes size-container {
@@ -200,6 +203,14 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
             to {
                 transform: scale(1) translateX(0);
             }
+        }
+        @keyframes size-container-480 {
+            from {
+                transform: scale(1.9) translateX(-24%);
+            }
+            to {
+                transform: scale(1) translateX(0);
+            }            
         }
         .logo-img-container img {
             animation: move-img calc($animation-duration / 3) ease-in-out;

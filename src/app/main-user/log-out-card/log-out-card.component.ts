@@ -35,9 +35,6 @@ export class LogOutCardComponent {
                 mainUser: this.data.mainUser
             }
         });
-
-        this.dialogUserRef.afterClosed().subscribe(result => {
-        });
     }
 
     close() {

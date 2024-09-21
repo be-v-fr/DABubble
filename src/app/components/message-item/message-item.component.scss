@@ -96,6 +96,7 @@
                 display: flex;
                 align-items: center;
                 gap: 20px;
+
                 &.reversed {
                     flex-direction: row-reverse;
                 }
@@ -106,6 +107,7 @@
                     line-height: 24.55px;
                     cursor: pointer;
                     @include textOverflowMulti();
+
                     &:hover {
                         color: rgba(68, 77, 242, 1);
                     }
@@ -125,7 +127,7 @@
                 background-color: $violet-bright;
                 border-radius: 0 30px 30px 30px;
                 padding: 15px;
-                
+
                 .message-text {
                     font-size: 18px;
                     font-weight: 400;
@@ -232,7 +234,7 @@
 
         .message-edit {
             width: 90%;
-            height: 145px;
+            // height: 145px;
             display: flex;
             flex-direction: column;
             gap: 16px;
@@ -305,6 +307,36 @@
                         }
                     }
 
+                }
+            }
+
+            
+            @media screen and (max-width: 800px) and (min-width: 768.5px) {
+                padding: 10px;
+            }
+
+            container: message-edit / inline-size;
+
+            @container message-edit (max-width: 400px) {
+                .message-edit-footer {
+                    width: 100%;
+                    display: unset;
+
+                    .message-edit-footer-actions {
+                        width: 100%;
+                        justify-content: space-between;
+                        gap: unset;
+
+                        @container message-edit (max-width: 324px) {
+                            flex-direction: column-reverse;
+                            align-items: center;
+                            gap: 4px;
+
+                            button {
+                                width: 100%;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -433,16 +465,39 @@
     }
 }
 
+@media screen and (max-width: 950px) {
+    .reaction-bar-container{
+        top: -45px !important;
+    }
+    .reversed[_ngcontent-ng-c2023459723] .reaction-bar-container{
+        left: 15px !important;
+
+    }
+    .edit-message-container {
+            left: -110px !important;
+            top: 48px !important;
+            width: 267px !important;
+
+        }
+    
+}
+
 @media screen and (max-width: 430px) {
     :host {
         .message-container {
+            padding: 12px;
+            gap: 12px;
+
             .img-container {
                 img {
                     width: 50px;
                     height: 50px;
                 }
             }
+
+            .message-edit {
+                padding: 8px;
+            }
         }
     }
 }
-

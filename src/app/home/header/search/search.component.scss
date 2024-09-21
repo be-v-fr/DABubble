@@ -36,6 +36,7 @@
             position: absolute;
             z-index: 10;
             width: calc(100% - 70px);
+            min-width: 420px;
             max-height: 762px;
             overflow-y: hidden;
             top: calc(100% - 16px);
@@ -219,6 +220,7 @@
         .search-results-container {
             width: 480px;
             max-width: calc(100vw - 85px);
+            min-width: unset;
             top: calc(100% - 9px);
             left: 24px;
 

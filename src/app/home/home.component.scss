@@ -15,12 +15,14 @@ button.nav-button {
     gap: 10px;
     transform: translateY(-30%);
     transition: left 0.3s ease;
+
     .inner-button {
         height: fit-content;
         display: flex;
         flex-direction: column-reverse;
         align-items: center;
         gap: 10px;
+
         span {
             font-size: 20px;
             font-weight: 500;
@@ -29,12 +31,15 @@ button.nav-button {
             text-orientation: mixed;
             transform: rotate(180deg);
         }
+
         .close {
             transform: rotate(180deg);
         }
     }
+
     &:hover {
         color: $purple-blue-bright;
+
         .inner-button {
             img {
                 content: url('/assets/img/icons/show_menu_hover.svg');
@@ -54,14 +59,16 @@ button.nav-button {
     width: 100%;
     max-height: calc(100% - 115px);
     transition: transform 0.3s;
+
     &.expanded {
         gap: 20px;
+
         .main-content {
             max-width: calc(100vw - 426px);
         }
     }
 
-    
+
     app-navigation {
         opacity: 0;
         width: 0;
@@ -83,7 +90,7 @@ button.nav-button {
 
     .emoji-container {
         width: 100%;
-        height: 100%;   
+        height: 100%;
         position: absolute;
         top: 0;
         left: 0;
@@ -107,22 +114,39 @@ button.nav-button {
         height: calc(100% - 80px); // Höhe 100% - Header, damit bei Dialog's kein Scrollbalken erscheint
         padding: 0;
         gap: 0;
+
         &.expanded {
             gap: 0;
         }
-        app-navigation, app-navigation.expanded {
+
+        app-navigation,
+        app-navigation.expanded {
             opacity: 1;
             width: 100%;
             transition: none;
         }
+
         .main-content.hide {
             display: none;
         }
     }
+
     // .main-content{
     //     position: absolute;
     //     left: 0;
     //     right: 0;
     //   }
+
+    .emoji-container{
+        emoji-mart {
+        position: absolute;
+        bottom: 0;
+        left: 0 !important;
+    }
+
+    }
+
+
+
 
 }

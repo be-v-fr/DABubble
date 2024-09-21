@@ -108,13 +108,7 @@ export class EditMainUserProfileCardComponent {
             }
         });
 
-        this.dialogAvatarRef.afterOpened().subscribe(() => {
-            this.closeDialog();
-        });
-
-        this.dialogAvatarRef.afterClosed().subscribe(result => {
-            console.log('The dialog "EditMainUserAvatar" was Closed.', result);
-        });
+        this.dialogAvatarRef.afterOpened().subscribe(() => this.closeDialog());
     }
 
 }

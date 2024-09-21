@@ -42,9 +42,10 @@ $onlinedot-offline: #686868; // this is identical to "grey"
         box-shadow:
             inset -1px -1px 0px rgba(0, 0, 0, 0.05),
             inset 1px 1px 0px rgba(0, 0, 0, 0.05);
-            &:hover {
-                cursor: pointer;
-            }
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     &::-webkit-scrollbar-button {
@@ -70,7 +71,7 @@ $onlinedot-offline: #686868; // this is identical to "grey"
     display: -webkit-box;
     line-clamp: $rows;
     -webkit-line-clamp: $rows;
-    -webkit-box-orient: vertical; 
+    -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     word-wrap: break-word;
 }
@@ -293,7 +294,7 @@ a {
     @media screen and (max-height: 800px),
     screen and (max-width: 1024px) {
         font-size: 13px;
-    }    
+    }
 }
 
 .error-msg {
@@ -304,15 +305,18 @@ a {
 .dialog-all-corner-30 {
     &.cdk-overlay-pane.mat-mdc-dialog-panel {
         width: min(872px, 100%);
+
         @media screen and (max-width: 890px) {
             max-width: none;
             width: 100%;
         }
     }
+
     .mat-mdc-dialog-container .mdc-dialog__surface {
         width: 100%;
         border-radius: 30px;
         background-color: transparent;
+
         @media screen and (max-width: 890px) {
             border-radius: 0;
         }
@@ -322,15 +326,18 @@ a {
 .dialog-topleft-edge {
     &.cdk-overlay-pane.mat-mdc-dialog-panel {
         width: min(872px, 100%);
+
         @media screen and (max-width: 890px) {
             max-width: none;
             width: 100%;
         }
     }
+
     .mat-mdc-dialog-container .mdc-dialog__surface {
         width: 100%;
         border-radius: 30px;
         background-color: transparent;
+
         @media screen and (max-width: 890px) {
             border-radius: 0;
         }
@@ -340,18 +347,29 @@ a {
 .dialog-topright-edge {
     &.cdk-overlay-pane.mat-mdc-dialog-panel {
         width: min(872px, 100%);
+
         @media screen and (max-width: 890px) {
             max-width: none;
             width: 100%;
         }
     }
+
     .mat-mdc-dialog-container .mdc-dialog__surface {
         width: 100%;
         border-radius: 30px;
         background-color: transparent;
+
         @media screen and (max-width: 890px) {
             border-radius: 0;
         }
     }
 }
 
+@media screen and (max-width: 768px) {
+
+    .emoji-mart {
+        border-radius: 0;
+        width: 100% !important;
+    }
+
+}
