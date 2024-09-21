@@ -56,9 +56,7 @@ export class MainUserProfileCardComponent {
             }
         });
 
-        this.dialogAvatarRef.afterOpened().subscribe( () => {
-            this.closeDialog();
-        });
+        this.dialogAvatarRef.afterOpened().subscribe( () => this.closeDialog());
     }
 
 

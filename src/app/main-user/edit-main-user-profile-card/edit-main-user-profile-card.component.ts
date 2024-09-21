@@ -108,9 +108,7 @@ export class EditMainUserProfileCardComponent {
             }
         });
 
-        this.dialogAvatarRef.afterOpened().subscribe(() => {
-            this.closeDialog();
-        });
+        this.dialogAvatarRef.afterOpened().subscribe(() => this.closeDialog());
     }
 
 }
