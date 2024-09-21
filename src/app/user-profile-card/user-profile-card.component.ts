@@ -58,8 +58,8 @@ export class UserProfileCardComponent implements OnInit, OnDestroy {
     });
   }
 
-  closeCard() {
-    this.dialogRef.close();
+  closeCard(msg = '') {
+    this.dialogRef.close(msg);
   }
 
   async onUserClick(user: User): Promise<void> {

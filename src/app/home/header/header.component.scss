@@ -78,6 +78,7 @@ app-search {
     }
 }
 
+
 .userprofile-wrapper {
     min-width: 471px;
     max-width: 471px;
@@ -117,8 +118,6 @@ app-search {
             overflow: hidden;
             font-size: 32px;
             font-weight: 700;
-                // display: -webkit-box;
-            // the property "display: -webkit-box;" prevented "text-overflow: ellipsis" from working
             line-clamp: 2;
             -webkit-line-clamp: 2;
             -webkit-box-orient: horizontal; 

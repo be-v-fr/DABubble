@@ -27,9 +27,7 @@ export class LogOutCardComponent {
         public dialogUserRef: MatDialogRef<MainUserProfileCardComponent>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any,
-    ) {
-        console.log('LogOut-Card..constr. data:', data);
-    }
+    ) {}
 
     openProfile() {
         this.dialogUserRef = this.dialog.open(MainUserProfileCardComponent, {

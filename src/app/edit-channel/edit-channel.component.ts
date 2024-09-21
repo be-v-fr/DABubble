@@ -24,14 +24,16 @@ export class EditChannelComponent {
   editMode: boolean = false;
   editDescriptionMode: boolean = false;
   nameAvailable: boolean = true;
-  mobileView = false;
+//   mobileView = false;
   channelName: string = '';
   channelDescription: string = '';
   channelAuthorName: string = '';
   loading: boolean = false;
 
   constructor(
-    private dialog: MatDialog,
+    public dialog: MatDialog,
+    private dialogUserRef: MatDialogRef<UserProfileCardComponent>,
+    private dialogMemberRef: MatDialogRef<AddMembersComponent>,
     private dialogRef: MatDialogRef<EditChannelComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Channel,
     private channelsService: ChannelsService,
@@ -42,17 +44,17 @@ export class EditChannelComponent {
     this.channelDescription = data.description;
     this.channelAuthorName = this.getAuthorName();
     this.userIsAuthor = (this.data.author_uid === this.authService.getCurrentUid());
-    this.checkScreenSize();
+    // this.checkScreenSize();
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.checkScreenSize();
-  }
+//   @HostListener('window:resize', ['$event'])
+//   onResize(event: any) {
+//     this.checkScreenSize();
+//   }
 
-  checkScreenSize() {
-    this.mobileView = window.innerWidth < 891;
-  }
+//   checkScreenSize() {
+//     this.mobileView = window.innerWidth < 891;
+//   }
 
   getAuthorName(): string {
     if (!this.isTeamChannel()) {
@@ -64,11 +66,17 @@ export class EditChannelComponent {
   }
 
   openUserProfile(user: User): void {
-    this.dialog.open(UserProfileCardComponent, { data: user });
+    this.dialogUserRef = this.dialog.open(UserProfileCardComponent, { data: user });
+
+    this.dialogUserRef.afterClosed().subscribe(result => {
+        if (result == "directMessage") {
+            this.dialogRef.close();
+        }
+    });
   }
 
   openAddMembers(): void {
-    const dialogRef = this.dialog.open(AddMembersComponent, {
+    this.dialogMemberRef = this.dialog.open(AddMembersComponent, {
       data: { channelMembers: this.data.members, channel: this.data }
     });
   }

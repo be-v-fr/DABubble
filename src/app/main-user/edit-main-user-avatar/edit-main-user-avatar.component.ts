@@ -61,9 +61,6 @@ export class EditMainUserAvatarComponent {
      */
     selectDefaultAvatar(index: string) {
         this.defaultAvatar = index;
-        // this.resetFileError();
-        // this.userTempData.avatarSrc = `assets/img/avatar/avatar_${index}.svg`;
-        // this.avatarChanged.emit(this.userTempData.avatarSrc);
     }
 
     /**
@@ -117,9 +114,6 @@ export class EditMainUserAvatarComponent {
       this.defaultAvatar = '-1';
       this.loading = false;
       this.showNewPicture = true;
-    //   this.usersService.updateUser(new User(this.userTempData))
-    //     .then(() => this.loading = false)
-    //     .catch((err: Error) => this.onError(err));
     }
   }
 

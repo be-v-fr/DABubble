@@ -28,7 +28,9 @@ export class MemberListComponent {
     private dialog: MatDialog,
     private channelsService: ChannelsService,
     public activityService: ActivityService,
-    private dialogRef: MatDialogRef<any>
+    private dialogRef: MatDialogRef<MemberListComponent>,
+    private dialogUserRef: MatDialogRef<UserProfileCardComponent>,
+    private dialogMemberRef: MatDialogRef<AddMembersComponent>,
   ) {
     this.channelMembers = data.channelMembers;
     this.channel = data.channel;
@@ -37,11 +39,11 @@ export class MemberListComponent {
 
   addMember(): void {
     this.dialogRef.close();
-    const dialogRef = this.dialog.open(AddMembersComponent, {
+    this.dialogMemberRef = this.dialog.open(AddMembersComponent, {
       data: { channel: this.channel }
     });
 
-    dialogRef.afterClosed().subscribe((newUsers: User[]) => {
+    this.dialogMemberRef.afterClosed().subscribe((newUsers: User[]) => {
       if (newUsers && newUsers.length > 0) {
         this.channelMembers.push(...newUsers);
       } else {this.checkMembersIndependently()}
@@ -57,7 +59,13 @@ export class MemberListComponent {
   }
 
   openUserProfile(user: User): void {
-    this.dialog.open(UserProfileCardComponent, {data: user});
+    this.dialogUserRef = this.dialog.open(UserProfileCardComponent, {data: user});
+
+    this.dialogUserRef.afterClosed().subscribe(result => {
+        if (result == "directMessage") {
+            this.dialogRef.close();
+        }
+    });
   }
 
   closeCard() {
