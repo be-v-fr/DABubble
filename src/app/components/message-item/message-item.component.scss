@@ -310,11 +310,13 @@
                 }
             }
 
+            
             @media screen and (max-width: 800px) and (min-width: 768.5px) {
                 padding: 10px;
             }
 
             container: message-edit / inline-size;
+
             @container message-edit (max-width: 400px) {
                 .message-edit-footer {
                     width: 100%;
@@ -461,6 +463,23 @@
             }
         }
     }
+}
+
+@media screen and (max-width: 950px) {
+    .reaction-bar-container{
+        top: -45px !important;
+    }
+    .reversed[_ngcontent-ng-c2023459723] .reaction-bar-container{
+        left: 15px !important;
+
+    }
+    .edit-message-container {
+            left: -110px !important;
+            top: 48px !important;
+            width: 267px !important;
+
+        }
+    
 }
 
 @media screen and (max-width: 430px) {
