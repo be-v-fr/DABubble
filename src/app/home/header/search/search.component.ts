@@ -6,7 +6,7 @@ import { Post } from '../../../../models/post.class';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TimeService } from '../../../../services/time.service';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { MembersOverviewComponent } from '../../../components/main-chat/members-overview/members-overview.component';
 import { UserProfileCardComponent } from '../../../user-profile-card/user-profile-card.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -40,7 +40,6 @@ export class SearchComponent {
 
     constructor(
         private dialog: MatDialog,
-        private router: Router
     ) { }
 
     search(): void {

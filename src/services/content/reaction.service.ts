@@ -71,8 +71,6 @@ export class ReactionService {
 
     } catch (error) {
       console.error('Error handling reaction for post:', error);
-      // Optionally, show user feedback for errors
-      // this.snackBar.open('Failed to handle reaction', 'Close', { duration: 2000 });
     } finally {
       this._reactionsPicker$.next(false);
     }

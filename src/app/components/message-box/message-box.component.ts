@@ -192,8 +192,6 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
    * @returns True if the form is empty, otherwise false.
    */
   isFormEmpty(): boolean {
-    console.log('message:', this.data.message);
-    console.log('attachment:', this.data.attachmentSrc);
     if (this.inThread) {
       return (this.data.messageInThread.length == 0 && this.data.attachmentSrc.length == 0);
     } else {
