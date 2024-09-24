@@ -19,10 +19,16 @@ import { ToastNotificationComponent } from '../toast-notification/toast-notifica
 })
 export class RequestPwResetComponent {
   private authService = inject(AuthService);
+
+  /** Form data */
   data = {
     email: ''
   }
+
+  /** Toast notification display state */
   showToast: boolean = false;
+
+  /** Loading state during data processing / toast notification / backend communication */
   loading: boolean = false;
 
 

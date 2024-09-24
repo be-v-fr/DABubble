@@ -20,13 +20,23 @@ export class ResetPwComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+
+  /** Form data */
   passwords = {
     password: '',
     passwordConfirmation: ''
   }
+
+  /** Toast notification display state */
   showToast: boolean = false;
+
+  /** Storage for any authentication error response from backend */
   authError: string | null = null;
+
+  /** Loading state during data processing / toast notification / backend communication */
   loading: boolean = false;
+
+  /** oobCode received from email link and transmitted via auth.guard */
   oobCode: string = '';
 
 

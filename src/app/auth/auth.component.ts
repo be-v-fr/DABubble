@@ -20,8 +20,14 @@ import { AnimationIntroService } from '../animation-intro/service/animation-intr
 export class AuthComponent {
   @ViewChild('routerOutlet', { static: false, read: ElementRef }) routerOutlet!: ElementRef;
   public introService = inject(AnimationIntroService);
+
+  /** Check viewport width to correctly setup intro animation */
   animationResponsive: boolean = (window.innerWidth <= 1024);
 
+
+  /**
+   * Check content height to correctly setup intro animation
+   */
   ngAfterViewInit() {
     if (window.innerWidth <= 1024) {
       const routerOutletHeight = this.routerOutlet.nativeElement.offsetHeight;

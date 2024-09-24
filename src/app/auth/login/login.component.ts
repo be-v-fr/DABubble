@@ -24,20 +24,33 @@ import { Subscription } from 'rxjs';
 export class LoginComponent implements OnDestroy {
   private authService = inject(AuthService);
   private usersService = inject(UsersService);
-  private router = inject(Router)
+  private router = inject(Router);
+  private guestSub = new Subscription();
+
+  /** Login form data */
   userData = {
     uid: '',
     name: '',
     email: '',
     password: ''
   }
+
+  /** Storage for any authentication error response from backend */
   authError: string | null = null;
+
+  /** Toast notification display state */
   showToast: boolean = false;
+
+  /** Loading state during data processing / toast notification / backend communication */
   loading: boolean = false;
+
+  /** Route to redirect to after logging in */
   redirectTo: 'home' | 'avatar' = 'home';
-  private guestSub = new Subscription();
 
 
+  /**
+   * This function unsubscribes all subscriptions.
+   */
   ngOnDestroy(): void {
     this.guestSub.unsubscribe();
   }
@@ -146,6 +159,9 @@ export class LoginComponent implements OnDestroy {
   }
 
 
+  /** 
+   * This function sucscribes the guest user observable to handle anonymous guest log in
+   * */
   subGuest(): Subscription {
     return this.authService.guestUser$.subscribe({
       next: () => this.onGuestLogIn()

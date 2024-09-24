@@ -19,9 +19,14 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrl: './toast-notification.component.scss'
 })
 export class ToastNotificationComponent {
+
+  /** Notification content key (translated to actual message in HTML template) */
   @Input() message: 'login' | 'signup' | 'email' | 'resetPw' = 'login';
+  
+  /** Event triggered after toast notification has expired */
   @Output() then = new EventEmitter<void>;
 
+  /** Toast notification display state, synced in real time with input variable */
   private _showing: boolean = false;
   @Input()
   set showing(value: boolean) {
@@ -34,6 +39,10 @@ export class ToastNotificationComponent {
     return this._showing;
   }
 
+
+  /**
+   * This function is triggered after the "showing" property is set to true. 
+   */
   onShow() {
     setTimeout(() => {
       if (this._showing) {
