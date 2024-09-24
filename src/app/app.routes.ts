@@ -1,4 +1,4 @@
-import { ExtraOptions, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -49,7 +49,7 @@ export const routes: Routes = [
       { path: 'pickAvatar', component: PickAvatarComponent },
       { path: 'requestPwReset', component: RequestPwResetComponent },
       { path: 'resetPw', component: ResetPwComponent },
-      { path: 'changeEmail', component: ChangeEmailComponent}
+      { path: 'changeEmail', component: ChangeEmailComponent }
     ],
   },
   { path: 'impress', component: ImpressComponent },

@@ -34,16 +34,31 @@ import { AnimationIntroService } from './service/animation-intro.service';
   ]
 })
 export class AnimationIntroComponent implements OnInit {
-  @Input() animate: boolean = true;
-  @Input() authResponsive: boolean = false; 
-  animationState: 'center' | 'top' = 'center';
-  translateX: number;
-  translateY: number | null = null;
-  @Output() then = new EventEmitter<void>();
-  after: boolean = false;
   private router = inject(Router);
   private introService = inject(AnimationIntroService);
 
+  /** This property determines whether the intro animation will occur */
+  @Input() animate: boolean = true;
+
+  /** This property controls the responsive style (false = PC style) */
+  @Input() authResponsive: boolean = false;
+  
+  /** This property represents the current animation state / position of the logo */
+  animationState: 'center' | 'top' = 'center';
+
+  /** Logo position fine tuning: x coordinate */
+  translateX: number;
+  
+  /** Logo position fine tuning: y coordinate */
+  translateY: number | null = null;
+
+  /** This event is being emitted after the animation is completed */
+  @Output() then = new EventEmitter<void>();
+
+  /** This property is set to true after the animation is completed */
+  after: boolean = false;
+
+  /** Animation pausing state, synced in real time with input variable */
   private _pause: boolean = false;
   @Input()
   set pause(value: boolean) {
@@ -55,6 +70,9 @@ export class AnimationIntroComponent implements OnInit {
   }
 
 
+  /**
+   * The constructor sets the fine tuning properties.
+   */
   constructor() {
     if(window.innerWidth > 768) {this.translateX = -97}
     else {this.translateX = -78}

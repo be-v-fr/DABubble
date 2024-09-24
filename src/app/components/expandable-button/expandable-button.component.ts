@@ -31,7 +31,7 @@ import { LoadingCircleComponent } from './loading-circle/loading-circle.componen
 })
 export class ExpandableButtonComponent implements OnInit, OnDestroy {
   private authSub = new Subscription();
-  private userSub!: Subscription;
+  private userSub = new Subscription();
   private channelsSub = new Subscription();
 
   /**

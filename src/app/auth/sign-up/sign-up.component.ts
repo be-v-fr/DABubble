@@ -23,13 +23,21 @@ export class SignUpComponent {
   private authService = inject(AuthService);
   private usersService = inject(UsersService);
   private router = inject(Router);
+
+  /** Sign up form data */
   user = {
     name: '',
     email: '',
     password: ''
   }
+
+  /** Toast notification display state */
   showToast: boolean = false;
+
+  /** Storage for any authentication error response from backend */
   authError: string | null = null;
+
+  /** Loading state during data processing / toast notification / backend communication */
   loading: boolean = false;
 
 

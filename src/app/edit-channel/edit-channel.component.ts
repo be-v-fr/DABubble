@@ -24,7 +24,6 @@ export class EditChannelComponent {
   editMode: boolean = false;
   editDescriptionMode: boolean = false;
   nameAvailable: boolean = true;
-//   mobileView = false;
   channelName: string = '';
   channelDescription: string = '';
   channelAuthorName: string = '';
@@ -44,17 +43,7 @@ export class EditChannelComponent {
     this.channelDescription = data.description;
     this.channelAuthorName = this.getAuthorName();
     this.userIsAuthor = (this.data.author_uid === this.authService.getCurrentUid());
-    // this.checkScreenSize();
   }
-
-//   @HostListener('window:resize', ['$event'])
-//   onResize(event: any) {
-//     this.checkScreenSize();
-//   }
-
-//   checkScreenSize() {
-//     this.mobileView = window.innerWidth < 891;
-//   }
 
   getAuthorName(): string {
     if (!this.isTeamChannel()) {
@@ -69,9 +58,9 @@ export class EditChannelComponent {
     this.dialogUserRef = this.dialog.open(UserProfileCardComponent, { data: user });
 
     this.dialogUserRef.afterClosed().subscribe(result => {
-        if (result == "directMessage") {
-            this.dialogRef.close();
-        }
+      if (result == "directMessage") {
+        this.dialogRef.close();
+      }
     });
   }
 
@@ -90,8 +79,8 @@ export class EditChannelComponent {
   }
 
   toggleEditDescriptionMode() {
-    this.editDescriptionMode = !this.editDescriptionMode;  
-  }  
+    this.editDescriptionMode = !this.editDescriptionMode;
+  }
 
   checkNameAvailability() {
     if (this.channelName === this.data.name) { this.nameAvailable = true }
