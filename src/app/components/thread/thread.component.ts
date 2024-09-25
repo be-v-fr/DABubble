@@ -36,6 +36,16 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   @Input() channelData: { id: string, name: string, members: User[] } | undefined;
 
+
+  /**
+   * A flag indicating whether the thread is open or not.
+   * When `true`, the thread is expanded; otherwise, it is closed.
+   * 
+   * @type {boolean}
+   * @default false
+   */
+  @Input() isThreadOpen: boolean = false;
+
   /**
    * The channel object associated with the thread.
    */
