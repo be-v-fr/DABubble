@@ -12,7 +12,7 @@
         <div class="thread-message">
             <app-time-separator [timestamp]="post.date" *ngIf="post" />
             <app-message-item [postUid]="post?.user_id!" [post]="post!" [isMainPostThread]="true"
-                [messageSender]="isCurrentUserAuthor(post?.user_id!)" [ComeFromThread]="true"/>
+                [messageSender]="isCurrentUserAuthor(post?.user_id!)" [ComeFromThread]="true" />
             <div class="antworten-separator">{{ post?.thread?.posts?.length }} Antworten</div>
         </div>
         @if(post && post.thread) {
@@ -24,10 +24,11 @@
             <app-time-separator [timestamp]="thPost.date" [previous]="post.thread.posts[i - 1].date" />
             }
             <app-message-item [id]="thPost.post_id" [postUid]="thPost.user_id" [post]="thPost"
-                [messageSender]="isCurrentUserAuthor(thPost.user_id)" [ComeFromThread]="true" />
+                [messageSender]="isCurrentUserAuthor(thPost.user_id)" [ComeFromThread]="true" [isThreadOpen]="true" />
         </div>
         }
         }
     </div>
-    <app-message-box [replying]="true" (sent)="onCreatePost($event)" [inThread]="true" [channel]="channel || undefined"/>
+    <app-message-box [replying]="true" (sent)="onCreatePost($event)" [inThread]="true"
+        [channel]="channel || undefined" />
 </div>

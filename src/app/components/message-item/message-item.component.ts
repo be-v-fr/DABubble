@@ -58,6 +58,15 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
   /** The UID of the post */
   @Input() postUid: string = "";
 
+  /**
+   * A flag indicating whether the thread is open or not.
+   * When `true`, the thread is expanded; otherwise, it is closed.
+   * 
+   * @type {boolean}
+   * @default false
+   */
+  @Input() isThreadOpen: boolean = false;
+
   /** Emits the thread ID when opening a new thread */
   @Output() threadId = new EventEmitter<string>();
 
@@ -68,7 +77,7 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
   currentUser: User | undefined;
 
   /** User data of the post creator */
-  postUser: User = new User({name: 'Unbekannter Nutzer'});
+  postUser: User = new User({ name: 'Unbekannter Nutzer' });
 
   /** Name of the attachment file, if any */
   attachmentFileName: string | null = null;
@@ -159,6 +168,7 @@ export class MessageItemComponent implements OnInit, OnChanges, OnDestroy {
    */
   onOpenNewThread() {
     this.threadId.emit(this.post.thread.thread_id);
+    this.isThreadOpen = true;
   }
 
   /**

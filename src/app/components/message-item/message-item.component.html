@@ -12,7 +12,8 @@
         <button type="button" (click)="showEditActions()">
             <span class="material-icons-outlined">more_vert</span>
             @if (showActions) {
-            <div class="edit-message-container" [class.isThread]="ComeFromThread" id="editMessages">
+            <div class="edit-message-container" [class.thread-open]="isThreadOpen"
+                [class.in-direct-message]="isInDirectMessage" [class.isThread]="ComeFromThread" id="editMessages">
                 <button class="edit-message" (click)="onEditMessage()">Nachricht bearbeiten</button>
                 <button class="delete-message" (click)="onDeletePost()">Nachricht löschen</button>
             </div>

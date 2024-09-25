@@ -21,7 +21,7 @@
                 <app-time-separator [timestamp]="post.date"
                     *ngIf="i == 0 || timeService.getDifferenceInDays(post.date) != timeService.getDifferenceInDays(currentChannel.posts[i - 1].date)" />
                 <app-message-item [id]="post.post_id" [post]="post" [messageSender]="isCurrentUserAuthor(i)"
-                    [postUid]="getPostUid(i)" (threadId)="handleThread($event)" />
+                    [postUid]="getPostUid(i)" (threadId)="handleThread($event)" [isThreadOpen]="openTh" />
             </div>
             }
             } @else {
@@ -46,7 +46,7 @@
         </div>
         <app-message-box [channel]="currentChannel" [inThread]="false" (sent)="onCreatePost($event)" />
     </section>
-    <app-thread class="thread" *ngIf="openTh" (closeTh)="closeThread($event)" [post]="currPost!"
+    <app-thread class="thread" *ngIf="openTh" (closeTh)="closeThread($event)" [isThreadOpen]="openTh" [post]="currPost!"
         [channelData]="{ id: this.currentChannel.channel_id, name: this.currentChannel.name, members: this.currentChannel.members}" />
     } @else {
     <section class="main-section">
