@@ -5,6 +5,13 @@ import { Post } from '../../models/post.class';
 import { ChannelsService } from './channels.service';
 import { Reaction } from '../../models/reaction.class';
 
+
+/**
+ * This service provides reactions (i.e. emoji) operations for a post.
+ * The operations consider the active user and whether or not the respective
+ * reaction already exists. 
+ * The current post has to be set dynamically.
+ */
 @Injectable({
   providedIn: 'root'
 })
