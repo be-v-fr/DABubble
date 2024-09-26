@@ -1,6 +1,10 @@
 import { Post } from "./post.class";
 import { User } from "./user.class";
 
+/**
+ * Represents a communication channel in the application.
+ * A channel can be either a public or private messaging (PM) channel, consisting of members (users), posts, and additional metadata.
+ */
 export class Channel {
     channel_id: string;
     name: string;
@@ -11,6 +15,14 @@ export class Channel {
     isPmChannel: boolean;
     posts: Post[];
 
+
+    /**
+     * Constructor for the `Channel` class.
+     * Initializes a new `Channel` object, either from a provided object (typically fetched from a database) or as an empty instance.
+     * 
+     * @param obj - An optional object containing initial values for the channel properties.
+     *              If no object is provided, default values are used.
+     */
     constructor(obj?: any) {
         this.channel_id = obj && obj.channel_id ? obj.channel_id : '';
         this.name = obj && obj.name ? obj.name : '';
@@ -22,16 +34,23 @@ export class Channel {
         this.posts = obj && obj.posts ? obj.posts.map((p: any) => new Post(p)) : [];
     }
 
+
+    /**
+     * Converts the `Channel` instance into a plain object (JSON format) suitable for storage or transmission.
+     * 
+     * @returns An object containing the serialized properties of the channel.
+     *          The `members` and `posts` are also converted to JSON format.
+     */
     toJson() {
         return {
             channel_id: this.channel_id,
             name: this.name,
             author_uid: this.author_uid,
             description: this.description,
-            members: this.members.map(m => m.toJson()), // Ensure to convert User objects to JSON
+            members: this.members.map(m => m.toJson()),
             date: this.date,
             isPmChannel: this.isPmChannel,
-            posts: this.posts.map(p => p.toJson()) // Ensure to convert Post objects to JSON
+            posts: this.posts.map(p => p.toJson())
         };
     }
 }
