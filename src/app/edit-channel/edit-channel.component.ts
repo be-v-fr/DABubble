@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { DeleteChannelComponent } from './delete-channel/delete-channel.component';
 import { Subscription } from 'rxjs';
 import { UserProfileCardComponent } from '../components/user-profile-card/user-profile-card.component';
-import { AddMembersComponent } from '../add-members/add-members.component';
+import { AddMembersComponent } from '../components/add-members/add-members.component';
 
 @Component({
   selector: 'app-edit-channel',

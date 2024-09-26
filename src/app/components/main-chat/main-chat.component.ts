@@ -17,7 +17,7 @@ import { TimeService } from '../../../services/time.service';
 import { User } from '../../../models/user.class';
 import { ActivityService } from '../../../services/activity.service';
 import { UsersService } from '../../../services/users.service';
-import { AddMembersComponent } from '../../add-members/add-members.component';
+import { AddMembersComponent } from '../../components/add-members/add-members.component';
 import { ForbiddenChannelFeedbackComponent } from './forbidden-channel-feedback/forbidden-channel-feedback.component';
 import { MembersOverviewComponent } from './members-overview/members-overview.component';
 import { NavigationComponent } from '../navigation/navigation.component';

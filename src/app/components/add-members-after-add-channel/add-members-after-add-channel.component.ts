@@ -6,7 +6,7 @@ import { ChannelsService } from '../../../services/content/channels.service';
 import { User } from '../../../models/user.class';
 import { UsersService } from '../../../services/users.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AddMembersInputComponent } from '../../add-members/add-members-input/add-members-input.component';
+import { AddMembersInputComponent } from '../../components/add-members/add-members-input/add-members-input.component';
 
 @Component({
   selector: 'app-add-members-after-add-channel',
@@ -32,8 +32,8 @@ export class AddMembersAfterAddChannelComponent {
   }
 
   async onSubmit() {
-    if(this.selection === 'allMembers') {this.data.members = this.usersService.users}
-    else {this.data.members = this.data.members.concat(this.specificPeopleSelected)}
+    if (this.selection === 'allMembers') { this.data.members = this.usersService.users }
+    else { this.data.members = this.data.members.concat(this.specificPeopleSelected) }
     await this.channelsService.updateChannel(this.data)
       .then(() => this.redirectToChannel());
   }

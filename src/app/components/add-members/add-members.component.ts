@@ -2,10 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UsersService } from '../../services/users.service';
-import { User } from '../../models/user.class';
-import { ChannelsService } from '../../services/content/channels.service';
-import { Channel } from '../../models/channel.class';
+import { User } from '../../../models/user.class';
+import { Channel } from '../../../models/channel.class';
+import { ChannelsService } from '../../../services/content/channels.service';
 import { AddMembersInputComponent } from './add-members-input/add-members-input.component';
 
 @Component({

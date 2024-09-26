@@ -17,7 +17,7 @@ import { MemberListComponent } from './components/member-list/member-list.compon
 import { AddMembersAfterAddChannelComponent } from './components/add-members-after-add-channel/add-members-after-add-channel.component';
 import { NewMessageComponent } from './components/new-message/new-message.component';
 import { MainChatComponent } from './components/main-chat/main-chat.component';
-import { AddMembersComponent } from './add-members/add-members.component';
+import { AddMembersComponent } from './components/add-members/add-members.component';
 import { DirectMessageComponent } from './components/direct-message/direct-message.component';
 import { EditMainUserAvatarComponent } from './main-user/edit-main-user-avatar/edit-main-user-avatar.component';
 import { authGuard } from './shared/auth.guard';
