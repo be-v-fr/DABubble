@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../../models/user.class';
 import { AddMembersComponent } from '../../add-members/add-members.component';
-import { UserProfileCardComponent } from '../../user-profile-card/user-profile-card.component';
+import { UserProfileCardComponent } from '../user-profile-card/user-profile-card.component';
 import { Channel } from '../../../models/channel.class';
 import { ChannelsService } from '../../../services/content/channels.service';
 import { ActivityService } from '../../../services/activity.service';

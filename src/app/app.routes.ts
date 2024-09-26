@@ -4,7 +4,7 @@ import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/login/login.component';
 import { ImpressComponent } from './home/legal/impress/impress.component';
 import { PrivacypolicyComponent } from './home/legal/privacypolicy/privacypolicy.component';
-import { UserProfileCardComponent } from './user-profile-card/user-profile-card.component';
+import { UserProfileCardComponent } from './components/user-profile-card/user-profile-card.component';
 import { MainUserProfileCardComponent } from './main-user/main-user-profile-card/main-user-profile-card.component';
 import { EditMainUserProfileCardComponent } from './main-user/edit-main-user-profile-card/edit-main-user-profile-card.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';

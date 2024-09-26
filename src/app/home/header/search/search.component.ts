@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { TimeService } from '../../../../services/time.service';
 import { RouterLink } from '@angular/router';
 import { MembersOverviewComponent } from '../../../components/main-chat/members-overview/members-overview.component';
-import { UserProfileCardComponent } from '../../../user-profile-card/user-profile-card.component';
+import { UserProfileCardComponent } from '../../../components/user-profile-card/user-profile-card.component';
 import { MatDialog } from '@angular/material/dialog';
 
 

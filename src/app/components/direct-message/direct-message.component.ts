@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { MessageBoxComponent } from '../message-box/message-box.component';
-import { UserProfileCardComponent } from '../../user-profile-card/user-profile-card.component';
+import { UserProfileCardComponent } from '../user-profile-card/user-profile-card.component';
 import { ChannelsService } from '../../../services/content/channels.service';
 import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';

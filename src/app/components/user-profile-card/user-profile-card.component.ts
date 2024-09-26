@@ -3,16 +3,16 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
-import { ActivityService } from '../../services/activity.service';
-import { ChannelsService } from '../../services/content/channels.service';
-import { AuthService } from '../../services/auth.service';
-import { UsersService } from '../../services/users.service';
-import { ActivityStateDotComponent } from '../components/activity-state-dot/activity-state-dot.component';
+import { ActivityService } from '../../../services/activity.service';
+import { ChannelsService } from '../../../services/content/channels.service';
+import { AuthService } from '../../../services/auth.service';
+import { UsersService } from '../../../services/users.service';
+import { ActivityStateDotComponent } from '../activity-state-dot/activity-state-dot.component';
 
 import { Subscription } from 'rxjs';
 
-import { User } from '../../models/user.class';
-import { Channel } from '../../models/channel.class';
+import { User } from '../../../models/user.class';
+import { Channel } from '../../../models/channel.class';
 
 
 @Component({
