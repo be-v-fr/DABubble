@@ -1,4 +1,4 @@
-@import "../../styles.scss";
+@import "../../../styles.scss";
 
 .memberCard {
     position: fixed;
@@ -57,6 +57,7 @@
                 display: flex;
                 flex-direction: column;
                 gap: 13px;
+
                 .member-btn {
                     position: relative;
                     padding: 4px 20px;
