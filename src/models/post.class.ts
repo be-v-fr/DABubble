@@ -1,6 +1,6 @@
-import { StorageReference } from "firebase/storage";
 import { Reaction } from "./reaction.class";
 import { Thread } from "./thread.class";
+import { v4 as uuidv4 } from 'uuid';
 
 export class Post {
     post_id: string;
@@ -22,6 +22,18 @@ export class Post {
         this.reactions = obj && obj.reactions ? obj.reactions.map((r: any) => new Reaction(r)) : [];
         this.attachmentSrc = obj && obj.attachmentSrc ? obj.attachmentSrc : '';
     }
+
+
+    setNew(channel_id: string, uid: string, message: string, attachmentSrc: string) {
+        this.post_id = uuidv4();
+        this.channel_id = channel_id;
+        this.message = message;
+        this.user_id = uid;
+        this.date = Date.now();
+        this.reactions = [];
+        this.attachmentSrc = attachmentSrc;
+    }
+
 
     toJson(): {
         post_id: string;
