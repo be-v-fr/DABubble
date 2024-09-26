@@ -5,7 +5,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ChannelsService } from '../../../services/content/channels.service';
 import { Channel } from '../../../models/channel.class';
 import { AuthService } from '../../../services/auth.service';
-import { AddMembersAfterAddChannelComponent } from '../../add-members-after-add-channel/add-members-after-add-channel.component';
+import { AddMembersAfterAddChannelComponent } from '../add-members-after-add-channel/add-members-after-add-channel.component';
 
 @Component({
   selector: 'app-add-channel',
