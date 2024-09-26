@@ -75,7 +75,7 @@ export class UsersService implements OnDestroy {
 
   async addGuestUser() {
     const user = new User({
-      name: 'Gast' // OPTIONAL: Add Guest counter for unique name
+      name: 'Gast'
     });
     try {
       const response = await addDoc(collection(this.firestore, 'users'), user.toJson());
