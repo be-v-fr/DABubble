@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnDestroy, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { TimeSeparatorComponent } from '../time-separator/time-separator.component';
 import { CommonModule } from '@angular/common';
-import { UserProfileCardComponent } from '../../user-profile-card/user-profile-card.component';
+import { UserProfileCardComponent } from '../user-profile-card/user-profile-card.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Post } from '../../../models/post.class';
 import { UsersService } from '../../../services/users.service';

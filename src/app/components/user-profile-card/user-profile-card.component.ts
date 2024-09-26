@@ -3,6 +3,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
+<<<<<<< HEAD:src/app/user-profile-card/user-profile-card.component.ts
 import { ActivityService } from '../../services/activity.service';
 import { ChannelsService } from '../../services/content/channels.service';
 import { AuthService } from '../../services/auth.service';
@@ -11,6 +12,18 @@ import { ActivityStateDotComponent } from '../components/activity-state-dot/acti
 import { Subscription } from 'rxjs';
 import { User } from '../../models/user.class';
 import { Channel } from '../../models/channel.class';
+=======
+import { ActivityService } from '../../../services/activity.service';
+import { ChannelsService } from '../../../services/content/channels.service';
+import { AuthService } from '../../../services/auth.service';
+import { UsersService } from '../../../services/users.service';
+import { ActivityStateDotComponent } from '../activity-state-dot/activity-state-dot.component';
+
+import { Subscription } from 'rxjs';
+
+import { User } from '../../../models/user.class';
+import { Channel } from '../../../models/channel.class';
+>>>>>>> 88c95140d4da5412a1dc44d41b913295527519a5:src/app/components/user-profile-card/user-profile-card.component.ts
 
 /**
  * Represents a user profile card component that displays user information and handles direct messaging functionality.

@@ -4,7 +4,7 @@ import { MessageBoxComponent } from "../message-box/message-box.component";
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { UserProfileCardComponent } from '../../user-profile-card/user-profile-card.component';
+import { UserProfileCardComponent } from '../user-profile-card/user-profile-card.component';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { Post } from '../../../models/post.class';

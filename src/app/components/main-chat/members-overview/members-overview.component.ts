@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Channel } from '../../../../models/channel.class';
-import { MemberListComponent } from '../../../member-list/member-list.component';
+import { MemberListComponent } from '../../member-list/member-list.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({

@@ -2,9 +2,9 @@ import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ChannelsService } from '../../services/content/channels.service';
-import { Channel } from '../../models/channel.class';
-import { AuthService } from '../../services/auth.service';
+import { ChannelsService } from '../../../services/content/channels.service';
+import { Channel } from '../../../models/channel.class';
+import { AuthService } from '../../../services/auth.service';
 import { AddMembersAfterAddChannelComponent } from '../add-members-after-add-channel/add-members-after-add-channel.component';
 
 /**

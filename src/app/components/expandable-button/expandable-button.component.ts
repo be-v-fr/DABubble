@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { AddChannelComponent } from '../../add-channel/add-channel.component';
+import { AddChannelComponent } from '../add-channel/add-channel.component';
 import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
 import { Subscription } from 'rxjs';

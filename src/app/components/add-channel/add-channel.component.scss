@@ -1,4 +1,4 @@
-@import "../../styles.scss";
+@import "../../../styles.scss";
 
 .container {
   width: 872px;
@@ -131,22 +131,25 @@
 
 @media screen and (max-width: 930px) {
 
-  .container{
-      width: 700px;
-    .headlineAndCloseBtn{
+  .container {
+    width: 700px;
+
+    .headlineAndCloseBtn {
       width: unset;
       margin-right: 40px;
     }
 
-    .channelName{
+    .channelName {
       margin-right: 40px;
       width: unset;
     }
-    .explain{
+
+    .explain {
       margin-right: 40px;
       width: unset;
     }
-    .form-btn-primary{
+
+    .form-btn-primary {
       position: absolute;
       right: 40px;
     }
@@ -156,33 +159,34 @@
 }
 
 @media screen and (max-width: 768px) {
-  .container{
+  .container {
     position: fixed;
     border-radius: unset;
     height: 100vh;
     width: 100%;
   }
 
-  .explain{
+  .explain {
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 25px;
     width: unset;
   }
-  .channelName{
+
+  .channelName {
     margin-left: 20px;
     margin-right: 20px;
     width: unset;
 
   }
 
-  .headlineAndCloseBtn{
+  .headlineAndCloseBtn {
     width: unset;
     margin-left: 20px;
     margin-right: 20px;
   }
 
-  .explainChannel{
+  .explainChannel {
     width: unset;
     margin-left: 20px;
     margin-right: 20px;
@@ -190,11 +194,9 @@
 
   }
 
-  .addChannelBtn{
+  .addChannelBtn {
     margin-top: 25px;
     position: absolute;
     right: 20px;
   }
 }
-
-

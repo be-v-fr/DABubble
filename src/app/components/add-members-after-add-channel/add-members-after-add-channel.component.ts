@@ -1,12 +1,12 @@
 import { Component, inject, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Channel } from '../../models/channel.class';
-import { ChannelsService } from '../../services/content/channels.service';
-import { User } from '../../models/user.class';
-import { UsersService } from '../../services/users.service';
+import { Channel } from '../../../models/channel.class';
+import { ChannelsService } from '../../../services/content/channels.service';
+import { User } from '../../../models/user.class';
+import { UsersService } from '../../../services/users.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AddMembersInputComponent } from '../add-members/add-members-input/add-members-input.component';
+import { AddMembersInputComponent } from '../../add-members/add-members-input/add-members-input.component';
 
 /**
  * Represents a component that allows adding members to a channel after its creation.
