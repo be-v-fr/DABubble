@@ -8,6 +8,9 @@ import { ChannelsService } from '../../services/content/channels.service';
 import { Channel } from '../../models/channel.class';
 import { AddMembersInputComponent } from './add-members-input/add-members-input.component';
 
+/**
+ * Represents a component for adding users to a channel's member list.
+ */
 @Component({
   selector: 'app-add-members',
   standalone: true,
@@ -30,19 +33,27 @@ export class AddMembersComponent {
     this.isThreadOpen = data.isThreadOpen;
   }
 
+  /**
+   * Initializes the component and sets a timeout to open it immediately after creation.
+   */
   ngOnInit(): void {
     setTimeout(() => {
       this.isOpen = true;
     }, 0);
   }
 
-
+  /**
+   * Adds selected users to the channel's member list and updates the channel.
+   */
   async addUsersToMembers() {
     this.channel.members = this.channel.members.concat(this.selectedUsers);
     await this.channelsService.updateChannel(this.channel)
       .then(() => this.closeCard());
   }
 
+  /**
+   * Closes the dialog
+   */
   closeCard() {
     this.dialogRef.close(this.selectedUsers);
   }

@@ -7,6 +7,9 @@ import { Channel } from '../../models/channel.class';
 import { AuthService } from '../../services/auth.service';
 import { AddMembersAfterAddChannelComponent } from '../add-members-after-add-channel/add-members-after-add-channel.component';
 
+/**
+ * Represents a component for adding a new channel, including input validation and member addition. 
+ */
 @Component({
   selector: 'app-add-channel',
   standalone: true,
@@ -26,14 +29,23 @@ export class AddChannelComponent implements OnInit {
     private channelsService: ChannelsService,
   ) { }
 
+  /**
+   * Executes once after the directive's data-bound properties are initially checked.
+   */
   ngOnInit(): void {
     this.autofocusName();
   }
 
+  /**
+   * Closes the dialog without making any changes.
+   */
   onCancel() {
     this.dialogRef.close();
   }
 
+  /**
+   * Checks if the channel name is available by querying the channels service.
+   */
   checkNameAvailability() {
     this.nameAvailable = this.channelsService.isChannelNameAvailable(this.channel.name);
   }
@@ -53,12 +65,20 @@ export class AddChannelComponent implements OnInit {
     }
   }
 
+  /**
+   * Prepares the channel by setting the author UID to the current user's UID.
+   * @param channel - The channel object to be prepared. 
+   * @returns The updated channel object with the author UID set. 
+   */
   prepareChannel(channel: Channel): Channel {
     const author = this.authService.getCurrent();
     channel.author_uid = author!.uid;
     return channel;
   }
 
+  /**
+   * Sets the focus on the name input element after a short delay of 200 milliseconds.
+   */
   autofocusName() {
     setTimeout(() => this.nameInput.nativeElement.focus(), 200);
   }

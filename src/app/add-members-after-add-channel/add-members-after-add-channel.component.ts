@@ -8,6 +8,9 @@ import { UsersService } from '../../services/users.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddMembersInputComponent } from '../add-members/add-members-input/add-members-input.component';
 
+/**
+ * Represents a component that allows adding members to a channel after its creation.
+ */
 @Component({
   selector: 'app-add-members-after-add-channel',
   standalone: true,
@@ -26,18 +29,28 @@ export class AddMembersAfterAddChannelComponent {
     @Inject(MAT_DIALOG_DATA) public data: Channel,
   ) { }
 
+  /**
+   * Redirects to the specified channel by adding it to the route and closes the dialog.
+   */
   redirectToChannel() {
     this.channelsService.addChannelToRoute('main-chat', this.data.channel_id);
     this.dialogRef.close();
   }
 
+  /**
+   * Submits the form by updating the channel's member list based on the selection 
+   * and redirects to the updated channel.
+   */
   async onSubmit() {
-    if(this.selection === 'allMembers') {this.data.members = this.usersService.users}
-    else {this.data.members = this.data.members.concat(this.specificPeopleSelected)}
+    if (this.selection === 'allMembers') { this.data.members = this.usersService.users }
+    else { this.data.members = this.data.members.concat(this.specificPeopleSelected) }
     await this.channelsService.updateChannel(this.data)
       .then(() => this.redirectToChannel());
   }
 
+  /**
+   * Closes the dialog and redirects to the specified channel.
+   */
   close() {
     this.redirectToChannel();
     this.dialogRef.close();

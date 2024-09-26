@@ -14,6 +14,7 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
     background-color: white;
     border-radius: 30px 0px 30px 30px;
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+
     .head {
         position: absolute;
         margin-left: 40px;
@@ -24,10 +25,12 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
         flex-direction: row;
         justify-content: space-between;
         align-items: baseline;
+
         p {
             font-weight: 700;
             font-size: 24px;
         }
+
         a {
             width: 40px;
             height: 40px;
@@ -35,13 +38,16 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
             display: flex;
             justify-content: center;
             align-items: center;
+
             img {
                 cursor: pointer;
             }
+
             &:hover {
                 background-color: $violet-bright;
             }
         }
+
         .close-btn {
             padding: 8px;
             width: 40px;
@@ -51,24 +57,29 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
             justify-content: center;
             align-items: center;
             cursor: pointer;
+
             &:hover {
                 background-color: $violet-bright;
                 border-radius: 99px;
+
                 a img {
                     content: url("/assets/img/icons/close_hover.svg");
                 }
             }
         }
     }
+
     .profileImg {
         position: absolute;
         top: 125px;
         left: 150px;
+
         img {
             width: 200px;
             height: 200px;
             border-radius: 100%;
         }
+
         &.defaultPic {
             width: 200px;
             height: 200px;
@@ -77,6 +88,7 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
             border-radius: 100%;
         }
     }
+
     .imgedit {
         position: absolute;
         top: 300px;
@@ -87,13 +99,16 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
         display: flex;
         justify-content: center;
         align-items: center;
+
         &:hover {
             background-color: $violet-bright;
         }
+
         img {
             cursor: pointer;
         }
     }
+
     .userName {
         position: absolute;
         top: 370px;
@@ -103,39 +118,47 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
         display: flex;
         flex-direction: column;
         gap: 15px;
+
         .nameAndEdit {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             .name {
                 font-size: 24px;
                 font-weight: 600;
                 overflow: hidden;
                 word-break: break-word;
             }
+
             .edit {
                 color: $purple-blue-bright;
                 font-weight: 600;
                 font-size: 18px;
                 cursor: pointer;
+
                 img {
                     display: none;
                 }
+
                 &:hover {
                     color: $purple-blue-bright;
                     font-weight: 650;
+
                     img {
                         content: url('/assets/img/icons/edit_hover.svg');
                     }
                 }
             }
         }
+
         .online-status {
             height: 27px;
             display: flex;
             align-items: center;
             flex-wrap: nowrap;
             gap: 15px;
+
             app-activity-state-dot {
                 position: relative;
                 bottom: 6px;
@@ -143,18 +166,22 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
                 width: 16px;
                 height: 16px;
             }
+
             .status-text {
                 font-weight: 400;
                 font-size: 20px;
+
                 &.online {
                     color: $onlinedot-online;
                 }
+
                 &.idle {
                     color: #c8c82e;
                 }
             }
         }
     }
+
     .emailContainer {
         margin-top: 501px;
         margin-left: 40px;
@@ -163,20 +190,25 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
         display: flex;
         flex-direction: column;
         gap: 15px;
+
         .email {
             display: flex;
             gap: 20px;
+
             img {
                 width: 25px;
                 height: 20px;
             }
+
             p {
                 font-weight: 700;
                 font-size: 20px;
             }
         }
-        .showEmail{
+
+        .showEmail {
             margin-left: 50px;
+
             p {
                 font-weight: 400;
                 font-size: 18px;
@@ -193,6 +225,15 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
 // #########################################################################################################
 // #########################################################################################################
 
+@media screen and (max-height:768px) {
+    .userCard {
+        transform: translate(-50%, -50%);
+        top: 50%;
+        border-radius: 30px;
+        right: auto;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .userCard {
         position: fixed;
@@ -206,9 +247,11 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
         border-radius: 30px;
         box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
         box-sizing: border-box;
+
         p {
             margin-block-end: 0;
         }
+
         .head {
             position: relative;
             margin-left: 0px;
@@ -219,10 +262,12 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
             flex-direction: row;
             justify-content: space-between;
             align-items: baseline;
+
             p {
                 font-weight: 700;
                 font-size: 24px;
             }
+
             a {
                 width: 40px;
                 height: 40px;
@@ -230,18 +275,22 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+
                 img {
                     cursor: pointer;
                 }
+
                 &:hover {
                     background-color: $violet-bright;
                 }
             }
         }
+
         .profileImg {
             position: relative;
             top: 0px;
             left: 50%;
+
             &.defaultPic {
                 transform: translateX(-50%);
                 width: 150px;
@@ -250,23 +299,28 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
                 background-image: url(/assets/img/avatar/empty_avatar.svg);
                 background-size: cover;
             }
+
             img {
                 width: 150px;
                 height: 150px;
                 border-radius: 100%;
             }
         }
+
         .imgedit {
             position: absolute;
             top: 211px;
             right: 20px;
+
             img {
                 cursor: pointer;
             }
+
             img:hover {
                 content: url('/assets/img/icons/edit_hover.svg');
             }
         }
+
         .userName {
             position: relative;
             margin-top: 15px;
@@ -277,14 +331,17 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
             display: flex;
             flex-direction: column;
             gap: 15px;
+
             .nameAndEdit {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+
                 .name {
                     font-size: 24px;
                     font-weight: 600;
                 }
+
                 .edit {
                     color: $purple-blue-bright;
                     font-weight: 600;
@@ -296,30 +353,37 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
                     justify-content: center;
                     align-items: center;
                     cursor: pointer;
+
                     &:hover {
                         background-color: $violet-bright;
                     }
+
                     img {
                         display: inline;
                     }
+
                     span {
                         display: none;
                     }
+
                     &:hover {
                         color: $purple-blue-bright;
                         font-weight: 650;
+
                         img {
                             content: url('/assets/img/icons/edit_hover.svg');
                         }
                     }
                 }
             }
+
             .online-status {
                 height: 27px;
                 display: flex;
                 align-items: center;
                 flex-wrap: nowrap;
                 gap: 15px;
+
                 .onlinedot {
                     content: '';
                     position: relative;
@@ -331,28 +395,35 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
                     background-color: $onlinedot-online;
                     border: 2px solid $onlinedot-border;
                     border-radius: 50%;
+
                     &.online {
                         background-color: $onlinedot-online;
                     }
+
                     &.idle {
                         background-color: #c8c82e;
                     }
+
                     &.offline {
                         background-color: $onlinedot-offline;
                     }
                 }
+
                 .status-text {
                     font-weight: 400;
                     font-size: 20px;
+
                     &.online {
                         color: $onlinedot-online;
                     }
+
                     &.idle {
                         color: #c8c82e;
                     }
                 }
             }
         }
+
         .emailContainer {
             position: relative;
             margin-top: 15px;
@@ -362,20 +433,25 @@ div.mat-mdc-dialog-container.mdc-dialog__surface {
             display: flex;
             flex-direction: column;
             gap: 15px;
+
             .email {
                 display: flex;
                 gap: 20px;
+
                 img {
                     width: 25px;
                     height: 20px;
                 }
+
                 p {
                     font-weight: 700;
                     font-size: 20px;
                 }
             }
-            .showEmail{
+
+            .showEmail {
                 margin-left: 50px;
+
                 p {
                     font-weight: 400;
                     font-size: 18px;
