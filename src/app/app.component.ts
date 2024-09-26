@@ -7,8 +7,8 @@ import { Subscription } from 'rxjs';
 
 
 /**
- * This component is the central component displaying all other components as its children.
- * It also directly displays the intro animation and handles the user authentication upon visit.
+ * This component is the central component displaying all other components as its children
+ * via router outlet.
  */
 @Component({
   selector: 'app-root',
@@ -81,6 +81,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
 
+  /**
+   * Checks whether the URL contains a route that is protected by authentication.
+   * @returns {boolean} - check result
+   */
   onProtectedRoute(): boolean {
     const route = this.router.url;
     return !(
