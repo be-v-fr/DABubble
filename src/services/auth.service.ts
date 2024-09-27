@@ -201,7 +201,6 @@ export class AuthService {
         newEmail
       )
         .then(() => { })
-        .catch(err => console.error(err));
       return from(promise);
     } else {
       const promise = new Promise<void>(() => { });
