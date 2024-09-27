@@ -40,10 +40,22 @@ export class AppComponent implements OnInit, OnDestroy {
    * This function creates an authentication service subscription for user authentication.
    */
   ngOnInit(): void {
-    this.initialRoute = this.router.url;
-    this.router.navigate(['/auth/logIn']);
+    this.initRedirect();
     this.userSub = this.subUser();
     this.awaitMax();
+  }
+
+
+  /**
+   * Initializes redirect. If there is no oobCode in the URL, the initial route
+   * is stored in the `initialRoute` property. After the authentication has been checked, it can be
+   * accessed from there.
+   */
+  initRedirect() {
+    if (!window.location.href.includes('?oobCode')) {
+      this.initialRoute = this.router.url;
+      this.router.navigate(['/auth/logIn']);
+    }
   }
 
 
