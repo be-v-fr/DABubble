@@ -15,6 +15,10 @@ import { MatDialog } from '@angular/material/dialog';
 /**
  * This component displays an interactive search bar.
  * Search results dynamically show channels, users and posts.
+ * 
+ * Channels should be filtered in the parent component to only
+ * include channels featuring the current user as member. Posts
+ * are automatically pre-filtered that way as well.
  */
 @Component({
     selector: 'app-search',
