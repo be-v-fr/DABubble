@@ -10,6 +10,10 @@ import { UsersService } from './../../../services/users.service';
 import { User } from './../../../models/user.class';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
+/**
+ * This component is responsible for editing the avatar picture for the current user.
+ */
+
 @Component({
     selector: 'app-edit-main-user-avatar',
     standalone: true,
@@ -117,15 +121,9 @@ export class EditMainUserAvatarComponent {
         }
     }
 
-
-
-    async cancelTempAvatar() {
-        this.loading = true;
-        await this.storageService.cancelAvatar(this.userTempData.uid);
-        this.dialogRef.close();
-    }
-
-
+    /**
+     * Deletes the temporarily saved avatar image.
+     */
     async closeDialog() {
         this.loading = true;
         await this.storageService.cancelAvatar(this.userTempData.uid);
@@ -182,58 +180,10 @@ export class EditMainUserAvatarComponent {
         this.resetFileError();
     }
 
-    async saveAvatarOld() {
-        if (this.defaultAvatar !== '-2') {
-            // Anderes Bild ist ausgewählt worden
-            switch (this.defaultAvatar) {
-                case '00':
-                case '01':
-                case '02':
-                case '03':
-                case '04':
-                case '05':
-                    // Einer der Standard-Avatare gewählt
-                    this.userData.avatarSrc = `assets/img/avatar/avatar_${this.defaultAvatar}.svg`;
-                    this.avatarChanged.emit(this.userData.avatarSrc);
-                    this.usersService
-                        .updateUser(new User(this.userData))
-                        .then(() => {
-                            this.dialogRef.close(this.userData);
-                        })
-                        .catch((err: Error) => this.onError(err));
-                    break;
-
-                default:
-                    // hochgeladenes Bild gewählt
-                    this.loading = true;
-                    this.resetFileError();
-                    const input = this.userInput;
-                    if (input.files) {
-                        this.storageService
-                            .uploadAvatar(input.files[0], this.userData.uid)
-                            .then((response) => {
-                                if (response.includes(this.userData.uid)) {
-                                    this.userData.avatarSrc = response;
-                                    this.usersService.updateUser(new User(this.userData))
-                                        .then(() => {
-                                            this.cancelTempAvatar()
-                                        })
-                                        .catch((err: Error) => this.onError(err));
-                                }
-                            })
-                            .catch((err: Error) => this.onError(err));
-                    }
-                    break;
-            }
-        }
-        this.loading = false;
-        this.dialogRef.close(this.userData);
-    }
-
-
-
-
-
+    /**
+     * This function saves the new avatar image in the database, saves the change in the profile and closes the dialog.
+     * @returns 
+     */
     async saveAvatar() {
         try {
             if (this.defaultAvatar !== '-2') {
@@ -252,7 +202,7 @@ export class EditMainUserAvatarComponent {
                         if (response.includes(this.userData.uid)) {
                             this.userData.avatarSrc = response;
                             await this.updateUserAndCloseDialog();
-                            await this.cancelTempAvatar();
+                            await this.closeDialog();
                             return;
                         }
                     }
@@ -267,6 +217,9 @@ export class EditMainUserAvatarComponent {
         }
     }
 
+    /**
+     * This function saves the avatar change in the current user profile and closes the dialog.
+     */
     private async updateUserAndCloseDialog() {
         await this.usersService.updateUser(new User(this.userData));
         this.dialogRef.close(this.userData);
