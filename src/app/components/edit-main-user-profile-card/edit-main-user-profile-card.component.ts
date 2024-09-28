@@ -2,7 +2,7 @@ import { Component, inject, Inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../../models/user.class';
-import { EditMainUserAvatarComponent } from '../edit-main-user-avatar/edit-main-user-avatar.component';
+import { EditMainUserAvatarComponent } from '../../main-user/edit-main-user-avatar/edit-main-user-avatar.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UsersService } from '../../../services/users.service';
 import { AuthService } from '../../../services/auth.service';

@@ -6,7 +6,7 @@ import { ImpressComponent } from './home/legal/impress/impress.component';
 import { PrivacypolicyComponent } from './home/legal/privacypolicy/privacypolicy.component';
 import { UserProfileCardComponent } from './components/user-profile-card/user-profile-card.component';
 import { MainUserProfileCardComponent } from './components/main-user-profile-card/main-user-profile-card.component';
-import { EditMainUserProfileCardComponent } from './main-user/edit-main-user-profile-card/edit-main-user-profile-card.component';
+import { EditMainUserProfileCardComponent } from './components/edit-main-user-profile-card/edit-main-user-profile-card.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { PickAvatarComponent } from './auth/pick-avatar/pick-avatar.component';
 import { RequestPwResetComponent } from './auth/request-pw-reset/request-pw-reset.component';
