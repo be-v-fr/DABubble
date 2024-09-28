@@ -12,6 +12,10 @@ import { UserProfileCardComponent } from '../../../components/user-profile-card/
 import { MatDialog } from '@angular/material/dialog';
 
 
+/**
+ * This component displays an interactive search bar.
+ * Search results dynamically show channels, users and posts.
+ */
 @Component({
     selector: 'app-search',
     standalone: true,
