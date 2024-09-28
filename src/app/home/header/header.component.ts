@@ -14,6 +14,10 @@ import { SearchComponent } from './search/search.component';
 import { ActivityStateDotComponent } from '../../components/activity-state-dot/activity-state-dot.component';
 
 
+/**
+ * This component displays the in-app header showing the DABubble logo, a search bar
+ * and the main menu for the current user.
+ */
 @Component({
     selector: 'app-header',
     standalone: true,
@@ -50,21 +54,31 @@ export class HeaderComponent {
         public introService: AnimationIntroService
     ) { }
 
+
+    /**
+     * After the dialog is closed, it checks the result and logs out if confirmed.
+     */
     openUserLogoutCard(): void {
         this.dialogRef = this.dialog.open(LogOutCardComponent, {
             data: {
                 mainUser: this.mainUser
             }
         });
+        this.dialogRef.afterClosed().subscribe(result => this.logout(result));
+    }
 
-        this.dialogRef.afterClosed().subscribe(result => {
-            if (result == 'logout') {
-                const user = new User(this.mainUser);
-                user.lastActivity = -1;
-                this.usersService.updateUser(user);
-                this.authService.logOut();
-                this.router.navigate(['auth/logIn']);
-            }
-        });
+
+    /**
+     * This function logs out the current user according to the dialog result.
+     * @param dialogResult - Result transmitted by LogOutCardComponent as MatDialog after closing.
+     */
+    logout(dialogResult: any): void {
+        if (dialogResult == 'logout') {
+            const user = new User(this.mainUser);
+            user.lastActivity = -1;
+            this.usersService.updateUser(user);
+            this.authService.logOut();
+            this.router.navigate(['auth/logIn']);
+        }
     }
 }
