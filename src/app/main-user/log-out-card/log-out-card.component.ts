@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RouterLink, Router } from '@angular/router';
-import { MainUserProfileCardComponent } from '../main-user-profile-card/main-user-profile-card.component';
+import { MainUserProfileCardComponent } from '../../components/main-user-profile-card/main-user-profile-card.component';
 import { AuthService } from '../../../services/auth.service';
 import { ActivityService } from '../../../services/activity.service';
 import { User } from '../../../models/user.class';

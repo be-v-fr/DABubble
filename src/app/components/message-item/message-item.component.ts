@@ -12,7 +12,7 @@ import { AuthService } from '../../../services/auth.service';
 import { ChannelsService } from '../../../services/content/channels.service';
 import { Reaction } from '../../../models/reaction.class';
 import { ReactionService } from '../../../services/content/reaction.service';
-import { MainUserProfileCardComponent } from '../../main-user/main-user-profile-card/main-user-profile-card.component';
+import { MainUserProfileCardComponent } from '../main-user-profile-card/main-user-profile-card.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { StorageService } from '../../../services/storage.service';
 
