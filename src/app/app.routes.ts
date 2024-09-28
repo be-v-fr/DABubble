@@ -19,7 +19,7 @@ import { NewMessageComponent } from './components/new-message/new-message.compon
 import { MainChatComponent } from './components/main-chat/main-chat.component';
 import { AddMembersComponent } from './components/add-members/add-members.component';
 import { DirectMessageComponent } from './components/direct-message/direct-message.component';
-import { EditMainUserAvatarComponent } from './main-user/edit-main-user-avatar/edit-main-user-avatar.component';
+import { EditMainUserAvatarComponent } from './components/edit-main-user-avatar/edit-main-user-avatar.component';
 import { authGuard } from './shared/auth.guard';
 import { ChangeEmailComponent } from './auth/change-email/change-email.component';
 

@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../../models/user.class';
 import { EditMainUserProfileCardComponent } from '../edit-main-user-profile-card/edit-main-user-profile-card.component';
-import { EditMainUserAvatarComponent } from '../../main-user/edit-main-user-avatar/edit-main-user-avatar.component';
+import { EditMainUserAvatarComponent } from '../../components/edit-main-user-avatar/edit-main-user-avatar.component';
 import { CommonModule } from '@angular/common';
 import { ActivityStateDotComponent } from '../activity-state-dot/activity-state-dot.component';
 import { ActivityService } from '../../../services/activity.service';
