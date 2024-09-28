@@ -7,7 +7,7 @@ import { MessageBoxComponent } from '../message-box/message-box.component';
 import { TimeSeparatorComponent } from '../time-separator/time-separator.component';
 import { ChannelsService } from '../../../services/content/channels.service';
 import { Channel } from '../../../models/channel.class';
-import { EditChannelComponent } from '../../edit-channel/edit-channel.component';
+import { EditChannelComponent } from '../edit-channel/edit-channel.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ThreadComponent } from '../thread/thread.component';
 import { Subscription } from 'rxjs';

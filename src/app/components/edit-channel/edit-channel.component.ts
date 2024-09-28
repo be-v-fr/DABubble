@@ -1,16 +1,15 @@
-import { Component, HostListener, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Channel } from '../../models/channel.class';
-import { ChannelsService } from '../../services/content/channels.service';
-import { AuthService } from '../../services/auth.service';
-import { User } from '../../models/user.class';
+import { Channel } from '../../../models/channel.class';
+import { ChannelsService } from '../../../services/content/channels.service';
+import { AuthService } from '../../../services/auth.service';
+import { User } from '../../../models/user.class';
 import { Router } from '@angular/router';
 import { DeleteChannelComponent } from './delete-channel/delete-channel.component';
-import { Subscription } from 'rxjs';
-import { UserProfileCardComponent } from '../components/user-profile-card/user-profile-card.component';
-import { AddMembersComponent } from '../components/add-members/add-members.component';
+import { UserProfileCardComponent } from '../user-profile-card/user-profile-card.component';
+import { AddMembersComponent } from '../add-members/add-members.component';
 
 @Component({
   selector: 'app-edit-channel',
