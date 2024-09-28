@@ -42,6 +42,10 @@ export class SearchComponent {
         private dialog: MatDialog,
     ) { }
 
+
+    /**
+     * Triggers search across all categories (users, channels, and posts).
+     */
     search(): void {
         if (this.searchInput.length > 0) {
             const term: string = this.searchInput.toLowerCase();
@@ -52,6 +56,10 @@ export class SearchComponent {
         }
     }
 
+
+    /**
+     * Determines whether to search users, channels, or posts based on the search input.
+     */
     triggerSearchCategories(term: string) {
         if (term.startsWith('@')) {
             this.searchUsers(term.slice(1));
@@ -64,6 +72,10 @@ export class SearchComponent {
         }
     }
 
+
+    /**
+     * Filters channels based on the search term.
+     */
     searchChannels(term: string): void {
         if (term.startsWith(' ')) { term = term.slice(1) }
         this.searchResultsChannels = this.userChannels.filter(c => {
@@ -72,6 +84,10 @@ export class SearchComponent {
         });
     }
 
+
+    /**
+     * Filters users based on the search term.
+     */
     searchUsers(term: string): void {
         if (term.startsWith(' ')) { term = term.slice(1) }
         this.searchResultsUsers = this.users.filter(u => {
@@ -80,6 +96,10 @@ export class SearchComponent {
         });
     }
 
+
+    /**
+     * Searches for posts containing the search term in the user's channels.
+     */
     searchPosts(term: string): void {
         this.searchResultsPosts = [];
         this.userChannels.forEach(c => {
@@ -92,14 +112,26 @@ export class SearchComponent {
         this.setResultsPostInfo();
     }
 
+
+    /**
+     * Filters posts to find matches based on the search term.
+     */
     filterPostsToResults(posts: Post[], term: string): void {
         this.searchResultsPosts = this.searchResultsPosts.concat(this.filterSinglePostsArray(posts, term));
     }
 
+
+    /**
+     * Filters a single array of posts to find matches based on the search term.
+     */
     filterSinglePostsArray(posts: Post[], term: string): Post[] {
         return posts.filter(p => p.message.toLowerCase().includes(term));
     }
 
+
+    /**
+     * Formats the search results for posts, truncating them for better display.
+     */
     setResultsPostsDisplay(term: string): void {
         this.searchResultsPostsDisplay = [];
         this.searchResultsPosts.forEach(p => {
@@ -108,6 +140,10 @@ export class SearchComponent {
         });
     }
 
+
+    /**
+     * Truncates a post message to display only a portion around the search term.
+     */
     getResultsSinglePostDisplay(message: string, term: string): string {
         const termIndex = message.toLowerCase().indexOf(term.toLowerCase());
         let { start, prependEllipsis } = this.adjustPostDisplayStart(message, termIndex);
@@ -121,6 +157,10 @@ export class SearchComponent {
         return displayedMessage;
     }
 
+
+    /**
+     * Adjusts the start index for displaying part of a post message.
+     */
     adjustPostDisplayStart(message: string, termIndex: number): { start: number, prependEllipsis: boolean } {
         let start = Math.max(0, termIndex - 32);
         let prependEllipsis = false;
@@ -132,6 +172,10 @@ export class SearchComponent {
         return { start, prependEllipsis };
     }
 
+
+    /**
+     * Adjusts the end index for displaying part of a post message.
+     */
     adjustPostDisplayEnd(message: string, termIndex: number, term: string): { end: number, appendEllipsis: boolean } {
         let end = Math.min(message.length, termIndex + term.length + 32);
         let appendEllipsis = false;
@@ -143,12 +187,20 @@ export class SearchComponent {
         return { end, appendEllipsis };
     }
 
+
+    /**
+     * Adds ellipses to the displayed message if it's truncated.
+     */
     addEllipsis(message: string, prependEllipsis: boolean, appendEllipsis: boolean): string {
         if (prependEllipsis) { message = '...' + message; }
         if (appendEllipsis) { message = message + '...'; }
         return message;
     }
 
+
+    /**
+     * Gathers additional information (author and channel) for each post result.
+     */
     setResultsPostInfo(): void {
         this.searchResultsPostAuthors = [];
         this.postChannelIndices = [];
@@ -160,6 +212,10 @@ export class SearchComponent {
         })
     }
 
+
+    /**
+     * Handles clicking the search bar, preventing event propagation.
+     */
     onSearchClick(e: Event): void {
         e.stopPropagation();
         e.preventDefault();
@@ -167,17 +223,29 @@ export class SearchComponent {
         this.autofocusSearch();
     }
 
+
+    /**
+     * Clears the search input and results.
+     */
     onCloseSearchClick(): void {
         this.clearSearch();
         this.autofocusSearch();
     }
 
+
+    /**
+     * Handles clicks on the search results to focus the search bar.
+     */
     onResultsClick(e: Event): void {
         e.preventDefault();
         e.stopPropagation();
         this.autofocusSearch();
     }
 
+
+    /**
+     * Clears the search results and resets the input field.
+     */
     clearSearch(): void {
         this.searchInput = '';
         this.searchResultsChannels = [];
@@ -186,19 +254,35 @@ export class SearchComponent {
         this.extended = null;
     }
 
+
+    /**
+     * Hides the search results when clicking outside the search component.
+     */
     @HostListener('document:click', ['$event'])
     hideResults(): void {
         this.hidingResults = true;
     }
 
+
+    /**
+     * Focuses the search bar after a short delay.
+     */
     autofocusSearch(): void {
         setTimeout(() => this.searchbar.nativeElement.focus(), 20);
     }
 
+
+    /**
+     * Toggles the extension of the result lists (channels, users, posts).
+     */
     toggleListExtension(list: 'channels' | 'users' | 'posts'): void {
         this.extended = (this.extended === list ? null : list);
     }
 
+
+    /**
+     * Opens a dialog with the user's profile information.
+     */
     openUserProfile(user: User): void {
         this.dialog.open(UserProfileCardComponent, { data: user });
         this.hideResults();
