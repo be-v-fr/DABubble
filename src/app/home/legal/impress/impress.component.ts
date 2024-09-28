@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 
+/**
+ * This component is responsible for the imprint page.
+ */
 @Component({
   selector: 'app-impress',
   standalone: true,
@@ -14,6 +17,9 @@ export class ImpressComponent {
     private location: Location,
   ) {}
 
+  /**
+   * The previously displayed page can be called up again using the browser's back function.
+   */
   historyBack() {
     this.location.back();
   }
