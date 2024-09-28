@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, OnDestroy, Inject, EventEmitter, Output } from '@angular/core';
+import { Component, inject, Inject, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { LegalFooterComponent } from '../../auth/legal-footer/legal-footer.component';
@@ -41,7 +41,7 @@ export class EditMainUserAvatarComponent {
     showNewPicture: boolean = false;
     initializing: boolean = true;
     fileError: string | null = null;
-    
+
     constructor(
         private dialogRef: MatDialogRef<EditMainUserAvatarComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -89,33 +89,33 @@ export class EditMainUserAvatarComponent {
         }
     }
 
-    
-  /**
-   * This function updates the user data to the custom avatar upload. 
-   * @param response - upload process response
-   */
-  async onCustomUpload(response: any) {
-    if (response.includes(this.userData.uid)) {
-      this.userData.avatarSrc = response;
-      this.usersService.updateUser(new User(this.userData))
-        .then(() => this.loading = false)
-        .catch((err: Error) => this.onError(err));
+
+    /**
+     * This function updates the user data to the custom avatar upload. 
+     * @param response - upload process response
+     */
+    async onCustomUpload(response: any) {
+        if (response.includes(this.userData.uid)) {
+            this.userData.avatarSrc = response;
+            this.usersService.updateUser(new User(this.userData))
+                .then(() => this.loading = false)
+                .catch((err: Error) => this.onError(err));
+        }
     }
-  }
 
 
-  /**
-   * This function updates the user data to the custom avatar upload. 
-   * @param response - upload process response
-   */
-  async onCustomTempUpload(response: any) {
-    if (response.includes(this.userTempData.uid)) {
-      this.userTempData.avatarSrc = response;
-      this.defaultAvatar = '-1';
-      this.loading = false;
-      this.showNewPicture = true;
+    /**
+     * This function updates the user data to the custom avatar upload. 
+     * @param response - upload process response
+     */
+    async onCustomTempUpload(response: any) {
+        if (response.includes(this.userTempData.uid)) {
+            this.userTempData.avatarSrc = response;
+            this.defaultAvatar = '-1';
+            this.loading = false;
+            this.showNewPicture = true;
+        }
     }
-  }
 
 
 
@@ -147,8 +147,8 @@ export class EditMainUserAvatarComponent {
      */
     setFileError(response?: string) {
         this.fileError = response
-        ? this.getFileError(response)
-        : this.getFileError();
+            ? this.getFileError(response)
+            : this.getFileError();
     }
 
     /**
@@ -183,7 +183,7 @@ export class EditMainUserAvatarComponent {
     }
 
     async saveAvatarOld() {
-        if(this.defaultAvatar !== '-2') {
+        if (this.defaultAvatar !== '-2') {
             // Anderes Bild ist ausgewählt worden
             switch (this.defaultAvatar) {
                 case '00':
@@ -202,7 +202,7 @@ export class EditMainUserAvatarComponent {
                         })
                         .catch((err: Error) => this.onError(err));
                     break;
-            
+
                 default:
                     // hochgeladenes Bild gewählt
                     this.loading = true;
@@ -223,7 +223,7 @@ export class EditMainUserAvatarComponent {
                             })
                             .catch((err: Error) => this.onError(err));
                     }
-                break;
+                    break;
             }
         }
         this.loading = false;
@@ -245,7 +245,7 @@ export class EditMainUserAvatarComponent {
                     // Hochgeladenes Bild gewählt
                     this.loading = true;
                     this.resetFileError();
-                    
+
                     const input = this.userInput;
                     if (input.files) {
                         const response = await this.storageService.uploadAvatar(input.files[0], this.userData.uid);
@@ -266,7 +266,7 @@ export class EditMainUserAvatarComponent {
             this.dialogRef.close(this.userData);
         }
     }
-    
+
     private async updateUserAndCloseDialog() {
         await this.usersService.updateUser(new User(this.userData));
         this.dialogRef.close(this.userData);
