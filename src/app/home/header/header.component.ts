@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { LogOutCardComponent } from '../../main-user/log-out-card/log-out-card.component';
+import { LogOutCardComponent } from '../../components/log-out-card/log-out-card.component';
 import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';

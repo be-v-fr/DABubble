@@ -11,7 +11,7 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { PickAvatarComponent } from './auth/pick-avatar/pick-avatar.component';
 import { RequestPwResetComponent } from './auth/request-pw-reset/request-pw-reset.component';
 import { ResetPwComponent } from './auth/reset-pw/reset-pw.component';
-import { LogOutCardComponent } from './main-user/log-out-card/log-out-card.component';
+import { LogOutCardComponent } from './components/log-out-card/log-out-card.component';
 import { EditChannelComponent } from './components/edit-channel/edit-channel.component';
 import { MemberListComponent } from './components/member-list/member-list.component';
 import { AddMembersAfterAddChannelComponent } from './components/add-members-after-add-channel/add-members-after-add-channel.component';
