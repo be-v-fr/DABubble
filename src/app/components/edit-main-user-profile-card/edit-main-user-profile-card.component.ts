@@ -2,11 +2,14 @@ import { Component, inject, Inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../../models/user.class';
-import { EditMainUserAvatarComponent } from '../edit-main-user-avatar/edit-main-user-avatar.component';
+import { EditMainUserAvatarComponent } from '../../components/edit-main-user-avatar/edit-main-user-avatar.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UsersService } from '../../../services/users.service';
 import { AuthService } from '../../../services/auth.service';
 
+/**
+ * This component is responsible for editing the current user profile.
+ */
 
 @Component({
     selector: 'app-edit-main-user-profile-card',
@@ -35,10 +38,16 @@ export class EditMainUserProfileCardComponent {
         this.userData.email = this.data.mainUser.email;
     }
 
+    /**
+     * Close this dialog.
+     */
     closeDialog() {
         this.dialogRef.close();
     }
 
+    /**
+     * Saves the edited data of the current user.
+     */
     async saveMainUser() {
         this.disableForm = true;
         await this.saveName();
@@ -46,11 +55,17 @@ export class EditMainUserProfileCardComponent {
         await this.handleEmail();
     }
 
+    /**
+     * Saves the edited data of the current user.
+     */
     async saveName() {
         this.mainUser.name = this.userData.name;
         await this.usersService.updateUser(this.mainUser);
     }
 
+    /**
+     * Verifies the email address change. If the user is not a guest, redirects to send a confirmation email.
+     */
     async handleEmail() {
         if (this.userData.email !== this.mainUser.email) {
             this.disableForm = true;
@@ -64,13 +79,17 @@ export class EditMainUserProfileCardComponent {
         } else { this.closeDialog() }
     }
 
-
+    /**
+     * Saves the edited data of the current user.
+     */
     async updateEmail() {
         this.mainUser.email = this.userData.email;
         await this.usersService.updateUser(this.mainUser);
     }
 
-
+    /**
+     * If the email address was saved successfully, a success message will be displayed, otherwise an error message will be displayed.
+     */
     requestEmailEdit() {
         this.authService.requestEmailEdit(this.userData.email).subscribe({
             next: () => this.onEmailEditRequest(),
@@ -78,7 +97,9 @@ export class EditMainUserProfileCardComponent {
         });
     }
 
-
+    /**
+     * This function activates the feedback after changing the email address.
+     */
     onEmailEditRequest() {
         this.showEmailSentFeedback = true;
         setTimeout(() => {
@@ -87,7 +108,10 @@ export class EditMainUserProfileCardComponent {
         }, 4000);
     }
 
-
+    /**
+     * This function is responsible for displaying a login error with the email address.
+     * @param err : The detected error.
+     */
     showEmailError(err: Error) {
         const error: string = err.toString();
         if (error.includes('auth/requires-recent-login')) {
@@ -96,19 +120,12 @@ export class EditMainUserProfileCardComponent {
         }
     }
 
-
+    /**
+     * This function forwards the submission of the form.
+     * @param form : The current form.
+     */
     onSubmit(form: NgForm) {
         if (form.submitted && form.valid) { this.saveMainUser(); }
-    }
-
-    openPickAvatar() {
-        this.dialogAvatarRef = this.dialog.open(EditMainUserAvatarComponent, {
-            data: {
-                mainUser: this.mainUser
-            }
-        });
-
-        this.dialogAvatarRef.afterOpened().subscribe(() => this.closeDialog());
     }
 
 }

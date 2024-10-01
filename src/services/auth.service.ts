@@ -199,10 +199,11 @@ export class AuthService {
       const promise = verifyBeforeUpdateEmail(
         this.firebaseAuth.currentUser,
         newEmail
-      ).then(() => { })
+      )
+        .then(() => { })
       return from(promise);
     } else {
-      const promise = new Promise<void>(() => console.log('else case...'));
+      const promise = new Promise<void>(() => { });
       return from(promise);
     }
   }
@@ -213,14 +214,10 @@ export class AuthService {
    * @param oobCode The action code to confirm the email change.
    */
   async confirmEmailEdit(oobCode: string): Promise<void> {
-    if (this.firebaseAuth.currentUser) {
-      await applyActionCode(
-        this.firebaseAuth,
-        oobCode
-      ).then(() => { });
-    } else {
-      console.error('You are not logged in. You must be logged in to confirm your edited email address.')
-    }
+    await applyActionCode(
+      this.firebaseAuth,
+      oobCode
+    ).then(() => { });
   }
 
 

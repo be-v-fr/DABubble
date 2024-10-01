@@ -6,7 +6,9 @@ import { AuthService } from '../../../services/auth.service';
 import { ActivityService } from '../../../services/activity.service';
 import { User } from '../../../models/user.class';
 
-
+/**
+ * This component is responsible for the user menu.
+ */
 @Component({
     selector: 'app-edit-user-log-out-card',
     standalone: true,
@@ -29,6 +31,9 @@ export class LogOutCardComponent {
         @Inject(MAT_DIALOG_DATA) public data: any,
     ) {}
 
+    /**
+     * This function opens the current user profile as a dialog.
+     */
     openProfile() {
         this.dialogUserRef = this.dialog.open(MainUserProfileCardComponent, {
             data: {
@@ -37,10 +42,16 @@ export class LogOutCardComponent {
         });
     }
 
+    /**
+     * This function closes the menu.
+     */
     close() {
         this.dialogRef.close();
     }
   
+    /**
+     * This function logs the user out and goes to the login page.
+     */
     logMeOut() {
         try {
             this.authService.logOut();
@@ -53,11 +64,17 @@ export class LogOutCardComponent {
         }
     }
   
+    /**
+     * This function switches to the impress page.
+     */
     openImpress() {
         this.router.navigate(['impress']);
         this.dialogRef.close();
     }
   
+    /**
+     * This function switches to the privacy-policy page.
+     */
     openPriPol() {
         this.router.navigate(['privacypolicy']);
         this.dialogRef.close();

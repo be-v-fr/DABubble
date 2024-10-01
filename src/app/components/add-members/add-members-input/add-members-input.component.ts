@@ -1,10 +1,10 @@
 import { Component, inject, ViewChild, ElementRef, Input, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Channel } from '../../../models/channel.class';
-import { User } from '../../../models/user.class';
-import { UsersService } from '../../../services/users.service';
-import { AuthService } from '../../../services/auth.service';
+import { Channel } from '../../../../models/channel.class';
+import { User } from '../../../../models/user.class';
+import { UsersService } from '../../../../services/users.service';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-add-members-input',

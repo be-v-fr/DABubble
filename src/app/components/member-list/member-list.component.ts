@@ -2,7 +2,7 @@ import { Component, Inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../../models/user.class';
-import { AddMembersComponent } from '../../add-members/add-members.component';
+import { AddMembersComponent } from '../../components/add-members/add-members.component';
 import { UserProfileCardComponent } from '../user-profile-card/user-profile-card.component';
 import { Channel } from '../../../models/channel.class';
 import { ChannelsService } from '../../../services/content/channels.service';
@@ -23,7 +23,7 @@ import { ActivityStateDotComponent } from '../activity-state-dot/activity-state-
   styleUrls: ['./member-list.component.scss']
 })
 export class MemberListComponent {
-  @Input() isThreadOpen: boolean = false; 
+  @Input() isThreadOpen: boolean = false;
   channelMembers: User[];
   channel: Channel;
   memberListVisible = true;
@@ -41,7 +41,7 @@ export class MemberListComponent {
    * @param dialogMemberRef - Reference to the add members dialog.
    */
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { channelMembers: User[], channel: Channel;  isThreadOpen: boolean },
+    @Inject(MAT_DIALOG_DATA) public data: { channelMembers: User[], channel: Channel; isThreadOpen: boolean },
     private dialog: MatDialog,
     private channelsService: ChannelsService,
     public activityService: ActivityService,
@@ -67,7 +67,7 @@ export class MemberListComponent {
     this.dialogMemberRef.afterClosed().subscribe((newUsers: User[]) => {
       if (newUsers && newUsers.length > 0) {
         this.channelMembers.push(...newUsers);
-      } else {this.checkMembersIndependently()}
+      } else { this.checkMembersIndependently() }
 
     });
   }
@@ -79,7 +79,7 @@ export class MemberListComponent {
    */
   async checkMembersIndependently(): Promise<void> {
     const channelFromService = await this.channelsService.getChannel(this.channel.channel_id);
-    if(channelFromService && channelFromService.members.length != this.channelMembers.length) {
+    if (channelFromService && channelFromService.members.length != this.channelMembers.length) {
       this.channelMembers = channelFromService.members;
     }
   }
@@ -91,11 +91,11 @@ export class MemberListComponent {
    * @param user - The user whose profile is to be opened.
    */
   openUserProfile(user: User): void {
-    this.dialogUserRef = this.dialog.open(UserProfileCardComponent, {data: user});
+    this.dialogUserRef = this.dialog.open(UserProfileCardComponent, { data: user });
     this.dialogUserRef.afterClosed().subscribe(result => {
-        if (result == "directMessage") {
-            this.dialogRef.close();
-        }
+      if (result == "directMessage") {
+        this.dialogRef.close();
+      }
     });
   }
 

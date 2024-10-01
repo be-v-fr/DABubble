@@ -15,27 +15,30 @@
             <div class="titleText">
                 <span class="title">Channel-Name</span>
                 @if(userIsAuthor) {
-                    <div class="channel-edit-btn">
-                        @if (editMode) {
-                            <button type="button" (click)="saveNameChanges()" [disabled]="channelName.length == 0 || !nameAvailable || loading">
-                                <span class="notmobileView">Speichern</span>
-                                <img class="mobileView img-check" src="/assets/img/icons/check_circle.svg">
-                            </button>
-                        } @else {
-                            <button type="button" (click)="toggleEditMode()">
-                                <span class="notmobileView" >Bearbeiten</span>
-                                <img class="mobileView img-edit" src="/assets/img/icons/edit.svg">
-                            </button>
-                        }
-                    </div>
+                <div class="channel-edit-btn">
+                    @if (editMode) {
+                    <button type="button" (click)="saveNameChanges()"
+                        [disabled]="channelName.length == 0 || !nameAvailable || loading">
+                        <span class="notmobileView">Speichern</span>
+                        <img class="mobileView img-check" src="/assets/img/icons/check_circle.svg">
+                    </button>
+                    } @else {
+                    <button type="button" (click)="toggleEditMode()">
+                        <span class="notmobileView">Bearbeiten</span>
+                        <img class="mobileView img-edit" src="/assets/img/icons/edit.svg">
+                    </button>
+                    }
+                </div>
                 }
             </div>
             <div class="editChannelName">
                 <div class="input-box">
-                    <img src="/assets/img/icons/tag.svg"><input type="text" [(ngModel)]="channelName" placeholder="#&nbsp;Channel-Name" (keydown)="nameAvailable = true" (change)="checkNameAvailability()" />
+                    <img src="/assets/img/icons/tag.svg"><input type="text" [(ngModel)]="channelName"
+                        placeholder="#&nbsp;Channel-Name" (keydown)="nameAvailable = true"
+                        (change)="checkNameAvailability()" />
                 </div>
                 @if(!nameAvailable) {
-                    <p class="error-msg">Dieser Channel-Name ist nicht mehr verfügbar.</p>
+                <p class="error-msg">Dieser Channel-Name ist nicht mehr verfügbar.</p>
                 }
             </div>
             <div class="channelName-text">
@@ -48,24 +51,25 @@
             <div class="titleText">
                 <span class="title">Beschreibung</span>
                 @if(userIsAuthor) {
-                    <div class="channel-edit-btn">
-                        @if (editDescriptionMode) {
-                            <button type="button" (click)="saveDescriptionChanges()"  [disabled]="loading">
-                                <span class="notmobileView">Speichern</span>
-                                <img class="mobileView img-check" src="/assets/img/icons/check_circle.svg">
-                            </button>
-                        } @else {
-                            <button type="button" (click)="toggleEditDescriptionMode()">
-                                <span class="notmobileView">Bearbeiten</span>
-                                <img class="mobileView img-edit" src="/assets/img/icons/edit.svg">
-                            </button>
-                        }
-                    </div>
+                <div class="channel-edit-btn">
+                    @if (editDescriptionMode) {
+                    <button type="button" (click)="saveDescriptionChanges()" [disabled]="loading">
+                        <span class="notmobileView">Speichern</span>
+                        <img class="mobileView img-check" src="/assets/img/icons/check_circle.svg">
+                    </button>
+                    } @else {
+                    <button type="button" (click)="toggleEditDescriptionMode()">
+                        <span class="notmobileView">Bearbeiten</span>
+                        <img class="mobileView img-edit" src="/assets/img/icons/edit.svg">
+                    </button>
+                    }
+                </div>
                 }
             </div>
             <div class="editChannelDescription">
                 <div class="input-box">
-                    <input *ngIf="editDescriptionMode" type="text" [(ngModel)]="channelDescription" placeholder="Dein Text hier" />
+                    <input *ngIf="editDescriptionMode" type="text" [(ngModel)]="channelDescription"
+                        placeholder="Dein Text hier" />
                 </div>
             </div>
             <div class="channelDescription-text">
@@ -76,9 +80,9 @@
         <div class="createdBy">
             <span class="createdBy-text">Erstellt von</span>
             @if(data.name === 'Team') {
-                <img src="/assets/img/logo_name.svg" class="logo">
+            <img src="/assets/img/logo_name.svg" class="logo">
             } @else {
-                <span class="createdBy-data">{{ channelAuthorName }}</span>
+            <span class="createdBy-data">{{ channelAuthorName }}</span>
             }
         </div>
     </div>
@@ -91,20 +95,22 @@
                 @for (member of data.members; track $index) {
                 <li class="member" (click)="openUserProfile(member)">
                     <img [src]="member.avatarSrc"><span>{{member.name}}</span>
-                </li> 
+                </li>
                 }
             </ul>
         </div>
         <button type="button" class="members-list-btn" (click)="openAddMembers()" [disabled]="loading">
-            <span class="material-icons-outlined icon">person_add_alt</span><span class="icon-text">Mitglieder hinzufügen</span>
+            <span class="material-icons-outlined icon">person_add_alt</span><span class="icon-text">Mitglieder
+                hinzufügen</span>
         </button>
     </div>
     <div class="leaveChannelBtn">
         @if(data.members.length > 1) {
-            <button type="submit" class="form-btn-primary" (click)="leaveChannel()" [disabled]="data.name === 'Team' || loading">Channel verlassen</button>
+        <button type="submit" class="form-btn-primary" (click)="leaveChannel()"
+            [disabled]="data.name === 'Team' || loading">Channel verlassen</button>
         } @else {
-            <button type="submit" class="form-btn-primary-warning" (click)="onDeleteChannelSubmit()" [disabled]="data.name === 'Team' || loading">Channel löschen</button>
+        <button type="submit" class="form-btn-primary-warning" (click)="onDeleteChannelSubmit()"
+            [disabled]="data.name === 'Team' || loading">Channel löschen</button>
         }
     </div>
 </div>
-

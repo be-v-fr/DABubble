@@ -226,7 +226,7 @@ export class ChannelsService implements OnDestroy {
    * @param {string} updatedMessage - The updated message content.
    */
   async updatePost(channel_id: string, post_id: string, updatedMessage: string) {
-    const {post, channel} = this.findPostByChannelId(channel_id, post_id);
+    const { post, channel } = this.findPostByChannelId(channel_id, post_id);
     if (channel && post) {
       post.message = updatedMessage;
       await this.storageService.updateChannelInStorage(channel);
@@ -279,8 +279,17 @@ export class ChannelsService implements OnDestroy {
    * @param {string} post_id - The ID of the post to delete.
    */
   async deletePostFromChannelThreadLevel(channel: Channel, post_id: string): Promise<void> {
-    const post = this.getPostInThread(channel, post_id).postInThread;
-    if (post) {
+    let postFoundInThread = false;
+    for (const post of channel.posts) {
+      const threadPostIndex = post.thread.posts.findIndex(tp => tp.post_id === post_id);
+      if (threadPostIndex !== -1) {
+        post.thread.posts.splice(threadPostIndex, 1);
+        postFoundInThread = true;
+        break;
+      }
+    }
+
+    if (postFoundInThread) {
       await this.storageService.updateChannelInStorage(channel);
       this.channels$.next(this.channels.slice());
     } else {
@@ -403,7 +412,7 @@ export class ChannelsService implements OnDestroy {
    * @param {string} channelId - The ID of the channel where the post exists.
    * @param {string} postId - The ID of the post to find.
    * @returns {Post | undefined} The found post or undefined if not found.
-   */  
+   */
   private findPostByChannelId(channelId: string, postId: string): { post: Post | undefined, channel: Channel | undefined } {
     const channel = this.channels.find(c => c.channel_id === channelId);
     if (channel) {

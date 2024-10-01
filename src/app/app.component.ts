@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
+import { AnimationIntroComponent } from './animation-intro/animation-intro.component';
 import { AnimationIntroService } from './animation-intro/service/animation-intro.service';
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
@@ -13,7 +14,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, AnimationIntroComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   public introService = inject(AnimationIntroService);
   userSub = new Subscription();
+  initialRoute: string | null = null;
 
 
   /**
@@ -38,11 +40,22 @@ export class AppComponent implements OnInit, OnDestroy {
    * This function creates an authentication service subscription for user authentication.
    */
   ngOnInit(): void {
-    const url = new URL(window.location.href);
-    if (url.href.slice(-5).includes('auth')) {this.router.navigate(['/auth/logIn']) }
-    // if (!url.href.includes('mode')) {this.router.navigate(['/auth/logIn']) }
+    this.initRedirect();
     this.userSub = this.subUser();
     this.awaitMax();
+  }
+
+
+  /**
+   * Initializes redirect. If there is no oobCode in the URL, the initial route
+   * is stored in the `initialRoute` property. After the authentication has been checked, it can be
+   * accessed from there.
+   */
+  initRedirect() {
+    if (!window.location.href.includes('?oobCode')) {
+      this.initialRoute = this.router.url;
+      this.router.navigate(['/auth/logIn']);
+    }
   }
 
 
@@ -62,8 +75,11 @@ export class AppComponent implements OnInit, OnDestroy {
     return this.authService.user$.subscribe((user) => {
       if (user && user.uid) {
         this.uid = user.uid;
-        this.introService.awaitingAppInit = false;
+        if (this.introService.awaitingAppInit && this.initialRoute) {
+          this.router.navigateByUrl(this.initialRoute);
+        }
         this.userSub.unsubscribe();
+        this.introService.awaitingAppInit = false;
       }
     });
   }
@@ -81,6 +97,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
 
+  /**
+   * Checks whether the URL contains a route that is protected by authentication.
+   * @returns {boolean} - check result
+   */
   onProtectedRoute(): boolean {
     const route = this.router.url;
     return !(

@@ -1,8 +1,11 @@
+<app-animation-intro [pause]="introService.awaitingAppInit" (then)="introService.onAnimationComplete()"
+    *ngIf="!introService.afterAnimationPlusTimeout" />
 <div class="header-wrapper">
     <a href="" class="logo-wrapper" [class.hide]="usersService.mainChatViewState != 'workspace'">
-        <img src="/assets/img/logo_name.svg" alt="DABubble" class="logo">
+        <img *ngIf="introService.afterAnimation" src="/assets/img/logo_name.svg" alt="DABubble" class="logo">
     </a>
-    <button class="logo-btn" (click)="usersService.mobileBackBtn()" [class.show]="usersService.mainChatViewState != 'workspace'">
+    <button class="logo-btn" (click)="usersService.mobileBackBtn()"
+        [class.show]="usersService.mainChatViewState != 'workspace'">
         <img src="/assets/img/icons/keyboard_arrow_left.svg" alt="Arrow left">
         <div class="devspace">
             <img src="/assets/img/workspace_logo.svg" alt="Workspace Logo">

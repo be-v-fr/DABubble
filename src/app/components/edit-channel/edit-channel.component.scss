@@ -1,4 +1,4 @@
-@import "../../styles.scss";
+@import "../../../styles.scss";
 
 
 .mobileView {
@@ -17,21 +17,28 @@
         display: flex;
         flex-direction: column;
         transition: all 100ms ease-in-out;
+
         &.editMode {
             align-items: center;
             transition: 100ms ease-in-out;
+
             .titleText {
                 .channel-edit-btn {
                     padding-right: 20px;
                 }
             }
-            .editChannelName, .editChannelDescription {
+
+            .editChannelName,
+            .editChannelDescription {
                 display: flex;
             }
-            .channelName-text, .channelDescription-text {
+
+            .channelName-text,
+            .channelDescription-text {
                 display: none;
             }
         }
+
         @media screen and (max-width: 890px) {
             &.editMode {
                 margin-left: 0px;
@@ -40,13 +47,17 @@
                 transition: 0.1s ease-in-out;
             }
         }
-        .editChannelName, .editChannelDescription {
+
+        .editChannelName,
+        .editChannelDescription {
             display: none;
         }
+
         .channelName-text {
             display: flex;
             align-items: center;
             gap: 10px;
+
             span {
                 width: 100%;
                 font-size: 18px;
@@ -54,16 +65,19 @@
                 // @include textOverflowSingle();
             }
         }
+
         .channelDescription-text {
             display: flex;
             align-items: center;
             gap: 10px;
+
             span {
                 width: 100%;
                 font-size: 18px;
                 @include textOverflowMulti(99);
             }
         }
+
         .titleText {
             width: 100%;
             font-size: 18px;
@@ -72,44 +86,54 @@
             align-items: center;
             gap: 20px;
             transition: 100ms ease-in;
+
             .title {
                 font-weight: 700;
                 @include textOverflowSingle();
             }
+
             .channel-edit-btn {
                 transition: padding-right 0.1s linear;
+
                 button {
                     display: flex;
                     justify-content: center;
                     align-items: center;
+
                     @media screen and (max-width: 890px) {
                         width: 30px;
                         height: 30px;
                         background-color: $violet-bright;
                         border-radius: 99px;
                     }
+
                     &:disabled {
                         cursor: not-allowed;
                         color: $grey;
                     }
+
                     span {
                         color: $purple-blue-bright;
                         font-size: 18px;
                         font-weight: 600;
+
                         &:hover {
                             font-weight: 700;
                             color: $purple-blue;
                         }
                     }
+
                     .img-edit {
                         width: 24px;
                         height: 24px;
+
                         &:hover {
                             content: url("/assets/img/icons/edit_hover.svg");
                         }
                     }
                 }
             }
+
             .channel-description {
                 max-height: 105px;
                 max-width: 100%;
@@ -121,8 +145,11 @@
                 @include scrollbar();
             }
         }
-        .editChannelName, .editChannelDescription {
+
+        .editChannelName,
+        .editChannelDescription {
             width: 100%;
+
             .input-box {
                 padding: 15px 20px;
                 width: 100%;
@@ -132,18 +159,21 @@
                 display: flex;
                 align-items: center;
                 gap: 10px;
+
                 input {
                     width: 100%;
                     font-size: 18px;
                     font-weight: 400;
                 }
-                &:hover, :has(&:focus) {
+
+                &:hover,
+                :has(&:focus) {
                     border: 1px solid rgba(83, 90, 241, 1);
                 }
             }
         }
     }
-    
+
 }
 
 // ######################################################################################################
@@ -161,12 +191,14 @@
     flex-direction: column;
     gap: 20px;
     @include scrollbar();
+
     .headlineAndCloseBtn {
         position: relative;
         width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
+
         .headline-outer-box {
             position: relative;
             display: flex;
@@ -175,12 +207,14 @@
             width: 100%;
             height: 40px;
             justify-content: space-between;
+
             .headline-box {
                 position: relative;
                 width: 100%;
                 display: flex;
                 align-items: center;
                 gap: 5px;
+
                 span {
                     width: 100%;
                     font-weight: 700;
@@ -188,12 +222,14 @@
                     @include textOverflowSingle();
                 }
             }
+
             .close-dialog-btn {
                 color: #000;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 padding: 8px 8px;
+
                 &:hover {
                     color: $purple-blue-bright;
                     background-color: $violet-bright;
@@ -202,9 +238,11 @@
             }
         }
     }
+
     .mobile-top-box {
         display: none;
     }
+
     .explainChannel {
         position: relative;
         padding: 20px;
@@ -217,15 +255,19 @@
         flex-direction: column;
         gap: 20px;
         transition: 100ms ease-in;
+
         &.editMode {
             padding: 0;
             border: 1px solid rgba(173, 176, 217, 0);
         }
+
         @include channelName();
+
         .channelName {
             gap: 20px;
         }
     }
+
     .explain {
         position: relative;
         padding: 20px;
@@ -238,44 +280,54 @@
         align-items: center;
         gap: 20px;
         transition: 100ms ease-in;
+
         &.editMode {
             padding: 0;
             border: 1px solid rgba(173, 176, 217, 0);
         }
+
         @include channelName();
+
         .channelName {
             gap: 20px;
         }
+
         .line {
             width: 100%;
             height: 1px;
             border: 1px solid rgba(173, 176, 217, 1);
             transition: width 0.1s linear;
+
             &.editMode {
                 width: calc(100% - 40px);
             }
         }
+
         .createdBy {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             gap: 20px;
+
             .createdBy-text {
                 font-size: 18px;
                 font-weight: 700;
             }
+
             .createdBy-data {
                 color: $purple-blue-bright;
                 font-size: 24px;
                 @include textOverflowMulti();
             }
+
             .logo {
                 height: 32px;
             }
         }
-        
+
     }
+
     .members-list-container {
         padding: 20px;
         width: 100%;
@@ -284,17 +336,20 @@
         display: none;
         flex-direction: column;
         gap: 15px;
+
         .member-list-title-box {
             .member-list-title {
                 font-size: 24px;
                 font-weight: 700;
             }
         }
+
         .member-list-content-box {
             width: 100%;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
+
             .members-list {
                 list-style: none;
                 padding: 0;
@@ -306,6 +361,7 @@
                 align-items: flex-start;
                 gap: 13px;
                 @include scrollbar();
+
                 .member {
                     padding: 4px 20px;
                     width: 100%;
@@ -315,24 +371,28 @@
                     align-items: center;
                     gap: 15px;
                     cursor: pointer;
+
                     &:hover {
                         background-color: $violet-bright;
                     }
+
                     img {
                         width: 50px;
                         height: 50px;
                         border-radius: 30px;
                     }
+
                     span {
                         overflow: hidden;
                         line-clamp: 2;
                         -webkit-line-clamp: 2;
-                        -webkit-box-orient: horizontal; 
+                        -webkit-box-orient: horizontal;
                         text-overflow: ellipsis;
                     }
                 }
             }
         }
+
         .members-list-btn {
             padding: 12px 20px;
             width: 100%;
@@ -343,12 +403,14 @@
             align-items: center;
             gap: 15px;
             cursor: pointer;
+
             &:hover {
                 border-radius: 100px;
                 font-weight: 650;
                 color: $purple-blue-bright;
                 background-color: $violet-bright;
             }
+
             span.icon {
                 margin-left: 5px;
                 min-width: 32px;
@@ -360,17 +422,20 @@
                 justify-content: center;
                 align-items: center;
             }
+
             span.icon-text {
                 text-align: left;
             }
         }
     }
+
     .leaveChannelBtn {
         width: 100%;
         height: 100%;
         display: flex;
         justify-content: flex-end;
         align-items: flex-end;
+
         button {
             margin-bottom: 0px;
         }
@@ -397,6 +462,7 @@
         height: 100vh;
         border-radius: unset;
         overflow-x: auto;
+
         .headlineAndCloseBtn {
             z-index: 10;
             position: fixed;
@@ -406,25 +472,31 @@
             height: 90px;
             box-shadow: 0 2px 10px 0 #00000014;
             background-color: #fff;
+
             .headline-outer-box {
                 .headline-box {
                     width: calc(100% - 40px);
                 }
             }
         }
+
         .mobile-top-box {
             min-height: 50px;
             height: 90px;
             width: 100%;
             display: block;
         }
+
         .explainChannel {
             min-height: 119px;
+
             .channelName {
                 &.editMode {
                     gap: 9px;
+
                     .titleText {
                         padding: 20px 20px 0;
+
                         .channel-edit-btn {
                             padding-right: 0;
                         }
@@ -432,24 +504,31 @@
                 }
             }
         }
+
         .explain {
             display: flex;
             flex-direction: column;
             gap: 20px;
+
             &.editMode {
                 padding: 0 0 20px 0;
+
                 .line.editMode {
                     width: 100%;
                 }
+
                 .createdBy {
                     padding: 0 20px;
                 }
             }
+
             .channelName {
                 &.editMode {
                     gap: 9px;
+
                     .titleText {
                         padding: 20px 20px 0;
+
                         .channel-edit-btn {
                             padding-right: 0;
                         }
@@ -457,6 +536,7 @@
                 }
             }
         }
+
         .members-list-container {
             display: flex;
         }
