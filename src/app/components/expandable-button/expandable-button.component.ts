@@ -201,10 +201,8 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
    * Stops loading if the specified instance matches.
    * @param {'channels' | 'users'} instance - The instance to stop loading for.
    */
-  stopLoading(instance: 'channels' | 'users') {
-    if (this.loading && this.instance.toString().includes(instance)) {
-      this.loading = false;
-    }
+  stopLoading() {
+    if (this.loading) {this.loading = false}
   }
 
   /**
@@ -213,7 +211,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
    * @param {string} uid - The user ID of the current user.
    */
   syncUsers(users: User[], uid: string) {
-    this.stopLoading('users');
+    this.stopLoading();
     this.currentUser = users.find(u => u.uid === uid);
     if (this.currentUser) {
       this.users = [this.currentUser].concat(users.filter(u => u.uid !== uid));
@@ -226,7 +224,7 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
    * @param {Channel[]} channels - The list of channels.
    */
   syncUserChannels(channels: Channel[]) {
-    this.stopLoading('channels');
+    this.stopLoading();
     this.userChannels = channels.filter(c => !c.isPmChannel && c.members.some(m => m.uid === this.currentUser?.uid));
   }
 
