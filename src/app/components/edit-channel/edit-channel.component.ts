@@ -164,7 +164,7 @@ export class EditChannelComponent {
     this.data.description = this.channelDescription;
     await this.channelsService.updateChannel(this.data);
     this.editDescriptionMode = false;
-    this.loading = true;
+    this.loading = false;
   }
 
 
