@@ -46,7 +46,7 @@ export class UsersService implements OnDestroy {
   users: User[] = [];
   unsubUsers;
   firestore: Firestore = inject(Firestore);
-  public mainChatViewState: 'workspace' | 'mainchat' | 'thread' = 'mainchat';
+  public mainChatViewState: 'workspace' | 'mainchat' | 'thread' = 'workspace';
   private channelsService = inject(ChannelsService);
   private storageService = inject(StorageService);
 
