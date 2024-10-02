@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, inject, OnInit } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 import { AnimationIntroService } from './service/animation-intro.service';
-
 
 
 /**
@@ -16,7 +16,7 @@ import { AnimationIntroService } from './service/animation-intro.service';
 @Component({
   selector: 'app-animation-intro',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, BrowserAnimationsModule],
   templateUrl: './animation-intro.component.html',
   styleUrl: './animation-intro.component.scss',
   animations: [
