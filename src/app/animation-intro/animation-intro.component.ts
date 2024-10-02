@@ -25,7 +25,7 @@ import { AnimationIntroService } from './service/animation-intro.service';
         transform: 'translate(50vw, 50dvh)'
       })),
       state('top', style({
-        transform: 'translate(calc(50vw + {{translateX}}px), {{translateY}}px)'
+        transform: 'translate({{translateX}}px, {{translateY}}px)'
       }), { params: { translateX: 0, translateY: 0 } }),
       transition('center => top', [
         animate('1008ms 1056ms ease-in-out')
@@ -74,8 +74,9 @@ export class AnimationIntroComponent implements OnInit {
    * The constructor sets the fine tuning properties.
    */
   constructor() {
-    if(window.innerWidth > 768) {this.translateX = -97}
-    else {this.translateX = -78}
+    this.translateX = window.innerWidth / 2;
+    if(window.innerWidth > 768) {this.translateX -= 97}
+    else {this.translateX -= 78}
   }
 
 

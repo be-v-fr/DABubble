@@ -46,8 +46,8 @@ export class AnimationIntroService {
     setTimeout(() => {
       this.doingResponsiveCalculation = false;
       this.logoResponsiveTranslateY = (window.innerHeight - contentHeight) / 2;
-      if(window.innerWidth > 768) {this.logoResponsiveTranslateY -= 56 + 16}
-      else {this.logoResponsiveTranslateY -= 45 + 8}
+      if(window.innerWidth > 768) {this.logoResponsiveTranslateY -= 72}
+      else {this.logoResponsiveTranslateY -= 53}
     }, 0);
   }
 
