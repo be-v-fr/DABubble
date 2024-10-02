@@ -21,7 +21,7 @@
         <div *ngIf="instance() == 'channels'" class="channel-menu">
             <ul>
                 @for (channel of userChannels; track channel) {<li>
-                    <a (click)="userService.setMobileView('mainchat')" class="list-item-content" title="{{channel.name}}"
+                    <a (click)="mobileViewService.setMobileView('mainchat')" class="list-item-content" title="{{channel.name}}"
                         [routerLink]="['/main-chat', channel.channel_id]">
                         <p class="list-item-text">
                             <img src="/assets/img/icons/tag.svg"><span>{{channel.name}}</span>
@@ -38,7 +38,7 @@
             <ul>
                 @for (user of users; track $index; let first = $first) {
                 <li>
-                    <a (click)="userService.setMobileView('mainchat')" [routerLink]="['/direct-message']" [attr.title]="first ? user.name + ' (Du)' : user.name"
+                    <a (click)="mobileViewService.setMobileView('mainchat')" [routerLink]="['/direct-message']" [attr.title]="first ? user.name + ' (Du)' : user.name"
                         (click)="onUserClick(user)">
                         <div class="visible-part">
                             <div class="message-img-container">
