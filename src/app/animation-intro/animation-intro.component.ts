@@ -76,8 +76,7 @@ export class AnimationIntroComponent implements OnInit {
    */
   constructor() {
     this.translateX = window.innerWidth / 2;
-    if(window.innerWidth > 768) {this.translateX -= 97}
-    else {this.translateX -= 78}
+    this.translateX -= (window.innerWidth > 768 ? 97 : 78);
   }
 
 
