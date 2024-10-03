@@ -12,7 +12,7 @@
     </div>
     @if (reactionsPickerVisible) {
     <div class="emoji-container" appClickStopPropagation (click)="closeReactionsPicker()">
-        <emoji-mart title="Pick your emoji…" (emojiClick)="onAddReaction($event)" emoji="point_up"></emoji-mart>
+        <emoji-mart title="Pick your emoji…" appClickStopPropagation (emojiClick)="onAddReaction($event)" emoji="point_up"></emoji-mart>
     </div>
     }
 </div>
