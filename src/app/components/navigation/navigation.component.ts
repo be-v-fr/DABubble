@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ExpandableButtonComponent } from '../expandable-button/expandable-button.component';
 import { RouterLink } from '@angular/router';
 import { Channel } from '../../../models/channel.class';
@@ -10,6 +10,7 @@ import { UsersService } from '../../../services/users.service';
 import { SearchComponent } from '../../home/header/search/search.component';
 import { AuthService } from '../../../services/auth.service';
 import { MobileViewService } from '../../../services/mobile-view.service';
+
 
 /**
  * Component responsible for navigation, including user and channel information.
@@ -105,5 +106,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
     if (window.innerWidth <= 768) {
       this.isVisible = false;
     }
+  }
+
+
+  createEmptyUser(): User {
+    return new User();
   }
 }

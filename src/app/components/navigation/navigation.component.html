@@ -8,10 +8,8 @@
             <img src="/assets/img/icons/edit_square.svg" >
         </a>
     </div>
-    @if(currentUser && users && userChannels) {
-    <app-search class="mobile-searchbar" [inHeader]="false" [placeholder]="'Gehe zu...'" [mainUser]="currentUser"
-        [users]="usersService.users" [userChannels]="userChannels" />
-    }
+    <app-search class="mobile-searchbar" [inHeader]="false" [placeholder]="'Gehe zu...'" [mainUser]="currentUser || createEmptyUser()"
+        [users]="usersService.users" [userChannels]="userChannels || []" />
     <div class="nav-main">
         <app-expandable-button class="channel" [title]="'Channels'" icon="workspaces" [instance]="'channels'" />
         <app-expandable-button class="direct" [title]="'Direktnachrichten'" icon="account_circle" [instance]="'users'" />
