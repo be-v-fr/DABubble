@@ -8,6 +8,7 @@ import { User } from '../../models/user.class';
 import { Post } from '../../models/post.class';
 import { Reaction } from '../../models/reaction.class';
 import { StorageService } from '../storage.service';
+import { MobileViewService } from '../mobile-view.service';
 
 
 /**
@@ -24,6 +25,7 @@ export class ChannelsService implements OnDestroy {
   channels: Channel[] = [];
   unSubChannels;
   storageService = inject(StorageService);
+  mobileViewService = inject(MobileViewService);
   router = inject(Router);
 
   /**
@@ -504,5 +506,6 @@ export class ChannelsService implements OnDestroy {
     this.router.navigate([`/${parent}`, channel_id], {
       queryParamsHandling: 'merge'
     });
+    this.mobileViewService.mainChatViewState = 'mainchat';
   }
 }

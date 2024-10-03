@@ -9,6 +9,7 @@ import { ChannelsService } from '../../../services/content/channels.service';
 import { UsersService } from '../../../services/users.service';
 import { SearchComponent } from '../../home/header/search/search.component';
 import { AuthService } from '../../../services/auth.service';
+import { MobileViewService } from '../../../services/mobile-view.service';
 
 /**
  * Component responsible for navigation, including user and channel information.
@@ -49,7 +50,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     public usersService: UsersService,
-    private channelsService: ChannelsService
+    private channelsService: ChannelsService,
+    public mobileViewService: MobileViewService,
   ) { }
 
   /**

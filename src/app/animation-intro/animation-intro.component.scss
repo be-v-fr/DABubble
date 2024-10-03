@@ -165,9 +165,6 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
 
 .outer-wrapper-main .logo-animate {
     animation: move-wrapper-main-desktop calc($animation-duration * 0.42) ease-in-out;
-    @media screen and (max-width: 768px) {
-        animation-name: move-wrapper-main-mobile;
-    }
     animation-delay: calc($animation-duration * 0.44);
     animation-fill-mode: backwards;
     @keyframes move-wrapper-main-desktop {
@@ -178,22 +175,23 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
             @include logo-wrapper-end-main-desktop();
         }
     }
-    @keyframes move-wrapper-main-mobile {
-        from {
-            @include logo-wrapper-start();
-        }
-        to {
-            @include logo-wrapper-end-main-mobile();
+    @media screen and (max-width: 768px) {
+        animation-name: move-wrapper-main-mobile;
+        @keyframes move-wrapper-main-mobile {
+            from {
+                @include logo-wrapper-start();
+            }
+            to {
+                @include logo-wrapper-end-main-mobile();
+            }
         }
     }
 }
 
 .logo-animate {
+    will-change: transform;
     .logo-container {
         animation: size-container calc($animation-duration * 0.42) ease-in-out;
-        @media screen and (max-width: 480px) {
-            animation-name: size-container-480;
-        }
         animation-delay: calc($animation-duration * 0.44);
         animation-fill-mode: backwards;
         @keyframes size-container {
@@ -204,13 +202,16 @@ $gradient-bg: linear-gradient($purple-blue-brighter, #323be6);
                 transform: scale(1) translateX(0);
             }
         }
-        @keyframes size-container-480 {
-            from {
-                transform: scale(1.9) translateX(-24%);
+        @media screen and (max-width: 480px) {
+            animation-name: size-container-480;
+            @keyframes size-container-480 {
+                from {
+                    transform: scale(1.9) translateX(-24%);
+                }
+                to {
+                    transform: scale(1) translateX(0);
+                }            
             }
-            to {
-                transform: scale(1) translateX(0);
-            }            
         }
         .logo-img-container img {
             animation: move-img calc($animation-duration / 3) ease-in-out;

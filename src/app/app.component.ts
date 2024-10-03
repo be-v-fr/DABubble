@@ -52,7 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
    * accessed from there.
    */
   initRedirect() {
-    if (!window.location.href.includes('?oobCode')) {
+    if (!window.location.href.includes('oobCode')) {
       this.initialRoute = this.router.url;
       this.router.navigate(['/auth/logIn']);
     }

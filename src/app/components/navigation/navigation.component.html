@@ -4,7 +4,7 @@
             <img src="/assets/img/workspace_logo.svg">
             <span>Devspace</span>
         </div>
-        <a (click)="usersService.setMobileView('mainchat')" routerLink="/new" class="new-message-btn">
+        <a (click)="mobileViewService.setMobileView('mainchat')" routerLink="/new" class="new-message-btn">
             <img src="/assets/img/icons/edit_square.svg" >
         </a>
     </div>
@@ -16,7 +16,7 @@
         <app-expandable-button class="channel" [title]="'Channels'" icon="workspaces" [instance]="'channels'" />
         <app-expandable-button class="direct" [title]="'Direktnachrichten'" icon="account_circle" [instance]="'users'" />
     </div>
-    <a (click)="usersService.setMobileView('mainchat')" routerLink="/new" class="new-message-mobile-btn">
+    <a (click)="mobileViewService.setMobileView('mainchat')" routerLink="/new" class="new-message-mobile-btn">
         <div class="new-message-icon">
             <img src="../../../assets/img/icons/new_message.svg">
         </div>
