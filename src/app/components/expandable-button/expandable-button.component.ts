@@ -12,6 +12,7 @@ import { AuthService } from '../../../services/auth.service';
 import { ActivityService } from '../../../services/activity.service';
 import { ActivityStateDotComponent } from '../activity-state-dot/activity-state-dot.component';
 import { LoadingCircleComponent } from './loading-circle/loading-circle.component';
+import { MobileViewService } from '../../../services/mobile-view.service';
 
 /**
  * Component for an expandable button that displays menus for users and channels.
@@ -129,11 +130,10 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
    */
   constructor(
     private dialog: MatDialog,
-    private router: Router,
     private authService: AuthService,
     public userService: UsersService,
     private channelsService: ChannelsService,
-    private activityService: ActivityService
+    public mobileViewService: MobileViewService,
   ) { }
 
   /**

@@ -15,6 +15,7 @@ import { ClickStopPropagationDirective } from '../shared/click-stop-propagation.
 import { ReactionService } from '../../services/content/reaction.service';
 import { ChannelsService } from '../../services/content/channels.service';
 import { Channel } from '../../models/channel.class';
+import { MobileViewService } from '../../services/mobile-view.service';
 
 
 /**
@@ -44,6 +45,7 @@ export class HomeComponent {
     private channelsService = inject(ChannelsService);
     public activityService = inject(ActivityService);
     public reactionsService = inject(ReactionService);
+    public mobileViewService = inject(MobileViewService);
     private authSub = new Subscription();
     private usersSub = new Subscription();
     private channelsSub = new Subscription();

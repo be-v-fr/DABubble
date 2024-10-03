@@ -19,7 +19,7 @@
           <app-time-separator [timestamp]="post.date"
             *ngIf="i == 0 || !timeService.isOnSameDay(post.date, channel.posts[i - 1].date)" />
           <app-message-item [id]="post.post_id" [postUid]="post.user_id" [post]="post"
-            [messageSender]="isCurrentUserAuthor()" [isInDirectMessage]="true" />
+            [messageSender]="isCurrentUserAuthor(i)" [isInDirectMessage]="true" />
         </div>
         }
       </div>

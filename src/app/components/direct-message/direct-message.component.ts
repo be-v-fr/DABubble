@@ -299,8 +299,8 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
    * Checks if the current user is the author of the first post in the channel.
    * @returns True if the current user is the author, otherwise false.
    */
-  isCurrentUserAuthor(): boolean {
-    const firstPost = this.channel!.posts[0];
+  isCurrentUserAuthor(index: number): boolean {
+    const firstPost = this.channel!.posts[index];
     return this.currUser?.uid === firstPost.user_id;
   }
 }

@@ -2,6 +2,10 @@
 @import "material-icons/iconfont/material-icons.css";
 @import "@ctrl/ngx-emoji-mart/picker";
 
+:root {
+    --mat-dialog-container-small-max-width: 92vw;
+}
+
 $violet-bright: #eceefe;
 $purple-light: #adb0d9;
 $purple-blue: #444df2;
@@ -11,9 +15,9 @@ $purple-blue-active: #444df2;
 $grey: #686868;
 $grey-light: #e6e6e6;
 $magenta: #ed1e79;
-$onlinedot-border: #eceefe; // this is identical to "violet-bright"
+$onlinedot-border: #eceefe;
 $onlinedot-online: #92c83e;
-$onlinedot-offline: #686868; // this is identical to "grey"
+$onlinedot-offline: #686868;
 
 @mixin transition($duration: 100ms) {
     transition: $duration ease;

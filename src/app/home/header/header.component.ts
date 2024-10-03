@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { Channel } from '../../../models/channel.class';
 import { SearchComponent } from './search/search.component';
 import { ActivityStateDotComponent } from '../../components/activity-state-dot/activity-state-dot.component';
+import { MobileViewService } from '../../../services/mobile-view.service';
 
 
 /**
@@ -50,8 +51,9 @@ export class HeaderComponent {
         public dialog: MatDialog,
         private router: Router,
         private authService: AuthService,
-        public usersService: UsersService,
-        public introService: AnimationIntroService
+        private usersService: UsersService,
+        public introService: AnimationIntroService,
+        public mobileViewService: MobileViewService,
     ) { }
 
 
