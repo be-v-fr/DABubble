@@ -1,7 +1,7 @@
 <form class="searchbar-wrapper" [ngClass]="inHeader? 'in-header' : 'in-navigation'" #searchForm="ngForm">
     <div class="searchbar-box">
         <input #searchbar name="searchbar" [(ngModel)]="searchInput" type="text" [placeholder]="placeholder"
-            autocomplete="off" (keyup)="search()" [disabled]="mainUser.uid.length == 0 || users.length == 0 || userChannels.length == 0">
+            autocomplete="off" (keyup)="search()" [disabled]="users.length == 0 && userChannels.length == 0">
         @if(searchInput.length > 0 && !hidingResults) {
         <button type="button" class="searchbar-icon material-icons-outlined"
             (click)="onCloseSearchClick()">close</button>
