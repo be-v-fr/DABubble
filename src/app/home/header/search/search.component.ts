@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Channel } from '../../../../models/channel.class';
 import { User } from '../../../../models/user.class';
 import { UsersService } from '../../../../services/users.service';
@@ -11,6 +11,9 @@ import { MembersOverviewComponent } from '../../../components/main-chat/members-
 import { UserProfileCardComponent } from '../../../components/user-profile-card/user-profile-card.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MobileViewService } from '../../../../services/mobile-view.service';
+import { AuthService } from '../../../../services/auth.service';
+import { ChannelsService } from '../../../../services/content/channels.service';
+import { Subscription } from 'rxjs';
 
 
 /**
@@ -29,9 +32,9 @@ import { MobileViewService } from '../../../../services/mobile-view.service';
     styleUrl: './search.component.scss'
 })
 export class SearchComponent {
-    @Input() mainUser: User = new User;
-    @Input() users: User[] = [];
-    @Input() userChannels: Channel[] = [];
+    mainUser: User = new User;
+    users: User[] = [];
+    userChannels: Channel[] = [];
     @Input() placeholder: string = 'Devspace durchsuchen';
     @Input() inHeader: boolean = true;
     searchInput: string = '';
@@ -44,13 +47,101 @@ export class SearchComponent {
     hidingResults: boolean = false;
     @ViewChild('searchbar', { read: ElementRef }) searchbar!: ElementRef<HTMLInputElement>;
     public extended: 'channels' | 'users' | 'posts' | null = null;
+    private authService = inject(AuthService);
     private usersService = inject(UsersService);
+    private channelsService = inject(ChannelsService);
     public mobileViewService = inject(MobileViewService);
     public timeService = inject(TimeService);
+    private authSub = new Subscription();
+    private usersSub = new Subscription();
+    private channelsSub = new Subscription();
+
 
     constructor(
         private dialog: MatDialog,
+        private cd: ChangeDetectorRef,
     ) { }
+
+
+    /**
+     * Initializes the component by subscribing to user authentication and data services.
+     */
+    ngOnInit(): void {
+        const uid = this.authService.getCurrentUid();
+        if (uid) {
+            this.syncUsers(this.usersService.users, uid);
+            this.syncChannels(this.channelsService.channels, uid);
+        }
+        this.authSub = this.authService.user$.subscribe(user => this.onAuthUserChange(user));
+    }
+
+
+    /**
+     * Initializes users and channels subscriptions using the current user's UID.
+     * @param user - Value transmitted by authService.user$ observable.
+     */
+    onAuthUserChange(user: any) {
+        if (user) {
+            this.usersSub = this.subUsers(user.uid);
+            this.channelsSub = this.subChannels(user.uid);
+            this.cd.detectChanges();
+        }
+    }
+
+
+    /**
+     * Subscribes to user data updates and sets the current user and users list.
+     * @param uid - The user ID of the current user.
+     * @returns The subscription to user data updates.
+     */
+    subUsers(uid: string): Subscription {
+        return this.usersService.users$.subscribe(users => this.syncUsers(users, uid));
+    }
+
+
+    /**
+     * Synchronizes local users array with input users array.
+     * @param users - users array
+     * @param uid - current user UID
+     */
+    syncUsers(users: User[], uid: string) {
+        const mainUser = users.find(u => u.uid === uid)
+        if (mainUser) {
+            this.mainUser = mainUser;
+            this.users = users;
+            this.cd.detectChanges();
+        }
+    }
+
+    /**
+     * Subscribes to channel data updates and filters channels based on user membership.
+     * @param uid - The user ID of the current user.
+     * @returns The subscription to channel data updates.
+     */
+    subChannels(uid: string): Subscription {
+        return this.channelsService.channels$.subscribe(channels => this.syncChannels(channels, uid));
+    }
+
+
+    /**
+     * Synchronizes local channels array with input channels array.
+     * @param channels - channels array
+     * @param uid - current user UID
+     */
+    syncChannels(channels: Channel[], uid: string) {
+        this.userChannels = channels.filter(c => c.members.find(m => m.uid === uid));
+        this.cd.detectChanges();
+    }
+
+
+    /**
+     * Unsubscribes from all subscriptions to avoid memory leaks.
+     */
+    ngOnDestroy(): void {
+        this.authSub.unsubscribe();
+        this.usersSub.unsubscribe();
+        this.channelsSub.unsubscribe();
+    }
 
 
     /**
