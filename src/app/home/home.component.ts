@@ -93,7 +93,11 @@ export class HomeComponent {
                 this.syncUsers();
                 this.setUserChannels(this.channelsService.channels);
                 this.usersSub = this.subUsers();
-                this.authService.isGoogleUser = user.providerData[0].providerId.includes('google');
+                if (user.providerData) {
+                    this.authService.isGoogleUser = user.providerData[0].providerId.includes('google');
+                } else {
+                    this.authService.isGoogleUser = false;
+                }
             }
         });
     }
