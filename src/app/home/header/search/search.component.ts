@@ -10,6 +10,7 @@ import { RouterLink } from '@angular/router';
 import { MembersOverviewComponent } from '../../../components/main-chat/members-overview/members-overview.component';
 import { UserProfileCardComponent } from '../../../components/user-profile-card/user-profile-card.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MobileViewService } from '../../../../services/mobile-view.service';
 
 
 /**
@@ -43,7 +44,8 @@ export class SearchComponent {
     hidingResults: boolean = false;
     @ViewChild('searchbar', { read: ElementRef }) searchbar!: ElementRef<HTMLInputElement>;
     public extended: 'channels' | 'users' | 'posts' | null = null;
-    public usersService = inject(UsersService);
+    private usersService = inject(UsersService);
+    public mobileViewService = inject(MobileViewService);
     public timeService = inject(TimeService);
 
     constructor(

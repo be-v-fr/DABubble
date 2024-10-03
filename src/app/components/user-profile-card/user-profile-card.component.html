@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="submit-btns">
-        <a (click)="usersService.setMobileView('mainchat')" [routerLink]="['/direct-message']" (click)="onUserClick(user)">
+        <a (click)="mobileViewService.setMobileView('mainchat')" [routerLink]="['/direct-message']" (click)="onUserClick(user)">
             <button class="form-btn-primary" (click)="closeCard('directMessage')">
                 Nachricht
                 <img src="../../assets/img/userProfileImg/mode_comment.png" />

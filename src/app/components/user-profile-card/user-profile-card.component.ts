@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
+import { MobileViewService } from '../../../services/mobile-view.service';
 
 /**
  * Represents a user profile card component that displays user information and handles direct messaging functionality.
@@ -34,7 +35,8 @@ export class UserProfileCardComponent implements OnInit, OnDestroy {
   constructor(
     private channelsService: ChannelsService,
     private authService: AuthService,
-    public usersService: UsersService,
+    private usersService: UsersService,
+    public mobileViewService: MobileViewService,
     private dialogRef: MatDialogRef<UserProfileCardComponent>,
     public activityService: ActivityService,
     @Inject(MAT_DIALOG_DATA) public data: User
