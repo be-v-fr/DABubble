@@ -465,6 +465,7 @@ export class ChannelsService implements OnDestroy {
    */
   async initUserChannels(user: User) {
     await this.initTeamChannel(user);
+    await this.initWelcomeChannel(user)
   }
 
 
@@ -475,7 +476,9 @@ export class ChannelsService implements OnDestroy {
    */
   async initTeamChannel(user: User) {
     const teamChannel: Channel | undefined = this.channels.find(c => c.name === 'Team');
-    if (teamChannel) { await this.addMemberToChannel(user, teamChannel.channel_id) }
+    if (teamChannel) {
+      await this.addMemberToChannel(user, teamChannel.channel_id)
+    }
     else { await this.storageService.storeChannel(new Channel(this.getTeamChannelData(user))) }
   }
 
@@ -496,6 +499,22 @@ export class ChannelsService implements OnDestroy {
     };
   }
 
+
+  /**
+  * Initializes the welcome channel for a user.
+  * @param {User} user - The user for whom the welcome channel will be initialized.
+  * @returns {Promise<void>} A promise that resolves when the welcome channel is initialized.
+  */
+  async initWelcomeChannel(user: User): Promise<void> {
+    const welcomeChannel = this.channels.find(channel => channel.name === 'Welcome');
+    if (welcomeChannel) {
+      const isMember = welcomeChannel.members.some(member => member.uid === user.uid);
+      if (!isMember) {
+        await this.addMemberToChannel(user, welcomeChannel.channel_id);
+      }
+    }
+  }
+  
 
   /**
    * Navigates to a specific channel route within the app.
