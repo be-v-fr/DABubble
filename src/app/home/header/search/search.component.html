@@ -23,8 +23,8 @@
                 </p>
                 <ul class="search-results-list">
                     @for(channel of searchResultsChannels; track channel) {
-                    <li class="search-results-channel" [routerLink]="['/main-chat', channel.channel_id]"
-                        (click)="clearSearch()">
+                    <li class="search-results-channel" (click)="usersService.setMobileView('mainchat')"
+                        [routerLink]="['/main-chat', channel.channel_id]" (click)="clearSearch()">
                         <span class="limit-text"># {{ channel.name }}</span>
                         <app-members-overview *ngIf="inHeader" [channel]="channel" />
                     </li>
@@ -57,6 +57,7 @@
                 <ul class="search-results-list">
                     @for(post of searchResultsPosts; track post; let i = $index) {
                     <li class="search-results-post" *ngIf="postChannelIndices[i] != -1" (click)="clearSearch()"
+                        (click)="usersService.setMobileView('mainchat')"
                         [routerLink]="[userChannels[postChannelIndices[i]].isPmChannel ? '/direct-message' : '/main-chat', post.channel_id]"
                         [queryParams]="{post: post.post_id}">
                         <div class="top-line">

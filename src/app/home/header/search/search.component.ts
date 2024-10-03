@@ -43,7 +43,7 @@ export class SearchComponent {
     hidingResults: boolean = false;
     @ViewChild('searchbar', { read: ElementRef }) searchbar!: ElementRef<HTMLInputElement>;
     public extended: 'channels' | 'users' | 'posts' | null = null;
-    private usersService = inject(UsersService);
+    public usersService = inject(UsersService);
     public timeService = inject(TimeService);
 
     constructor(

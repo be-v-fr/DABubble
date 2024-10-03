@@ -34,7 +34,7 @@ export class UserProfileCardComponent implements OnInit, OnDestroy {
   constructor(
     private channelsService: ChannelsService,
     private authService: AuthService,
-    private usersService: UsersService,
+    public usersService: UsersService,
     private dialogRef: MatDialogRef<UserProfileCardComponent>,
     public activityService: ActivityService,
     @Inject(MAT_DIALOG_DATA) public data: User
