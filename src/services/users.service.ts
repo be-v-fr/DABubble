@@ -157,7 +157,6 @@ export class UsersService implements OnDestroy {
       localStorage.setItem('GUEST_uid', response.id);
       user.uid = response.id;
       await this.channelsService.initUserChannels(user);
-      await this.channelsService.initWelcomeChannel(user);
     } catch (err) {
       console.error('Error adding guest user:', err);
     }
