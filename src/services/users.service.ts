@@ -136,7 +136,6 @@ export class UsersService implements OnDestroy {
     try {
       await setDoc(this.getSingleDocRef(user.uid), user.toJson());
       await this.channelsService.initUserChannels(user);
-      await this.channelsService.initWelcomeChannel(user);
     } catch (err) {
       console.error('Error adding user:', err);
     }

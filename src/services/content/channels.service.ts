@@ -465,7 +465,7 @@ export class ChannelsService implements OnDestroy {
    */
   async initUserChannels(user: User) {
     await this.initTeamChannel(user);
-    await this.initWelcomeChannel(user)
+    await this.initWelcomeChannel(user);
   }
 
 
