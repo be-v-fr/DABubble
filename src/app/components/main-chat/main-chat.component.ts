@@ -277,7 +277,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
     }
 
     this.channelsService.addPostToChannel(this.currentChannel.channel_id, this.currentUid, data.message, data.attachmentSrc)
-      .then(() => console.log('Post successfully added to the channel'))
+      .then(() => { })
       .catch(err => console.error('Error adding post to the channel:', err));
   }
 

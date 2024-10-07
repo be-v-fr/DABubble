@@ -228,7 +228,7 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.channelsService.addPostToThread(this.channelData.id, this.post!.thread.thread_id, this.currUid, data.message, data.attachmentSrc)
-      .then(() => console.log('Post successfully added to the channel'))
+      .then(() => { })
       .catch(err => console.error('Error adding post to the channel:', err));
   }
 
