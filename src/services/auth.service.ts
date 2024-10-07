@@ -12,7 +12,6 @@ import {
 import {
   sendPasswordResetEmail,
   confirmPasswordReset,
-  updateEmail,
   verifyBeforeUpdateEmail,
   applyActionCode
 } from "firebase/auth";
