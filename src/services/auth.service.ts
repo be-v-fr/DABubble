@@ -12,10 +12,11 @@ import {
 import {
   sendPasswordResetEmail,
   confirmPasswordReset,
+  updateEmail,
   verifyBeforeUpdateEmail,
   applyActionCode
 } from "firebase/auth";
-import { Observable, from, merge, BehaviorSubject, map, Subscription } from "rxjs";
+import { Observable, from, merge, BehaviorSubject, map, Subscription, throwError, tap, catchError } from "rxjs";
 import { UsersService } from "./users.service";
 import { User } from "../models/user.class";
 
@@ -46,35 +47,38 @@ export class AuthService {
 
 
   /**
-   * Registers a new user with an email and password and updates the user profile with the provided name.
-   * @param name The display name of the user.
-   * @param email The email address for the new account.
-   * @param password The password for the new account.
-   * @returns Observable<void> representing the completion of the registration.
-   */
+ * Registers a new user with an email and password and updates the user profile with the provided name.
+ * @param name The display name of the user.
+ * @param email The email address for the new account.
+ * @param password The password for the new account.
+ * @returns Observable<void> representing the completion of the registration.
+ */
   register(name: string, email: string, password: string): Observable<void> {
-    const promise = createUserWithEmailAndPassword(
-      this.firebaseAuth,
-      email,
-      password
-    ).then(response => updateProfile(response.user, { displayName: name }));
-    return from(promise);
+    const promise = createUserWithEmailAndPassword(this.firebaseAuth, email, password)
+      .then((response) => updateProfile(response.user, { displayName: name }));
+
+    return from(promise).pipe(
+      tap(() => this.onRegisteredLogin(email)),
+      map(() => { }),
+      catchError(this.handleError)
+    );
   }
 
 
   /**
-   * Logs in a user using email and password.
-   * @param email The user's email address.
-   * @param password The user's password.
-   * @returns Observable<void> representing the completion of the login process.
-   */
+ * Logs in a user using email and password.
+ * @param email The user's email address.
+ * @param password The user's password.
+ * @returns Observable<void> representing the completion of the login process.
+ */
   logIn(email: string, password: string): Observable<void> {
-    const promise = signInWithEmailAndPassword(
-      this.firebaseAuth,
-      email,
-      password
-    ).then(() => this.onRegisteredLogin(email));
-    return from(promise);
+    const promise = signInWithEmailAndPassword(this.firebaseAuth, email, password);
+
+    return from(promise).pipe(
+      tap(() => this.onRegisteredLogin(email)),
+      map(() => { }),
+      catchError(this.handleError)
+    );
   }
 
 
@@ -271,5 +275,33 @@ export class AuthService {
       const current = this.firebaseAuth.currentUser;
       return current ? current.uid : undefined;
     }
+  }
+
+  private handleError(errorRes: any) {
+    let errorMessage = 'An unknown error occurred!';
+
+    if (!errorRes || !errorRes.code) {
+      return throwError(() => new Error(errorMessage));
+    }
+
+    // Check error codes based on Firebase Auth errors
+    switch (errorRes.code) {
+      case 'auth/email-already-in-use':
+        errorMessage = 'This email is already in use.';
+        break;
+      case 'auth/invalid-email':
+        errorMessage = 'The email address is not valid.';
+        break;
+      case 'auth/user-not-found':
+        errorMessage = 'This email is not registered.';
+        break;
+      case 'auth/wrong-password':
+        errorMessage = 'The password is incorrect.';
+        break;
+      default:
+        errorMessage = errorRes.message;
+    }
+
+    return throwError(() => new Error(errorMessage));
   }
 }
