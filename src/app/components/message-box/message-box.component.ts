@@ -9,6 +9,9 @@ import { ClickStopPropagationDirective } from '../../shared/click-stop-propagati
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/user.class';
+import { AuthService } from '../../../services/auth.service';
+import { ChannelsService } from '../../../services/content/channels.service';
+import { MembersOverviewComponent } from '../main-chat/members-overview/members-overview.component';
 
 /**
  * Component for sending messages, including text, reactions, and file attachments.
@@ -16,26 +19,16 @@ import { User } from '../../../models/user.class';
 @Component({
   selector: 'app-message-box',
   standalone: true,
-  imports: [CommonModule, FormsModule, ClickStopPropagationDirective, PickerComponent],
+  imports: [CommonModule, FormsModule, ClickStopPropagationDirective, PickerComponent, MembersOverviewComponent],
   templateUrl: './message-box.component.html',
   styleUrl: './message-box.component.scss'
 })
 export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   private reactionSub = new Subscription();
-
-  /** Indicates if a message is being sent or if it's loading */
   loading: boolean = false;
-
-  /** Indicates if the members list is currently being shown */
   showingMembersList: boolean = false;
-
-  /** Error message to be displayed to the user */
   errorMsg: string | null = null;
-
-  /** Indicates if the emoji picker is visible */
   public reactionsPickerVisible = false;
-
-  /** Data for the message box, including message content and file attachment details */
   data = {
     message: '',
     messageInThread: '',
@@ -43,38 +36,25 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     attachmentSrc: '',
     attachmentName: ''
   };
-
-  /** List of channels available to the user */
-  @Input() channelList!: Channel[];
-
-  /** List of users available to the user */
-  @Input() userList!: User[];
-
-  /** Indicates if the message is a reply */
+  @Input() toChannel: boolean = false;
+  @Input() toUser: boolean = false;
   @Input() replying: boolean = false;
-
-  /** The current channel */
   @Input() channel?: Channel;
-
-  /** The recipient of the message */
   @Input() recipient?: string;
-
-  /** Indicates if the message is part of a thread */
   @Input({ required: true }) inThread?: boolean | undefined;
-
-  /** Event emitted when a message is sent */
   @Output() sent = new EventEmitter<{}>();
-
-  /** Reference to the message input element */
   @ViewChild('messageBox') messageBoxInput!: ElementRef<HTMLInputElement>;
-
-  /** Reference to the file input element */
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+  searchResultsChannels: Channel[] = [];
+  searchResultsUsers: User[] = [];
 
-  /** Injected service for handling file storage */
-  public storageService = inject(StorageService);
 
-  constructor(public reactionsService: ReactionService) { }
+  constructor(
+    public storageService: StorageService,
+    public reactionsService: ReactionService,
+    private authService: AuthService,
+    private channelsService: ChannelsService,
+  ) { }
 
   /**
    * Initializes the component and subscribes to reaction service updates.
@@ -158,7 +138,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     const empty = this.isFormEmpty();
     if (form.submitted && form.valid && !empty) {
       this.resetError();
-      (this.channel || this.inThread || this.channelList!.length > 0 || this.userList!.length > 0) ? this.completeForm(form) : this.showError('Die Nachricht ist an niemanden adressiert.');
+      (this.channel || this.inThread || this.toChannel || this.toUser) ? this.completeForm(form) : this.showError('Die Nachricht ist an niemanden adressiert.');
     } else if (empty) {
       this.showError('Schreibe eine Nachricht oder wähle eine Datei.');
     }
@@ -206,6 +186,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   toggleMembersList(e: Event): void {
     e.stopPropagation();
     e.preventDefault();
+    this.clearSearch();
     this.showingMembersList = !this.showingMembersList;
     this.messageBoxInput.nativeElement.focus();
   }
@@ -223,8 +204,15 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
    * Adds a string to the current message and focuses the message input field.
    * @param string - The string to be added.
    */
-  addToMessage(string: string) {
+  addToMessage(string: string, type: 'channel' | 'user' | 'reaction') {
+    if (type != 'reaction') {
+      const cutIndex = this.getLastSpecialCharIndex(this.message);
+      const char = type == 'channel' ? '#' : '@';
+      if (cutIndex != -1) { this.message = this.message.substring(0, cutIndex) }
+      this.message += char;
+    }
     this.message += string;
+    this.clearSearch();
     this.messageBoxInput.nativeElement.focus();
   }
 
@@ -243,7 +231,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   subReaction(): Subscription {
     return this.reactionsService.reactionToAdded$.subscribe((reaction) => {
       if (reaction && this.reactionsService.reactionToMessage) {
-        this.addToMessage(reaction);
+        this.addToMessage(reaction, 'reaction');
         this.reactionsService.setReaction('');
       }
     });
@@ -354,5 +342,91 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   deleteFile(): void {
     deleteObject(this.data.attachmentRef);
     this.resetFile();
+  }
+
+
+  /**
+   * Triggers a search based on the message input value.
+   */
+  search(): void {
+    let term: string | null = this.getSubstringFromLastSpecialChar(this.message.toLowerCase());
+    term ? this.triggerSearchCategories(term) : this.clearSearch();
+  }
+
+
+  /**
+   * Gets a substring from the message starting from the last special character (@ or #).
+   * @param message - The message string to extract the substring from.
+   * @returns The substring starting from the last special character, or null if none found.
+   */
+  getSubstringFromLastSpecialChar(message: string): string | null {
+    const lastIndex = this.getLastSpecialCharIndex(message);
+    return lastIndex === -1 ? null : message.substring(lastIndex);
+  }
+
+
+  /**
+   * Gets the index of the last special character (@ or #) in the message.
+   * @param message - The message string to check.
+   * @returns The index of the last special character, or -1 if none found.
+   */
+  getLastSpecialCharIndex(message: string): number {
+    const atIndex = message.lastIndexOf('@');
+    const hashIndex = message.lastIndexOf('#');
+    return Math.max(atIndex, hashIndex);
+  }
+
+
+  /**
+   * Triggers search in different categories based on the input term.
+   * @param term - The search term.
+   */
+  triggerSearchCategories(term: string) {
+    if (term.startsWith('@')) {
+      this.searchResultsChannels = [];
+      this.searchUsers(term.slice(1));
+    } else if (term.startsWith('#')) {
+      this.searchResultsUsers = [];
+      this.searchChannels(term.slice(1));
+    }
+  }
+
+
+  /**
+   * Searches for channels based on the search term.
+   * @param term - The search term.
+   */
+  searchChannels(term: string): void {
+    if (term.startsWith(' ')) { term = term.slice(1) }
+    this.searchResultsChannels = this.channelsService.channels
+      .filter(c => {
+        return !c.isPmChannel &&
+          c.members.find(m => m.uid == this.authService.getCurrentUid()) &&
+          (c.name.toLowerCase().includes(term) || c.description.toLowerCase().includes(term));
+      });
+  }
+
+
+  /**
+   * Searches for users based on the search term.
+   * @param term - The search term.
+   */
+  searchUsers(term: string): void {
+    if (this.channel) {
+      if (term.startsWith(' ')) { term = term.slice(1) }
+      this.searchResultsUsers = this.channel.members.filter(u => {
+        return u.uid != this.authService.getCurrentUid() &&
+          (u.name.toLowerCase().includes(term) || u.email.toLowerCase().includes(term));
+      });
+    }
+  }
+
+
+  /**
+   * Clears the search input and results.
+   */
+  clearSearch(): void {
+    this.searchResultsChannels = [];
+    this.searchResultsUsers = [];
   }
 }

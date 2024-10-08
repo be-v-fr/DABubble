@@ -111,7 +111,7 @@
         }
     }
 
-    .members-list {
+    .results-list {
         position: absolute;
         left: 0;
         bottom: calc(100% + 0.5px);
@@ -160,9 +160,14 @@
                 object-fit: cover;
             }
 
-            span {
+            span.user {
                 width: 100%;
                 @include textOverflowMulti();
+            }
+
+            span.channel {
+                width: 100%;
+                @include textOverflowSingle();
             }
 
             &:hover {

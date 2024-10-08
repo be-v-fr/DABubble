@@ -1,7 +1,8 @@
 <div class="message-box-wrapper">
     <form class="message-box-container" (ngSubmit)="onSubmit(messageForm)" #messageForm="ngForm"
         (click)="onContainerClick()">
-        <input [placeholder]="getPlaceholder()" [(ngModel)]="message" name="messageBox" autocomplete="off" #messageBox>
+        <input [placeholder]="getPlaceholder()" [(ngModel)]="message" name="messageBox" autocomplete="off" #messageBox
+            (keyup)="search()">
         <div class="message-box-footer">
             <div class="message-box-actions">
                 <input type="file" #fileInput name="fileInput" style="display: none" ngModel
@@ -21,14 +22,34 @@
                 <span class="material-icons-outlined icon">send</span>
             </button>
         </div>
-        <ul class="members-list" *ngIf="channel && showingMembersList">
-            @for(member of channel.members; track member) {
-            <li (click)="addToMessage(member.name)" title="{{member.name}}">
+        @if(searchResultsUsers.length > 0) {
+        <ul class="results-list">
+            @for(member of searchResultsUsers; track member) {
+            <li (click)="addToMessage(member.name, 'user')" title="{{member.name}}">
                 <img src="{{member.avatarSrc}}" alt="Avatar">
-                <span>{{member.name}}</span>
+                <span class="user">{{member.name}}</span>
             </li>
             }
         </ul>
+        } @else if(searchResultsChannels.length > 0) {
+        <ul class="results-list">
+            @for(channel of searchResultsChannels; track channel) {
+            <li class="search-results-channel" (click)="addToMessage(channel.name, 'channel')">
+                <span class="limit-text channel"># {{ channel.name }}</span>
+                <app-members-overview [channel]="channel" />
+            </li>
+            }
+        </ul>
+        } @else if(channel && showingMembersList) {
+        <ul class="results-list">
+            @for(member of channel.members; track member) {
+            <li (click)="addToMessage(member.name, 'user')" title="{{member.name}}">
+                <img src="{{member.avatarSrc}}" alt="Avatar">
+                <span class="user">{{member.name}}</span>
+            </li>
+            }
+        </ul>
+        }
         <p *ngIf="errorMsg" class="error-msg">{{errorMsg}}</p>
     </form>
     <div class="attachment-container" *ngIf="data.attachmentRef">
