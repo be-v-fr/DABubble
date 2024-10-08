@@ -3,3 +3,25 @@
     width: 100vw;
     height: 100dvh;
 }
+
+.turn-device-overlay {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    opacity: 0.84;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    .turn-device-icon {
+        font-size: 140px;
+    }
+    p {
+        font-size: 20px;
+        text-align: center;
+    }
+    @media screen and (max-width: 1024px) and (max-height: 768px) and (orientation: landscape) {
+        display: flex;
+    }
+}
