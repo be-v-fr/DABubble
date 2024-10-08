@@ -14,18 +14,32 @@ import { TimeSeparatorComponent } from '../time-separator/time-separator.compone
 import { TimeService } from '../../../services/time.service';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
+import { trigger, state, style,transition,animate } from '@angular/animations';
 
 @Component({
   selector: 'app-thread',
   standalone: true,
   templateUrl: './thread.component.html',
   styleUrls: ['./thread.component.scss'],
-  imports: [CommonModule, MessageItemComponent, MessageBoxComponent, PickerComponent, TimeSeparatorComponent]
+  imports: [CommonModule, MessageItemComponent, MessageBoxComponent, PickerComponent, TimeSeparatorComponent],
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({ opacity: 0, maxHeight: '0px', overflow: 'hidden' })),
+      state('*', style({ opacity: 1, maxHeight: '100%', overflow: 'hidden' })),
+      transition(':enter', [
+        animate('0.9s ease-in-out', style({ opacity: 1, maxHeight: '100%' })) 
+      ]),
+      transition(':leave', [
+        animate('0.5s ease-out', style({ opacity: 0, maxHeight: '0px' })) 
+      ])
+    ])
+  ]
 })
 /**
  * Component to manage and display a thread of posts in a channel.
  */
 export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
+
   /**
    * The current post being displayed in the thread.
    */
