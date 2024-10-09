@@ -85,6 +85,8 @@
       flex-direction: column;
       margin-left: 45px;
       gap: 24px;
+      overflow-y: auto;
+      @include scrollbar();
 
       .direct-m-mem-header {
         width: 100%;
