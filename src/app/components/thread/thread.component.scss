@@ -13,6 +13,12 @@
     border-left: 1px solid white;
     border-right: 1px solid white;
     overflow: hidden;
+    transition: all 0.3s;
+    opacity: 0; 
+
+    &.show {
+        opacity: 1; 
+    }
 
     .thread-header {
         width: 100%;
