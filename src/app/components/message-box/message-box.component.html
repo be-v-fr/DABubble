@@ -13,8 +13,7 @@
                 <button type="button" (click)="onShowEmojiPicker()">
                     <span class="material-icons-outlined">sentiment_satisfied_alt</span>
                 </button>
-                <button type="button" (click)="toggleMembersList($event)"
-                    *ngIf="channel && channel.members.length > 1 && (channel.members[0].uid != channel.members[1].uid)">
+                <button type="button" (click)="toggleMembersList($event)">
                     <span class="material-icons-outlined icon">alternate_email</span>
                 </button>
             </div>
@@ -24,10 +23,10 @@
         </div>
         @if(searchResultsUsers.length > 0) {
         <ul class="results-list">
-            @for(member of searchResultsUsers; track member) {
-            <li (click)="addToMessage(member.name, 'user')" title="{{member.name}}">
-                <img src="{{member.avatarSrc}}" alt="Avatar">
-                <span class="user">{{member.name}}</span>
+            @for(user of searchResultsUsers; track user) {
+            <li (click)="addToMessage(user.name, 'user')" title="{{user.name}}">
+                <img src="{{user.avatarSrc}}" alt="Avatar">
+                <span class="user">{{user.name}}</span>
             </li>
             }
         </ul>
@@ -40,12 +39,12 @@
             </li>
             }
         </ul>
-        } @else if(channel && showingMembersList) {
+        } @else if(channel && showingUsersList) {
         <ul class="results-list">
-            @for(member of channel.members; track member) {
-            <li (click)="addToMessage(member.name, 'user')" title="{{member.name}}">
-                <img src="{{member.avatarSrc}}" alt="Avatar">
-                <span class="user">{{member.name}}</span>
+            @for(user of usersService.users; track user) {
+            <li (click)="addToMessage(user.name, 'user')" title="{{user.name}}">
+                <img src="{{user.avatarSrc}}" alt="Avatar">
+                <span class="user">{{user.name}}</span>
             </li>
             }
         </ul>

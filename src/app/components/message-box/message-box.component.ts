@@ -12,6 +12,7 @@ import { User } from '../../../models/user.class';
 import { AuthService } from '../../../services/auth.service';
 import { ChannelsService } from '../../../services/content/channels.service';
 import { MembersOverviewComponent } from '../main-chat/members-overview/members-overview.component';
+import { UsersService } from '../../../services/users.service';
 
 /**
  * Component for sending messages, including text, reactions, and file attachments.
@@ -26,7 +27,7 @@ import { MembersOverviewComponent } from '../main-chat/members-overview/members-
 export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   private reactionSub = new Subscription();
   loading: boolean = false;
-  showingMembersList: boolean = false;
+  showingUsersList: boolean = false;
   errorMsg: string | null = null;
   public reactionsPickerVisible = false;
   data = {
@@ -54,6 +55,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     public reactionsService: ReactionService,
     private authService: AuthService,
     private channelsService: ChannelsService,
+    public usersService: UsersService,
   ) { }
 
   /**
@@ -187,7 +189,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     e.stopPropagation();
     e.preventDefault();
     this.clearSearch();
-    this.showingMembersList = !this.showingMembersList;
+    this.showingUsersList = !this.showingUsersList;
     this.messageBoxInput.nativeElement.focus();
   }
 
@@ -197,7 +199,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   @HostListener('document:click', ['$event'])
   hideMembersList(): void {
-    this.showingMembersList = false;
+    this.showingUsersList = false;
   }
 
   /**
@@ -414,7 +416,7 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   searchUsers(term: string): void {
     if (this.channel) {
       if (term.startsWith(' ')) { term = term.slice(1) }
-      this.searchResultsUsers = this.channel.members.filter(u => {
+      this.searchResultsUsers = this.usersService.users.filter(u => {
         return u.uid != this.authService.getCurrentUid() &&
           (u.name.toLowerCase().includes(term) || u.email.toLowerCase().includes(term));
       });
