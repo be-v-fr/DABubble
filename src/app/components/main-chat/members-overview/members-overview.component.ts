@@ -30,14 +30,8 @@ export class MembersOverviewComponent {
    * If a thread is open, includes additional data related to the thread.
    */
   openMemberList(): void {
-    if (this.openTh) {
-      const dialogRef = this.dialog.open(MemberListComponent, {
+      this.dialog.open(MemberListComponent, {
         data: { channelMembers: this.channel.members, channel: this.channel, isThreadOpen: this.openTh }
       });
-    } else {
-      const dialogRef = this.dialog.open(MemberListComponent, {
-        data: { channelMembers: this.channel.members, channel: this.channel }
-      });
-    }
   }
 }

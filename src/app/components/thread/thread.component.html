@@ -1,10 +1,13 @@
-<div class="thread-container" [@fadeInOut]="isThreadOpen ? 'open' : 'closed'">
+<div class="thread-container" [class.open]="isThreadOpen">
     <div class="thread-header">
         <div class="thread-title-box">
             Thread
             <span># {{ channelData?.name }}</span>
         </div>
-        <button class="close-thread-btn" (click)="onClose()">
+        <button class="close-thread-btn time" (click)="onCloseTime()">
+            <span class="material-icons-outlined">close</span>
+        </button>
+        <button class="close-thread-btn mobile" (click)="onClose()">
             <span class="material-icons-outlined">close</span>
         </button>
     </div>

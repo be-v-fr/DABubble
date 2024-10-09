@@ -46,8 +46,9 @@
         </div>
         <app-message-box [channel]="currentChannel" [inThread]="false" (sent)="onCreatePost($event)" />
     </section>
-    <app-thread class="thread" *ngIf="openTh" (closeTh)="closeThread($event)" [isThreadOpen]="openTh" [post]="currPost!"
-        [channelData]="{ id: this.currentChannel.channel_id, name: this.currentChannel.name, members: this.currentChannel.members}" />
+    <div class="thread-box" [class.open]="openThAni">
+        <app-thread class="thread" *ngIf="openTh" (setCloseTh)="closeThreadTime($event)" [isThreadOpen]="openTh" [post]="currPost!" [channelData]="{ id: this.currentChannel.channel_id, name: this.currentChannel.name, members: this.currentChannel.members}" />
+    </div>
     } @else {
     <section class="main-section">
         <app-forbidden-channel-feedback />

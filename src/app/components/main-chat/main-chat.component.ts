@@ -51,6 +51,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
   currentChannelAuthorName?: string;
   currPost: Post | undefined;
   openTh = false;
+  openThAni = false;
   emojiPicker = false;
   activeUsers: User[] = [];
   currentDate: number = Date.now();
@@ -295,15 +296,9 @@ export class MainChatComponent implements OnInit, OnDestroy {
     if (window.innerWidth <= 768) {
       this.callOpenMemberList();
     } else {
-      if (this.openTh) {
-        const dialogRef = this.dialog.open(AddMembersComponent, {
+        this.dialog.open(AddMembersComponent, {
           data: { channelMembers: this.currentChannel.members, channel: this.currentChannel, isThreadOpen: this.openTh },
         });
-      } else {
-        const dialogRef = this.dialog.open(AddMembersComponent, {
-          data: { channelMembers: this.currentChannel.members, channel: this.currentChannel }
-        });
-      }
     }
   }
 
@@ -328,6 +323,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
       if (post) {
         this.currPost = post;
         this.openTh = true;
+        this.openThAni = true;
       } else {
         console.error(`Thread with ID ${threadId} not found.`);
         this.currPost = undefined;
@@ -337,11 +333,26 @@ export class MainChatComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Closes the current thread based on the provided event value.
-   * @param event - The value indicating whether to close the thread or not.
-   */
-  closeThread(event: any) {
-    this.openTh = event;
-  }
+    /**
+     * Closes the current thread based on the provided event value.
+     * @param event - The value indicating whether to close the thread or not.
+     */
+    closeThread(event: any) {
+        this.openTh = event;
+    }
+
+    /**
+     * Closes the current thread based on the provided event value after animation.
+     * @param event - The value indicating whether to close the thread or not.
+     */
+    closeThreadTime(event: string) {
+        this.openThAni = false;
+        if (event == 'falseTime') {
+            setTimeout(() => {
+                this.openTh = false;
+            }, 300);
+        } else {
+            this.openTh = false;
+        }
+    }
 }

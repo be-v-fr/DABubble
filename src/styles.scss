@@ -19,6 +19,8 @@ $onlinedot-border: #eceefe;
 $onlinedot-online: #92c83e;
 $onlinedot-offline: #686868;
 
+$thread-ani-time: .3s;
+
 @mixin transition($duration: 100ms) {
     transition: $duration ease;
 

@@ -22,19 +22,8 @@ import { trigger, state, style,transition,animate } from '@angular/animations';
   templateUrl: './thread.component.html',
   styleUrls: ['./thread.component.scss'],
   imports: [CommonModule, MessageItemComponent, MessageBoxComponent, PickerComponent, TimeSeparatorComponent],
-  animations: [
-    trigger('fadeInOut', [
-      state('void', style({ opacity: 0, maxHeight: '0px', overflow: 'hidden' })),
-      state('*', style({ opacity: 1, maxHeight: '100%', overflow: 'hidden' })),
-      transition(':enter', [
-        animate('0.9s ease-in-out', style({ opacity: 1, maxHeight: '100%' })) 
-      ]),
-      transition(':leave', [
-        animate('0.5s ease-out', style({ opacity: 0, maxHeight: '0px' })) 
-      ])
-    ])
-  ]
 })
+
 /**
  * Component to manage and display a thread of posts in a channel.
  */
@@ -68,7 +57,7 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
   /**
    * EventEmitter to signal when the thread should be closed.
    */
-  @Output() closeTh = new EventEmitter<boolean>();
+  @Output() setCloseTh = new EventEmitter<string>();
 
   /**
    * QueryList of MessageItemComponent elements for scrolling purposes.
@@ -257,6 +246,15 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
    * Emits an event to close the thread view.
    */
   onClose() {
-    this.closeTh.emit(false);
+      this.isThreadOpen = false;
+      this.setCloseTh.emit('false');
+  }
+
+  /**
+   * Emits an event to close the thread view.
+   */
+  onCloseTime() {
+      this.isThreadOpen = false;
+      this.setCloseTh.emit('falseTime');
   }
 }
