@@ -38,7 +38,7 @@
             <ul>
                 @for (user of users; track $index; let first = $first) {
                 <li>
-                    <a (click)="mobileViewService.setMobileView('mainchat')" [routerLink]="['/direct-message']" [attr.title]="first ? user.name + ' (Du)' : user.name"
+                    <a (click)="mobileViewService.setMobileView('mainchat')" [attr.title]="first ? user.name + ' (Du)' : user.name"
                         (click)="onUserClick(user)">
                         <div class="visible-part">
                             <div class="message-img-container">

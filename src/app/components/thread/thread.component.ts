@@ -14,7 +14,7 @@ import { TimeSeparatorComponent } from '../time-separator/time-separator.compone
 import { TimeService } from '../../../services/time.service';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
-import { trigger, state, style,transition,animate } from '@angular/animations';
+// import { trigger, state, style,transition,animate } from '@angular/animations';
 
 @Component({
   selector: 'app-thread',
@@ -257,4 +257,6 @@ export class ThreadComponent implements OnInit, OnDestroy, AfterViewInit {
       this.isThreadOpen = false;
       this.setCloseTh.emit('falseTime');
   }
+
+
 }
