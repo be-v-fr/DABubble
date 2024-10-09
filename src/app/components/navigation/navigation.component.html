@@ -10,8 +10,8 @@
     </div>
     <app-search class="mobile-searchbar" [inHeader]="false" [placeholder]="'Gehe zu...'" />
     <div class="nav-main">
-        <app-expandable-button class="channel" [title]="'Channels'" icon="workspaces" [instance]="'channels'" />
-        <app-expandable-button class="direct" [title]="'Direktnachrichten'" icon="account_circle" [instance]="'users'" />
+        <app-expandable-button class="channel" [class.expanded]="expandChannels" (expandedChannels)="setExpandableChannels($event)" [title]="'Channels'" icon="workspaces" [instance]="'channels'" />
+        <app-expandable-button class="direct" [class.expanded]="expandUsers" (expandedUsers)="setExpandableUsers($event)" [title]="'Direktnachrichten'" icon="account_circle" [instance]="'users'" />
     </div>
     <a (click)="mobileViewService.setMobileView('mainchat')" routerLink="/new" class="new-message-mobile-btn">
         <div class="new-message-icon">
