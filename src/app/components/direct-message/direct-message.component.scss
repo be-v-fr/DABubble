@@ -1,12 +1,27 @@
 @import "../../../styles.scss";
 
+.main-container {
+  height: 100%;
+  display: flex;
+  gap: 0px;
+  overflow: hidden;
+  border-radius: 30px;
+  transition: gap $thread-ani-time ease-out;
+
+  &:has(.thread-box.open) {
+    gap: 20px;
+  }
+}
+
 .direct-m-container {
   position: relative;
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   flex-direction: column;
   align-items: center;
   height: 100%;
+  width: 100%;
+  flex-grow: 4;
   background-color: white;
   border-radius: 30px;
   overflow: hidden;
@@ -21,6 +36,7 @@
     .header-img-container {
       position: relative;
       width: 100%;
+
       img {
         width: 50px;
         height: 50px;
@@ -73,6 +89,7 @@
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
+
     .direct-m-items {
       width: 100%;
       overflow-y: auto;
@@ -135,6 +152,7 @@
     app-message-box {
       width: 90%;
       margin-top: 20px;
+
       @media screen and (max-width: 768px) and (max-height: 600px) {
         margin-top: 0;
       }
@@ -152,13 +170,83 @@
   }
 }
 
-.mobile-wrapper {
-  display: contents;
+.thread-box {
+  max-width: 485px;
+  width: 0%;
+  transition: width $thread-ani-time ease-out;
+
+  &.open {
+    width: 100%;
+
+    &:has(&:not(.thread)) {
+      width: 0%;
+    }
+  }
+
+  &:not(.open) {
+    width: 0%;
+  }
+
+  .thread {
+    max-width: 485px;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+// .main-container {
+//   display: contents;
+// }
+
+@media screen and (max-width: 1200px) {
+  .main-container {
+    transition: none;
+
+    &:has(.thread-box .thread) {
+      .direct-m-container {
+        min-width: 470px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .main-container {
+    .thread-box {
+      transition: none;
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
+  .main-container {
+    position: absolute;
+    right: 0;
+    left: 0;
+    width: 100%;
+    border-radius: unset;
 
-  .mobile-wrapper {
+    .direct-m-container {
+      height: 100%;
+      border-radius: unset;
+
+      .direct-m-header {
+        border-radius: unset;
+      }
+    }
+
+    .thread-box {
+      transition: none;
+
+      .thread {
+        position: relative;
+        max-width: none;
+      }
+    }
+  }
+
+  .main-container {
     position: absolute;
     left: 0;
     right: 0;
@@ -175,16 +263,39 @@
         padding: 10px 16px 10px 16px;
       }
 
-      .direct-m-content{
+      .direct-m-content {
         overflow-y: auto;
         padding-top: 30px;
+      }
+
+    }
+
+    #mobile-direct-m-mem p {
+      display: block;
     }
 
   }
-
-  #mobile-direct-m-mem p {
-    display: block;
-  }
-
 }
+
+@media screen and (max-width: 430px) {
+  .main-container {
+    .direct-m-container {
+      .direct-m-header {
+        height: 60px;
+
+        .channel-btn {
+          .channel-btn-name {
+            font-size: 20px;
+          }
+        }
+
+        .direct-m-header-members {
+          .add-members-btn {
+            width: 34px;
+            height: 34px;
+          }
+        }
+      }
+    }
+  }
 }

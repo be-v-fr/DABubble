@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
+import { ThreadComponent } from '../thread/thread.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { MessageBoxComponent } from '../message-box/message-box.component';
@@ -17,6 +18,7 @@ import { AuthService } from '../../../services/auth.service';
 import { TimeService } from '../../../services/time.service';
 import { ActivityStateDotComponent } from '../activity-state-dot/activity-state-dot.component';
 import { UsersService } from '../../../services/users.service';
+import { Post } from '../../../models/post.class';
 
 /**
  * Component for managing and displaying direct messages between users.
@@ -33,42 +35,26 @@ import { UsersService } from '../../../services/users.service';
     TimeSeparatorComponent,
     MessageItemComponent,
     ForbiddenChannelFeedbackComponent,
-    ActivityStateDotComponent
+    ActivityStateDotComponent,
+    ThreadComponent,
   ],
 })
 export class DirectMessageComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   private scrollSub!: Subscription;
   private postsSub!: Subscription;
-
-  /** The ID of the current channel */
   channelId?: string;
-
-  /** The current channel object */
   channel?: Channel;
-
-  /** The length of posts previously saved for comparison */
+  currPost: Post | undefined;
   savedPostsLength: number | null = null;
-
-  /** The current user */
   currUser?: User;
-
-  /** The recipient user of the direct message */
   recipient?: User;
-
-  /** Indicates if the user is online */
   online: boolean = true;
-
-  /** Indicates if the emoji picker is open */
+  openTh = false;
+  openThAni = false;
   emojiPicker: boolean = false;
-
-  /** Indicates if the route is invalid or forbidden */
   onInvalidOrForbiddenRoute: boolean = false;
-
-  /** Indicates if channel members data has been updated */
   channelMembersDataUpdated: boolean = false;
-
-  /** Query list of message item components */
   @ViewChildren(MessageItemComponent, { read: ElementRef }) messageItems!: QueryList<ElementRef>;
 
   constructor(
@@ -157,7 +143,6 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
       console.error('Channel ID is not defined');
       return;
     }
-
     try {
       const channel = await this.channelService.getChannel(channelId);
       if (channel) {
@@ -167,6 +152,9 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
           setTimeout(() => this.goToPost(params['post']), 20);
         });
         this.updateChannelMembersData();
+        this.scrollSub = this.route.queryParams.subscribe(params => {
+          setTimeout(() => this.goToPost(params['post']), 20);
+        });
       } else {
         this.onInvalidOrForbiddenRoute = true;
       }
@@ -205,48 +193,21 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Scrolls to a specific post if it exists, or to the last post if no post ID is provided.
-   * @param postId - The ID of the post to scroll to.
+   * Navigates to a specific post if needed.
+   * @param postId - The ID of the post to navigate to.
    */
   goToPost(postId: string | undefined) {
     this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
       if (this.hasPostLengthChanged(elements)) {
-        (postId && postId.length > 0) ? this.autoscrollToPost(elements, postId) : this.autoscrollToLastPost(elements);
+        (postId && postId.length > 0) ? this.handlePostAndThreadScrolling(elements, postId) : this.autoscrollToLastPost(elements);
       }
     });
     this.messageItems.notifyOnChanges();
   }
 
   /**
-   * Scrolls smoothly to the specified post.
-   * @param elements - The list of message elements.
-   * @param postId - The ID of the post to scroll to.
-   */
-  autoscrollToPost(elements: QueryList<ElementRef>, postId: string) {
-    const postRef = elements.find(el => el.nativeElement.id === postId);
-    if (postRef) {
-      this.postsSub.unsubscribe();
-      postRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
-      this.router.navigate([], {
-        queryParams: { 'post': null },
-        queryParamsHandling: 'merge'
-      });
-    }
-  }
-
-  /**
-   * Scrolls to the last post in the message list.
-   * @param elements - The list of message elements.
-   */
-  autoscrollToLastPost(elements: QueryList<ElementRef>) {
-    const array = elements.toArray();
-    const postRef = array.pop();
-    if (postRef) { postRef.nativeElement.scrollIntoView({}); }
-  }
-
-  /**
-   * Checks if the length of the message elements has changed.
-   * @param elements - The list of message elements.
+   * Checks if the length of posts has changed compared to the previously saved length.
+   * @param elements - The list of message items.
    * @returns True if the length has changed, otherwise false.
    */
   hasPostLengthChanged(elements: QueryList<ElementRef>): boolean {
@@ -256,6 +217,62 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
       return true;
     } else {
       return false;
+    }
+  }
+
+  /**
+   * Handles scrolling to a specific post or thread.
+   * @param elements - The list of message items.
+   * @param postId - The ID of the post to scroll to.
+   */
+  handlePostAndThreadScrolling(elements: QueryList<ElementRef>, postId: string) {
+    if (this.channel) {
+      const postRef = elements.find(el => el.nativeElement.id === postId);
+      if (postRef) {
+        this.autoscrollToPost(postRef);
+      } else if (this.channelService.isPostInThread(this.channel, postId)) {
+        this.openThreadAndAutoscrollToFirstPost(elements, postId);
+      }
+    }
+  }
+
+  /**
+   * Autoscrolls to a specific post element.
+   * @param postRef - The reference to the post element.
+   */
+  autoscrollToPost(postRef: ElementRef<any>) {
+    this.postsSub.unsubscribe();
+    postRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    this.router.navigate([], {
+      queryParams: { 'post': null },
+      queryParamsHandling: 'merge'
+    });
+  }
+
+  /**
+   * Autoscrolls to the last post element.
+   * @param elements - The list of message items.
+   */
+  autoscrollToLastPost(elements: QueryList<ElementRef>) {
+    const array = elements.toArray();
+    const postRef = array.pop();
+    if (postRef) { postRef.nativeElement.scrollIntoView({}); }
+  }
+
+  /**
+   * Opens a thread and autoscrolls to the first post in that thread.
+   * @param elements - The list of message items.
+   * @param postId - The ID of the post to find and open the thread for.
+   */
+  openThreadAndAutoscrollToFirstPost(elements: QueryList<ElementRef>, postId: string) {
+    if (this.channel) {
+      const { postInThread, thread_id } = this.channelService.getPostInThread(this.channel, postId);
+      if (thread_id.length > 0) {
+        const firstPost: Post | undefined = this.channel.posts.find(p => p.thread.thread_id === thread_id);
+        const firstPostRef = elements.find(el => el.nativeElement.id === firstPost?.post_id);
+        firstPostRef?.nativeElement.scrollIntoView();
+        this.handleThread(thread_id);
+      }
     }
   }
 
@@ -301,5 +318,48 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
   isCurrentUserAuthor(index: number): boolean {
     const firstPost = this.channel!.posts[index];
     return this.currUser?.uid === firstPost.user_id;
+  }
+
+  /**
+   * Handles opening a thread based on the provided thread ID.
+   * @param threadId - The ID of the thread to open.
+   */
+  handleThread(threadId: string): void {
+    if (this.channel && this.channel.posts) {
+      const post = this.channel.posts.find(post => post.thread.thread_id === threadId);
+      if (post) {
+        this.currPost = post;
+        this.openTh = true;
+        this.openThAni = true;
+      } else {
+        console.error(`Thread with ID ${threadId} not found.`);
+        this.currPost = undefined;
+      }
+    } else {
+      console.error('Current channel or posts are not defined.');
+    }
+  }
+
+  /**
+   * Closes the current thread based on the provided event value.
+   * @param event - The value indicating whether to close the thread or not.
+   */
+  closeThread(event: any) {
+    this.openTh = event;
+  }
+
+  /**
+   * Closes the current thread based on the provided event value after animation.
+   * @param event - The value indicating whether to close the thread or not.
+   */
+  closeThreadTime(event: string) {
+    this.openThAni = false;
+    if (event == 'falseTime') {
+      setTimeout(() => {
+        this.openTh = false;
+      }, 300);
+    } else {
+      this.openTh = false;
+    }
   }
 }

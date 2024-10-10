@@ -1,4 +1,4 @@
-<div class="mobile-wrapper">
+<div class="main-container">
   @if(!onInvalidOrForbiddenRoute) {
   <section class="direct-m-container">
     <div class="direct-m-header">
@@ -6,7 +6,6 @@
         <div class="hoverImgContainer" *ngIf="recipient" (click)="openUserProfile(recipient)">
           <img [src]="recipient.avatarSrc" [alt]="recipient.name" />
           <app-activity-state-dot *ngIf="recipient" [user]="recipient" />
-
           <span class="header-username">{{ recipient.name }}</span>
         </div>
       </div>
@@ -19,7 +18,8 @@
           <app-time-separator [timestamp]="post.date"
             *ngIf="i == 0 || !timeService.isOnSameDay(post.date, channel.posts[i - 1].date)" />
           <app-message-item [id]="post.post_id" [postUid]="post.user_id" [post]="post"
-            [messageSender]="isCurrentUserAuthor(i)" [isInDirectMessage]="true" />
+            [messageSender]="isCurrentUserAuthor(i)" [isInDirectMessage]="true" (threadId)="handleThread($event)"
+            [isThreadOpen]="openTh" />
         </div>
         }
       </div>
@@ -44,8 +44,12 @@
       }
       <app-message-box [channel]="channel" (sent)="onCreatePost($event)" [inThread]="false" />
     </div>
-    <emoji-mart title="Pick your emoji…" emoji="point_up" *ngIf="emojiPicker"></emoji-mart>
   </section>
+  <div *ngIf="channel" class="thread-box" [class.open]="openThAni">
+    <app-thread class="thread" *ngIf="openTh" (setCloseTh)="closeThreadTime($event)" [isThreadOpen]="openTh"
+      [channelData]="{ id: this.channel.channel_id, name: this.channel.name, members: this.channel.members}"
+      [post]="currPost!" />
+  </div>
   } @else {
   <section class="direct-m-container">
     <app-forbidden-channel-feedback />
