@@ -104,16 +104,21 @@ export class AuthService {
 
 
   /**
-   * Logs in a user using their Google account via a popup.
-   * @returns Observable<void> representing the completion of the Google sign-in process.
-   */
+ * Logs in a user using their Google account via a popup.
+ * @returns Observable<void> representing the completion of the Google sign-in process.
+ */
   logInWithGoogle(): Observable<void> {
-    const promise = signInWithPopup(
-      this.firebaseAuth,
-      new GoogleAuthProvider()
-    ).then(() => { });
-    return from(promise);
+    const promise = signInWithPopup(this.firebaseAuth, new GoogleAuthProvider());
+
+    return from(promise).pipe(
+      map(() => { }),
+      catchError((error) => {
+        this.handleError(error);
+        return throwError(() => error);
+      })
+    );
   }
+
 
 
   /**
@@ -224,19 +229,24 @@ export class AuthService {
   }
 
 
-  /**
-   * Logs out the current user, whether they're a guest or a registered user.
-   * @returns Observable<void> representing the completion of the logout process.
-   */
+  // /**
+  //  * Logs out the current user, whether they're a guest or a registered user.
+  //  * @returns Observable<void> representing the completion of the logout process.
+  //  */
   logOut(): Observable<void> {
-    if (localStorage.getItem('GUEST_logIn') == 'true') {
+    if (localStorage.getItem('GUEST_logIn') === 'true') {
       localStorage.setItem('GUEST_logIn', 'false');
       this.guestUser$.next(null);
       this.authAsGuest = false;
     }
-    const promise = signOut(this.firebaseAuth);
-    return from(promise);
+    return from(signOut(this.firebaseAuth)).pipe(
+      catchError((error) => {
+        console.error('Error during Firebase logout', error);
+        return throwError(() => error);
+      })
+    );
   }
+
 
 
   /**
