@@ -111,13 +111,17 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
    * Type of the instance, either 'channels' or 'users'.
    * @type {'channels' | 'users'}
    */
-  instance = input.required<'channels' | 'users'>();
+  instance = input.required<string>();
+//   instance = input.required<'channels' | 'users'>();
 
   /**
    * EventEmitter that is emitted when a user is clicked.
    * @type {EventEmitter<void>}
    */
   @Output() userClick = new EventEmitter<void>();
+
+  @Output() expandedChannels = new EventEmitter<boolean>();
+  @Output() expandedUsers = new EventEmitter<boolean>();
 
   /**
    * Constructs the component with the required services.
@@ -234,6 +238,11 @@ export class ExpandableButtonComponent implements OnInit, OnDestroy {
   toggleMenu() {
     this.isMenuExpanded = !this.isMenuExpanded;
     this.isRotated = !this.isRotated;
+    if (this.instance() == 'users') {
+        this.expandedUsers.emit(this.isMenuExpanded);
+    } else {
+        this.expandedChannels.emit(this.isMenuExpanded);
+    }
   }
 
   /**

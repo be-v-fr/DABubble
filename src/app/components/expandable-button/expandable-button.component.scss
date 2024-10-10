@@ -5,6 +5,10 @@
     display: flex;
     flex-direction: column;
     grid-row-gap: 25px;
+    // transition: $expandable-btn-ani-time ease-out;
+    // &.expanded {
+    //     height: 100%;
+    // }
 
     .exp-btn-container {
         position: relative;
@@ -56,9 +60,22 @@
         }
 
         .menu {
+            // height: 40px;
             height: calc(100% - 40px);
             display: flex;
-
+            overflow: hidden;
+            transition: height $expandable-btn-ani-time ease-out;
+            // &.expanded {
+            //     height: calc(100% - 40px);
+            //     .channel-menu {
+            //         height: 100%;
+            //     }
+            // }
+            .loading-container {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
             .channel-menu {
                 height: 100%;
                 width: 100%;
@@ -67,6 +84,7 @@
                 align-items: flex-start;
                 gap: 25px;
                 // margin-left: 30px;
+                // transition: height $expandable-btn-ani-time ease-out;
                 cursor: default !important;
 
                 ul {
@@ -153,7 +171,6 @@
                     }
                 }
             }
-
             .messages-menu {
                 height: 100%;
                 width: 100%;
@@ -228,12 +245,6 @@
                         }
                     }
                 }
-            }
-
-            .loading-container {
-                width: 100%;
-                display: flex;
-                justify-content: center;
             }
         }
     }

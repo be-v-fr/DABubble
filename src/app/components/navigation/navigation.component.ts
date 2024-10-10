@@ -36,6 +36,10 @@ export class NavigationComponent {
   /** List of channels the user is a member of */
   userChannels?: Channel[];
 
+  /** Sets the status for expanded/closed of the two lists  */
+  public expandUsers:boolean = true;
+  public expandChannels:boolean = true;
+
   constructor(
     public usersService: UsersService,
     public mobileViewService: MobileViewService,
@@ -58,5 +62,21 @@ export class NavigationComponent {
    */
   createEmptyUser(): User {
     return new User();
+  }
+
+  /**
+   * Change state of expanded/closed list of users
+   * @param event to set the new state
+   */
+  setExpandableUsers(event: any) {
+      this.expandUsers = event;
+    }
+    
+    /**
+     * Change state of expanded/closed list of channels
+     * @param event to set the new state
+     */
+  setExpandableChannels(event: any) {
+    this.expandChannels = event;
   }
 }

@@ -20,6 +20,7 @@ $onlinedot-online: #92c83e;
 $onlinedot-offline: #686868;
 
 $thread-ani-time: .3s;
+$expandable-btn-ani-time: 7.3s;
 
 @mixin transition($duration: 100ms) {
     transition: $duration ease;
