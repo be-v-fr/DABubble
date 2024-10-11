@@ -311,6 +311,7 @@ export class ChannelsService implements OnDestroy {
   async addPostToPmChannel(channel_id: string, uid: string, message: string, attachmentSrc: string) {
     const newPost = new Post();
     newPost.setNew(channel_id, uid, message, attachmentSrc);
+    newPost.thread.thread_id = uuidv4();
     const channel = this.channels.find(c => c.channel_id === channel_id);
     if (channel) {
       channel.posts.push(newPost);
@@ -514,7 +515,7 @@ export class ChannelsService implements OnDestroy {
       }
     }
   }
-  
+
 
   /**
    * Navigates to a specific channel route within the app.
