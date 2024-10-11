@@ -229,10 +229,10 @@ export class AuthService {
   }
 
 
-  // /**
-  //  * Logs out the current user, whether they're a guest or a registered user.
-  //  * @returns Observable<void> representing the completion of the logout process.
-  //  */
+  /**
+   * Logs out the current user, whether they're a guest or a registered user.
+   * @returns Observable<void> representing the completion of the logout process.
+   */
   logOut(): Observable<void> {
     if (localStorage.getItem('GUEST_logIn') === 'true') {
       localStorage.setItem('GUEST_logIn', 'false');
@@ -287,6 +287,12 @@ export class AuthService {
     }
   }
 
+
+  /**
+   * Handles backend errors by returning errors with customized messages.
+   * @param {any} errorRes - The error response caught from the server/Firebase  
+   * @returns {Observable<never>} - Result from "throwError" method containing "Error" object
+   */
   private handleError(errorRes: any) {
     let errorMessage = 'An unknown error occurred!';
 
