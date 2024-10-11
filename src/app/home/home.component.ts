@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { ThreadComponent } from '../components/thread/thread.component';
 import { NavigationComponent } from '../components/navigation/navigation.component';
@@ -55,7 +55,7 @@ export class HomeComponent {
     public showNav = true;
     public reactionsPickerVisible = false;
 
-    constructor() { }
+    constructor(private router: Router) { }
 
 
     /**
@@ -68,6 +68,20 @@ export class HomeComponent {
         this.reactionsService.reactionsPicker$.subscribe((rp) => {
             this.reactionsPickerVisible = rp;
         });
+        this.redirectUnauthenticatedClient();
+    }
+
+
+    /**
+     * Redirects the client to the login page if no current user is loaded (yet).
+     * Since the app component saves the initial route and redirects to the
+     * home component on successful authentication itself, this does not prevent
+     * redirection to the home component on page loading. 
+     */
+    redirectUnauthenticatedClient() {
+        if (!this.authService.getCurrentUid()) {
+            this.router.navigate(['/auth/logIn']);
+        }
     }
 
 

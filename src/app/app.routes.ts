@@ -20,14 +20,15 @@ import { MainChatComponent } from './components/main-chat/main-chat.component';
 import { AddMembersComponent } from './components/add-members/add-members.component';
 import { DirectMessageComponent } from './components/direct-message/direct-message.component';
 import { EditMainUserAvatarComponent } from './components/edit-main-user-avatar/edit-main-user-avatar.component';
-import { authGuard } from './shared/auth.guard';
+import { emptyRouteGuard } from './shared/empty-route.guard';
 import { ChangeEmailComponent } from './auth/change-email/change-email.component';
+import { actionGuard } from './shared/action.guard';
 
 
 export const routes: Routes = [
   {
     path: '',
-    canActivate: [authGuard],
+    canActivate: [emptyRouteGuard],
     pathMatch: 'full',
     component: HomeComponent,
   },
@@ -51,6 +52,12 @@ export const routes: Routes = [
       { path: 'resetPw', component: ResetPwComponent },
       { path: 'changeEmail', component: ChangeEmailComponent }
     ],
+  },
+  {
+    path: 'action',
+    canActivate: [actionGuard],
+    pathMatch: 'full',
+    component: AuthComponent,
   },
   { path: 'impress', component: ImpressComponent },
   { path: 'privacypolicy', component: PrivacypolicyComponent },
