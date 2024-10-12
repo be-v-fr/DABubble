@@ -351,8 +351,10 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
    * Triggers a search based on the message input value.
    */
   search(): void {
-    let term: string | null = this.getSubstringFromLastSpecialChar(this.message.toLowerCase());
-    term ? this.triggerSearchCategories(term) : this.clearSearch();
+    if (this.message && this.message.length > 0) {
+      let term: string | null = this.getSubstringFromLastSpecialChar(this.message.toLowerCase());
+      term ? this.triggerSearchCategories(term) : this.clearSearch();
+    }
   }
 
 
