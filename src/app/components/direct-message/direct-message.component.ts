@@ -148,9 +148,6 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
       if (channel) {
         this.channel = channel;
         this.initUsers(channel);
-        this.scrollSub = this.route.queryParams.subscribe(params => {
-          setTimeout(() => this.goToPost(params['post']), 20);
-        });
         this.updateChannelMembersData();
         this.scrollSub = this.route.queryParams.subscribe(params => {
           setTimeout(() => this.goToPost(params['post']), 20);
@@ -198,9 +195,7 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
    */
   goToPost(postId: string | undefined) {
     this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
-      if (this.hasPostLengthChanged(elements)) {
-        (postId && postId.length > 0) ? this.handlePostAndThreadScrolling(elements, postId) : this.autoscrollToLastPost(elements);
-      }
+      (postId && postId.length > 0) ? this.handlePostAndThreadScrolling(elements, postId) : this.autoscrollToLastPost(elements);
     });
     this.messageItems.notifyOnChanges();
   }
@@ -254,9 +249,11 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
    * @param elements - The list of message items.
    */
   autoscrollToLastPost(elements: QueryList<ElementRef>) {
-    const array = elements.toArray();
-    const postRef = array.pop();
-    if (postRef) { postRef.nativeElement.scrollIntoView({}); }
+    if (this.hasPostLengthChanged(elements)) {
+      const array = elements.toArray();
+      const postRef = array.pop();
+      if (postRef) { postRef.nativeElement.scrollIntoView({}); }
+    }
   }
 
   /**

@@ -173,9 +173,7 @@ export class MainChatComponent implements OnInit, OnDestroy {
    */
   goToPost(postId: string | undefined) {
     this.postsSub = this.messageItems.changes.subscribe((elements: QueryList<ElementRef>) => {
-      if (this.hasPostLengthChanged(elements)) {
-        (postId && postId.length > 0) ? this.handlePostAndThreadScrolling(elements, postId) : this.autoscrollToLastPost(elements);
-      }
+      (postId && postId.length > 0) ? this.handlePostAndThreadScrolling(elements, postId) : this.autoscrollToLastPost(elements);
     });
     this.messageItems.notifyOnChanges();
   }
@@ -227,9 +225,11 @@ export class MainChatComponent implements OnInit, OnDestroy {
    * @param elements - The list of message items.
    */
   autoscrollToLastPost(elements: QueryList<ElementRef>) {
-    const array = elements.toArray();
-    const postRef = array.pop();
-    if (postRef) { postRef.nativeElement.scrollIntoView({}); }
+    if (this.hasPostLengthChanged(elements)) {
+      const array = elements.toArray();
+      const postRef = array.pop();
+      if (postRef) { postRef.nativeElement.scrollIntoView({}); }
+    }
   }
 
   /**
@@ -296,9 +296,9 @@ export class MainChatComponent implements OnInit, OnDestroy {
     if (window.innerWidth <= 768) {
       this.callOpenMemberList();
     } else {
-        this.dialog.open(AddMembersComponent, {
-          data: { channelMembers: this.currentChannel.members, channel: this.currentChannel, isThreadOpen: this.openTh },
-        });
+      this.dialog.open(AddMembersComponent, {
+        data: { channelMembers: this.currentChannel.members, channel: this.currentChannel, isThreadOpen: this.openTh },
+      });
     }
   }
 
@@ -333,26 +333,26 @@ export class MainChatComponent implements OnInit, OnDestroy {
     }
   }
 
-    /**
-     * Closes the current thread based on the provided event value.
-     * @param event - The value indicating whether to close the thread or not.
-     */
-    closeThread(event: any) {
-        this.openTh = event;
-    }
+  /**
+   * Closes the current thread based on the provided event value.
+   * @param event - The value indicating whether to close the thread or not.
+   */
+  closeThread(event: any) {
+    this.openTh = event;
+  }
 
-    /**
-     * Closes the current thread based on the provided event value after animation.
-     * @param event - The value indicating whether to close the thread or not.
-     */
-    closeThreadTime(event: string) {
-        this.openThAni = false;
-        if (event == 'falseTime') {
-            setTimeout(() => {
-                this.openTh = false;
-            }, 300);
-        } else {
-            this.openTh = false;
-        }
+  /**
+   * Closes the current thread based on the provided event value after animation.
+   * @param event - The value indicating whether to close the thread or not.
+   */
+  closeThreadTime(event: string) {
+    this.openThAni = false;
+    if (event == 'falseTime') {
+      setTimeout(() => {
+        this.openTh = false;
+      }, 300);
+    } else {
+      this.openTh = false;
     }
+  }
 }
