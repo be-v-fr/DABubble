@@ -97,8 +97,8 @@ export class AuthService {
           currentUser.email = email;
           this.usersService.updateUser(currentUser);
         }
-        usersSub.unsubscribe();
       }
+      usersSub.unsubscribe();
     });
   }
 
