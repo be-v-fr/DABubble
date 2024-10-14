@@ -12,7 +12,6 @@ import {
 import {
   sendPasswordResetEmail,
   confirmPasswordReset,
-  updateEmail,
   verifyBeforeUpdateEmail,
   applyActionCode
 } from "firebase/auth";
@@ -37,6 +36,7 @@ export class AuthService {
   private authAsGuest: boolean = false;
   public isGoogleUser: boolean = false;
 
+
   constructor() {
     if (this.currentUserIsGuest()) { this.logInAsGuest() }
     this.guestUser$ = new BehaviorSubject<User | null>(this.getCurrentGuest());
@@ -47,12 +47,12 @@ export class AuthService {
 
 
   /**
- * Registers a new user with an email and password and updates the user profile with the provided name.
- * @param name The display name of the user.
- * @param email The email address for the new account.
- * @param password The password for the new account.
- * @returns Observable<void> representing the completion of the registration.
- */
+   * Registers a new user with an email and password and updates the user profile with the provided name.
+   * @param name The display name of the user.
+   * @param email The email address for the new account.
+   * @param password The password for the new account.
+   * @returns Observable<void> representing the completion of the registration.
+   */
   register(name: string, email: string, password: string): Observable<void> {
     const promise = createUserWithEmailAndPassword(this.firebaseAuth, email, password)
       .then((response) => updateProfile(response.user, { displayName: name }));
@@ -66,11 +66,11 @@ export class AuthService {
 
 
   /**
- * Logs in a user using email and password.
- * @param email The user's email address.
- * @param password The user's password.
- * @returns Observable<void> representing the completion of the login process.
- */
+   * Logs in a user using email and password.
+   * @param email The user's email address.
+   * @param password The user's password.
+   * @returns Observable<void> representing the completion of the login process.
+   */
   logIn(email: string, password: string): Observable<void> {
     const promise = signInWithEmailAndPassword(this.firebaseAuth, email, password);
 
@@ -96,17 +96,17 @@ export class AuthService {
         if (currentUser && currentUser.email != email) {
           currentUser.email = email;
           this.usersService.updateUser(currentUser);
-          usersSub.unsubscribe();
         }
+        usersSub.unsubscribe();
       }
     });
   }
 
 
   /**
- * Logs in a user using their Google account via a popup.
- * @returns Observable<void> representing the completion of the Google sign-in process.
- */
+   * Logs in a user using their Google account via a popup.
+   * @returns Observable<void> representing the completion of the Google sign-in process.
+   */
   logInWithGoogle(): Observable<void> {
     const promise = signInWithPopup(this.firebaseAuth, new GoogleAuthProvider());
 
@@ -246,7 +246,6 @@ export class AuthService {
       })
     );
   }
-
 
 
   /**
