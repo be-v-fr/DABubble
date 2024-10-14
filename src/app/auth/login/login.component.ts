@@ -26,6 +26,7 @@ export class LoginComponent implements OnDestroy {
   private usersService = inject(UsersService);
   private router = inject(Router);
   private guestSub = new Subscription();
+  private usersSub = new Subscription();
 
   /** Login form data */
   userData = {
@@ -53,6 +54,7 @@ export class LoginComponent implements OnDestroy {
    */
   ngOnDestroy(): void {
     this.guestSub.unsubscribe();
+    this.usersSub.unsubscribe();
   }
 
 
@@ -110,9 +112,13 @@ export class LoginComponent implements OnDestroy {
     const userRef = this.authService.getCurrent();
     if (userRef) {
       const userObj = this.constructUserFromGoogleAuth(userRef);
-      this.handleExternalUserRegistrationStatus(userObj)
-        .then(() => this.onLogIn())
-        .catch((err) => this.onError(err));
+      if (this.usersService.users.length > 0) {
+        this.handleExternalUserRegistrationStatus(userObj)
+          .then(() => this.onLogIn())
+          .catch((err) => this.onError(err));
+      } else {
+        this.usersSub = this.subUsers(userObj);
+      }
     }
   }
 
@@ -137,14 +143,34 @@ export class LoginComponent implements OnDestroy {
    * @param user User() object to be checked
    */
   async handleExternalUserRegistrationStatus(user: User): Promise<void> {
-    if (this.usersService.isRegisteredUser(user.uid)) {
-      await this.usersService.updateUser(user);
+    const registeredUser: User | undefined = this.usersService.users.find(u => u.uid == user.uid);
+    if (registeredUser) {
+      registeredUser.name == user.name;
+      registeredUser.email == user.email;
+      await this.usersService.updateUser(registeredUser);
       this.redirectTo = 'home';
     }
     else {
       await this.usersService.addUser(user);
       this.redirectTo = (user.name == 'Gast' ? 'home' : 'avatar');
     }
+  }
+
+
+  /**
+   * Subscribes to users service to make sure that users have been loaded.
+   * @param {User} externalUser - external user object to handle 
+   * @returns subscription
+   */
+  subUsers(externalUser: User): Subscription {
+    return this.usersService.users$.subscribe(users => {
+      if (users.length > 0) {
+        this.handleExternalUserRegistrationStatus(externalUser)
+          .then(() => this.onLogIn())
+          .catch((err) => this.onError(err));
+        this.usersSub.unsubscribe();
+      }
+    });
   }
 
 
