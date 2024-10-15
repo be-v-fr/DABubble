@@ -29,6 +29,7 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
   userData = {
     uid: '',
     name: '...',
+    email: '',
     avatarSrc: 'assets/img/profile_blank.svg'
   }
   userSub = new Subscription();
@@ -69,6 +70,7 @@ export class PickAvatarComponent implements OnInit, OnDestroy {
         if (uid) { this.userData.uid = uid };
         this.setPreSelectionAvatar();
         this.userData.name = user.displayName;
+        this.userData.email = user.email;
       }
     });
   }
