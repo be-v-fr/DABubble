@@ -351,9 +351,11 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
    * Triggers a search based on the message input value.
    */
   search(): void {
-    if (this.message && this.message.length > 0) {
+    if (this.message) {
       let term: string | null = this.getSubstringFromLastSpecialChar(this.message.toLowerCase());
       term ? this.triggerSearchCategories(term) : this.clearSearch();
+    } else {
+      this.clearSearch();
     }
   }
 
@@ -387,7 +389,6 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   triggerSearchCategories(term: string) {
     if (term.startsWith('@')) {
-      this.searchResultsChannels = [];
       this.searchUsers(term.slice(1));
     } else if (term.startsWith('#')) {
       this.searchResultsUsers = [];
@@ -416,13 +417,11 @@ export class MessageBoxComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param term - The search term.
    */
   searchUsers(term: string): void {
-    if (this.channel) {
-      if (term.startsWith(' ')) { term = term.slice(1) }
-      this.searchResultsUsers = this.usersService.users.filter(u => {
-        return u.uid != this.authService.getCurrentUid() &&
-          (u.name.toLowerCase().includes(term) || u.email.toLowerCase().includes(term));
-      });
-    }
+    if (term.startsWith(' ')) { term = term.slice(1) }
+    this.searchResultsUsers = this.usersService.users.filter(u => {
+      return u.uid != this.authService.getCurrentUid() &&
+        (u.name.toLowerCase().includes(term) || u.email.toLowerCase().includes(term));
+    });
   }
 
 
