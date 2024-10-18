@@ -41,3 +41,6 @@ up.bat
 # System files
 .DS_Store
 Thumbs.db
+
+# Hidden for data security
+firebase.config.ts
