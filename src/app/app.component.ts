@@ -24,6 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   public introService = inject(AnimationIntroService);
   userSub = new Subscription();
+  logoutSub = new Subscription();
   initialRoute: string | null = null;
 
 
@@ -56,6 +57,11 @@ export class AppComponent implements OnInit, OnDestroy {
       this.initialRoute = this.router.url;
       this.router.navigate(['/auth/logIn']);
     }
+    this.logoutSub = this.authService.firebaseUser$.subscribe(user => {
+      if (!this.introService.awaitingAppInit && !user) {
+        this.router.navigate(['/auth/logIn']);
+      }
+    })
   }
 
 
@@ -64,6 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
+    this.logoutSub.unsubscribe();
   }
 
 
